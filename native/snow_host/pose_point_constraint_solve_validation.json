@@ -1,0 +1,18 @@
+{
+  "schema": "pose-point-constraint-solve-validation-v1",
+  "cases": 512,
+  "preparations": 512,
+  "iterations": 1536,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "method": "Offline original kind1 builder followed by original selected preparation and three iterations; no interception",
+  "comparisons": [
+    "entire arena after builder and each numerical call",
+    "body data, states and results"
+  ],
+  "limits": [
+    "Finite synthetic frames and positive unit tensor/linear response.",
+    "Numerical body buffers and cached results are supplied explicitly.",
+    "No count-publication, outer dispatch or full group lifecycle claim."
+  ]
+}

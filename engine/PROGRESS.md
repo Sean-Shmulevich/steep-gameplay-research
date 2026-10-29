@@ -8183,3 +8183,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   wrapper comparisons pass with all25 categories populated. Numerical traversal
   for supplied rows is now complete within the kernels' stated domains. Remaining
   non-contact builders, damping and full lifecycle composition stay unresolved.
+- Recovered kind1 attachment-point construction into category10/11. The builder
+  preserves frame-transform rounding, center-relative cross coefficients,
+  metadata-selected endpoint count and phase-gated position error.512 native
+  builder comparisons pass;512 builder-to-solver cases also match preparation
+  and1536 iterations. Kind1 and kind4 producers are implemented. Kinds2,3,5,6,
+  dispatch/count publication and full group lifecycle remain unfinished.

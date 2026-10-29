@@ -4741,3 +4741,72 @@ stated domain. It does not close the five remaining kind-dispatched non-contact
 builders, damping response, complete group lifecycle, exceptional floating-point
 behavior, concurrency or gameplay ownership. A runnable API that receives rows
 is not yet an engine that produces every row from authored constraints.
+
+## Point constraint producer
+
+Kind1 dispatch reaches0x19e7f20. The independent entry point is
+`engine.pose_constraint_point.build_pose_point_constraint`. This is a producer
+for the recovered point solvers, rather than a row fixture invented for testing.
+Its geometry uses two body frames and two local attachment points.
+
+Inputs are retained context storage, constraint bytes through90, bodies keyed
+by the tokens at constraint08/10, and metadata keyed by body30. Body1c supplies
+the numerical index;40/50/60 hold basis columns,70 translation, and128 the local
+center offset. Constraint70/80 hold attachment points. XYZ is used for geometry;
+frame and center fourth lanes are masked. Both bodies are required even when only
+one receives a numerical correction.
+
+The second body's metadata ushort50 bit15 selects the row family. If clear, the
+builder appends category10,128 bytes. If set, it appends category11,176 bytes.
+This is an observed flag rule; assigning a universal dynamic/static class meaning
+would need separate evidence. Row allocation uses the category's base in context
+40+4*category, append counter a4+4*category, and common row offset16c. Arithmetic
+wraps the base-plus-count product at32 bits before converting16-byte units.
+The builder increments that append counter and context180, placing the previous
+result count at row04. It writes both body indices even for category10.
+
+For each endpoint with frame R, translation t, local anchor a and local center c:
+
+```text
+world_anchor = R.z*a.z + ((R.x*a.x + t) + R.y*a.y)
+arm = R.z*(a.z-c.z) + (R.y*(a.y-c.y) + R.x*(a.x-c.x))
+```
+
+Each operation retains float32 rounding. The first expression's translation is
+added before the Y and Z terms; it is not the same rounding sequence as adding
+translation after a generic matrix transform. Center offsets affect the arm,
+not the world anchor. Category10 needs only the first arm.
+
+```text
+phase_scale = 0.4 if (flags38 & 0x18000000) == 0x08000000 else 0
+response.xyz = (world_anchor1 - world_anchor2) * (context_c * phase_scale)
+response.w = largest finite float32
+A = cross_matrix(-arm1)
+B = cross_matrix(arm2)  # category11 only
+```
+
+For v=(x,y,z), `cross_matrix(v)` has columns(0,z,-y),(-z,0,x),(y,-x,0).
+Thus A*w equals w cross arm1, and B*w equals arm2 cross w. The opposite signs
+match the paired solver's relative linear velocity convention. The responseW
+becomes the solver's per-increment cap, effectively unbounded for ordinary finite
+motion. The positional response is disabled outside the exact normal pose-building
+phase. This does not make the rest of row construction a no-op.
+
+The routine leaves prepared inverse matrices and reserved result bytes untouched.
+It does not publish the traversal counts at context108+4*category. The caller must
+supply their producer and cached-result lifecycle; silently zeroing the result
+would invent behavior absent from this routine.
+
+[Builder validation](../../native/snow_host/pose_point_constraint_validation.json)
+compares512 uninterrupted original calls, with all arena, constraint, body and
+metadata bytes plus the return byte matching. Cases cover both families, all four
+phase masks, general finite frames, center offsets, arbitrary unused bytes and
+nonzero initial append/result counts.
+[Builder-to-solver validation](../../native/snow_host/pose_point_constraint_solve_validation.json)
+then runs512 original builders followed by their selected preparation and three
+iterations. Every retained arena/state/result byte matches the independent
+composition. Numerical body buffers and cached results are explicitly supplied;
+this is not full group initialization or live gameplay validation.
+
+Kind1 and kind4 builders are now reconstructed. Kinds2,3,5,6 remain open, as do
+outer dispatch eligibility, count publication and full group lifecycle composition.

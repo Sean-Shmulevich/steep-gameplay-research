@@ -1,0 +1,24 @@
+{
+  "schema": "pose-point-constraint-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19e7f20"
+  ],
+  "method": "Offline uninterrupted original kind1 builder; no interception",
+  "comparisons": [
+    "entire context arena, source constraint, metadata and body buffers",
+    "return byte"
+  ],
+  "coverage": [
+    "single and paired row selection",
+    "four phase masks",
+    "general body frames, anchors and center offsets",
+    "existing append and result counts, untouched bytes"
+  ],
+  "limits": [
+    "Finite synthetic retained inputs.",
+    "Dispatch gates, traversal-count publication and gameplay ownership not covered."
+  ]
+}

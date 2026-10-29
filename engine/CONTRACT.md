@@ -1153,3 +1153,12 @@ ownership remain unknown. The `paired_two_stage_rows` pool runs before category2
 in normal phase and is skipped in special phase. All 25 numerical categories are
 now connected, with synthetic native comparisons. This closes the supported-row
 numerical traversal boundary, not row production or full engine integration.
+
+Point constraint production: kind1 consumes two retained body frames, local
+anchors at70/80 and the second body's metadata bit15 at50. It appends category10
+or11 and reserves an external result index, without initializing that result or
+publishing traversal counts. See LINK_SOLVER.md, "Point constraint producer".
+The normal pose-building phase applies a0.4*context_c position-error response;
+other phase masks use zero. Body-center offsets affect angular coefficients,
+not world anchor positions. Finite retained inputs and bounded output storage
+are required. Full dispatch gates and gameplay ownership remain separate.
