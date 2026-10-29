@@ -6038,3 +6038,38 @@ raw link before another tick. Retired array entries are still present but are
 outside the cleared count. Reusing the old parsed count would incorrectly revive
 released payloads. Public tests cover null skipping, shared-ring clearing, captured
 span with later entry edits, empty-array admission and release failure behavior.
+
+## Repeated retained group passes
+
+`engine.pose_group_retained.read_retained_pose_group` rebuilds typed input views
+from current raw group, body, metadata, constraint and link records. Group spans
+supply current body/link/pose tokens. Link58/60 selects active16-byte contact entries;
+bodyb8/c0 selects active72-byte resource entries. Zero counts skip array lookup.
+Body transforms, motion, centers, indices and metadata class flags are reread.
+Constraint kinds come from the supplied query and inline records are copied.
+Inactive entries beyond a current count are not revived.
+
+`run_retained_pose_group_pass` calls this reader, performs preparation and runs
+the joined group runtime with shared contact services. All maps, retained storage,
+profiles, resource resolution and reached services remain explicit caller inputs.
+It returns the authored layout description. Each invocation uses new parsed views
+so the previous pass's transform updates and payload-count clears are retained.
+Within a pass records must be stable except for the modeled operations. Eager
+parsing is authored adapter behavior and does not reproduce native read ordering
+under callback mutation or imply an atomic live snapshot.
+
+[256 four-pass native comparisons](../../native/snow_host/pose_repeated_group_validation.json)
+execute1024 consecutive original wrapper calls, preserving native and independent
+state separately between calls. Every retained byte matches after each call,
+including layout changes following contact retirement. There are312 pass returns
+with inactive group flags,89 total payload release requests and1507 changed body
+transforms across2048 body-pass instances. Native angle inputs and release order
+also match. No already-cleared contact is released again.
+
+These are direct repeated group-wrapper calls. The test deliberately does not
+infer whether an outer scheduler would admit an inactive group again. It also
+does not regenerate terrain contacts, reactivate bodies or simulate native pool
+reuse. Count/build invalid-state admission, damping, allocator growth, other body
+classes and live ownership remain open. The supplied atan2 and pool-return service
+boundaries remain unchanged. Public tests cover fresh frame/motion reads, cleared
+contact spans,72-byte resource strides and four successive integrated passes.

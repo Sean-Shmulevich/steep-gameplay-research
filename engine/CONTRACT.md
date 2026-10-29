@@ -1326,3 +1326,10 @@ body rings and contact retirement". It clears active count after successful rele
 requests and preserves inactive entries. Pool return remains an explicit service.
 Refresh parsed link counts before another tick; raw stale entries are not active
 contacts. Joined ring validation covers one link shared by both endpoints.
+
+Repeated retained group API: `read_retained_pose_group` rebuilds typed views from
+current active spans; `run_retained_pose_group_pass` composes preparation and the
+joined runtime. See LINK_SOLVER.md, "Repeated retained group passes". Eager parsing
+requires stable well-formed records. Every invocation refreshes frame/motion and
+contact/resource counts. Direct repeated calls do not supply scheduler admission,
+contact generation, sleep/wake policy, allocator growth or live atomicity.

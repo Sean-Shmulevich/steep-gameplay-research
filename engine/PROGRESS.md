@@ -8318,3 +8318,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   retained bytes and release order match;58 inactive groups request one release
   each despite two endpoint visits. Protected pool publication/reuse is still
   supplied, and parsed link counts must be refreshed before a subsequent tick.
+- Added fresh retained-record parsing and a one-call group pass API.256 fixtures
+  now match native execution across four consecutive calls each,1024 comparisons
+  total, without resetting transforms or contact state between calls.89 payloads
+  are released once; cleared counts exclude their stale entries on later passes.
+  This verifies state carryover, not scheduler admission or contact regeneration.

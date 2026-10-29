@@ -1,0 +1,32 @@
+{
+  "schema": "pose-repeated-group-validation-v1",
+  "cases": 256,
+  "passes": 1024,
+  "passed": true,
+  "inactive_passes": 312,
+  "total_payload_releases": 89,
+  "changed_body_transforms": 1507,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1994da0",
+  "method": "Four consecutive original group-wrapper calls per retained fixture, rebuilding independent views each call, through counting, retained layout, settings, body buffers, contact and kind2 build, shared solve, feedback, secondary refresh/solve and actual constructor-selected secondary updates, poststep integration and box bounds and circular body-link contact clearing; memset and protected payload pool-return service supplied, native atan2 outputs observed",
+  "comparisons": [
+    "entire context allocation and retained group/body/constraint/metadata/link/payload/resource/entry/transform bytes",
+    "atan2 arguments and call counts",
+    "payload release order and once-only retirement through shared endpoint rings"
+  ],
+  "coverage": [
+    "mixed contact and kind2 rows, one through four contact points, all four settings modes",
+    "single and paired endpoint layouts",
+    "translation and angular states0/1/2",
+    "hard and soft rows, optional drives, swap modes",
+    "one through three normal and secondary iterations",
+    "poststep quiet-check enable/disable, integration and one box resource per body"
+  ],
+  "limits": [
+    "Direct repeated calls do not establish scheduler admission, sleep/wake policy or contact regeneration.",
+    "Protected pool-return effects and reuse are excluded; release arguments are compared.",
+    "Constructor-selected body and box classes; one shared contact link in both endpoint rings.",
+    "No damping response, allocator growth, callback mutation or live player ownership claim.",
+    "Atan2 output arithmetic remains supplied."
+  ]
+}
