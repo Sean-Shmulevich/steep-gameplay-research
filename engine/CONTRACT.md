@@ -1356,3 +1356,10 @@ batch count, dispatcher capacity and32. See LINK_SOLVER.md, "Group batch formati
 Sorting, storage growth, dispatch and completed-group transfer are explicit
 services. Dispatch must finish consuming batch records before returning; this API
 requires that ordering but does not reconstruct the native dispatcher's join.
+
+Completed-group transfer: `transfer_completed_pose_groups` walks the active list
+backwards when context44c is nonzero. Groups with a nonzero inactive flag are
+swap-removed, appended to the inactive list, and their body tokens appended to the
+tracked list. See LINK_SOLVER.md, "Completed-group transfer". Indices must be
+consistent before entry. The inactive flag and stale array tails are preserved.
+Growth is an explicit service; concurrent list mutation is outside this contract.

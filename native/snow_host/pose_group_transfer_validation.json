@@ -1,0 +1,34 @@
+{
+  "schema": "pose-group-transfer-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18e3350",
+    "0x18e1740"
+  ],
+  "method": "Original transfer and tracked-body append execute in Unicorn; only storage-growth helpers are supplied, relocating arrays while preserving retained bytes",
+  "comparisons": [
+    "all context, group and array bytes including stale tails",
+    "all relocated arrays",
+    "growth descriptor, requested capacity and call order"
+  ],
+  "coverage": [
+    "zero through20 active groups",
+    "enable bytes0/1/2/255",
+    "inactive flags0/1/2/255",
+    "reverse transfer order and swap index repair",
+    "special context groups are not excluded",
+    "existing inactive and tracked entries",
+    "zero through five bodies per group",
+    "retained storage and relocating growth"
+  ],
+  "transferred_groups": 2262,
+  "growth_requests": 1160,
+  "limits": [
+    "Allocation/copy implementation is a supplied service, not the native allocator.",
+    "Well-formed retained group indices and counts; no concurrent mutation or lifetime proof.",
+    "No body integration or wake/reset is performed by this routine.",
+    "Offline synthetic fixtures; no live session."
+  ]
+}

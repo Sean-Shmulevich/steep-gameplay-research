@@ -6252,3 +6252,57 @@ game was launched. Public tests cover growth requests, wrapped counts, signed
 accumulation and worker limits. Native allocation growth, equal-key CRT ordering,
 concurrent dispatch, job construction and completed-group transfer remain outside
 this validation.
+
+## Completed-group transfer
+
+Binary-derived routines `0x18e3350` and `0x18e1740` supply the completion stage
+called after the batch wrapper clears its batch count. Implementation:
+`engine/pose_group_transfer.py`. Receipt:
+[`pose_group_transfer_validation.json`](../../native/snow_host/pose_group_transfer_validation.json).
+
+The context's transfer-enable byte gates the entire operation. When enabled, the
+routine walks the original active indices backwards. Every group whose inactive
+byte is nonzero is removed using its stored index. The last active pointer fills
+that slot, and the moved group's index is repaired when the slot is still active.
+The removed group's index becomes its insertion index in the inactive collection.
+Its body tokens are then appended to the context's tracked-body collection.
+
+```python
+if context.transfer_enabled:
+    for index in reversed(range(context.active_count)):
+        group = context.active_groups[index]
+        if not group.inactive:
+            continue
+        context.active_count -= 1
+        context.active_groups[group.index] = context.active_groups[context.active_count]
+        if group.index < context.active_count:
+            context.active_groups[group.index].index = group.index
+        group.index = context.inactive_count
+        append_inactive_with_growth(group)
+        append_tracked_bodies_with_growth(group)
+```
+
+The inactive flag stays set. Stale array tails are not erased, and body tokens are
+not deduplicated. There is no special-group exemption at this boundary, unlike the
+existing wake/finalize path. No body-reset callback, integration or contact-clear
+callback occurs here. The index changes ownership from the active collection to
+the inactive collection. The active-group list must have consistent indices on
+entry; the routine does not validate or reconstruct them.
+
+Inactive storage grows from zero capacity to8, otherwise doubles. Tracked storage
+instead grows from zero directly to the needed body count; nonzero capacity doubles
+until sufficient. The helper captures group body count and prior tracked count
+before growth, then reloads both pointer arrays while copying. Growth callbacks
+may therefore replace storage. The independent implementation rejects a doubling
+sequence that wraps to zero and cannot terminate; this is an authored guard, not
+a native exception path. Ordinary well-formed counts do not reach that guard.
+
+512 native comparisons match all context, group and array bytes, including unused
+tails and relocated arrays. They cover2262 group transfers and1160 growth requests.
+The original transfer and body-append instructions execute unchanged; only the two
+storage-growth helpers are supplied. Those services relocate storage, preserve
+retained bytes and record requested capacities. Native allocator internals remain
+outside this result. Public tests additionally connect transfer to batch completion
+across two passes: a synthetic inactive outcome removes that group from the next
+pass and does not append its bodies again. This composition test is not a live
+sleep/wake observation or proof of dispatcher synchronization.

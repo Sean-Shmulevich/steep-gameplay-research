@@ -8340,3 +8340,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   execute original partition/sort and match retained bytes plus dispatch snapshots.
   Sorting ties, native growth, dispatcher synchronization, job initialization and
   completed-group transfer remain explicit boundaries. No live session was used.
+- Reconstructed completed-group transfer and tracked-body append, closing the
+  explicit batch finish callback with a callable implementation.512 native cases
+  match all retained bytes through2262 transfers and1160 relocating growth requests.
+  Public two-pass composition excludes retired groups from the next active batch.
+  Native allocators, dispatcher synchronization, wake integration and live lifetime
+  remain separate. Transfer preserves inactive flags and does not reset bodies.
