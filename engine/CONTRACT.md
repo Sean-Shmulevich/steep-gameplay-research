@@ -1290,3 +1290,9 @@ LINK_SOLVER.md, "Group preparation through solve entry". Inputs are stable expli
 views and sufficient caller-owned capacity. No count repair or eligibility filter
 is added. Returned layout metadata is authored; solving remains an explicit next
 stage. Full-word count mode and low-bit builder mode remain distinct.
+
+Complete solver arena: `solve_pose_arena` derives writable row/body/result views
+from retained layout fields and runs all25 numerical categories. See LINK_SOLVER.md,
+"Complete arena numerical dispatch". Planned counts govern traversal regardless
+of append counters. Rows and body buffers must already be populated; count repair,
+row construction, feedback and full group lifecycle are not implicit.

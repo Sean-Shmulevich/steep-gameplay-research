@@ -5849,3 +5849,30 @@ The API does not allocate or release native memory and does not run the group
 step implicitly. Object mutation during virtual queries, count/build eligibility
 mismatches, unsupported state domains and active player ownership remain open.
 This validates preparation composition, not full numerical lifecycle equivalence.
+
+## Complete arena numerical dispatch
+
+`engine.pose_solver_arena.solve_pose_arena` connects all25 reconstructed numerical
+categories directly to a retained context allocation. It creates writable views
+using category starts at context40, planned counts at108 and row origin16c.
+Each stride comes from the recovered25-entry layout table. Body data spans170
+through174 in64-byte records; body state spans174 through178 in32-byte records;
+results start at178 with one16-byte slot per planned row. These views alias the
+original allocation, including references from primary rows to shared-row fields.
+
+The adapter delegates preparation, phase selection and iteration to the existing
+complete numerical dispatcher. It does not infer traversal from append counters
+or silently replace planned counts when fewer rows were built. A caller must
+establish valid populated rows. Bounds/alignment checks are authored API guards.
+It does not build rows, allocate memory, publish body motion or run poststep.
+
+[256 native full-arena comparisons](../../native/snow_host/pose_solver_arena_validation.json)
+execute the uninterrupted original solver wrapper with all25 categories populated,
+four phase masks and zero through three iterations. Every byte of the retained
+allocation matches, including unused padding, context scalars, body data/state,
+results and cross-row updates. Numerical inputs are synthetic and supplied;
+these tests do not establish complete group lifecycle or live-player equivalence.
+
+This adapter can consume a context prepared by `prepare_pose_group` once its body
+buffers and rows have been populated. It removes the need to manually pass25
+separate row lists, while preserving the same numerical and state-domain limits.

@@ -8290,3 +8290,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   source objects, including mixed links/all six pose kinds. Each reaches exactly
   one group-step call with the same buffer. Allocation, actual solve/feedback and
   state/eligibility domain reconciliation remain separate boundaries.
+- Added complete arena numerical dispatch, deriving all25 row views and body/result
+  views from the retained context.256 uninterrupted native solver comparisons match
+  every allocation byte, including cross-row writes and unused padding. This joins
+  layout to numerical execution without separately assembled row lists; row/body
+  production and full feedback/poststep composition remain the next boundary.
