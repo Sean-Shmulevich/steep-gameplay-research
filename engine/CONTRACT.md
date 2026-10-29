@@ -1008,3 +1008,10 @@ secondary-count bits, transitions phase, clears arena state, refreshes primary r
 and solves in special phase. It returns whether the phase ran. Body state must alias
 the arena. See LINK_SOLVER.md, "Contact secondary correction composition". Applying
 correction to transforms and group poststep remain explicit subsequent stages.
+
+Contact transform correction: `correct_pose_contact_transforms` runs secondary
+correction and applies the constructor-selected body integrator through temporary
+motion fields, restoring original motion on normal return. Caller supplies reached
+half-angle trig responses and must refresh parsed transforms before reuse. See
+LINK_SOLVER.md, "Contact correction through transform update". No general body-class
+virtual dispatch, exception rollback or group poststep is supplied.

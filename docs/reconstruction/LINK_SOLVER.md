@@ -3876,3 +3876,27 @@ the complete original group routine is not executed. Its earlier fixture placed
 results before state, which is valid for first-pass-only tests but not this clear
 range; the composition fixture now uses state-before-results layout. Damping and
 secondary transform application remain outside this comparison.
+
+### Contact correction through transform update
+
+`correct_pose_contact_transforms` composes secondary contact refresh/solve with the
+recovered temporary-state wrapper and constructor-selected body integrator. The
+caller explicitly selects this supported body implementation; the API does not
+claim general virtual dispatch for every body class. It supplies correction XYZ
+as temporary motion, calls the transform update with scalar1, and restores the
+original24 motion bytes on normal return. Corrected basis/translation persist.
+Parsed builder body snapshots remain unchanged and must be refreshed before reuse.
+
+General angular correction still requires `half_angle_trig`. Zero-angular cases
+need no trigonometric service. Exception-safe restoration is not invented: the
+existing wrapper's contract covers normal returns. Group poststep remains separate.
+
+[256 composed transform comparisons](../../native/snow_host/pose_contact_transform_composition_validation.json)
+execute native body production, contact building/solving/feedback, secondary
+refresh/solve and actual constructor-selected virtual transform updates. All arena,
+payload and raw-body bytes match. Observation hooks record317 original sine/cosine
+pairs; the independent integration requests identical half-angles and replays those
+responses. Native execution is not intercepted. This proves the composed arithmetic
+and service boundary, not an independently recovered transcendental library.
+Damping is disabled and group phase transitions/clears remain explicit harness work;
+complete original group/poststep execution and live class coverage are not claimed.

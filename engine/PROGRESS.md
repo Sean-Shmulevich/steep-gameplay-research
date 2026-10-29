@@ -8073,3 +8073,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   arena/payload/body bytes with zero through three secondary iterations. Group
   transition/clear are explicitly reproduced by the harness; full original group
   execution and secondary transform application remain outside this receipt.
+- Connected secondary contact solving to constructor-selected transform correction.
+  256 native composed comparisons match arena/payload/raw-body bytes;317 observed
+  native trig pairs are replayed with matching arguments. A public zero-angular
+  case verifies translation correction and restoration of first-pass motion.
+  Independent trig/damping libraries and complete group/poststep remain unresolved.

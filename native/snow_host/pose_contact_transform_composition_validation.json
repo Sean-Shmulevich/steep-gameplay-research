@@ -1,0 +1,28 @@
+{
+  "schema": "pose-contact-transform-composition-validation-v1",
+  "cases": 256,
+  "passed": 256,
+  "trigonometric_pairs": 317,
+  "method": "Original body-buffer producer, link dispatcher followed by original solver wrapper, link cache feedback and body motion feedback then gated secondary refresh, solve and native virtual transform update in the same retained arena; observation hooks only, no interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x1994560",
+    "0x1994970",
+    "0x1994e80",
+    "0x1994470",
+    "0x1994240",
+    "0x1993e50",
+    "0x1994e80",
+    "0x19906b0",
+    "0x18befb0"
+  ],
+  "comparisons": [
+    "Entire retained arena including all six row categories, counters, results, body data/state and unused storage",
+    "All payload bytes and raw body records"
+  ],
+  "limits": [
+    "Synthetic layout and independent count prepass; damping disabled; getter TLS/static state initialized",
+    "Finite geometry and profile arithmetic",
+    "Native sine/cosine responses replayed by reconstruction; no full group poststep or live lifetime"
+  ]
+}

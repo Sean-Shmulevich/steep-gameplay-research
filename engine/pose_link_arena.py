@@ -123,3 +123,21 @@ def solve_pose_contact_secondary_correction(arena,link_tokens,*,links,bodies,pay
         shared_rows=pools['clear_shared'],paired_shared_rows=pools['paired_shared'],secondary_rows=pools['clear_secondary'],
         paired_tangent_rows=pools['paired_secondary'],arena=arena,body_data=body_data,body_state=body_state,results=results)
     return True
+
+
+def correct_pose_contact_transforms(arena,link_tokens,*,links,bodies,payloads,body_data,body_state,
+                                    body_tokens,raw_bodies,half_angle_trig=None):
+    """Solve secondary contacts and apply the recovered constructor-selected update.
+
+    The caller explicitly selects this body implementation. Other virtual update
+    implementations are not dispatched. General sine/cosine remain a service.
+    Raw transforms change; parsed body snapshots must be refreshed before reuse.
+    """
+    from .pose_body_secondary_update import apply_pose_secondary_body_state
+    from .pose_body_integration import integrate_pose_body
+    if not solve_pose_contact_secondary_correction(arena,link_tokens,links=links,bodies=bodies,
+                                                   payloads=payloads,body_data=body_data,body_state=body_state):
+        return False
+    apply_pose_secondary_body_state(body_tokens,bodies=raw_bodies,body_state=body_state,
+        update_body=lambda token,body,scalar:integrate_pose_body(body,scalar,half_angle_trig=half_angle_trig))
+    return True
