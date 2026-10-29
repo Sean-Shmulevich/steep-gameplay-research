@@ -5125,9 +5125,9 @@ not called for ineligible entries. The dispatcher retains the selected constrain
 token across the query; it does not reload a replaced current slot. Later slots
 are read when reached.
 
-Kinds1/3/4 call their independent implementations. Kinds2/5/6 remain explicit
-dependencies in `additional_builders`, keyed by kind and called with context and token. Reaching one without
-a supplied implementation raises an error instead of silently skipping work.
+All six kinds now call their independent implementations. Kinds2/3/5 require
+an explicit atan2 service, and reached notifications require a callback. The
+earlier additional-builder callback API has been removed after composition.
 Unknown uint32 kinds emit no row, matching the native default. The outer loop
 does not use the builder's returned boolean to make a further decision.
 
@@ -5797,3 +5797,16 @@ Public tests check all54 angular state/hardness combinations against counts,
 near-parallel fallback, skipped-frame preparation, repeated notification and
 complete dispatcher equivalence. Full group lifecycle, count/build eligibility
 reconciliation and active player ownership remain open.
+
+
+### Angular state-domain boundary through submission
+
+The record submission converter copies the six state records unchanged from
+source60..d7 to converted80..f7. Neither conversion, optional frame swap nor
+field storage sanitizes angular state3 or UINT32_MAX. A composed public regression
+passes those values through `prepare_pose_submission`, count planning and the
+complete kind2 builder. In both frame orders the state survives, planning reserves
+zero limit rows, and construction emits two. Thus the known submission conversion
+cannot explain away the mismatch. This does not establish that game-authored
+records use those values. The remaining lead is the source-state producer or its
+valid-state contract before submission, together with enclosing allocation policy.

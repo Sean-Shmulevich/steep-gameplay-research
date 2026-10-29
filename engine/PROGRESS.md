@@ -8281,3 +8281,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   combinations with counts. Angular state3 still exposes a prepass/build mismatch;
   atan2 arithmetic, notification effects, full lifecycle and active rig ownership
   remain outside this result. No live game session was used for this checkpoint.
+- Traced the angular state-domain mismatch through existing submission conversion:
+  frame swap and field storage preserve state3/UINT32_MAX. Composed regressions
+  confirm zero planned limit rows versus two emitted rows. The unresolved gate is
+  upstream state production/validity or enclosing allocation, not conversion.

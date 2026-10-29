@@ -27,6 +27,24 @@ class AxisConstraintTests(unittest.TestCase):
                 for cat,key in ((8,'doubled_rows'),(14,'flagged_or_hard_rows'),(18,'second_hard_rows'),(20,'second_soft_rows')):
                     self.assertEqual(struct.unpack_from('<I',c,0xa4+4*cat)[0],counts[key])
 
+    def test_submission_preserves_unreserved_angular_states(self):
+        from engine.snow_pose_record import prepare_pose_submission
+        for state in (3, 0xffffffff):
+            for swapped in (0, 1):
+                c,r,args=full_fixture((state,1,1))
+                # Source and inline layouts differ by 0x20 after the frames.
+                source=bytearray(0x100)
+                config=r[0x70:0x190]
+                for i in range(8):
+                    source[12*i:12*i+12]=config[16*i:16*i+12]
+                source[0x60:0xd8]=config[0x80:0xf8]
+                stored=prepare_pose_submission(source,config,swap_byte=swapped)['storage']
+                r[0x70:0x190]=stored
+                self.assertEqual(struct.unpack_from('<I',stored,0xbc)[0],state)
+                self.assertEqual(pose_solver_counts(stored,0)['doubled_rows'],0)
+                build_pose_axis_constraint(c,r,**args)
+                self.assertEqual(struct.unpack_from('<I',c,0xa4+4*8)[0],2)
+
     def test_skip_all_angular_states_avoids_frame_normalization(self):
         c,r,args=full_fixture((1,1,1))
         for b in args['bodies'].values():b[0x40:0x70]=bytes(48)
