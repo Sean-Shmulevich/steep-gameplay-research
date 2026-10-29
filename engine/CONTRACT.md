@@ -1237,3 +1237,10 @@ correction and quaternion axis rotation. See LINK_SOLVER.md, "Composed angular-l
 geometry". Four-lane extent equality, XYZ radius gating and scalar-X geometry
 remain distinct. Early returns preserve axis.W; the rotated result clears it.
 Native initializer synchronization and full kind5 row composition are excluded.
+
+Kind5 target preparation: `prepare_pose_target_frame` copies XYZ target columns
+while preserving destination padding, optionally transposes the measurement
+frame, and applies elliptical and secondary angular bounds. See LINK_SOLVER.md,
+"Bounded drive target frame". Atan2 remains an explicit service. Later angle
+measurements retain original working vectors after output correction. This is
+one preparation stage, not a complete kind5 builder or active rig contract.

@@ -5469,3 +5469,53 @@ elliptical projection, degenerate extents, negligible residual and general axes.
 No interception or substituted math output is used. Static initialization
 concurrency, CRT status effects, complete kind5 composition and gameplay ownership
 remain outside this evidence.
+
+## Bounded drive target frame
+
+Before kind5 emits its quaternion drive, wrapper RVA19439d0 passes the inline
+configuration at constraint+70 and swap byte59 to RVA19434c0.
+`engine/pose_constraint_target.py::prepare_pose_target_frame` reconstructs that
+second routine. It copies configuration XYZ columns80/90/a0 into the destination,
+preserving each destination padding lane. A nonzero swap flag transposes only the
+working frame used to measure angles; it does not transpose the initial output.
+
+Let M be that working frame. The routine forms u=M*config20 and t=M*config40,
+with v=config30 and reference=config50. The correction axis is normalize(cross(u,v)),
+except that a length strictly below1e-4 selects config50 directly. It computes
+angle=signed_angle(axis,v,u) using the existing explicit atan2 service. The
+unmodified u/t/axis/angle remain the inputs for later measurements, even if an
+intermediate correction changes the output matrix.
+
+With a=config60 and b=config64, if angle>min(a,b), rotate v by pi/2 around the
+correction axis, measure its signed azimuth around v against reference, then:
+
+```text
+bound = (b*a) / sqrt((sin(azimuth)*b)^2 + (cos(azimuth)*a)^2)
+if angle > bound:
+    output = rotation(axis,bound-angle) * output
+```
+
+If config68 is nonzero, rotate t around the correction axis by the original
+angle. Measure twist=signed_angle(v,reference,rotated_t), with bound=config6c.
+When twist>bound, correction=bound-twist. When twist<-bound,
+correction=-twist-bound. Otherwise leave the output unchanged. A reached
+correction left-multiplies output by rotation(u,correction). The correction axis
+is not renormalized before axis-angle conversion. Scalar matrix composition
+sums X+Y, then Z; the measurement transforms use the recovered SIMD association.
+Both compositions preserve destination padding lanes.
+
+[Target-frame comparison](../../native/snow_host/pose_target_frame_validation.json)
+records1024 complete original calls. Every destination byte and unchanged
+configuration byte matches, as do signed-angle arguments and call counts.
+Native atan2 outputs are supplied to the explicit independent service; the
+comparison does not establish independent atan2 arithmetic. The native path runs
+without interception. Other trig and quaternion arithmetic is independently
+reconstructed. Cases include146 fallback-axis paths,693 elliptical corrections
+and373 secondary-angle corrections. Positive finite angular bounds and bounded
+finite matrices define the tested domain. Complete kind5 row composition,
+nonfinite behavior and active rig ownership remain open.
+
+A synthetic native-checked sign regression starts with a1-radian Z rotation and
+produces approximately1.25radians after correction with its supplied reference
+axes. Thus these local signed-bound formulas are not a universal world-angle
+clamp. Caller frame conventions and valid authored configuration still matter.

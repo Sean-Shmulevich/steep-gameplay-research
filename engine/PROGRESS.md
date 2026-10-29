@@ -8245,3 +8245,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   native calls match all eight output lanes without substituted helper outputs.
   Preserved all-lane extent equality, XYZ radius gating and early-return W behavior.
   Full kind5 builder composition and group lifecycle remain open.
+- Reconstructed kind5 drive-target preparation before quaternion error formation.
+  1024 native calls match destination padding, corrected matrices and angle-service
+  inputs. Covers elliptical correction, secondary angle correction, swapped
+  measurement frame and fallback axis. Native atan2 outputs remain an explicit
+  supplied dependency; complete kind5 row composition is still unfinished.

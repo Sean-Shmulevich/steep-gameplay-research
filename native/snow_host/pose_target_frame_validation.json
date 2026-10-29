@@ -1,0 +1,32 @@
+{
+  "schema": "pose-target-frame-validation-v1",
+  "cases": 1024,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x19434c0",
+  "method": "Original target preparation and nested math; native atan2 arguments/results observed and supplied to explicit independent service; no native interception",
+  "branch_hits": {
+    "0x1c88cec": 2273,
+    "0x19a17da": 2273,
+    "0x19437e0": 693,
+    "0x19438fc": 373,
+    "0x1943659": 146
+  },
+  "comparisons": [
+    "all destination bytes including preserved padding",
+    "all atan2 arguments and call counts",
+    "unchanged configuration"
+  ],
+  "coverage": [
+    "swapped analysis frame",
+    "fallback correction axis",
+    "elliptical swing correction",
+    "enabled and disabled secondary angle correction",
+    "general finite nonorthogonal targets"
+  ],
+  "limits": [
+    "Independent atan2 arithmetic remains external.",
+    "Finite synthetic inputs and positive configured angular bounds.",
+    "No full kind5 builder or active gameplay ownership claim."
+  ]
+}
