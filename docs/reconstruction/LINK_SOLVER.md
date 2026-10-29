@@ -4563,3 +4563,84 @@ preparation0x19ed4d0 and iteration0x19ee190. Both occur before categories3/2 in
 normal phase and remain explicitly rejected by the independent mixed solver.
 Completing those kernels will not by itself supply row production, group lifecycle,
 concurrency or original gameplay ownership.
+
+## Two-stage single-body constraint
+
+Category22 preparation0x19edd10 and iteration0x19ee580 operate on a256-byte row.
+The independent API is `prepare_pose_two_stage_row` / `iterate_pose_two_stage_row`
+in `engine.pose_two_stage_solver`. "Two-stage" describes the observed arithmetic;
+it is not an original constraint class name or evidence of a player controller.
+
+| Row field, hexadecimal | Meaning in these routines |
+| --- | --- |
+| 00,04 | ushort body index and uint external result index |
+| 10 | coupled response, four lanes |
+| 20,30,40 | three columns of coefficient matrix A |
+| 50,60,70 | prepared coupled inverse K |
+| 80,90,a0 | three columns of angular coefficient matrix C |
+| b0,c0,d0 | prepared diagonal angular response H |
+| e0 | angular response, four lanes |
+| f0 | separate cached angular impulse |
+
+Let T be the body's tensor, M its four-lane linear response, v its linear state,
+and w its angular state. Matrix products use XYZ inputs and retain four output
+lanes. Transpose application takes a four-lane dot product against each stored
+column and masks the resulting torque W to zero. The source's float32 order is
+preserved in the implementation.
+
+Preparation computes the full inverse `K = inverse(diag(M) + A*T*transpose(A))`.
+Unlike category10, it does not normalize by the trace before inversion. For the
+second stage, let cy and cz be rows Y and Z of C, with W zero:
+
+```text
+hy = 1 / dotXYZ(cy, T*cy)
+hz = 1 / dotXYZ(cz, T*cz)
+H  = diag(0, hy, hz)
+
+v += M * external_cached_impulse
+w += T * transpose(A) * external_cached_impulse
+w += T * transpose(C) * row.cached_angular_impulse
+```
+
+H is not the full inverse of C*T*transpose(C). The routine leaves its first
+column zero and computes only the two diagonal reciprocals. Both caches are
+applied without clearing them, including the cached first angular component.
+The public implementation requires finite nonsingular coupled response and finite
+nonzero angular denominators; it does not emulate exceptional division results.
+
+Each iteration then performs these operations sequentially:
+
+```text
+coupled_speed = (A*w + v) + row.coupled_response
+coupled_delta = -(K * coupled_speed)
+external_updated = external_cached_impulse + coupled_delta
+v += M * coupled_delta
+w += T * transpose(A) * coupled_delta
+
+angular_speed = C*w + row.angular_response  # reads the newly updated w
+angular_delta = -(H * angular_speed)
+w += T * transpose(C) * angular_delta
+row.cached_angular_impulse = angular_delta + row.cached_angular_impulse
+external_cached_impulse = external_updated
+```
+
+Neither increment is clamped. The response W fields are not interpreted as caps.
+The external result is stored only after the second correction. With identity
+A,C,T, unit M, zero states/caches and coupled responseXYZ=(2,4,6), the first stage
+produces v=w=(-1,-2,-3). A zero angular response then produces angular delta
+(0,2,3), leaving w=(-1,0,0) and v=(-1,-2,-3). Reading the initial w for stage two
+would produce a different result.
+
+[Kernel comparison](../../native/snow_host/pose_two_stage_validation.json)
+checks512 uninterrupted native preparations and1536 iterations. All row, data,
+state and result bytes match with general coefficient matrices, off-diagonal
+body tensors, fourth lanes and both caches populated. These are synthetic retained
+inputs, not observations of a gameplay owner or reconstruction of its producer.
+
+Mixed traversal now accepts `two_stage_rows`, using context160 counts and context98
+arena bases. Category22 runs after14 and before3 in normal phase; special phase
+skips it. [Twenty-four-category comparison](../../native/snow_host/pose_twenty_four_category_solve_validation.json)
+checks256 original wrappers with every supported category populated, all four
+phase masks and zero through three iterations. All retained buffers match.
+Category23 remains rejected. Remaining builders, full group lifecycle and live
+scheduler behavior are separate unresolved boundaries.

@@ -1131,3 +1131,14 @@ bases/counts and normal-only execution. See LINK_SOLVER.md, "Late primary
 categories and remaining numerical kernels". `late_primary_rows` and
 `paired_late_primary_rows` require explicit retained rows. Only numerical
 categories22/23 remain unsupported; broader producer/lifecycle gaps persist.
+
+Two-stage single-body constraint: category22 uses a 256-byte retained row, one
+64-byte body-data record, one 32-byte state and an external 16-byte result.
+Preparation builds a coupled inverse plus two angular reciprocal responses and
+applies both cached impulses. Iteration applies the coupled increment before
+reading angular state for its second correction. See LINK_SOLVER.md, "Two-stage
+single-body constraint". Finite nonsingular responses are required. Coefficient
+producers, physical units and gameplay ownership remain unresolved.
+`two_stage_rows` supplies category22 with its normal-only gate and placement
+between14 and3. Category23 is the sole unsupported numerical category. This does
+not close row production, physical ownership or full group lifecycle.

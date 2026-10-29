@@ -1,0 +1,24 @@
+{
+  "schema": "pose-two-stage-validation-v1",
+  "preparations": 512,
+  "iterations": 1536,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19edd10",
+    "0x19ee580"
+  ],
+  "method": "Offline uninterrupted original preparation, matrix inverse and three iterations; no interception",
+  "comparisons": [
+    "all row, body-data, body-state and result bytes after each call"
+  ],
+  "coverage": [
+    "off-diagonal tensors",
+    "unused second index",
+    "nonzero fourth lanes, two cached impulses and sequential correction"
+  ],
+  "limits": [
+    "Finite nonsingular synthetic rows with nonzero angular responses.",
+    "Row producer, full traversal and gameplay ownership not covered."
+  ]
+}

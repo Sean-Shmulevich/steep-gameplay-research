@@ -3,6 +3,7 @@
 Evidence: LINK_SOLVER.md, Connected primary and tangent solver slice.
 """
 import struct
+from .pose_two_stage_solver import prepare_pose_two_stage_row,iterate_pose_two_stage_row
 from .pose_axis_angular_solver import prepare_pose_axis_angular_row,iterate_pose_axis_angular_row
 from .pose_bounded_scalar_solver import prepare_pose_bounded_scalar_row,iterate_pose_bounded_scalar_row
 from .pose_point_solver import prepare_pose_point_row,iterate_pose_point_row
@@ -28,8 +29,8 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
                          paired_bounded_rows=(), axis_angular_rows=(), paired_axis_angular_rows=(),
                          softened_axis_rows=(), paired_softened_axis_rows=(),
                          plain_bounded_rows=(), paired_plain_bounded_rows=(),
-                         late_primary_rows=(), paired_late_primary_rows=(), arena=None):
-    """Run native phase/count policy for the twenty-three supported row categories.
+                         late_primary_rows=(), paired_late_primary_rows=(), two_stage_rows=(), arena=None):
+    """Run native phase/count policy for the twenty-four supported row categories.
 
     Traversal counts come from context108/120, not builder append counters.
     Other row-category counts must be zero. The caller supplies already populated
@@ -37,7 +38,7 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
     """
     if len(context_bytes)<0x17c:raise ValueError('Complete solver context fields required')
     counts=struct.unpack_from('<25I',context_bytes,0x108)
-    if any(value for i,value in enumerate(counts) if i not in (0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,24)):
+    if any(value for i,value in enumerate(counts) if i not in (0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,24)):
         raise ValueError('Unsupported populated row category')
     primary_count,paired_count,secondary_count=counts[0],counts[1],counts[6]
     if primary_count>len(primary_rows) or paired_count>len(paired_primary_rows) or secondary_count>len(secondary_rows):
@@ -73,6 +74,9 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
     late_count,paired_late_count=counts[2],counts[3]
     if late_count>len(late_primary_rows) or paired_late_count>len(paired_late_primary_rows):
         raise ValueError('Insufficient retained late primary rows')
+    two_stage_count=counts[22]
+    if two_stage_count>len(two_stage_rows):
+        raise ValueError('Insufficient retained two-stage rows')
     def location(category,index,stride):
         if arena is None:return {}
         start=struct.unpack_from('<I',context_bytes,0x16c)[0]+16*struct.unpack_from('<I',context_bytes,0x40+4*category)[0]
@@ -96,6 +100,7 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
             for row in softened_axis_rows[:softened_count]:prepare_pose_axis_angular_row(row,softened=True,**args)
             for row in paired_plain_bounded_rows[:paired_plain_count]:prepare_pose_bounded_scalar_row(row,paired=True,added_response=False,**args)
             for row in plain_bounded_rows[:plain_count]:prepare_pose_bounded_scalar_row(row,added_response=False,**args)
+            for row in two_stage_rows[:two_stage_count]:prepare_pose_two_stage_row(row,**args)
             for row in paired_late_primary_rows[:paired_late_count]:prepare_pose_paired_primary_row(row,**args)
             for row in late_primary_rows[:late_count]:prepare_pose_primary_row(row,**args)
         for row in paired_primary_rows[:paired_count]:prepare_pose_paired_primary_row(row,**args)
@@ -123,6 +128,7 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
             for row in softened_axis_rows[:softened_count]:iterate_pose_axis_angular_row(row,softened=True,**args)
             for row in paired_plain_bounded_rows[:paired_plain_count]:iterate_pose_bounded_scalar_row(row,paired=True,added_response=False,**args)
             for row in plain_bounded_rows[:plain_count]:iterate_pose_bounded_scalar_row(row,added_response=False,**args)
+            for row in two_stage_rows[:two_stage_count]:iterate_pose_two_stage_row(row,**args)
             for i,row in enumerate(paired_late_primary_rows[:paired_late_count]):iterate_pose_paired_primary_row(row,**args,**location(3,i,128))
             for i,row in enumerate(late_primary_rows[:late_count]):iterate_pose_primary_row(row,**args,**location(2,i,112))
         for i,row in enumerate(paired_primary_rows[:paired_count]):iterate_pose_paired_primary_row(row,**args,**location(1,i,128))

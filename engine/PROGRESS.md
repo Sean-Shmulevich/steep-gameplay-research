@@ -8171,3 +8171,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   pass with backward accumulator links and shared body states. Remaining numerical
   categories22/23 have distinct256/352-byte matrix rows; producers and lifecycle
   remain separate unfinished work.
+- Recovered category22's sequential coupled and angular corrections, including a
+  full coupled inverse and two diagonal angular reciprocals.512 preparations and
+  1536 iterations match all native bytes. Integrated the normal-only pool;
+  256 mixed twenty-four-category wrapper comparisons pass. Public tests distinguish
+  updated-state consumption, both caches and phase gating. Category23 remains the
+  numerical gap; row production and full lifecycle still require reconstruction.
