@@ -8313,3 +8313,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   trig is independently reproduced. Added the raw poststep adapter and override
   checks. Atan2 remains supplied; empty body link rings, damping, allocator growth,
   alternate classes and active player ownership remain explicit boundaries.
+- Added raw contact clearing and connected it in a256-case joined native ring
+  experiment. Both endpoint body rings now contain the group contact link. All
+  retained bytes and release order match;58 inactive groups request one release
+  each despite two endpoint visits. Protected pool publication/reuse is still
+  supplied, and parsed link counts must be refreshed before a subsequent tick.

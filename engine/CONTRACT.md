@@ -1319,3 +1319,10 @@ See LINK_SOLVER.md, "Joined secondary correction and poststep". Trig, resource
 bounds and link clearing are explicit. The joined native test now includes both
 solve phases and box poststep, with empty body link rings; it does not establish
 complete membership consistency, live lifetime or every body/resource class.
+
+Inactive contact retirement: `clear_pose_link_contacts` binds raw link entry
+storage to the existing no-transfer clear behavior. See LINK_SOLVER.md, "Inactive
+body rings and contact retirement". It clears active count after successful release
+requests and preserves inactive entries. Pool return remains an explicit service.
+Refresh parsed link counts before another tick; raw stale entries are not active
+contacts. Joined ring validation covers one link shared by both endpoints.

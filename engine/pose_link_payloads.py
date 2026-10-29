@@ -26,3 +26,22 @@ def clear_pose_link_payloads(source, destination, *, payloads, release, grow):
             destination['slots'][n]=token
             destination['count']=(n+1)&0xffffffff
     source['count']=0
+
+
+def clear_pose_link_contacts(link, *, entry_arrays, release):
+    """Run the no-transfer clearing wrapper on a retained raw link.
+
+    Evidence: LINK_SOLVER.md, Inactive body rings and contact retirement.
+    Capture link58 array identity and link60 count, re-read each 16-byte entry's
+    payload at +8, release nonnull payloads, then clear only link60. Release is
+    an explicit pool service; keys, capacity and inactive entry bytes persist.
+    """
+    import struct
+    pointer,count=struct.unpack_from('<QI',link,0x58)
+    if count:
+        entries=entry_arrays[pointer]
+        if len(entries)<16*count:raise ValueError('Complete retained contact entries required')
+        for i in range(count):
+            payload=struct.unpack_from('<Q',entries,16*i+8)[0]
+            if payload:release(payload)
+    struct.pack_into('<I',link,0x60,0)

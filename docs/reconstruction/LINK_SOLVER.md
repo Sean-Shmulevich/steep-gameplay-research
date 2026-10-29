@@ -6007,3 +6007,34 @@ by this joined test. Damping, allocation growth, callback-driven membership
 mutation, alternative resource/body classes, upstream invalid state exclusion and
 live player ownership remain open. Public adapter tests check raw group-flag
 publication, integration/bounds writes and quiet-override admission separately.
+
+## Inactive body rings and contact retirement
+
+`engine.pose_link_payloads.clear_pose_link_contacts` implements the raw no-transfer
+wrapper RVA0x1958b90 and the corresponding branch of0x1958720. It captures the
+link58 entry-array pointer and link60 count. Each16-byte entry contains a key and
+payload token; nonnull payloads go to an explicit pool-return service. Later
+entries are read when reached. After normal completion only link60 is cleared.
+Capacity, pointer, keys and inactive entry bytes remain unchanged. A zero count
+does not dereference the entry array. No exception rollback is invented.
+
+Connected to `make_integrated_pose_poststep`, this completes the explicit clearing
+route used by both endpoint body rings. A shared link can be visited twice during
+a group inactive transition. The first visit clears its active payload count;
+the second sees an empty span and does not request another release. The link
+itself remains in the rings; payload clearing is not unlinking or link destruction.
+
+[256 joined ring-retirement comparisons](../../native/snow_host/pose_mixed_group_retirement_validation.json)
+repeat the complete mixed two-phase wrapper with one shared contact link present
+in both body rings. All retained bytes and release order match.58 groups become
+inactive, each requesting exactly one payload release despite visiting the shared
+link from both endpoints. Active cases retain their payloads. Both next-pointer
+branches are exercised. The protected payload pool-return block is supplied as a
+recording service; its free-list mutation, synchronization and later reuse are not
+validated. Native atan2 outputs also remain supplied to the reconstruction.
+
+Parsed link views used by the build/count adapters must be refreshed from the
+raw link before another tick. Retired array entries are still present but are
+outside the cleared count. Reusing the old parsed count would incorrectly revive
+released payloads. Public tests cover null skipping, shared-ring clearing, captured
+span with later entry edits, empty-array admission and release failure behavior.
