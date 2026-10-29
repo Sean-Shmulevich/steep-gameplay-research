@@ -1,0 +1,24 @@
+{
+  "schema": "pose-command-registry-validation-v1",
+  "cases": 512,
+  "admitted_callbacks": 688,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18b9830",
+  "method": "Original collection driver, provider getters and command preparation wrapper; only registered callback is supplied",
+  "comparisons": [
+    "constraint/body/metadata bytes",
+    "callback order and all arguments including reciprocal, prior count and output bytes"
+  ],
+  "coverage": [
+    "zero through four entries in both provider collections",
+    "repeated identities across both collections",
+    "endpoint gates, nullable second endpoint and swaps",
+    "valid and invalid callback counts"
+  ],
+  "limits": [
+    "Callback numerical production and provider registration/mutation supplied.",
+    "Repeated identities are synthetic coverage, not proof of ordinary live topology.",
+    "No live ownership or concurrent snapshot guarantee."
+  ]
+}

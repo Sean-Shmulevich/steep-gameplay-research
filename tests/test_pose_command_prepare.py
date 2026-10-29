@@ -67,6 +67,20 @@ class CommandPrepareTests(unittest.TestCase):
         arena=bytearray(0x1000)
         with self.assertRaises(ValueError):build_pose_command_constraint(arena,r,bodies=b)
 
+    def test_registry_composition_reloads_slots_and_keeps_duplicate_visits(self):
+        from engine.pose_command_prepare import prepare_retained_pose_commands
+        r,b,m=self.fixture();other=bytearray(r);struct.pack_into('<Q',other,0x50,10)
+        owner=bytearray(0x50);struct.pack_into('<Q',owner,0x20,20)
+        provider=bytearray(0x90);struct.pack_into('<QI',provider,0x70,100,2)
+        struct.pack_into('<QI',provider,0x80,200,1)
+        arrays={100:[1,1],200:[1]};calls=[]
+        def invoke(fn,a,b,commands,count,scalar,mode,user):
+            calls.append((user,scalar,mode));struct.pack_into('<I',count,0,1)
+            arrays[100][1]=2
+        prepare_retained_pose_commands(9,scalar=.25,owners={9:owner},providers={20:provider},
+            arrays=arrays,constraints={1:r,2:other},bodies=b,metadata=m,invoke=invoke)
+        self.assertEqual(calls,[(9,4.,1),(10,4.,1),(9,4.,1)])
+
     def test_null_second_can_be_callback_first_after_swap(self):
         r,b,m=self.fixture();struct.pack_into('<Q',r,0x10,0);r[0x59]=1;seen=[]
         def invoke(fn,a,b,commands,count,scalar,mode,user):

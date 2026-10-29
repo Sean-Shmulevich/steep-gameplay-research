@@ -8384,3 +8384,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   above6, unlike update mode1. Concrete gameplay callback assignment remains open;
   direct offset-store candidates did not establish ownership. Indirect factories
   and registered constraint objects are the next evidence sources.
+- Bound both provider command registries to reciprocal preparation and the kind4
+  callback wrapper.512 original-driver comparisons admit688 callbacks and match
+  outputs/arguments with only callback production supplied. Static registration
+  shows individually registered kind4 constraints in the first list and kind4
+  children of registered objects in the second. Concrete gameplay identities,
+  registration effects, deserialization and live ownership remain unresolved.

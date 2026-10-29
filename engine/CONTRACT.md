@@ -1407,3 +1407,9 @@ single-body mode, then invokes mode0 with scalar0 and cleared count. See
 LINK_SOLVER.md, "Command creation and callback modes". It deliberately preserves
 counts above6 after the initial callback. Base registration/wake and gameplay
 callback production remain external; this is not a complete factory.
+
+Registered command preparation: `prepare_retained_pose_commands` binds the owner20
+provider's spans70/78 and80/88 to the recovered preparation driver and kind4 update
+wrapper. See LINK_SOLVER.md, "Command registry to preparation". Provider pointers
+and slots are read at the observed uses; active counts are captured per loop.
+Callbacks remain supplied. No deduplication or ownership/lifetime assertion is added.

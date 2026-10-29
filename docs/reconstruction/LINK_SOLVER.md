@@ -6688,3 +6688,59 @@ no concrete gameplay producer was identified. Such offsets alone are not evidenc
 of a command callback assignment. Next evidence should come from indirect factory
 callers, resource registration, or a guarded observation of actual registered
 constraint objects. No animation/trick/player attribution is established here.
+
+## Command registry to preparation
+
+`prepare_retained_pose_commands` now binds the preparation driver to retained
+provider records. The owner field+0x20 identifies the provider. Its first command
+span is pointer+0x70/count+0x78; its second is pointer+0x80/count+0x88. The getters
+at `0x18d02e0`, `0x66cd60`, `0x18d02c0` and `0x18d02d0` directly read these fields.
+Each active slot identifies the command constraint passed to preparation.
+
+```python
+first_count = current_provider.first_count
+for index in range(first_count):
+    constraint = current_provider.first_array[index]
+    prepare_command(constraint, reciprocal_scalar)
+second_count = current_provider.second_count
+for index in range(second_count):
+    constraint = current_provider.second_array[index]
+    prepare_command(constraint, reciprocal_scalar)
+```
+
+The implementation reuses the existing reciprocal driver and command wrapper.
+It does not snapshot both lists together, remove duplicate identities or skip a
+constraint merely because it was visited earlier. A changed later slot is read
+when reached. This joins actual provider storage to the callback ABI and six-count
+handling; it does not invent callback calculations.
+
+Static registration inspection gives a stronger ownership lead than offset-store
+searches. At `0x18cffe0`, a supplied constraint is appended to the general collection
+at provider+0x60, passed to `0x195c170` with argument2, then queried through its kind
+virtual method. Kind4 is additionally appended to provider+0x70. At `0x18d0080`, an
+object is appended to provider+0x50; its child-pointer span+0x58/count+0x60 is scanned,
+and children reporting kind4 are appended to provider+0x80. The inspected code
+establishes individual versus child-derived registration, but does not establish
+that the child-owning object is a player, animation rig or physics group.
+
+Both paths grow collections when full. Deserialization also writes provider command
+spans, so ordinary registration is not necessarily their sole producer. Those
+registration/growth/deserialization paths remain static leads here, not implemented
+by the retained preparation adapter. A future runtime observer can follow the
+owner's provider and these active spans, then inspect each constraint's callback
+and userdata fields. It must validate live object identity and lifetime rather than
+reuse stored addresses. This pass launches no game and installs no observer.
+
+[`pose_command_registry_validation.json`](../../native/snow_host/pose_command_registry_validation.json)
+records512 original preparation-driver comparisons with original provider getters
+and original per-constraint wrapper executing. Only the registered callback is
+supplied.688 callbacks are admitted across the fixtures. Whole constraint/body/
+metadata bytes and callback order/arguments match, including previous output bytes,
+reciprocal scalars, gates, swapping, and count resets. Fixtures vary both collection
+counts from0 through4 and include repeated identities across the lists. Those
+repetitions are synthetic coverage, not a claim about normal live topology.
+Public composition tests additionally mutate a later slot during callback execution.
+
+This removes provider lookup and individual preparation as supplied services in the
+joined adapter. Concrete gameplay callback production, registration effects,
+deserialization validity and concurrent ownership remain unresolved.

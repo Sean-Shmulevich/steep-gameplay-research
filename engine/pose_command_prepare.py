@@ -70,3 +70,24 @@ def construct_pose_command_constraint(constraint, *, constraint_token, owner_tok
     a,b=(actual_second,actual_first) if constraint[0x59] else (actual_first,actual_second)
     struct.pack_into('<I',constraint,0x74,0)
     invoke(callback_token,a,b,view[0x78:0x1f8],view[0x74:0x78],0.,0,userdata)
+
+
+def prepare_retained_pose_commands(owner_token, *, scalar, owners, providers,
+                                    arrays, constraints, bodies, metadata, invoke):
+    """Bind both provider collections to command preparation in observed order.
+
+    Provider spans70/78 and80/88 contain constraint identities. Counts are captured
+    by the outer driver, while provider pointers and indexed slots are reloaded.
+    Registered callback execution is explicit; no callback ownership is inferred.
+    """
+    from .pose_update_stage import prepare_pose_constraint_collections
+    def count(token,offset):
+        return struct.unpack_from('<I',providers[token],offset)[0]
+    def item(token,index,offset):
+        pointer=struct.unpack_from('<Q',providers[token],offset)[0]
+        return arrays[pointer][index]
+    prepare_pose_constraint_collections(owner_token,scalar=scalar,owners=owners,
+        first_count=lambda p:count(p,0x78),first_at=lambda p,i:item(p,i,0x70),
+        second_count=lambda p:count(p,0x88),second_at=lambda p,i:item(p,i,0x80),
+        prepare_constraint=lambda token,reciprocal:prepare_pose_command_constraint(
+            constraints[token],reciprocal=reciprocal,bodies=bodies,metadata=metadata,invoke=invoke))
