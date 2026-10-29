@@ -1253,3 +1253,10 @@ Target inversion has a retained near-unit determinant shortcut; body-frame
 inversion is separate. Kinds1/3/4/5/6 now run directly through the dispatcher;
 only kind2 remains external. Full group lifecycle and active rig ownership remain
 open; callback-driven mutation is outside the validated contract.
+
+Kind2 translation helpers: `build_pose_translation_row` appends hard14/15 or
+soft16/17 rows from supplied axis, points and lever arms. See LINK_SOLVER.md,
+"Translation spring row producers". Hard gain is negative0.4 without phase gating;
+soft gain is negative and its coefficient uses the existing spring arithmetic.
+Caller classification and endpoint completion remain external. This does not
+complete kind2's builder or establish physical units.

@@ -1,0 +1,27 @@
+{
+  "schema": "pose-translation-row-validation-v1",
+  "cases": 2048,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19f2bd0",
+    "0x19f2d20"
+  ],
+  "method": "Uninterrupted original hard and soft translation builders; no interception",
+  "comparisons": [
+    "entire arena bytes",
+    "return address",
+    "unchanged input vectors"
+  ],
+  "coverage": [
+    "hard and soft single/paired rows",
+    "all phase masks",
+    "zero, signed zero and near-zero scalar thresholds",
+    "nonuniform stiffness/damping",
+    "nonzero append/result counts"
+  ],
+  "limits": [
+    "Finite bounded synthetic inputs and nonsingular spring denominators.",
+    "No complete kind2 classification or builder composition claim."
+  ]
+}

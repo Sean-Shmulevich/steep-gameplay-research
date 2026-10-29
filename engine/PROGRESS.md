@@ -8257,3 +8257,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   its near-unit determinant shortcut. Five of six known constraint kinds now have
   independent builders; kind2 and full group lifecycle remain open. Atan2 output
   arithmetic and notification effects remain supplied services.
+- Reconstructed kind2 hard/soft translation row helpers, reusing existing spring
+  coefficient arithmetic with the observed negative response gain.2048 native
+  calls match all arena bytes and return addresses without interception. Kind2's
+  translation-limit producer and full world-frame/classification composition
+  remain open; its angular helpers were already available separately.

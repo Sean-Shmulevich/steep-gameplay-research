@@ -5596,3 +5596,47 @@ kinds1/3/4/5/6; kind2 remains an explicit supplied dependency. Public tests comp
 kind5 dispatch to direct construction, exercise row-count combinations and
 notification gates, and retain the target-inverse near-unit rule. This is a local
 six-kind dispatch milestone, not an engine-wide coverage percentage.
+
+## Translation spring row producers
+
+Kind2 calls hard translation RVA19f2bd0 and soft translation RVA19f2d20.
+`engine/pose_constraint_translation.py::build_pose_translation_row` reconstructs
+both, emitting category14/15 or16/17 respectively. The caller supplies the branch,
+axis, two points, two lever arms, and soft stiffness/damping when applicable.
+Presence of stiffness selects the soft API path; classification thresholds remain
+the caller's responsibility. This API does not assign physical units.
+
+The response distance is dotXYZ(axis,pointB-pointA), rounded with the recovered
+pairwise reduction. Both helpers write direction=axis, first angular coefficient
+=cross(armA,axis), and paired second coefficient=cross(axis,armB). They reserve
+one row and result index, preserve endpoint indices and inverse-response fields,
+and set response.W to FLT_MAX. The caller completes endpoint indices later.
+
+The hard response is distance*(context_c*(-0.4)), broadcast to XYZ. No phase mask
+gates that gain. For soft rows, let s=context_c and n=(flags>>2)&0x3fff:
+
+```text
+if abs(s) <= float32(1e-6):
+    added_response = stiffness
+    gain = -0.4
+else:
+    ratio = stiffness / (n*s)
+    denominator = ratio+damping
+    added_response = s*(1/denominator)
+    gain = (-ratio)/denominator
+response.xyz = distance*(gain.xyz*s)
+```
+
+All stages round to float32. Soft parameters may differ across lanes; coefficient
+W is preserved even though final response.W is replaced. Added response occupies
+row50 for single rows and row60 for paired rows. The implementation reuses the
+existing soft parameter arithmetic and reverses its gain sign. This is not the
+angular soft-row producer, which measures an angle and has a different layout.
+
+[Translation-row validation](../../native/snow_host/pose_translation_row_validation.json)
+records2048 uninterrupted original calls without interception. Complete arena
+bytes, source preservation and returned row addresses match. Cases cover hard and
+soft rows, both endpoint layouts, all phase masks, signed/near-zero scalar values,
+nonuniform coefficients and existing counts. Public tests distinguish cross-product
+signs, phase independence, added-response placement and result reservation.
+Complete kind2 classification, limit rows and top-level composition remain open.
