@@ -5682,3 +5682,57 @@ nonzero counts, signed context scalars, nonuniform bounds and exact-zero/mixed-l
 gates. Public tests cover W exclusion, strict positivity, opposite axes, endpoint
 truncation and preservation of untouched fields. Kind2's full caller composition
 and classification remain unresolved; this closes its translation-limit helper.
+
+## Kind2 translation assembly
+
+`engine/pose_constraint_axes.py` reconstructs world-input preparation and the
+translation portion of RVA19e5da0. `prepare_pose_axis_constraint` snapshots the
+0x120-byte record at constraint70 and derives two world anchors, lever arms and
+three world axes per endpoint. Config0 is the first anchor and40 the second;
+config10/20/30 and50/60/70 are the respective local axes. Frames, translations
+and centers use XYZ with W cleared. A single-endpoint row ignores the second
+body's center when deriving its lever arm. Angular fields remain in the snapshot
+for later composition but are not executed by this stage API.
+
+`build_pose_axis_translations` reads three20-byte records at config80/94/a8,
+containing state, two bounds, stiffness and damping. If all states are0 and all
+stiffness values are at least float32(1e12), it emits a single category10/11 point
+row using the recovered point arithmetic. Only constraint190 receives that row's
+result index;194 and198 remain unchanged.
+
+Otherwise compare constraint59 with config11c. On inequality, select the second
+endpoint's world axes and adjust its lever arm by worldPointA-worldPointB. On
+equality, select the first endpoint's axes and adjust its lever arm by
+worldPointB-worldPointA. The other arm remains unchanged. This adjustment is
+part of row geometry; it must not be replaced by an unmodified anchor arm.
+
+Each selected axis then follows its own record:
+
+| State | Emission |
+| --- | --- |
+| 0 | Hard14/15 when stiffness>=1e12, otherwise soft16/17 |
+| 2, stiffness<1e12 | Soft16/17, then the ordered pair of category8/9 limits |
+| 2, stiffness>=1e12 | Only the category8/9 limit pair |
+| Other | No translation rows |
+
+Hard/soft scalar rows receive endpoint indices and publish their result index to
+constraint190+4*axisIndex. Limit pairs do not overwrite those feedback indices.
+Their first/second bound inputs are the record's first/second stored bounds,
+without sorting or sign conversion. Skipped states also preserve feedback fields.
+All row and result allocation remains delegated to the verified producers.
+
+[Translation-stage comparison](../../native/snow_host/pose_kind2_translation_validation.json)
+executes512 complete original kind2 calls with angular states set to1 and drive
+flags cleared. This isolates translation without replacing any reached helper.
+Entire context arenas, constraints, bodies and metadata match, including native
+success and feedback publication. Coverage includes states0..3, both endpoint
+layouts, every phase mask, hard-triple collapse, soft-plus-limit emission,
+axis-owner comparison, nonzero centers and general axes.
+
+Public tests compare emitted category counts with the existing count prepass for
+all216 combinations of states0/1/2 and hard/soft coefficients across three axes.
+They also check feedback preservation and the second-center rule. The stage API
+returns prepared inputs for later angular composition; it is not registered as
+a complete kind2 dispatcher implementation. Angular-frame preparation, angular
+row dispatch and drive composition remain open. No full group lifecycle or active
+player ownership is established by these isolated translation runs.

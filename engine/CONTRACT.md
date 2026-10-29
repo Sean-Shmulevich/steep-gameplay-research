@@ -1267,3 +1267,10 @@ See LINK_SOLVER.md, "Paired translation limits". The phase gain requires all XYZ
 errors strictly positive; W receives the gain without participating in the gate.
 Bounds are not sorted. The returned offset tuple is authored. Full kind2 caller
 classification and composition remain open.
+
+Kind2 translation assembly: `prepare_pose_axis_constraint` snapshots world inputs;
+`build_pose_axis_translations` applies hard-triple collapse, axis-owner comparison,
+lever-arm adjustment and per-axis state dispatch. See LINK_SOLVER.md, "Kind2
+translation assembly". Only scalar spring rows publish their feedback indices;
+limit-only and skipped axes preserve them. This remains a stage API, not a full
+kind2 builder. Angular rows/drives and full lifecycle are unresolved.

@@ -8267,3 +8267,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   signed opposite-axis distance, endpoint writes and untouched fields. All three
   translation helper families now have independent implementations; kind2's
   world-frame preparation and state-driven composition remain unfinished.
+- Assembled kind2 world inputs and translation state dispatch, including the
+  hard-triple point optimization, axis-owner lever-arm correction and retained
+  feedback indices.512 complete native kind2 calls with angular/drive work
+  disabled match all arenas and retained objects. Public checks reconcile216
+  state/coefficient combinations with count prepass. Kind2 angular preparation,
+  angular row dispatch and optional drives remain to compose.

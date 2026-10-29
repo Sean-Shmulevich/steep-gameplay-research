@@ -1,0 +1,27 @@
+{
+  "schema": "pose-kind2-translation-stage-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x19e5da0",
+  "method": "Complete original kind2 with angular states1 and drives disabled; no reached math or notification interception",
+  "comparisons": [
+    "entire arena, constraint feedback fields, bodies and metadata",
+    "native success result"
+  ],
+  "coverage": [
+    "translation states0 through3",
+    "hard triple point-row optimization",
+    "hard and soft scalar rows",
+    "state2 soft row plus limit pair",
+    "both endpoint layouts",
+    "axis-owner byte comparison",
+    "all phase masks",
+    "nonzero centers and general axes"
+  ],
+  "limits": [
+    "Only translation stage reconstructed and compared; angular states1 and drive flags0 isolate it.",
+    "Finite synthetic inputs and nonsingular soft response denominators.",
+    "No complete kind2 or active gameplay ownership claim."
+  ]
+}
