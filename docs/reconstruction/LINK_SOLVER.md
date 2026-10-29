@@ -3754,3 +3754,26 @@ stage. Original preparation, inversion and iteration execute without interceptio
 Cases include general finite row blocks, off-diagonal body tensors and coincident
 indices. Both shared families now have local preparation/iteration implementations;
 full mixed-category traversal remains a separate validation requirement.
+
+### Connected six-category solver traversal
+
+`solve_pose_link_rows` now supports categories0/1 (primary),4/5 (shared) and6/7
+(tangent), using their explicit traversal counts. Preparation and each normal
+iteration execute in order: paired primary, one-body primary, paired shared,
+one-body shared, paired tangent, one-body tangent. Special phase skips shared and
+tangent categories. Primary rows still accumulate in that phase; callers must not
+infer accumulator clearing merely from a completed wrapper call.
+
+Optional `arena` storage is addressed relative to the context origin. Primary row
+locations derive from context+0x16c plus16 times their category start, plus their
+112/128-byte row stride. Caller-provided row views and arena must describe the same
+retained storage. Shared row views then observe primary accumulation directly.
+Absent arena preserves earlier standalone-row behavior. No rows, counts or results
+are silently allocated or inferred from builder counters.
+
+[256 uninterrupted six-category wrapper comparisons](../../native/snow_host/pose_six_category_solve_validation.json)
+execute original0x1994e80 and every reached numerical routine without interception.
+All context/row bytes, body state and results match across four phase masks and
+zero through three iterations. Both primary families point into their shared
+accumulators. The fixture supplies retained rows; this receipt does not yet execute
+builders before solving or establish complete group lifecycle/convergence.

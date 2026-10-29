@@ -978,3 +978,9 @@ inverse response using both bodies' linear/angular contributions, clears+0xe0 an
 applies cached results sequentially. See LINK_SOLVER.md, "Paired shared patch
 preparation". No supplied inverse matrix is needed in the finite nonsingular domain;
 full mixed-category traversal remains separate.
+
+Six-category traversal: `solve_pose_link_rows` accepts shared_rows and
+paired_shared_rows plus optional context-origin arena storage. It runs primary,
+shared and tangent families in native order and skips shared/tangent in special
+phase. Primary arena offsets come from retained context layout. See LINK_SOLVER.md,
+"Connected six-category solver traversal". Other populated categories still fail.

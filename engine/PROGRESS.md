@@ -8048,3 +8048,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   off-diagonal body tensors and coincident indices. Both shared numerical families
   now have complete local preparation and iteration. Mixed-category traversal and
   builder-to-solver integration remain the next validation boundaries.
+- Connected both shared numerical families into solver traversal with explicit
+  arena addressing for primary links.256 uninterrupted native wrapper comparisons
+  match six categories across phase/count variants. Tests verify accumulation
+  before projection and special-phase accumulation without shared consumption.
+  Builder-to-solver composition and complete group lifecycle remain open.
