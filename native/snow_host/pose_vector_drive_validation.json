@@ -1,0 +1,30 @@
+{
+  "schema": "pose-vector-drive-validation-v1",
+  "scalar_asin_cases": 16408,
+  "builder_cases": 1024,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x1c8e468",
+    "0x19f32f0"
+  ],
+  "method": "Uninterrupted original routines including native matrix conversion, quaternion product and asinf; no interception or supplied math outputs",
+  "comparisons": [
+    "scalar asinf output bits",
+    "entire context arena",
+    "unchanged input vectors",
+    "returned row address"
+  ],
+  "coverage": [
+    "asinf tiny, half and endpoint boundaries with neighboring float values",
+    "both endpoint layouts",
+    "general finite frames and equal frames",
+    "full, absent and mixed-lane cap gates",
+    "nonzero preexisting row/result counts"
+  ],
+  "limits": [
+    "CRT status flags and errno are not modeled; only supported finite asinf output arithmetic compared.",
+    "Finite bounded synthetic inputs; zero norm, overflow and negative-cap zero-magnitude division excluded.",
+    "No complete kind5 builder or active player ownership claim."
+  ]
+}

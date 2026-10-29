@@ -5287,3 +5287,70 @@ lanes and destination aliasing. Source bytes outside the destination remain
 unchanged. The product's returned address also matches. No native calls were
 intercepted and no math service was substituted. The source image and comparison
 script remain private; this receipt contains no game payload.
+
+## Quaternion angular-drive response
+
+`engine/pose_constraint_vector_drive.py` reconstructs RVA19f32f0, a kind5
+producer dependency that appends an80-byte category12 single-body or category13
+paired-body row. Inputs are two three-column frames A/B, an output frame,
+four-lane gain/cap/strength/additive values, and context scalars c/10. Physical
+units and active player ownership are not established. Body indices remain for
+the caller to write; prepared matrix coefficients and cached results are untouched.
+
+The relative orientation calculation is:
+
+```text
+b = normalize(matrix_to_quaternion(frame_b))
+a = normalize(matrix_to_quaternion(frame_a))
+if dot(a,b) < 0: a = -a
+q = normalize(hamilton_product(conjugate(b),a))
+v.xyz = asin(clamp(q.xyz,-1,1)) * (gain.xyz * (-2*context_c))
+v.w = 0 * (gain.w * (-2*context_c))
+magnitude = sqrt((v.x*v.x+v.y*v.y)+(v.z*v.z+0))
+if cap.x < magnitude and cap.y < magnitude and cap.z < magnitude:
+    v = (v/magnitude)*cap
+response = output_frame*v.xyz + additive
+response.w = strength.x*context_10
+```
+
+All operations round to float32. Matrix quaternion norms sum Y²+X², then Z²,
+then W². The product norm sums X²+Y², then Z², then W². The quaternion dot sums
+Ay*By+Ax*Bx, then Az*Bz, then Aw*Bw. Normalization multiplies each component by
+one rounded reciprocal of the rounded square root. The helper calls arcsine in
+Z/Y/X order. This is componentwise quaternion arcsine, not an axis-angle vector
+conversion. The negative factor2 is an observed constant, not a guessed gain.
+
+The magnitude gate uses all three XYZ comparisons and excludes W. It does not
+clamp each axis independently. Mixed caps can disable limiting entirely. The
+frame multiply evaluates columnZ*v.z + (columnY*v.y + columnX*v.x), then adds
+the supplied additive vector. Strength replaces the final W lane. These choices
+matter when composing with the category12/13 increment-clamped angular solver.
+The helper reserves one result index and advances only its selected append count;
+it does not publish traversal counts or initialize endpoint indices.
+
+The called CRT routine identifies itself as `asinf`. Its finite[-1,1] arithmetic
+is independently implemented in `engine/pose_scalar_asin.py`:
+
+- Below magnitude2^-14, return the original input bits, including signed zero.
+- At magnitude1, return signed float32 pi/2.
+- Below magnitude0.5, evaluate the recovered rational polynomial in x², then
+  return x+x*polynomial with the input sign.
+- Otherwise, evaluate the same polynomial in(1-abs(x))/2, split its square root
+  by clearing the low16 mantissa bits, and use the recovered compensated pi/2
+  reconstruction. The implementation preserves constants and operation order.
+
+The public function excludes CRT floating-point status and errno side effects,
+NaNs, out-of-domain inputs and nondefault floating-point modes. It does not
+claim a complete CRT replacement. The builder likewise excludes overflowing
+arithmetic, zero quaternion norms and negative caps causing division by zero.
+
+[Vector-drive validation](../../native/snow_host/pose_vector_drive_validation.json)
+records16408 scalar arcsine comparisons and1024 complete original builder calls.
+All output bits, context arena bytes, input preservation and returned row
+addresses match. The native builder executes its original matrix, quaternion
+and arcsine helpers without interception or supplied math outputs. Tests cover
+both endpoint layouts, general/equal frames, cap-gate branches and nonzero
+existing counters. Public regressions additionally cover shortest-sign selection,
+frame-before-additive order, untouched endpoint/preparation fields and signed zero.
+Complete kind5 composition, its angular-limit geometry and group lifecycle remain
+unresolved; this closes one producer dependency, not the whole constraint type.

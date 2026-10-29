@@ -1215,3 +1215,11 @@ branch ties. See LINK_SOLVER.md, "Quaternion inputs to angular drive". Neither
 normalizes or repairs its input. The latter consumes three XYZ columns and
 ignores optional fourth lanes. Both are verified local dependencies of the kind5
 angular drive; complete builder composition and active ownership remain open.
+
+Quaternion angular-drive response: `build_pose_vector_drive_row` appends an80-byte
+category12/13 row using normalized relative quaternions, componentwise arcsine,
+negative double gain, all-XYZ magnitude gating and an output frame. See
+LINK_SOLVER.md, "Quaternion angular-drive response". Endpoint indices and prepared
+coefficients are preserved for other stages. `pose_scalar_asin` independently
+implements finite[-1,1] output arithmetic; CRT status effects remain excluded.
+Complete kind5 composition and caller ownership remain unresolved.

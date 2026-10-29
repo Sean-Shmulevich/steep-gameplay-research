@@ -8229,3 +8229,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   all output bits, including all four converter branches, signed zeros and
   aliased destinations. No math substitution was required. Normalization belongs
   to the caller and remains separate. Complete kind5 composition is still open.
+- Reconstructed kind5's quaternion angular-drive row producer, including the
+  actual negative double gain and all-XYZ magnitude-cap gate. Its finite arcsine
+  arithmetic is independent:16408 scalar comparisons and1024 uninterrupted
+  native builder comparisons match without substituted math outputs. Category12/13
+  rows are now constructible through this API. Full kind5 geometry/composition
+  and group lifecycle remain open; CRT status side effects are not modeled.
