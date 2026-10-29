@@ -1071,3 +1071,10 @@ Paired angular solver: `prepare_pose_paired_angular_row` and
 application and capped angular increments. See LINK_SOLVER.md, "Paired angular
 increment solver". Caps constrain increments, not accumulated results. Finite
 nonsingular storage is required; builder and mixed traversal remain separate.
+
+Single angular solver: `prepare_pose_angular_row` preserves trace normalization,
+cofactor inversion and rescaling; `iterate_pose_angular_row` applies capped angular
+increments to one body. See LINK_SOLVER.md, "Single angular increment solver".
+Zero trace and singular/nonfinite inputs are rejected. Mixed traversal now accepts
+categories12/13 in normal phase after commands and before contact primary rows.
+Sixteen other categories remain unsupported.

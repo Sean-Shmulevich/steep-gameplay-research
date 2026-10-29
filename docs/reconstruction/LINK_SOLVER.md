@@ -4211,3 +4211,41 @@ off-diagonal tensors, coincident indices and nonzero fourth lanes. Public tests
 verify accumulation beyond the increment cap, opposite updates on the same body
 and explicit singular rejection. The row builder, gameplay owner and connection
 to the public mixed traversal remain unfinished.
+
+## Single angular increment solver
+
+`engine/pose_angular_solver.py` reconstructs category12 preparation0x19f07c0 and
+iteration0x19f0a80. Row layout matches category13, but the second body index is
+unused. Preparation first forms `A = T + diag(M)` in float32. It computes
+`trace = (A00 + A11) + A22`, obtains `s = 1/trace`, scales the matrix XYZ lanes
+by s and clears its fourth lanes, inverts that normalized matrix, then scales
+the inverse XYZ lanes by s again. The inverse therefore corresponds to A's
+inverse in real arithmetic, but replacing the normalization sequence with direct
+inversion would change float32 results. The cofactor implementation is shared
+with the paired solver; the paired receipt was rerun after that refactor.
+
+Cached impulse updates only this body's angular state through its tensor.
+Iteration uses `error = angular_state + response.xyz` followed by the same
+negative matrix response and symmetric per-increment clamp as category13.
+It adds the increment to the retained result and applies `T * increment` to
+angular state. Linear state and the unused second body remain untouched.
+
+[Single angular validation](../../native/snow_host/pose_angular_validation.json)
+compares512 preparations and1536 iterations with all retained bytes matching,
+including off-diagonal tensors and nonzero fourth lanes. Nonfinite inputs, zero
+trace and singular normalized matrices are explicit unsupported arithmetic.
+Gameplay ownership and row production are not established by this solver result.
+
+## Nine-category numerical traversal
+
+`solve_pose_link_rows` now accepts `angular_rows` and `paired_angular_rows` for
+categories12 and13. Their traversal counts are context138 and13c. In normal
+preparation and iteration, supported categories execute in this order:
+24,13,12,1,0,5,4,7,6. The special phase skips both angular categories along with
+commands, shared rows and tangents. Other populated categories remain rejected.
+
+[Nine-category validation](../../native/snow_host/pose_nine_category_solve_validation.json)
+compares256 uninterrupted native wrapper calls with all nine categories populated,
+sharing body-state storage. Context, all rows, body data/state and results match
+across four phase masks and zero through three iterations. Builders are outside
+this comparison. Sixteen categories and the full group lifecycle remain open.

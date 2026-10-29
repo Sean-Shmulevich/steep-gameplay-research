@@ -31,14 +31,8 @@ def prepare_pose_paired_angular_row(row,*,body_data,body_state,results):
         v=[f32(f32(axis[j]*ma[j])+a[j]) for j in range(4)]
         v=[f32(f32(axis[j]*mb[j])+v[j]) for j in range(4)]
         matrix.append([f32(b[j]+v[j]) for j in range(4)])
-    def cross(a,b):return [f32(f32(a[(j+1)%3]*b[(j+2)%3])-f32(a[(j+2)%3]*b[(j+1)%3])) for j in range(3)]
-    cof=[cross(matrix[1],matrix[2]),cross(matrix[2],matrix[0]),cross(matrix[0],matrix[1])]
-    products=[f32(matrix[0][j]*cof[0][j]) for j in range(3)]
-    determinant=f32(f32(products[0]+products[1])+f32(products[2]+0.))
-    if not determinant or not math.isfinite(determinant):raise ValueError('Finite nonsingular angular response required')
-    inverse=f32(1./determinant)
-    columns=[[f32(x*inverse) for x in c] for c in cof]
-    for i in range(3):struct.pack_into('<4f',row,0x20+i*16,*[columns[j][i] for j in range(3)],0.)
+    for i,column in enumerate(_inverse_matrix(matrix)):
+        struct.pack_into('<4f',row,0x20+i*16,*column)
     _apply(data,states,_read(result,0))
 
 
@@ -54,3 +48,14 @@ def iterate_pose_paired_angular_row(row,*,body_data,body_state,results):
     updated=[f32(o+d) for o,d in zip(old,delta)]
     _apply(data,states,delta)
     struct.pack_into('<4f',result,0,*updated)
+
+
+def _inverse_matrix(matrix):
+    def cross(a,b):return [f32(f32(a[(j+1)%3]*b[(j+2)%3])-f32(a[(j+2)%3]*b[(j+1)%3])) for j in range(3)]
+    cof=[cross(matrix[1],matrix[2]),cross(matrix[2],matrix[0]),cross(matrix[0],matrix[1])]
+    products=[f32(matrix[0][j]*cof[0][j]) for j in range(3)]
+    determinant=f32(f32(products[0]+products[1])+f32(products[2]+0.))
+    if not determinant or not math.isfinite(determinant):raise ValueError('Finite nonsingular angular response required')
+    inverse=f32(1./determinant)
+    columns=[[f32(x*inverse) for x in c] for c in cof]
+    return [[columns[j][i] for j in range(3)]+[0.] for i in range(3)]

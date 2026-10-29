@@ -8124,3 +8124,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   The scalar bound limits each increment rather than the accumulated result.
   Opposite endpoint updates are sequential. Row production, gameplay ownership
   and integration into the shared traversal remain open.
+- Recovered category12 one-body angular solving with exact trace-normalized
+  inversion.512 preparations and1536 iterations match native bytes; reran the
+  paired solver after sharing its cofactor helper. Connected both angular families
+  into traversal:256 mixed original wrapper comparisons pass with all nine
+  supported categories. Sixteen numerical categories and the full lifecycle remain.
