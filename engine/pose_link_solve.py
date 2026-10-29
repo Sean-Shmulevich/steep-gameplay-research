@@ -3,6 +3,7 @@
 Evidence: LINK_SOLVER.md, Connected primary and tangent solver slice.
 """
 import struct
+from .pose_axis_angular_solver import prepare_pose_axis_angular_row,iterate_pose_axis_angular_row
 from .pose_bounded_scalar_solver import prepare_pose_bounded_scalar_row,iterate_pose_bounded_scalar_row
 from .pose_point_solver import prepare_pose_point_row,iterate_pose_point_row
 from .pose_paired_point_solver import prepare_pose_paired_point_row,iterate_pose_paired_point_row
@@ -24,8 +25,8 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
                          angular_rows=(), paired_angular_rows=(),
                          constraint_primary_rows=(), paired_constraint_primary_rows=(),
                          point_rows=(), paired_point_rows=(), bounded_rows=(),
-                         paired_bounded_rows=(), arena=None):
-    """Run native phase/count policy for the fifteen supported row categories.
+                         paired_bounded_rows=(), axis_angular_rows=(), paired_axis_angular_rows=(), arena=None):
+    """Run native phase/count policy for the seventeen supported row categories.
 
     Traversal counts come from context108/120, not builder append counters.
     Other row-category counts must be zero. The caller supplies already populated
@@ -33,7 +34,7 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
     """
     if len(context_bytes)<0x17c:raise ValueError('Complete solver context fields required')
     counts=struct.unpack_from('<25I',context_bytes,0x108)
-    if any(value for i,value in enumerate(counts) if i not in (0,1,4,5,6,7,8,9,10,11,12,13,16,17,24)):
+    if any(value for i,value in enumerate(counts) if i not in (0,1,4,5,6,7,8,9,10,11,12,13,16,17,18,19,24)):
         raise ValueError('Unsupported populated row category')
     primary_count,paired_count,secondary_count=counts[0],counts[1],counts[6]
     if primary_count>len(primary_rows) or paired_count>len(paired_primary_rows) or secondary_count>len(secondary_rows):
@@ -57,6 +58,9 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
     bounded_count,paired_bounded_count=counts[16],counts[17]
     if bounded_count>len(bounded_rows) or paired_bounded_count>len(paired_bounded_rows):
         raise ValueError('Insufficient retained bounded scalar rows')
+    axis_count,paired_axis_count=counts[18],counts[19]
+    if axis_count>len(axis_angular_rows) or paired_axis_count>len(paired_axis_angular_rows):
+        raise ValueError('Insufficient retained angular axis rows')
     def location(category,index,stride):
         if arena is None:return {}
         start=struct.unpack_from('<I',context_bytes,0x16c)[0]+16*struct.unpack_from('<I',context_bytes,0x40+4*category)[0]
@@ -74,6 +78,8 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
             for row in point_rows[:point_count]:prepare_pose_point_row(row,**args)
             for row in paired_bounded_rows[:paired_bounded_count]:prepare_pose_bounded_scalar_row(row,paired=True,**args)
             for row in bounded_rows[:bounded_count]:prepare_pose_bounded_scalar_row(row,**args)
+            for row in paired_axis_angular_rows[:paired_axis_count]:prepare_pose_axis_angular_row(row,paired=True,**args)
+            for row in axis_angular_rows[:axis_count]:prepare_pose_axis_angular_row(row,**args)
         for row in paired_primary_rows[:paired_count]:prepare_pose_paired_primary_row(row,**args)
         for row in primary_rows[:primary_count]:prepare_pose_primary_row(row,**args)
         if not descriptor['special']:
@@ -93,6 +99,8 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
             for row in point_rows[:point_count]:iterate_pose_point_row(row,**args)
             for row in paired_bounded_rows[:paired_bounded_count]:iterate_pose_bounded_scalar_row(row,paired=True,**args)
             for row in bounded_rows[:bounded_count]:iterate_pose_bounded_scalar_row(row,**args)
+            for row in paired_axis_angular_rows[:paired_axis_count]:iterate_pose_axis_angular_row(row,paired=True,**args)
+            for row in axis_angular_rows[:axis_count]:iterate_pose_axis_angular_row(row,**args)
         for i,row in enumerate(paired_primary_rows[:paired_count]):iterate_pose_paired_primary_row(row,**args,**location(1,i,128))
         for i,row in enumerate(primary_rows[:primary_count]):iterate_pose_primary_row(row,**args,**location(0,i,112))
         if not descriptor['special']:

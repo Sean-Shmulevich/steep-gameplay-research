@@ -1107,3 +1107,9 @@ Bounded scalar traversal: `bounded_rows` and `paired_bounded_rows` connect
 categories16/17 after coupled rows and before contact primary rows in normal
 phase. Special phase skips both families. See LINK_SOLVER.md, "Fifteen-category
 numerical traversal". Ten numerical categories remain explicitly unsupported.
+
+Angular axis solvers: categories18/19 implement unbounded angular increments with
+per-lane response and retained cached add/subtract rounding. Paired endpoint writes
+are sequential. See LINK_SOLVER.md, "Unbounded angular axis solvers". Both are now
+connected to normal mixed traversal and skipped in special phase. Eight numerical
+categories and remaining producers/lifecycle integration remain unsupported.

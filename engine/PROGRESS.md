@@ -8153,3 +8153,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   four phase masks. Public tests cover both phase gates and missing storage.
   Ten numerical categories and remaining row production/lifecycle composition
   remain unfinished; the comparison uses supplied synthetic rows.
+- Recovered angular axis categories18/19:512 preparations and1536 iterations match
+  native bytes, preserving uncapped increments and sequential endpoint updates.
+  Connected both into traversal;256 seventeen-category original wrapper comparisons
+  pass. Eight numerical categories and remaining producers/lifecycle paths are open.

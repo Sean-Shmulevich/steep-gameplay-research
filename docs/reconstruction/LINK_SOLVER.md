@@ -4423,3 +4423,44 @@ synthetic supplied inputs; this does not validate their original builders.
 Public tests exercise both new categories' phase gates and missing-storage errors.
 Ten numerical categories and the remaining producer/lifecycle composition are
 still unsupported. This supersedes the mixed-traversal boundary for categories16/17.
+
+## Unbounded angular axis solvers
+
+`engine/pose_axis_angular_solver.py` reconstructs category18 single64-byte rows
+and category19 paired80-byte rows. Preparation uses0x19ee980/0x19ee7c0;
+iteration uses0x19eeb80/0x19eea50. Axis A is row20, paired axis B is row40,
+and inverse response is row30. There is no mass contribution or scalar clamp.
+
+Preparation computes `D = dotXYZ(T1*A,A)`, adding `dotXYZ(T2*B,B)` for paired
+rows, and stores `[-1/D,-1/D,-1/D,0]`. Cached impulses apply angular changes
+`T*(axis*cached)` with componentwise axis multiplication before tensor transform.
+Paired writes are sequential, so coincident indices accumulate both changes.
+Linear states are untouched. Each iteration computes:
+
+```text
+speed = dotXYZ(w1,A) + optional dotXYZ(w2,B)
+proposal = inverse * (broadcast(speed) + response)
+increment = float32(float32(proposal + cached) - cached)
+result = cached + increment
+w1 += T1*(A*increment)
+if paired: w2 += T2*(B*increment)
+```
+
+All four response lanes are used directly. There is no response-W cap in these
+families. The cached add/subtract sequence preserves float32 rounding and cannot
+be removed algebraically. Finite nonsingular inputs define the supported domain.
+[Kernel validation](../../native/snow_host/pose_axis_angular_validation.json)
+compares512 preparations and1536 iterations split between both families, with
+all retained bytes matching and no interception.
+
+## Seventeen-category numerical traversal
+
+The mixed solver accepts `axis_angular_rows` and `paired_axis_angular_rows`, with
+context150/154 counts. Normal order is
+24,13,12,9,8,11,10,17,16,19,18,1,0,5,4,7,6. Special phase skips categories18/19.
+[Mixed validation](../../native/snow_host/pose_seventeen_category_solve_validation.json)
+compares256 original wrappers with all seventeen families populated and sharing
+state. Context, row, body and result bytes match across four phase masks and zero
+through three iterations. Public tests check uncapped results, linear preservation,
+coincident endpoint accumulation and phase skips. Eight numerical categories,
+remaining row producers and full group lifecycle are still unsupported.
