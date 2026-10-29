@@ -1162,3 +1162,10 @@ The normal pose-building phase applies a0.4*context_c position-error response;
 other phase masks use zero. Body-center offsets affect angular coefficients,
 not world anchor positions. Finite retained inputs and bounded output storage
 are required. Full dispatch gates and gameplay ownership remain separate.
+
+Angular limit row helper: `build_pose_angular_limit_row` appends category8/9 from
+explicit axis, coordinate, sign, offset and two response vectors. It retains the
+strict XYZ response-threshold test, all-four-lane nonnegative test, phase gate and
+iteration-dependent response arithmetic. Caller supplies body indices afterward.
+See LINK_SOLVER.md, "Angular limit row producer". Finite inputs and nonzero reached
+divisors are required; physical units and upstream angle production remain open.

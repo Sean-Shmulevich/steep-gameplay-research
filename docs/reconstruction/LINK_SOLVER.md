@@ -4810,3 +4810,92 @@ this is not full group initialization or live gameplay validation.
 
 Kind1 and kind4 builders are now reconstructed. Kinds2,3,5,6 remain open, as do
 outer dispatch eligibility, count publication and full group lifecycle composition.
+
+## Angular limit row producer
+
+Kind3 builder0x19e7580 first emits category22 or23, then calls helper0x19f2560
+twice for angular limits. Its later optional drive path calls0x19f3750. The
+complete kind3 builder, its angle helper0x19a1760 and drive semantics remain
+unfinished. The implemented limit helper supplies actual category8/9 rows from
+explicit arguments; it does not manufacture missing angle data.
+
+`engine.pose_constraint_limit.build_pose_angular_limit_row` receives a context,
+`single` selector and six four-lane vectors. Their authored API names are axis,
+coordinate, sign, offset, response_term and response_mix. The native calling
+order is RCX context, DL selector, R8 axis, R9 coordinate, then pointers at entry
+stack28/30/38/40 for sign, offset, response_term and response_mix. Their physical
+units are not established. The helper returns the appended row; its caller
+writes endpoint indices afterward.
+
+A nonzero selector appends category8,112 bytes; zero selects category9,128 bytes.
+It reserves a result index and increments the category append count. The body
+index bytes and prepared inverse remain untouched. Common output fields are:
+
+```text
+row.direction20 = (0,0,0,0)
+row.angular30 = axis * sign
+row.accumulator_link50 = 0
+row.angular70 = axis * (-sign)  # paired only
+```
+
+The zero direction makes these rows angular-only when fed to the existing
+primary kernels. The primary kernels still project accumulated impulses to
+nonnegative values. Define componentwise error `e = coordinate*sign + offset`,
+context scalar s=context_c, and n=(flags38>>2)&0x3fff. Every operation below rounds
+to float32 in source order. "All nonnegative" includes W, not just XYZ.
+
+The helper takes its finite-response branch only if all three XYZ lanes of
+response_term are strictly below float32(1e12), exactly999999995904. Equality
+selects the other branch. The W lane does not participate in this decision.
+
+For the branch selected when any XYZ term is at or above the threshold:
+
+```text
+added_response = 0
+response = s*e
+if not all_four_lanes(e >= 0):
+    phase_gain = 0.4 if (flags38 & 0x18000000) == 0x08000000 else 0
+    response = phase_gain * response
+```
+
+Thus a nonnegative error bypasses the phase multiplier. For the finite-response
+branch, let k=response_term and d=response_mix:
+
+```text
+added_response = k
+position_gain = 0.4
+if abs(s) > float32(1e-6):
+    divisor = float32(n*s)
+    added_response = float32((1 / (float32(k/divisor) + d)) * s)
+    position_gain = k / (k + float32(n * float32(s*d)))
+
+if all_four_lanes(e >= 0):
+    response = float32(1e12)
+    added_response = 0
+else:
+    response = float32(s*e) * position_gain
+```
+
+Output response goes to row10 and added_response to row60. This branch's gain
+does not use the phase mask. At or below the scalar epsilon, it retains k and
+uses0.4, including zero-iteration cases. Outside that branch, zero iterations
+reach division by zero in the original. The independent finite-input API rejects
+zero/nonfinite reached divisors instead of emulating exceptional results. The
+arithmetic is evaluated before the nonnegative-error override, as in the source.
+
+For example, s=2,n=2,k=4,d=1,e=-1 gives added_response=1 and response=-1.
+Changing n to4 changes these to approximately4/3 and-2/3. These are local response
+formulas, not evidence that k and d have specific spring/damping units.
+
+[Helper validation](../../native/snow_host/pose_angular_limit_builder_validation.json)
+compares1024 uninterrupted original calls across both layouts and response
+branches. All arena bytes, input vectors and returned row addresses match.
+Cases include all four phase masks, zero and signed epsilon scalar boundaries,
+strict threshold selection, a large W term, nonuniform errors and existing
+append/result counts. Public tests isolate these boundaries and preserved fields.
+
+The inspected outer pose-row loop0x19948d0 skips a constraint when either present
+endpoint has metadata52 bit0 set. Eligible constraints reach0x19905f0's six-way
+virtual-kind dispatch. Neither inspected routine publishes append counters into
+traversal counts. That publication must be traced separately; it must not be
+inferred by copying counters in this helper.

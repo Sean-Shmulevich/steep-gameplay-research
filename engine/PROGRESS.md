@@ -8189,3 +8189,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   builder comparisons pass;512 builder-to-solver cases also match preparation
   and1536 iterations. Kind1 and kind4 producers are implemented. Kinds2,3,5,6,
   dispatch/count publication and full group lifecycle remain unfinished.
+- Traced kind3 to two-stage rows, two angular-limit rows and an optional drive
+  path. Reconstructed the limit helper's two response branches into category8/9,
+  including iteration scaling and four-lane error gating.1024 uninterrupted
+  native comparisons match all arena bytes and returned row addresses. The full
+  kind3 builder, angle helper and optional drive remain open; this is a recovered
+  producer dependency, not a third completed top-level constraint builder.
