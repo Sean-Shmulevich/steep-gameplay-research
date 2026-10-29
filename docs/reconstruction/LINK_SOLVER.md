@@ -4406,3 +4406,20 @@ tensors, per-lane response terms and coincident indices. Public tests preserve t
 rounding cancellation, second-snapshot behavior and signed result updates.
 Finite nonsingular rows are supported. Row producers, gameplay ownership and mixed
 traversal integration remain open.
+
+## Fifteen-category numerical traversal
+
+`solve_pose_link_rows` accepts `bounded_rows` and `paired_bounded_rows` for
+categories16 and17. Context148/14c supplies their traversal counts, independently
+of append counters. The normal supported order is now
+24,13,12,9,8,11,10,17,16,1,0,5,4,7,6. Both bounded scalar families are skipped
+in the special phase, before any preparation or cached application occurs.
+
+[Fifteen-category comparison](../../native/snow_host/pose_fifteen_category_solve_validation.json)
+executes256 uninterrupted original wrappers with all fifteen categories populated
+and shared body states. Every context, row, body-data/state and result byte matches
+across four phase masks and zero through three iterations. The retained rows are
+synthetic supplied inputs; this does not validate their original builders.
+Public tests exercise both new categories' phase gates and missing-storage errors.
+Ten numerical categories and the remaining producer/lifecycle composition are
+still unsupported. This supersedes the mixed-traversal boundary for categories16/17.

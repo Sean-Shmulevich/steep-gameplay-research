@@ -30,3 +30,25 @@ class BoundedScalarTests(unittest.TestCase):
         iterate_pose_bounded_scalar_row(row,**args)
         self.assertEqual(struct.unpack_from('<f',args['results'][0])[0],-.5)
         self.assertEqual(struct.unpack_from('<f',args['body_state'][0])[0],-.5)
+
+    def test_mixed_traversal_phase_gate(self):
+        from engine.pose_link_solve import solve_pose_link_rows
+        for paired in (False,True):
+            for special in (False,True):
+                row,args=self.fixture(paired)
+                c=bytearray(0x190);struct.pack_into('<I',c,0x14c if paired else 0x148,1)
+                struct.pack_into('<I',c,0x38,0x10010000 if special else 4)
+                args.pop('paired');before=bytes(row)
+                rows={'paired_bounded_rows' if paired else 'bounded_rows':[row]}
+                solve_pose_link_rows(c,base_token=0,primary_rows=[],secondary_rows=[],**rows,**args)
+                value=struct.unpack_from('<f',args['results'][0])[0]
+                if special:
+                    self.assertEqual(value,0);self.assertEqual(bytes(row),before)
+                else:self.assertLess(value,0)
+
+    def test_missing_bounded_storage_rejected(self):
+        from engine.pose_link_solve import solve_pose_link_rows
+        row,args=self.fixture();args.pop('paired');c=bytearray(0x190)
+        struct.pack_into('<I',c,0x148,1)
+        with self.assertRaisesRegex(ValueError,'bounded scalar'):
+            solve_pose_link_rows(c,base_token=0,primary_rows=[],secondary_rows=[],**args)

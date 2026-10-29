@@ -8148,3 +8148,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   iterations, split evenly between single/paired rows, match native bytes.
   Preserved single-body cached add/subtract rounding and paired snapshot semantics.
   Row producers, gameplay ownership and shared traversal integration remain open.
+- Connected bounded scalar categories16/17 into shared traversal.256 original
+  wrapper comparisons pass with all fifteen supported categories populated across
+  four phase masks. Public tests cover both phase gates and missing storage.
+  Ten numerical categories and remaining row production/lifecycle composition
+  remain unfinished; the comparison uses supplied synthetic rows.

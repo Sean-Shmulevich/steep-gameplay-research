@@ -1102,3 +1102,8 @@ symmetric increment bounds, single-body cached add/subtract rounding and paired
 snapshot update semantics. See LINK_SOLVER.md, "Bounded scalar constraint solvers".
 Explicit paired selection and complete finite retained storage are required.
 Mixed traversal and original gameplay producers are not supplied by these kernels.
+
+Bounded scalar traversal: `bounded_rows` and `paired_bounded_rows` connect
+categories16/17 after coupled rows and before contact primary rows in normal
+phase. Special phase skips both families. See LINK_SOLVER.md, "Fifteen-category
+numerical traversal". Ten numerical categories remain explicitly unsupported.

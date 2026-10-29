@@ -3,6 +3,7 @@
 Evidence: LINK_SOLVER.md, Connected primary and tangent solver slice.
 """
 import struct
+from .pose_bounded_scalar_solver import prepare_pose_bounded_scalar_row,iterate_pose_bounded_scalar_row
 from .pose_point_solver import prepare_pose_point_row,iterate_pose_point_row
 from .pose_paired_point_solver import prepare_pose_paired_point_row,iterate_pose_paired_point_row
 from .pose_angular_solver import prepare_pose_angular_row,iterate_pose_angular_row
@@ -19,8 +20,12 @@ from .pose_tangent_solver import prepare_pose_tangent_row,iterate_pose_tangent_r
 
 def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_rows,
                          body_data, body_state, results, paired_primary_rows=(), paired_tangent_rows=(),
-                         shared_rows=(), paired_shared_rows=(), command_rows=(), angular_rows=(), paired_angular_rows=(), constraint_primary_rows=(), paired_constraint_primary_rows=(), point_rows=(), paired_point_rows=(), arena=None):
-    """Run native phase/count policy for the thirteen supported row categories.
+                         shared_rows=(), paired_shared_rows=(), command_rows=(),
+                         angular_rows=(), paired_angular_rows=(),
+                         constraint_primary_rows=(), paired_constraint_primary_rows=(),
+                         point_rows=(), paired_point_rows=(), bounded_rows=(),
+                         paired_bounded_rows=(), arena=None):
+    """Run native phase/count policy for the fifteen supported row categories.
 
     Traversal counts come from context108/120, not builder append counters.
     Other row-category counts must be zero. The caller supplies already populated
@@ -28,7 +33,7 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
     """
     if len(context_bytes)<0x17c:raise ValueError('Complete solver context fields required')
     counts=struct.unpack_from('<25I',context_bytes,0x108)
-    if any(value for i,value in enumerate(counts) if i not in (0,1,4,5,6,7,8,9,10,11,12,13,24)):
+    if any(value for i,value in enumerate(counts) if i not in (0,1,4,5,6,7,8,9,10,11,12,13,16,17,24)):
         raise ValueError('Unsupported populated row category')
     primary_count,paired_count,secondary_count=counts[0],counts[1],counts[6]
     if primary_count>len(primary_rows) or paired_count>len(paired_primary_rows) or secondary_count>len(secondary_rows):
@@ -49,6 +54,9 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
     point_count,paired_point_count=counts[10],counts[11]
     if point_count>len(point_rows) or paired_point_count>len(paired_point_rows):
         raise ValueError('Insufficient retained point rows')
+    bounded_count,paired_bounded_count=counts[16],counts[17]
+    if bounded_count>len(bounded_rows) or paired_bounded_count>len(paired_bounded_rows):
+        raise ValueError('Insufficient retained bounded scalar rows')
     def location(category,index,stride):
         if arena is None:return {}
         start=struct.unpack_from('<I',context_bytes,0x16c)[0]+16*struct.unpack_from('<I',context_bytes,0x40+4*category)[0]
@@ -64,6 +72,8 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
             for row in constraint_primary_rows[:constraint_count]:prepare_pose_primary_row(row,**args)
             for row in paired_point_rows[:paired_point_count]:prepare_pose_paired_point_row(row,**args)
             for row in point_rows[:point_count]:prepare_pose_point_row(row,**args)
+            for row in paired_bounded_rows[:paired_bounded_count]:prepare_pose_bounded_scalar_row(row,paired=True,**args)
+            for row in bounded_rows[:bounded_count]:prepare_pose_bounded_scalar_row(row,**args)
         for row in paired_primary_rows[:paired_count]:prepare_pose_paired_primary_row(row,**args)
         for row in primary_rows[:primary_count]:prepare_pose_primary_row(row,**args)
         if not descriptor['special']:
@@ -81,6 +91,8 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
             for i,row in enumerate(constraint_primary_rows[:constraint_count]):iterate_pose_primary_row(row,**args,**location(8,i,112))
             for row in paired_point_rows[:paired_point_count]:iterate_pose_paired_point_row(row,**args)
             for row in point_rows[:point_count]:iterate_pose_point_row(row,**args)
+            for row in paired_bounded_rows[:paired_bounded_count]:iterate_pose_bounded_scalar_row(row,paired=True,**args)
+            for row in bounded_rows[:bounded_count]:iterate_pose_bounded_scalar_row(row,**args)
         for i,row in enumerate(paired_primary_rows[:paired_count]):iterate_pose_paired_primary_row(row,**args,**location(1,i,128))
         for i,row in enumerate(primary_rows[:primary_count]):iterate_pose_primary_row(row,**args,**location(0,i,112))
         if not descriptor['special']:
