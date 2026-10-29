@@ -8104,3 +8104,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   layouts, endpoint gates and missing indices. Public tests cover bit preservation
   and slot reload after the virtual query. Six kind-dispatched pose builders are
   identified as the next producer leads; their reconstruction remains open.
+- Reconstructed kind4 command-constraint row construction and exact expansion.
+  512 uninterrupted native comparisons match full arenas, source/body bytes and
+  return values. Captured the actual six-way dispatch table. This closes one
+  non-contact row producer; category24 numerical solving and the other five
+  builders remain open, with no claimed physical semantics for command fields.

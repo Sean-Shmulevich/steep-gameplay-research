@@ -1047,3 +1047,9 @@ queries explicit virtual kind and copies kind2 results in packed or scalar mode.
 See LINK_SOLVER.md, "Pose constraint feedback". Missing indices preserve values;
 raw result bits survive unchanged. Row producers, type discovery, floating-point
 exception flags and numerical constraint solving remain separate dependencies.
+
+Command constraint builder: `build_pose_command_constraint` appends the recovered
+kind4/category24 row, reserves a result index and expands retained command records
+without interpreting their physical meaning. See LINK_SOLVER.md, "Command constraint
+rows". Six commands is an authored capacity bound; untouched bytes persist.
+Category24 numerical solving remains unsupported.

@@ -4052,3 +4052,44 @@ The adjacent pose builder0x19948d0 uses the same endpoint gates, then invokes
 0x19905f0. That helper dispatches virtual kinds1 through6 to six builders.
 These are concrete leads for the remaining non-contact constraint producers;
 feedback recovery alone does not implement those builders or their solvers.
+
+## Command constraint rows
+
+The jump table in0x19905f0 establishes the following kind-to-builder mapping.
+These numeric kinds are observed dispatch values, not assigned physical names.
+
+| Kind | Builder RVA |
+| --- | --- |
+| 1 | 0x19e7f20 |
+| 2 | 0x19e5da0 |
+| 3 | 0x19e7580 |
+| 4 | 0x19e7290 |
+| 5 | 0x19e8350 |
+| 6 | 0x19e9510 |
+
+`engine/pose_constraint_commands.py::build_pose_command_constraint` reconstructs
+kind4 and expansion helper0x19e7360. It appends a912-byte category24 row, using
+context104 as the append count, contexta0 as the base in16-byte units and
+context16c as the arena offset. It increments that count and global result count180,
+then writes the old result index into row4. The first body's ushort1c supplies
+row0; the second supplies row2, or zero when absent. Constraint70 copies to row20,
+and signed command count74 copies to row24.
+
+Each inline64-byte command at constraint78 expands to128 bytes at row30 onward.
+The first48 source bytes hold four XYZ triples. Each becomes an XYZ0 vector.
+A nonzero constraint59 byte changes their order from0,1,2,3 to2,3,0,1. The final
+four source words each broadcast to all four lanes of one vector. Copies preserve
+raw bits. Nonpositive counts still reserve the row/result and publish the header,
+but do not expand commands. Untouched row bytes and the reserved result remain
+unchanged. The native return byte is1.
+
+The independent API admits at most six commands to fit the retained row. This
+is an authored bounds guard; the native helper does not clamp its signed count.
+It does not establish which higher-level producer constrains that count.
+
+[Builder validation](../../native/snow_host/pose_command_constraint_validation.json)
+compares512 complete original builder calls, including getters and expansion,
+without interception. Entire context arenas, source constraints, bodies and return
+bytes match. Fixtures cover negative through six counts, both orders, arbitrary
+source bits, null second bodies and nonzero existing counters. Category24 numerical
+preparation/iteration and the physical meaning of the command fields remain open.

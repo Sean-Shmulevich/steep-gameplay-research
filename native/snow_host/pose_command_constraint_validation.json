@@ -1,0 +1,24 @@
+{
+  "schema": "pose-command-constraint-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19e7290",
+    "0x19e7360"
+  ],
+  "method": "Offline complete original kind4 row builder, getters and command expansion; no interception",
+  "comparisons": [
+    "entire context arena, source constraint and both body buffers",
+    "return byte"
+  ],
+  "coverage": [
+    "negative and zero counts through six commands",
+    "both endpoint orders and nullable second body",
+    "arbitrary source bits, existing row/result counts, untouched row bytes"
+  ],
+  "limits": [
+    "Synthetic retained storage, at most six commands; larger counts rejected by authored capacity guard.",
+    "Only row construction; category24 preparation/iteration and command meaning remain unresolved."
+  ]
+}
