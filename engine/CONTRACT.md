@@ -1311,3 +1311,11 @@ See LINK_SOLVER.md, "Mixed contact and constraint group runtime". Pose categorie
 are preserved and result allocation is shared. Parsed body views must match raw
 bodies and be refreshed before another tick. Normal mixed kind2/contact execution
 is native-compared; secondary/poststep integration remains a separate boundary.
+
+Integrated poststep adapter: `make_integrated_pose_poststep` selects the known
+constructor body implementation and binds raw membership, quiet overrides and
+metadata to quiet aggregation/inactive transition/integration/resource bounds.
+See LINK_SOLVER.md, "Joined secondary correction and poststep". Trig, resource
+bounds and link clearing are explicit. The joined native test now includes both
+solve phases and box poststep, with empty body link rings; it does not establish
+complete membership consistency, live lifetime or every body/resource class.

@@ -5965,3 +5965,45 @@ comparison excludes secondary phase, body integration, damping response, allocat
 growth and concurrent ownership. Public composition tests cover all16 contact
 count/mode combinations and secondary refresh preserving pose counts, but do not
 upgrade the secondary path to a joined native validation claim.
+
+## Joined secondary correction and poststep
+
+`engine.pose_poststep_runtime.make_integrated_pose_poststep` binds the recovered
+constructor-selected body poststep to raw group/body/metadata maps. The callback
+reads group membership and inactive flag, resolves reached quiet override records,
+then runs quiet aggregation, inactive transition, transform integration and resource
+bounds refresh through the existing implementations. It publishes the group flag
+back into retained storage. Resource bounds, link clearing and half-angle trig are
+explicit services. Selecting this adapter selects the known body implementation;
+it does not discover or implement arbitrary virtual classes.
+
+The mixed runtime can pass `integrate_pose_body` as its secondary update service
+with `scalar_sin_cos` for independent finite-range trig. Secondary application
+exposes solved correction motion temporarily, integrates with scalar1, then
+restores ordinary motion. Poststep subsequently integrates ordinary motion with
+the context scalar if the group remains active. These are separate transform
+updates with different state inputs, not duplicate ordinary integration.
+
+[256 mixed secondary comparisons](../../native/snow_host/pose_mixed_group_secondary_validation.json)
+extend the normal mixed test through original secondary refresh/solve and actual
+body virtual integration. Whole retained arenas and bodies match; independent
+sine/cosine arithmetic is used without replaying native trig values. Poststep is
+still an explicit service in that receipt.
+
+[256 joined poststep comparisons](../../native/snow_host/pose_mixed_group_poststep_validation.json)
+continue through the actual native poststep, quiet aggregation, inactive method,
+body transform integration and box-resource bounds. Complete retained context,
+group, body, constraint, metadata, link, payload, resource, entry and local-transform
+bytes match. There are58 inactive groups at return and479 changed body transforms
+across the512 body instances. All four settings modes, one to four contact points,
+both endpoint classes and one to three iterations in each phase are covered.
+Native atan2 outputs remain supplied to the independent implementation; native
+execution itself only substitutes byte-fill. Known body and box vtables execute
+normally, including native scalar sine/cosine.
+
+The fixtures have group contact links but empty per-body link rings. Therefore
+inactive-link payload clearing and full membership consistency are not established
+by this joined test. Damping, allocation growth, callback-driven membership
+mutation, alternative resource/body classes, upstream invalid state exclusion and
+live player ownership remain open. Public adapter tests check raw group-flag
+publication, integration/bounds writes and quiet-override admission separately.

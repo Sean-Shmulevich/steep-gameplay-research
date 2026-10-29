@@ -8307,3 +8307,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   match across every contact-count/mode/endpoint-layout combination. Secondary
   refresh preserves pose counts in public tests; joined native secondary/poststep
   execution, damping and allocator growth remain open.
+- Extended mixed contact/kind2 native validation through secondary correction and
+  actual poststep integration/box bounds.256 complete wrapper cases match all
+  retained bytes;58 groups finish inactive and479 body transforms change. Native
+  trig is independently reproduced. Added the raw poststep adapter and override
+  checks. Atan2 remains supplied; empty body link rings, damping, allocator growth,
+  alternate classes and active player ownership remain explicit boundaries.
