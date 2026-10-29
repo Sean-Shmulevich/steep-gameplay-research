@@ -8301,3 +8301,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   adapter binds all six pose builders, while this joined native check covers kind2
   and empty contacts. Link operations/poststep remain explicit services; secondary
   update composition has public tests but is not part of this native receipt.
+- Connected contact services to the joined group runtime.256 original-wrapper
+  comparisons now include contact and kind2 rows in one count/layout/build/solve/
+  feedback pass. Entire retained arenas and all body/constraint/link/payload bytes
+  match across every contact-count/mode/endpoint-layout combination. Secondary
+  refresh preserves pose counts in public tests; joined native secondary/poststep
+  execution, damping and allocator growth remain open.

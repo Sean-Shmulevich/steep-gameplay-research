@@ -5932,3 +5932,36 @@ required damping resolution and the fixed-body damping bypass. Those tests are
 independent implementation tests, not additional joined native comparisons.
 Full mixed-contact group execution, poststep integration, allocation growth and
 live player ownership remain distinct validation work.
+
+## Mixed contact and constraint group runtime
+
+`engine.pose_link_runtime.make_pose_link_services` binds contact construction,
+contact-result feedback and secondary contact refresh to the same retained arena
+used by `run_pose_group_runtime`. Construction appends only the six contact
+categories0/1/4/5/6/7; it preserves all pose category counts. Result indices use
+the shared arena counter, so later pose construction starts after contact results.
+The callbacks do not run a separate solve. The group orchestrator performs one
+shared normal solve, followed by contact and pose feedback in their native order.
+
+Secondary refresh exposes only the two primary contact pools to the existing
+refresh implementation and writes back their append counts. It does not change
+pose category counts, switch phase, clear body state or solve independently; those
+operations belong to the group orchestrator. Category views and results are rebuilt
+from the retained header at each callback. Parsed body views must describe the
+same state as the raw bodies supplied to the group runtime. Refresh those views
+before reusing the adapter for a later tick; no automatic snapshot is implied.
+
+[256 mixed native group comparisons](../../native/snow_host/pose_mixed_group_runtime_validation.json)
+execute the original wrapper through contact/pose counting, retained layout,
+settings, body production, both builders, shared numerical solve and all normal
+feedback paths. Every context, body, constraint, metadata, link and payload byte
+matches. One through four contact points are combined with every mode0..3 and
+both endpoint layouts, covering multi-point shared rows as well as per-point
+friction rows. Kind2 states0/1/2, hard/soft rows, drives, swap modes and one through
+three iterations are included. Poststep and angle-service arguments also match.
+
+Native atan2 outputs remain supplied; byte-fill and poststep are services. This
+comparison excludes secondary phase, body integration, damping response, allocator
+growth and concurrent ownership. Public composition tests cover all16 contact
+count/mode combinations and secondary refresh preserving pose counts, but do not
+upgrade the secondary path to a joined native validation claim.

@@ -1304,3 +1304,10 @@ feedback through the recovered group-step orchestrator. See LINK_SOLVER.md,
 mandatory services; damping and secondary update require services when reached.
 The joined native validation covers kind2 with empty contact arrays and normal
 phase. It does not establish a complete player tick or mixed-contact lifecycle.
+
+Mixed contact services: `make_pose_link_services` connects contact build/cache
+feedback/secondary refresh to the shared group arena without a separate solve.
+See LINK_SOLVER.md, "Mixed contact and constraint group runtime". Pose categories
+are preserved and result allocation is shared. Parsed body views must match raw
+bodies and be refreshed before another tick. Normal mixed kind2/contact execution
+is native-compared; secondary/poststep integration remains a separate boundary.
