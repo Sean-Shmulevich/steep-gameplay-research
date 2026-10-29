@@ -996,3 +996,9 @@ raw-body motion feedback in recovered order. Explicit body_tokens must correspon
 to body_state order; raw and parsed bodies must agree. See LINK_SOLVER.md, "Contact
 pass with feedback". No group phases, pose constraints, secondary correction,
 position/orientation integration or poststep are implicitly supplied.
+
+Body-origin contact pass: `run_pose_contact_pass_from_bodies` produces body data/state
+in arena storage before contact building/solving/feedback. Ordered bodies must
+match index1c and supply tensor/mass/metadata fields; frame basis is used. Scalar,
+vector and reached damping response remain explicit. See LINK_SOLVER.md, "Contact
+pass from body fields". No complete group-step or body integration claim.

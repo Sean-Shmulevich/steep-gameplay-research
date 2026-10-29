@@ -3827,3 +3827,26 @@ Every arena byte, complete payload and complete raw body record matches. Cases
 cover cache-copy and cache-clear flags, both metadata families, contact counts and
 builder modes. Body data/state and layout are supplied, so this does not yet prove
 a complete group step or physical position/orientation integration.
+
+### Contact pass from body fields
+
+`pose_link_arena.run_pose_contact_pass_from_bodies` prepends recovered body-buffer
+production to the contact pass. Bodies combine the builder's frame and motion
+fields with `tensor170`, `scalar124`, `metadata_flags52`, `flagsaa` and optional
+`damping1b8`. Frame basis is passed to the existing producer. Scalar/vector inputs
+remain explicit; no gravity unit or simulation timestep is inferred by the adapter.
+Produced64-byte data and32-byte state records are written into the initialized
+arena and exposed as writable views to the build/solve/feedback stages.
+
+The supplied body order must match `index1c`; mismatch is an authored API error.
+No body-index repair or membership change occurs. Reached damping still requires
+an explicit `damping_response` service. There is no guessed power approximation.
+
+[256 native five-stage comparisons](../../native/snow_host/pose_body_contact_pass_validation.json)
+execute original body-buffer production, building, solving, cache feedback and
+body feedback without interception. Every arena, payload and raw-body byte matches.
+Fixtures include fixed-body metadata and external-increment gates, both metadata
+builder families and mixed contact counts. Damping is disabled and tensor-getter
+TLS/static state is initialized by the private harness. This composes already
+recovered local operations; complete group phases, pose constraints, secondary
+correction, poststep and position/orientation integration remain separate.

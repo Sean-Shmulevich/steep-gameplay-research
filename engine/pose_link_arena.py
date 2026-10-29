@@ -65,3 +65,30 @@ def run_pose_contact_pass(arena,link_tokens,*,links,bodies,payloads,resources,pr
     write_pose_link_feedback(dict(flags38=struct.unpack_from('<I',arena,0x38)[0],result_rows=results),
                              link_tokens,links=links,payloads=payloads)
     write_pose_body_feedback(body_tokens,bodies=raw_bodies,body_state=body_state)
+
+
+def run_pose_contact_pass_from_bodies(arena,link_tokens,*,links,bodies,payloads,resources,profiles,modes,
+                                      body_tokens,raw_bodies,scalar,vector,damping_response=None):
+    """Produce arena body buffers, then run the contact build/solve/feedback slice.
+
+    Bodies combine builder fields with tensor170/scalar124/metadata_flags52/flagsaa
+    and optional damping1b8. Their frame basis is used for buffer production.
+    Supplied body order must match index1c; this check is an authored API guard.
+    """
+    from .pose_body_buffers import build_pose_body_buffers
+    ordered=[]
+    for index,token in enumerate(body_tokens):
+        body=bodies[token]
+        if body['index1c']!=index:raise ValueError('Body order must match solver index')
+        ordered.append(dict(body,basis=body['frame']['basis']))
+    produced=build_pose_body_buffers(ordered,scalar=scalar,vector=vector,damping_response=damping_response)
+    view=memoryview(arena);buffers={}
+    for key,offset,stride in (('body_data',0x170,64),('body_state',0x174,32)):
+        start=struct.unpack_from('<I',arena,offset)[0]
+        if start<0x190 or start+len(ordered)*stride>len(arena):raise ValueError('Body buffers exceed retained arena')
+        buffers[key]=[]
+        for i,record in enumerate(produced[key]):
+            target=view[start+i*stride:start+(i+1)*stride];target[:]=record;buffers[key].append(target)
+    run_pose_contact_pass(arena,link_tokens,links=links,bodies=bodies,payloads=payloads,
+        resources=resources,profiles=profiles,modes=modes,body_tokens=body_tokens,
+        raw_bodies=raw_bodies,**buffers)

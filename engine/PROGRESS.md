@@ -8063,3 +8063,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   bytes with cache-copy and cache-clear flags. Public tests verify cache selection
   and preservation of all non-motion body fields. Body-buffer production and the
   full group-step lifecycle remain outside this slice.
+- Connected recovered body-buffer production ahead of contact build/solve/feedback.
+  256 uninterrupted native five-stage comparisons match arena, payload and raw-body
+  bytes from supplied body fields, including fixed metadata and increment gates.
+  Damping remains an explicit service and is disabled in this composition receipt.
+  Full group phases, pose constraints, secondary correction and integration remain.
