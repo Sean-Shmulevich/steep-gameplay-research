@@ -1393,3 +1393,10 @@ conditional post-solve notification order. See LINK_SOLVER.md, "Outer pose updat
 stage". Subsystem effects remain explicit services. Owner pointers are reloaded
 between calls; pending span bounds are captured once, but slots are read per visit.
 Phase resets on normal return only. Exceptions do not imply native cleanup.
+
+Command constraint preparation: `prepare_pose_command_constraint` gates on
+endpoint metadata bit0, restores callback endpoint order, passes mutable six-command
+and count views with reciprocal scalar/mode1/userdata, then resets unsigned counts
+above6 to0. See LINK_SOLVER.md, "Command preparation producer boundary". Skipped
+updates preserve old commands/count. Callback arithmetic and creation-time mode0
+remain explicit; a post-call count reset cannot prevent callback buffer overflow.

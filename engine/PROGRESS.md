@@ -8372,3 +8372,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   reciprocal values. Post-batch active count gates downstream notification. The
   individual constraint producer and changed-link wake/migration/merge bindings
   remain explicit services; this is not a full numerical outer-stage comparison.
+- Connected constraint preparation to the existing kind4 command-row producer.
+ 512 native wrapper cases and512 initializer cases match all bytes and callback
+  arguments. Admitted updates reset unsigned counts above6; gated updates preserve
+  old commands/count. Public tests compose callback output with row expansion.
+  The concrete gameplay callback and user-data meaning remain unresolved; static
+  construction mode0 and callback-preserving clone paths provide the next leads.

@@ -6576,3 +6576,63 @@ complete numerical outer-stage execution. The already validated retained batch
 API can be supplied as run_batches; body/contact preparation, changed-link effects,
 publication interfaces and provider lookups remain explicit. No live game session
 or concurrent ownership proof is part of this pass.
+
+## Command preparation producer boundary
+
+The preparation service `0x19445c0` belongs to the kind4 command constraint. Its
+output count at+0x74 and six64-byte records at+0x78 feed the existing
+`build_pose_command_constraint` directly. `engine/pose_command_prepare.py` now
+implements the visible wrapper and the six-record initializer `0x19440c0`.
+
+The first endpoint's metadata byte+0x52 bit0 blocks preparation when set. A nonnull
+second endpoint applies the same gate. These checks happen before endpoint swapping.
+If blocked, the wrapper returns without clearing the old count or command bytes.
+When admitted, any nonzero swap byte reverses the callback's two endpoint arguments,
+including the case where the original second endpoint is null. Callback arguments
+are the stored function, ordered endpoints, writable command span, writable count,
+reciprocal scalar, mode1, and the stored user-data token. The count is not reset
+before this update call.
+
+```python
+if first.metadata.flags52 & 1:
+    return
+if second is not null and second.metadata.flags52 & 1:
+    return
+callback_first, callback_second = (second, first) if swap else (first, second)
+callback(callback_first, callback_second, commands, count,
+         reciprocal_scalar, mode=1, userdata=userdata)
+if uint32(count) > 6:
+    count = 0
+```
+
+That unsigned check resets both7 and UINT32_MAX to0. It changes only the count,
+leaving produced bytes intact. It is a post-call validity check, not buffer-overrun
+prevention. A callback must respect the six-record allocation itself. The earlier
+row builder's independent six-command storage guard is still needed for inputs
+that have not passed through this preparation path; the builder itself does not
+clamp. Gated updates and deserialized records are distinct paths.
+
+Each64-byte command contains four XYZ vectors followed by four scalar words. The
+initializer zeroes all vector components and sets the scalars to0, negative largest
+finite float32, positive largest finite float32, and0. The row builder expands each
+XYZ to XYZ0 and broadcasts each scalar into four lanes; it swaps endpoint vector
+pairs when the constraint swap flag is set. Public composition tests pass callback
+outputs through that existing expansion and check count/reset behavior. Callback
+math and user-data meaning remain supplied, not inferred from the output layout.
+
+Static constructor inspection adds a lead. `0x19441e0` stores its supplied callback
+and user data, chooses endpoint ordering, clears the count, and invokes the callback
+with scalar0 and mode0. Unlike the update wrapper, this inspected construction path
+does not perform the same post-call six-count reset. The cloning path `0x1944340`
+copies callback and user-data identities from an existing constraint before calling
+that constructor. A default constructor instead stores a null callback. Concrete
+gameplay callback assignment remains unresolved; the construction/cloning evidence
+does not identify animation, tricks or player ownership.
+
+[`pose_command_prepare_validation.json`](../../native/snow_host/pose_command_prepare_validation.json)
+contains512 update comparisons, including171 admitted callback calls, and512
+initializer comparisons. All retained bytes match. The update check supplies the
+callback's output and verifies argument order, raw pointers, previous output bytes,
+metadata gates and final count. The original initializer executes without
+interception. Construction-time callbacks, deserialization validity, actual callback
+production and live concurrency remain outside these checks.
