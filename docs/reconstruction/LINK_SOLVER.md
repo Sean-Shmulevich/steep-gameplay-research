@@ -4464,3 +4464,42 @@ state. Context, row, body and result bytes match across four phase masks and zer
 through three iterations. Public tests check uncapped results, linear preservation,
 coincident endpoint accumulation and phase skips. Eight numerical categories,
 remaining row producers and full group lifecycle are still unsupported.
+
+## Angular axes with added response terms
+
+Categories20/21 extend the category18/19 layouts by16 bytes. Their preparation
+routines0x19eedf0 and0x19eec30 add a per-lane field to the angular denominator
+before reciprocal division. The single row stores it at40 and is80 bytes; the
+paired row stores it at50 and is96 bytes. The public axis-solver APIs select
+these layouts explicitly with `softened=True`.
+
+```text
+D = dotXYZ(T1*A,A) + optional dotXYZ(T2*B,B)
+inverse.xyz[lane] = -1 / float32(D + added_response[lane])
+inverse.w = 0
+```
+
+"Softened" is an authored API label for the effect of positive added terms,
+not proof of a physical compliance unit. Inputs are not restricted to positive
+terms by the implementation; each resulting denominator must be finite and
+nonzero. Original iteration dispatch calls exactly the same functions as for
+categories18/19, preserving unbounded increments, cached add/subtract rounding
+and sequential endpoint writes. The new preparation cannot be replaced with
+iteration damping or an impulse cap.
+
+[Added-response validation](../../native/snow_host/pose_softened_angular_validation.json)
+compares512 preparations and1536 iterations split between both layouts, all bytes
+matching. The unextended family comparison was also rerun. Public tests verify
+per-lane inverse values, changed result magnitudes and both traversal phase gates.
+
+## Nineteen-category numerical traversal
+
+Mixed traversal accepts `softened_axis_rows` and `paired_softened_axis_rows` for
+categories20/21 with context158/15c counts. Supported normal order is
+24,13,12,9,8,11,10,17,16,19,18,21,20,1,0,5,4,7,6. Both added-response families
+are skipped in special phase.
+[Nineteen-category comparison](../../native/snow_host/pose_nineteen_category_solve_validation.json)
+executes256 uninterrupted original wrappers. Every retained buffer matches across
+four phase masks and zero through three iterations with all nineteen families
+populated. Six numerical categories remain unsupported, alongside unresolved
+builders and full group lifecycle. The category count is not overall fidelity.

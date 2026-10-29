@@ -1,0 +1,26 @@
+{
+  "schema": "pose-softened-angular-validation-v1",
+  "preparations": 512,
+  "iterations": 1536,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19eec30",
+    "0x19eedf0",
+    "0x19eea50",
+    "0x19eeb80"
+  ],
+  "method": "Offline uninterrupted original preparation, reciprocal response and three iterations; no interception",
+  "comparisons": [
+    "all row, body-data, body-state and result bytes after each call"
+  ],
+  "coverage": [
+    "single and paired rows, off-diagonal tensors",
+    "coincident body indices",
+    "nonzero fourth lanes and unbounded increments"
+  ],
+  "limits": [
+    "Finite nonsingular synthetic rows with finite response lanes.",
+    "Row producer, full traversal and gameplay ownership not covered."
+  ]
+}

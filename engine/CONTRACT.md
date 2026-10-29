@@ -1113,3 +1113,9 @@ per-lane response and retained cached add/subtract rounding. Paired endpoint wri
 are sequential. See LINK_SOLVER.md, "Unbounded angular axis solvers". Both are now
 connected to normal mixed traversal and skipped in special phase. Eight numerical
 categories and remaining producers/lifecycle integration remain unsupported.
+
+Added-response angular variants: `softened=True` selects category20/21 layouts,
+with a per-lane denominator addition and unchanged iteration rules. "Softened" is
+an authored mathematical label, not a recovered physical unit. Both variants are
+connected to normal traversal and skipped in special phase. See LINK_SOLVER.md,
+"Angular axes with added response terms". Six numerical categories remain open.

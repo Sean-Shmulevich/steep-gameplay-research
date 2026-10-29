@@ -31,3 +31,25 @@ class AxisAngularTests(unittest.TestCase):
             before=bytes(row);rows={'paired_axis_angular_rows' if paired else 'axis_angular_rows':[row]}
             solve_pose_link_rows(c,base_token=0,primary_rows=[],secondary_rows=[],**args,**rows)
             self.assertEqual(bytes(row),before);self.assertEqual(args['body_state'][0],bytes(32))
+
+    def test_added_response_is_per_lane_and_reduces_magnitude(self):
+        row,args=self.fixture();row.extend(bytes(16));args['softened']=True
+        struct.pack_into('<4f',row,64,1,3,7,1)
+        prepare_pose_axis_angular_row(row,**args)
+        self.assertEqual(struct.unpack_from('<4f',row,48),(-.5,-.25,-.125,0))
+        iterate_pose_axis_angular_row(row,**args)
+        self.assertEqual(struct.unpack_from('<4f',args['results'][0]),(-5,-2.5,-1.25,0))
+
+    def test_softened_traversal_and_special_skip(self):
+        for paired in (False,True):
+            for special in (False,True):
+                row,args=self.fixture(paired);row.extend(bytes(16))
+                struct.pack_into('<4f',row,80 if paired else 64,1,1,1,1)
+                args.pop('paired');c=bytearray(0x190)
+                struct.pack_into('<I',c,0x15c if paired else 0x158,1)
+                struct.pack_into('<I',c,0x38,0x10010000 if special else 4)
+                rows={'paired_softened_axis_rows' if paired else 'softened_axis_rows':[row]}
+                before=bytes(row)
+                solve_pose_link_rows(c,base_token=0,primary_rows=[],secondary_rows=[],**args,**rows)
+                if special:self.assertEqual(bytes(row),before)
+                else:self.assertLess(struct.unpack_from('<f',args['results'][0])[0],0)
