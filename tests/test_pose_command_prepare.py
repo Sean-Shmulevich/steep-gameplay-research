@@ -46,6 +46,27 @@ class CommandPrepareTests(unittest.TestCase):
             self.assertEqual(struct.unpack_from('<I',arena,0x424)[0],expected)
             if expected:self.assertEqual(arena[0x430:0x43c],r[0x90:0x9c])
 
+    def test_construction_callback_mode_order_and_no_count_reset(self):
+        from engine.pose_command_prepare import construct_pose_command_constraint
+        r,b,m=self.fixture();events=[]
+        struct.pack_into('<H',m[11],0x50,0x8000)
+        def base(token,first,second,owner,request):
+            events.append(('base',token,first,second,owner,request))
+            struct.pack_into('<2Q',r,8,second,first)
+        def invoke(fn,first,second,commands,count,scalar,mode,user):
+            events.append(('callback',fn,first,second,scalar,mode,user))
+            self.assertEqual(bytes(count),bytes(4))
+            self.assertEqual(struct.unpack_from('<4I',commands,48),(0,0xff7fffff,0x7f7fffff,0))
+            struct.pack_into('<I',count,0,7)
+        construct_pose_command_constraint(r,constraint_token=50,owner_token=60,
+            first_body=1,second_body=2,callback_token=8,userdata=9,request_byte=257,
+            table=70,secondary_table=80,bodies=b,metadata=m,construct_base=base,invoke=invoke)
+        self.assertEqual(events,[('base',50,1,2,60,1),('callback',8,1,2,0.,0,9)])
+        self.assertEqual(r[0x59],1);self.assertEqual(r[0x70],0)
+        self.assertEqual(struct.unpack_from('<I',r,0x74)[0],7)
+        arena=bytearray(0x1000)
+        with self.assertRaises(ValueError):build_pose_command_constraint(arena,r,bodies=b)
+
     def test_null_second_can_be_callback_first_after_swap(self):
         r,b,m=self.fixture();struct.pack_into('<Q',r,0x10,0);r[0x59]=1;seen=[]
         def invoke(fn,a,b,commands,count,scalar,mode,user):

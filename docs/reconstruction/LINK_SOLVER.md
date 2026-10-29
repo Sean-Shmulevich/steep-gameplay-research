@@ -6636,3 +6636,55 @@ callback's output and verifies argument order, raw pointers, previous output byt
 metadata gates and final count. The original initializer executes without
 interception. Construction-time callbacks, deserialization validity, actual callback
 production and live concurrency remain outside these checks.
+
+## Command creation and callback modes
+
+`construct_pose_command_constraint` now reconstructs specialized constructor
+`0x19441e0` with the base constructor and callback supplied. It calls base
+construction with the requested bodies, owner token and low request byte. Base
+construction may reorder the stored endpoints. The specialized layer installs its
+two tables, initializes six command records, stores callback/userdata, and sets its
+swap byte according to whether the requested first body differs from the stored
+first body.
+
+The single-body flag is1 if the stored second endpoint is null or its metadata
+word+0x50 bit15 is clear, otherwise0. This flag uses stored endpoint order. The
+callback instead receives endpoints after the swap correction. The constructor
+clears the count and calls the function with scalar0 and mode0. It does not apply
+update-time metadata bit0 gates or the update-time unsigned six-count reset.
+
+```python
+construct_base(constraint, requested_first, requested_second, owner, request_byte)
+initialize_six_command_records()
+constraint.callback = callback
+constraint.userdata = userdata
+constraint.swap = requested_first != constraint.stored_first
+constraint.single = stored_second is null or not stored_second.metadata.bit15
+constraint.count = 0
+callback(ordered_endpoints, commands, count, scalar=0, mode=0, userdata=userdata)
+# No post-call count reset here.
+```
+
+This preserves the callback's two-mode contract. Mode0 supplies initial rows; mode1
+refreshes them during the reciprocal-scalar preparation stage. These mode numbers
+are observed arguments; their names do not establish what an arbitrary callback
+computes. An invalid count from construction can still fail the independent row
+builder's storage guard. The reset in the update wrapper is not a universal factory
+invariant and must not be moved into the common callback adapter.
+
+[`pose_command_construct_validation.json`](../../native/snow_host/pose_command_construct_validation.json)
+records512 full specialized-constructor comparisons. The native initializer runs
+unchanged. Supplied base construction varies endpoint order, and the callback
+produces counts0/1/6/7/UINT32_MAX. Whole records and call arguments match, including
+initial command defaults, cleared count, scalar/mode, userdata, null endpoints,
+metadata single-mode selection and request bytes. Base construction's registration,
+wake and ordering effects remain explicit services, not reconstructed by this test.
+
+The cloning function `0x1944340` is referenced by the command constraint's table and
+carries source callback/userdata into construction. The default constructor is
+reachable through generic type allocation and initializes a null callback. A raw
+search for direct writes to offset+0x1f8 produced many unrelated object fields;
+no concrete gameplay producer was identified. Such offsets alone are not evidence
+of a command callback assignment. Next evidence should come from indirect factory
+callers, resource registration, or a guarded observation of actual registered
+constraint objects. No animation/trick/player attribution is established here.

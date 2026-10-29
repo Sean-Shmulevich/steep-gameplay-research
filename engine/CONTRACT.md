@@ -1400,3 +1400,10 @@ and count views with reciprocal scalar/mode1/userdata, then resets unsigned coun
 above6 to0. See LINK_SOLVER.md, "Command preparation producer boundary". Skipped
 updates preserve old commands/count. Callback arithmetic and creation-time mode0
 remain explicit; a post-call count reset cannot prevent callback buffer overflow.
+
+Command construction: `construct_pose_command_constraint` binds supplied base
+construction to command defaults, callback/userdata storage, endpoint swap and
+single-body mode, then invokes mode0 with scalar0 and cleared count. See
+LINK_SOLVER.md, "Command creation and callback modes". It deliberately preserves
+counts above6 after the initial callback. Base registration/wake and gameplay
+callback production remain external; this is not a complete factory.

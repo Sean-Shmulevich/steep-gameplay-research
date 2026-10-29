@@ -1,0 +1,26 @@
+{
+  "schema": "pose-command-construct-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x19441e0",
+  "method": "Original specialized constructor and command initializer; base constructor and initial command callback supplied",
+  "comparisons": [
+    "whole constraint/body/metadata records",
+    "base constructor ABI and request byte",
+    "initial callback endpoints, scalar/mode/userdata and prior output bytes"
+  ],
+  "coverage": [
+    "base service preserves or reverses endpoints",
+    "nullable original second endpoint",
+    "single flag from actual second endpoint metadata bit15",
+    "callback counts0/1/6/7/UINT32_MAX preserved without reset",
+    "request bytes0/1/2/255"
+  ],
+  "limits": [
+    "Base construction/registration/wake effects are supplied, including endpoint ordering.",
+    "Concrete gameplay callback and userdata semantics remain unknown.",
+    "Callback bounds and constructor exception behavior not established.",
+    "Offline synthetic fixtures; no live session."
+  ]
+}

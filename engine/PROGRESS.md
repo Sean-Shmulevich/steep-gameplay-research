@@ -8378,3 +8378,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   old commands/count. Public tests compose callback output with row expansion.
   The concrete gameplay callback and user-data meaning remain unresolved; static
   construction mode0 and callback-preserving clone paths provide the next leads.
+- Reconstructed specialized kind4 construction with supplied base/callback services.
+ 512 native comparisons match endpoint correction, single-mode metadata selection,
+  initial mode0/scalar0 arguments and full storage. Construction preserves counts
+  above6, unlike update mode1. Concrete gameplay callback assignment remains open;
+  direct offset-store candidates did not establish ownership. Indirect factories
+  and registered constraint objects are the next evidence sources.
