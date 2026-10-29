@@ -1002,3 +1002,9 @@ in arena storage before contact building/solving/feedback. Ordered bodies must
 match index1c and supply tensor/mass/metadata fields; frame basis is used. Scalar,
 vector and reached damping response remain explicit. See LINK_SOLVER.md, "Contact
 pass from body fields". No complete group-step or body integration claim.
+
+Secondary contact correction: `solve_pose_contact_secondary_correction` gates on
+secondary-count bits, transitions phase, clears arena state, refreshes primary rows
+and solves in special phase. It returns whether the phase ran. Body state must alias
+the arena. See LINK_SOLVER.md, "Contact secondary correction composition". Applying
+correction to transforms and group poststep remain explicit subsequent stages.

@@ -8068,3 +8068,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   bytes from supplied body fields, including fixed metadata and increment gates.
   Damping remains an explicit service and is disabled in this composition receipt.
   Full group phases, pose constraints, secondary correction and integration remain.
+- Connected gated secondary state reset, primary-row refresh and special solve
+  after the first contact pass.256 native composed comparisons match complete
+  arena/payload/body bytes with zero through three secondary iterations. Group
+  transition/clear are explicitly reproduced by the harness; full original group
+  execution and secondary transform application remain outside this receipt.

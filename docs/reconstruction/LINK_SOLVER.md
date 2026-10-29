@@ -3850,3 +3850,29 @@ builder families and mixed contact counts. Damping is disabled and tensor-getter
 TLS/static state is initialized by the private harness. This composes already
 recovered local operations; complete group phases, pose constraints, secondary
 correction, poststep and position/orientation integration remain separate.
+
+### Contact secondary correction composition
+
+`solve_pose_contact_secondary_correction` connects the recovered group's secondary
+phase gate/transition to row refresh and special-phase solve. If context flags have
+no bits in0x07ff0000 it returns false without mutation. Otherwise it clears bit27,
+sets bit28, zeroes the retained state range from context+0x174 to+0x178, refreshes
+both primary families, publishes their reset append counters, and runs the solver.
+Refresh clears primary accumulator links and primary result slots while preserving
+geometry. Special traversal skips shared and tangent rows. The corrected state is
+left in the arena for an explicit subsequent body-update operation.
+
+Body data/state arguments must be views into that arena. Layout and primary rows
+must already correspond to the supplied links. The adapter does not apply correction
+to transforms, repeat cache/body feedback, or run poststep. Zero contacts are valid;
+malformed/out-of-range retained state spans are rejected by authored guards.
+
+[256 composed native comparisons](../../native/snow_host/pose_contact_secondary_composition_validation.json)
+cover body production, first build/solve/feedback, then secondary refresh/solve for
+zero through three secondary iterations. Every arena, payload and raw-body byte
+matches. Original numerical routines execute without interception. The harness
+explicitly performs the previously recovered group flag transition and state clear;
+the complete original group routine is not executed. Its earlier fixture placed
+results before state, which is valid for first-pass-only tests but not this clear
+range; the composition fixture now uses state-before-results layout. Damping and
+secondary transform application remain outside this comparison.

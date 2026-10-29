@@ -92,3 +92,34 @@ def run_pose_contact_pass_from_bodies(arena,link_tokens,*,links,bodies,payloads,
     run_pose_contact_pass(arena,link_tokens,links=links,bodies=bodies,payloads=payloads,
         resources=resources,profiles=profiles,modes=modes,body_tokens=body_tokens,
         raw_bodies=raw_bodies,**buffers)
+
+
+def solve_pose_contact_secondary_correction(arena,link_tokens,*,links,bodies,payloads,body_data,body_state):
+    """Run gated secondary contact refresh/solve, leaving correction state available.
+
+    Does not apply corrections to transforms or run group poststep. Body state must
+    alias the arena state range, as in run_pose_contact_pass_from_bodies.
+    """
+    from .pose_link_secondary_rows import refresh_pose_secondary_link_rows
+    flags=struct.unpack_from('<I',arena,0x38)[0]
+    if not flags&0x07ff0000:return False
+    struct.pack_into('<I',arena,0x38,(flags&~0x08000000)|0x10000000)
+    start,end=struct.unpack_from('<II',arena,0x174)
+    if end<start or start<0x190 or end>len(arena) or (end-start)%32:
+        raise ValueError('Complete retained secondary state range required')
+    arena[start:end]=bytes(end-start)
+    counts=struct.unpack_from('<25I',arena,0x108);view=memoryview(arena)
+    resultstart=struct.unpack_from('<I',arena,0x178)[0]
+    results=[view[resultstart+16*i:resultstart+16*(i+1)] for i in range(sum(counts))]
+    rowbase=struct.unpack_from('<I',arena,0x16c)[0];pools={}
+    for name,category,stride in POOLS:
+        offset=rowbase+16*struct.unpack_from('<I',arena,0x40+category*4)[0]
+        pools[name]=[view[offset+i*stride:offset+(i+1)*stride] for i in range(counts[category])]
+    context=dict(field18=struct.unpack_from('<f',arena,0x18)[0],field1c=struct.unpack_from('<f',arena,0x1c)[0],
+                 counts=[0,0],rows=[pools['clear_primary'],pools['paired_primary']],result_rows=results)
+    refresh_pose_secondary_link_rows(context,link_tokens,links=links,bodies=bodies,payloads=payloads)
+    struct.pack_into('<2I',arena,0xa4,*context['counts'])
+    solve_pose_link_rows(arena,base_token=0,primary_rows=pools['clear_primary'],paired_primary_rows=pools['paired_primary'],
+        shared_rows=pools['clear_shared'],paired_shared_rows=pools['paired_shared'],secondary_rows=pools['clear_secondary'],
+        paired_tangent_rows=pools['paired_secondary'],arena=arena,body_data=body_data,body_state=body_state,results=results)
+    return True
