@@ -8285,3 +8285,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   frame swap and field storage preserve state3/UINT32_MAX. Composed regressions
   confirm zero planned limit rows versus two emitted rows. The unresolved gate is
   upstream state production/validity or enclosing allocation, not conversion.
+- Composed group preparation from link/pose counts through retained layout and
+  settings.512 complete native-wrapper comparisons match whole allocations and
+  source objects, including mixed links/all six pose kinds. Each reaches exactly
+  one group-step call with the same buffer. Allocation, actual solve/feedback and
+  state/eligibility domain reconciliation remain separate boundaries.

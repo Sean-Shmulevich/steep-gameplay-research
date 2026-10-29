@@ -1,0 +1,27 @@
+{
+  "schema": "pose-group-prepare-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1994da0",
+  "method": "Complete native wrapper through solve entry; original pose counting, retained layout and settings initialization; memset supplied and group step intercepted",
+  "comparisons": [
+    "entire retained allocation",
+    "unchanged request, group, settings and pose objects",
+    "exactly one group-step call with retained allocation"
+  ],
+  "coverage": [
+    "mixed link and pose arrays, payload flags and zero/single/multiple contact counts",
+    "all six pose kinds and unknown kinds",
+    "zero and multiple pose entries",
+    "both metadata count banks",
+    "all raw mode branches including high bits",
+    "body count truncation",
+    "arbitrary retained padding"
+  ],
+  "limits": [
+    "No row construction, solving or feedback executes in this comparison.",
+    "Allocator/release paths excluded; retained capacity is sufficient.",
+    "Stable supplied virtual type results; no callback mutation or active player ownership claim."
+  ]
+}

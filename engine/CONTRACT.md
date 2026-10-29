@@ -1283,3 +1283,10 @@ kinds now dispatch directly. Atan2 and notification effects remain explicit
 services. States0/1/2 agree with count planning; angular state3 emits limits that
 the prepass does not reserve. Full lifecycle and active ownership remain open.
 This supersedes the earlier kind2-external/stage-only descriptions.
+
+Group preparation: `prepare_pose_group` combines link/pose counting, retained
+storage initialization and settings application in native wrapper order. See
+LINK_SOLVER.md, "Group preparation through solve entry". Inputs are stable explicit
+views and sufficient caller-owned capacity. No count repair or eligibility filter
+is added. Returned layout metadata is authored; solving remains an explicit next
+stage. Full-word count mode and low-bit builder mode remain distinct.

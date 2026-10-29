@@ -5810,3 +5810,42 @@ zero limit rows, and construction emits two. Thus the known submission conversio
 cannot explain away the mismatch. This does not establish that game-authored
 records use those values. The remaining lead is the source-state producer or its
 valid-state contract before submission, together with enclosing allocation policy.
+
+## Group preparation through solve entry
+
+`engine.pose_group_prepare.prepare_pose_group` composes the retained-storage path
+of wrapper RVA0x1994da0. It accepts explicit stable link/pose/body views, settings,
+a scalar, a group token and caller-owned storage. It clears a local 25-counter
+array, counts links using the full settings mode, adds pose counts, initializes
+storage using the group body count, then applies settings to that same buffer.
+The returned layout description is authored API output. The native wrapper
+continues by calling the group-step routine once with the resulting buffer.
+
+```text
+counts = zeroes(25)
+count_links(counts, links, full_uint32_settings_mode)
+count_poses(counts, poses)
+initialize_retained_storage(context, counts, body_count)
+initialize_settings(context, settings, scalar, group)
+# Native next call: group_step(context).
+# Independent caller explicitly invokes run_pose_group_step with its services.
+```
+
+There is no eligibility filtering or planned-count adjustment between counting
+and solve entry. Link counting uses the full mode word; settings retains only its
+low two bits. Mode4 therefore counts nonzero-mode link rows while publishing mode0
+for builders. This difference remains visible rather than being normalized away.
+Body storage uses the low16 bits of body count, as in the layout helper.
+
+[512 native wrapper comparisons](../../native/snow_host/pose_group_prepare_validation.json)
+execute original link/pose counters, retained storage initialization and settings
+initialization. Only byte-fill and the subsequent group-step call are supplied
+services. Synthetic virtual methods provide type results. Complete allocations
+and retained source objects match; each native case calls group-step exactly once
+with the retained allocation. Cases combine contact links and all six pose kinds,
+unknown kinds, both metadata banks, varied raw modes and nonzero retained bytes.
+
+The API does not allocate or release native memory and does not run the group
+step implicitly. Object mutation during virtual queries, count/build eligibility
+mismatches, unsupported state domains and active player ownership remain open.
+This validates preparation composition, not full numerical lifecycle equivalence.
