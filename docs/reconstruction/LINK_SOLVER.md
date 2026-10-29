@@ -4361,3 +4361,48 @@ populated and sharing body state. Context, all rows, body data/state and results
 match across four phase masks and zero through three iterations. Builders are not
 executed by this check. Twelve numerical categories, their unresolved producers
 and full group lifecycle remain open; this count is not an engine coverage metric.
+
+## Bounded scalar constraint solvers
+
+`engine/pose_bounded_scalar_solver.py` reconstructs categories16 and17.
+Single-body96-byte rows use preparation0x19ef900 and iteration0x19ef510;
+paired112-byte rows use0x19ef650 and0x19ef2b0. They store direction at20,
+first angular coefficient at30 and per-lane inverse response at40. Paired rows
+store the second angular coefficient at50. Additive response terms occupy50
+for single rows and60 for paired rows. Row10 supplies XYZ response and a symmetric
+increment cap. These are observed arithmetic roles, not inferred gameplay names.
+
+Preparation forms the scalar denominator from angular tensor and linear mass
+contributions. Paired addition order is first angular, first linear, second linear,
+second angular. Each lane adds its own stored response term before negative
+reciprocal division; inverse W is masked to zero. Cached results apply to body
+states. The second body's linear direction is negated, while its angular
+coefficient comes from its own field.
+
+Iteration measures first angular plus first linear projected speed. Paired rows
+add a second term of second angular plus negatively directed second linear speed.
+The scalar speed is broadcast. Response XYZ contributes to the first three lanes;
+the fourth shuffle lane repeats response X. For each lane:
+
+```text
+proposal = inverse * (speed + shuffled_response)
+if single_body:
+    proposal = float32(float32(proposal + cached_result) - cached_result)
+increment = clamp(proposal, -response.w, response.w)
+result = cached_result + increment
+apply_weighted_body_updates(increment)
+```
+
+The single-body add/subtract sequence is present in the instructions and must not
+be cancelled algebraically. A sufficiently large cached value can round away a
+small proposed increment. Paired endpoint state is snapshotted before writes;
+coincident indices retain the second endpoint's update rather than accumulating
+both. This differs from the sequential paired angular and point families.
+
+[Bounded scalar validation](../../native/snow_host/pose_bounded_scalar_validation.json)
+compares512 preparations and1536 iterations split evenly between the two families,
+without interception. All row, data/state and result bytes match with off-diagonal
+tensors, per-lane response terms and coincident indices. Public tests preserve the
+rounding cancellation, second-snapshot behavior and signed result updates.
+Finite nonsingular rows are supported. Row producers, gameplay ownership and mixed
+traversal integration remain open.

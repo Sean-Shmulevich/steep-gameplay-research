@@ -8144,3 +8144,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   256 thirteen-category mixed wrapper comparisons pass across all phase masks.
   Twelve numerical categories and full group lifecycle remain open. Supplied-row
   validation does not establish production from live gameplay constraints.
+- Recovered categories16/17 bounded scalar kernels.512 preparations and1536
+  iterations, split evenly between single/paired rows, match native bytes.
+  Preserved single-body cached add/subtract rounding and paired snapshot semantics.
+  Row producers, gameplay ownership and shared traversal integration remain open.

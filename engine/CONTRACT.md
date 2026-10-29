@@ -1096,3 +1096,9 @@ increments coupling one body's linear/angular state. See LINK_SOLVER.md, "Single
 point solver". Mixed traversal accepts categories10/11 in normal phase after
 constraint primary rows, before contact primary rows. Twelve numerical categories
 remain unsupported. Row producers and gameplay ownership are not inferred.
+
+Bounded scalar solvers: categories16/17 preserve per-lane reciprocal responses,
+symmetric increment bounds, single-body cached add/subtract rounding and paired
+snapshot update semantics. See LINK_SOLVER.md, "Bounded scalar constraint solvers".
+Explicit paired selection and complete finite retained storage are required.
+Mixed traversal and original gameplay producers are not supplied by these kernels.
