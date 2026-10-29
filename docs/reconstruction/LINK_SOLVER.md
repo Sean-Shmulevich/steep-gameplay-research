@@ -3656,3 +3656,41 @@ each iteration. The accumulator reset means a repeated iteration without primary
 reaccumulation has zero limits; the caller must preserve native traversal order.
 Inputs are finite synthetic prepared rows with supplied K. This establishes local
 iteration, not matrix preparation, paired shared solving or system convergence.
+
+### Shared patch preparation
+
+`pose_shared_solver.prepare_pose_shared_row` reconstructs0x19f1430, including
+matrix inversion helper0x19c9530. Its output supplies the inverse response used by
+the preceding iteration section. Using the builder's transposed blocks L/A and
+body tensor T, the response is formed from a linear mass contribution and an
+angular tensor contribution. Exact float32 construction, with rows treated as
+four-lane vectors and `transform(R,v)=R2*v.z+(R1*v.y+R0*v.x)`, is:
+
+```text
+weighted_linear[j] = transform(L, axis[j] * body_mass_lanes)
+K[i] = transform(weighted_linear, column(L,i))
+weighted_angular[j] = transform(A, T[j])
+K[i] += transform(weighted_angular, column(A,i))
+K[0] *= [1,1,0,0]
+K[1] *= [1,1,0,0]
+K[2] *= [0,0,1,0]
+r = 1 / length(K[2].xyz)
+K[2] = (K[2] * r) * body_mass_lanes
+inverse = cofactor_inverse(K)
+inverse[2] = [0,0,r,0]
+```
+
+Thus coupling to the third component is removed before inversion. The third
+inverse row is then overwritten with its separately computed reciprocal. The
+cofactor inverse retains cross-product, pairwise determinant sum and reciprocal
+multiplication order; an ordinary high-precision matrix library can change bytes.
+The builder's cached result is applied to body state using the same linear/tensor
+mapping as iteration, and shared+0xb0 is cleared. Result storage itself is retained.
+
+[512 original preparation plus1536 iteration comparisons](../../native/snow_host/pose_shared_preparation_validation.json)
+match all row bytes, body states and result lanes after every stage. Original
+inversion executes without interception. Cases include finite general row blocks
+and diagonally dominant body tensors with off-diagonal terms. Singular response
+or zero third response is rejected by the independent helper; this is an authored
+guard, not recovered native recovery. Paired shared preparation and integration
+into full traversal remain outside this receipt.

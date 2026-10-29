@@ -961,3 +961,9 @@ prepared208-byte row,64-byte body data,32-byte body state and16-byte result. It
 consumes/clears the accumulator, projects a coupled XYZ result and applies its
 change. Inverse response matrix remains supplied. See LINK_SOLVER.md, "Shared patch
 iteration". No preparation, paired variant or complete traversal is implied.
+
+One-body shared preparation: `prepare_pose_shared_row` now supplies the inverse
+response matrix for the208-byte shared row and applies the cached result to body
+state. It preserves the inspected removal of third-component coupling before
+inversion and separate third reciprocal. See LINK_SOLVER.md, "Shared patch
+preparation". Finite nonsingular input only; singular rejection is an authored guard.

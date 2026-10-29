@@ -8033,3 +8033,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   body state and result lanes. Added strict-gate and repeated-without-reaccumulation
   tests. Shared inverse response preparation, paired shared iteration and complete
   solver traversal integration remain open.
+- Recovered one-body shared preparation, including exact cofactor inversion and
+  separate third-component reciprocal.512 uninterrupted original preparations plus
+  1536 iterations match complete row/state/results with off-diagonal body tensors.
+  The one-body shared numerical path no longer requires a supplied inverse matrix.
+  Paired shared numerics and full traversal integration remain open.
