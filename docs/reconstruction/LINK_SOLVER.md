@@ -4093,3 +4093,57 @@ without interception. Entire context arenas, source constraints, bodies and retu
 bytes match. Fixtures cover negative through six counts, both orders, arbitrary
 source bits, null second bodies and nonzero existing counters. Category24 numerical
 preparation/iteration and the physical meaning of the command fields remain open.
+
+## Command constraint solving
+
+`engine/pose_command_solver.py` implements category24 preparation0x19f2180,
+impulse application0x19f2330 and iteration0x19f2430. The normal solver traversal
+processes these912-byte rows first; the special phase skips them. The scalar
+result index reserved by the builder is not read by these numerical routines.
+Each command instead retains its own four-lane impulse at command-relative70,
+which is rowa0 for command0.
+
+For each enabled endpoint, let L and A be the command's linear and angular XYZ
+coefficients, M the body's four-lane inverse-mass data and T its three tensor
+columns. Preparation computes the denominator in this order:
+
+```text
+D = dotXYZ(T1*A1, A1) + dotXYZ(L1, M1*L1)
+if row20 == 0:
+    D = D + dotXYZ(L2, M2*L2)
+    D = D + dotXYZ(T2*A2, A2)
+inverse = [-1/D, -1/D, -1/D, 0]
+apply(cached_impulse)
+```
+
+All products and additions round to float32, including the tensor multiply and
+pairwise XYZ dot reductions. Row20 nonzero suppresses the second endpoint.
+The inverse goes to row330 plus16 times command index. Impulse application updates
+linear state by `L * (M * impulse)` and angular state by `T * (A * impulse)`.
+It writes the first endpoint before reading/updating the second. Coincident body
+indices therefore accumulate both effects. Fourth state lanes are retained and
+updated by this helper, rather than universally masked away.
+
+Iteration computes `speed = dotXYZ(A1,w1) + dotXYZ(L1,v1)`, then adds the second
+linear and angular contributions in that order when enabled. Per lane:
+
+```text
+candidate = inverse * (speed - target) + cached_impulse
+projected = max(min(upper, candidate), lower)
+delta = projected - cached_impulse
+apply(delta)
+cached_impulse = cached_impulse + delta
+```
+
+The target, lower, upper and cached values are command-relative40/50/60/70.
+The final addition is retained rather than replaced with assignment of projected,
+because its rounding can differ. SSE min/max operand order is preserved for ties.
+Finite, nonsingular inputs and at most six commands define the independent API's
+supported domain; exceptional arithmetic is rejected rather than approximated.
+
+[Command solver validation](../../native/snow_host/pose_command_solver_validation.json)
+compares512 preparations and1536 iterations, without interception. All row,
+body-data and body-state bytes match after every call. Cases include off-diagonal
+tensor entries, nonzero fourth lanes, coincident indices and cached impulses.
+These formulas identify a bounded impulse solve. They do not yet identify which
+player/animation producers populate the commands or establish full group fidelity.

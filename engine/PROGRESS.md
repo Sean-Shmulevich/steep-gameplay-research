@@ -8109,3 +8109,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   return values. Captured the actual six-way dispatch table. This closes one
   non-contact row producer; category24 numerical solving and the other five
   builders remain open, with no claimed physical semantics for command fields.
+- Recovered category24 command preparation and iteration.512 preparations and1536
+  iterations match native bytes with off-diagonal tensors, fourth lanes and
+  coincident endpoints. The solver uses per-command cached impulses and sequential
+  body updates. This supersedes the numerical-solver gap for this row family;
+  traversal integration and higher-level command producers remain open.

@@ -1053,3 +1053,9 @@ kind4/category24 row, reserves a result index and expands retained command recor
 without interpreting their physical meaning. See LINK_SOLVER.md, "Command constraint
 rows". Six commands is an authored capacity bound; untouched bytes persist.
 Category24 numerical solving remains unsupported.
+
+Command constraint solving: `prepare_pose_command_row` and
+`iterate_pose_command_row` recover effective mass, cached impulse application and
+bounded updates for category24. See LINK_SOLVER.md, "Command constraint solving".
+Finite nonsingular arithmetic, six-command storage bound and explicit body data
+are required. Full traversal integration and gameplay command ownership remain open.

@@ -1,0 +1,25 @@
+{
+  "schema": "pose-command-solver-validation-v1",
+  "preparations": 512,
+  "iterations": 1536,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19f2180",
+    "0x19f2330",
+    "0x19f2430"
+  ],
+  "method": "Offline uninterrupted original preparation and three iterations; no interception",
+  "comparisons": [
+    "all row, body-data and body-state bytes after each call"
+  ],
+  "coverage": [
+    "negative through six commands",
+    "single/two endpoints and coincident indices",
+    "nonzero fourth lanes, componentwise bounds and cached impulses"
+  ],
+  "limits": [
+    "Finite nonsingular inputs; positive diagonal-dominant tensors with off-diagonal entries in this receipt.",
+    "Synthetic rows; full solver traversal and gameplay command producers not covered."
+  ]
+}
