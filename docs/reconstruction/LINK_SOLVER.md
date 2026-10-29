@@ -3694,3 +3694,36 @@ and diagonally dominant body tensors with off-diagonal terms. Singular response
 or zero third response is rejected by the independent helper; this is an authored
 guard, not recovered native recovery. Paired shared preparation and integration
 into full traversal remain outside this receipt.
+
+### Paired shared patch iteration
+
+`pose_paired_shared_solver.iterate_pose_paired_shared_row` reconstructs complete
+iteration0x19f19d0 and relative-state helper0x19f18c0. Its256-byte row has linear
+block L at+0x20, first angular block A1 at+0x50, second angular block A2 at+0x80,
+prepared inverse block K at+0xb0, accumulator+0xe0 and coefficient+0xf0.
+With operation order preserved:
+
+```text
+speed = transform(L, linear1) + transform(A1, angular1)
+speed = speed - transform(L, linear2)
+speed = speed + transform(A2, angular2)
+correction = transform(K, speed)
+candidate = -correction + old_result
+```
+
+Negation occurs after the inverse transform, unlike the one-body implementation's
+negated transform input. Projection uses the same coupled XYZ-length/all-three-
+strict-limits gate; the accumulator is cleared and the result is stored as
+`old + (projected - old)`. Both bodies receive tensor-mapped angular changes from
+their own angular blocks. Linear changes use opposite signs and each body's mass
+lanes. All intermediate operations round to float32.
+
+The original writes the first body's linear and angular state, then reads and
+updates the second body's state. Coincident indices therefore accumulate both
+updates sequentially. This differs from the paired primary solver's captured-state
+second-write-wins behavior; its update helper must not be reused here.
+
+[512 complete calls repeated three times](../../native/snow_host/pose_paired_shared_iteration_validation.json)
+match all256 row bytes, all state/result lanes and unchanged data, including
+random coincident body indices. Inverse response matrices are supplied finite
+synthetic inputs. Paired preparation and connected traversal remain unvalidated.

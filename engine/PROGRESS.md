@@ -8038,3 +8038,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   1536 iterations match complete row/state/results with off-diagonal body tensors.
   The one-body shared numerical path no longer requires a supplied inverse matrix.
   Paired shared numerics and full traversal integration remain open.
+- Recovered paired shared-row iteration and relative-state helper.512 original
+  cases with three iterations each match complete rows, both body states and
+  results, including coincident indices. Sequential alias behavior differs from
+  paired primary rows and has its own regression test. Paired preparation and
+  full traversal integration remain open.

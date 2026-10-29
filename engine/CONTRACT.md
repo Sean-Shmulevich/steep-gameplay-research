@@ -967,3 +967,8 @@ response matrix for the208-byte shared row and applies the cached result to body
 state. It preserves the inspected removal of third-component coupling before
 inversion and separate third reciprocal. See LINK_SOLVER.md, "Shared patch
 preparation". Finite nonsingular input only; singular rejection is an authored guard.
+
+Paired shared iteration: `iterate_pose_paired_shared_row` consumes a prepared256-byte
+row with two body indices and applies sequential first/second updates. Coincident
+indices accumulate both updates. See LINK_SOLVER.md, "Paired shared patch iteration".
+The inverse matrix remains supplied; no paired preparation or traversal claim.
