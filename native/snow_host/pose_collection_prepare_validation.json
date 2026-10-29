@@ -1,0 +1,22 @@
+{
+  "schema": "pose-collection-prepare-validation-v1",
+  "cases": 256,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18b9830",
+  "method": "Original reciprocal and two collection loops; count/getter/individual preparation calls supplied",
+  "comparisons": [
+    "service order and arguments",
+    "reciprocal float32 bytes including signed-zero division",
+    "unchanged owner record"
+  ],
+  "coverage": [
+    "zero through four entries in each collection",
+    "positive/negative/zero dt and small/large finite values"
+  ],
+  "limits": [
+    "Constraint preparation effects and provider collections supplied.",
+    "Floating-point status flags, NaN payloads and alternate MXCSR modes excluded.",
+    "No live session."
+  ]
+}

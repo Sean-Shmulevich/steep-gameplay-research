@@ -6510,3 +6510,69 @@ interface, obtains settings and calls the batch wrapper. Afterward, if active gr
 remain, it calls a downstream interface and finally resets its phase field to0.
 This is a static lead for the next integration boundary, not yet an implemented or
 native-compared outer stage.
+
+## Outer pose update stage
+
+`engine/pose_update_stage.py` reconstructs the normal-return service ordering of
+`0x18b9710` and the two-collection preparation driver `0x18b9830`. The outer stage
+sets its phase field to3, prepares constraints, obtains a body source, invokes the
+body update with the observed callback identity, runs three contact-stage calls,
+attaches the changed link span, publishes pending links, obtains settings and runs
+the pose batches. It tests the **post-batch** active-group count before a downstream
+notification, then resets phase to0. It is not an exception cleanup guarantee.
+
+```python
+owner.phase = 3
+prepare_constraints(owner, scalar)
+update_bodies(get_body_source(owner.provider), scalar, body_callback)
+begin_contacts(owner.contact_stage)
+update_contacts(owner.contact_stage, scalar)
+finish_contacts(owner.contact_stage)
+attach_links(owner.context, owner.changed_links.span)
+pending = capture_pending_span(owner.context)
+for slot in pending:
+    publish_link(owner.interface, slot.link + 8 if slot.link else null)
+settings = get_settings(owner.provider)
+run_batches(owner.context, scalar, settings)
+if owner.context.active_count != 0:
+    notify_active(owner.interface, null)
+owner.phase = 0
+```
+
+The implementation reloads the owner's provider/context/interface/contact pointers
+at their observed uses. Pending span bounds are captured once; each slot and the
+interface pointer are read when reached. Publishing null links passes null, not8.
+Callbacks can change later slots, and a batch callback can replace the context
+whose active count is checked. Public tests preserve these differences.
+
+The preparation driver computes float32(1.0 / scalar) once. It captures the first
+collection count, fetches and prepares each indexed constraint, then obtains the
+second collection count and repeats. The provider pointer is reloaded before each
+getter. The two loops are ordered; they are not one concatenated snapshot. Positive
+and negative zero produce signed infinities under the tested native floating-point
+mode. No local clamp or zero guard appears. This does not establish whether callers
+can legitimately submit zero. NaN payloads, floating-point status flags and other
+MXCSR modes remain outside the independent arithmetic contract.
+
+The individual constraint preparation call at `0x19445c0` remains an explicit
+service. Static inspection shows endpoint metadata-bit gates, endpoint swapping,
+a callback stored in the constraint record, and a returned count capped by resetting
+values above6 to0. Its callback/data semantics are the next numerical producer to
+resolve; they are not implemented by the outer-stage ordering model. Changed-link
+attachment at `0x18e2200` likewise includes wake, endpoint migration and group merge
+services that still need binding to the existing retained group implementations.
+
+[`pose_update_stage_validation.json`](../../native/snow_host/pose_update_stage_validation.json)
+records512 original outer-stage comparisons with subsystem calls supplied as
+recording services. All service arguments/order, phase observations and retained
+bytes match. It covers empty and populated pending spans, null/wrapped link-pointer
+conversion, scalar signs and post-solve active-count changes.
+[`pose_collection_prepare_validation.json`](../../native/snow_host/pose_collection_prepare_validation.json)
+records256 original preparation-driver comparisons. Reciprocal float32 bytes and
+both collection loops match, including signed-zero division.
+
+These receipts establish local orchestration and reciprocal preparation, not a
+complete numerical outer-stage execution. The already validated retained batch
+API can be supplied as run_batches; body/contact preparation, changed-link effects,
+publication interfaces and provider lookups remain explicit. No live game session
+or concurrent ownership proof is part of this pass.

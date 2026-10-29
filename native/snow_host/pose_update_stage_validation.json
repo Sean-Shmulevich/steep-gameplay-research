@@ -1,0 +1,23 @@
+{
+  "schema": "pose-update-stage-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18b9710",
+  "method": "Original complete outer stage with preparation, contact, membership, batch and interface calls supplied as recording services",
+  "comparisons": [
+    "service order, arguments and phase at every call",
+    "whole owner/context/collection/array bytes"
+  ],
+  "coverage": [
+    "zero through six pending links",
+    "null and wrapped link-plus8 conversion",
+    "post-solve active counts0/1/2",
+    "negative, zero and positive scalar"
+  ],
+  "limits": [
+    "Subsystem service effects are supplied; this is orchestration validation, not a full-stage numerical comparison.",
+    "Owner/slot mutations are tested publicly but not in these native fixtures.",
+    "No exception cleanup, concurrent mutation or live ownership proof."
+  ]
+}

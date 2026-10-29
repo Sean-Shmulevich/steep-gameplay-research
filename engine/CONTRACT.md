@@ -1386,3 +1386,10 @@ job owners/indices and argument-table pointers. See LINK_SOLVER.md, "Context job
 construction". It excludes allocation and protected constructor calls. Scalar and
 settings job fields remain untouched until batch submission. `bind_pose_jobs`
 returns authored views that alias these retained records and the raw pointer table.
+
+Pose update stage: `run_pose_update_stage` preserves the phase3 preparation,
+contact update, changed-link attachment, pending-link publication, batch solve and
+conditional post-solve notification order. See LINK_SOLVER.md, "Outer pose update
+stage". Subsystem effects remain explicit services. Owner pointers are reloaded
+between calls; pending span bounds are captured once, but slots are read per visit.
+Phase resets on normal return only. Exceptions do not imply native cleanup.

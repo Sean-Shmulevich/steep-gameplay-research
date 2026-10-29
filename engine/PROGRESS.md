@@ -8366,3 +8366,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   table adapter. Earlier protected allocation/construction, populated special-group
   callbacks and live/concurrent lifetime remain open. The upstream phase3 stage is
   now identified as the next orchestration lead.
+- Reconstructed phase3 outer update ordering and the reciprocal-scalar preparation
+  driver for two constraint collections.512 native outer-stage and256 preparation
+  comparisons match service order/arguments, phase, retained bytes and float32
+  reciprocal values. Post-batch active count gates downstream notification. The
+  individual constraint producer and changed-link wake/migration/merge bindings
+  remain explicit services; this is not a full numerical outer-stage comparison.
