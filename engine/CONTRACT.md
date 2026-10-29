@@ -1090,3 +1090,9 @@ angular coefficient matrices, applies cached impulses and bounds each increment.
 See LINK_SOLVER.md, "Paired point solver". The module name describes the math;
 it does not establish a native class or player consumer. Row production and
 traversal integration remain open; finite nonsingular retained inputs are required.
+
+Single point solver: category10 uses trace-normalized inversion and bounded
+increments coupling one body's linear/angular state. See LINK_SOLVER.md, "Single
+point solver". Mixed traversal accepts categories10/11 in normal phase after
+constraint primary rows, before contact primary rows. Twelve numerical categories
+remain unsupported. Row producers and gameplay ownership are not inferred.

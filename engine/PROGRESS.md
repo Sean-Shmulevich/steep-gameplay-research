@@ -8139,3 +8139,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   matrices and off-diagonal tensors. Opposite linear impulses and coefficient-led
   angular impulses retain exact ordering. Builder, gameplay ownership and shared
   traversal integration remain open for this family.
+- Recovered category10 one-body coupled solver with512 native preparations and1536
+  iterations matching all bytes. Integrated categories10/11 into traversal;
+  256 thirteen-category mixed wrapper comparisons pass across all phase masks.
+  Twelve numerical categories and full group lifecycle remain open. Supplied-row
+  validation does not establish production from live gameplay constraints.

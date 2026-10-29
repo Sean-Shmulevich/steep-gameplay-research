@@ -4319,3 +4319,45 @@ and coincident indices. Public tests check opposite linear updates, coefficient-
 angular signs, cached application and singular rejection. Finite nonsingular
 inputs are supported. Row construction, gameplay ownership and mixed traversal
 integration remain separate work.
+
+## Single point solver
+
+`engine/pose_point_solver.py` reconstructs category10 preparation0x19eff60 and
+iteration0x19f04e0 for128-byte rows. The first body's linear and angular state
+participate; the second index is unused. Coefficient matrix A occupies row20/30/40,
+and the inverse response occupies row50/60/70. Its pre-inversion matrix is
+`diag(M) + A*T*transpose(A)` in exact-real notation. Preparation retains the
+float32 multiplication order, divides the matrix by its trace, uses the recovered
+cofactor inverse and scales the inverse by the reciprocal trace again. Direct
+inversion without that normalization is not an interchangeable float32 path.
+
+Cached result applies `v += M*cached` and `w += T*transpose(A)*cached`.
+Iteration uses the recovered formulas:
+
+```text
+error = response.xyz + (A*w + v)
+increment = clamp(-(K*error), -response.w, response.w)
+result = old_result + increment
+v += M*increment
+w += T*transpose(A)*increment
+```
+
+The same four-lane dot, XYZ torque mask and per-increment cap conventions as the
+paired version apply. The second body need not exist in the retained map.
+[Single point validation](../../native/snow_host/pose_point_validation.json) compares
+512 preparations and1536 iterations with all bytes matching, including the
+original inverse routine, general coefficients and off-diagonal tensors.
+Nonfinite, zero-trace and singular arithmetic remain explicitly unsupported.
+
+## Thirteen-category numerical traversal
+
+`solve_pose_link_rows` accepts `point_rows` and `paired_point_rows` for categories10
+and11, using context130 and134 traversal counts. The normal supported order is
+24,13,12,9,8,11,10,1,0,5,4,7,6. Special phase skips both coupled families.
+
+[Thirteen-category comparison](../../native/snow_host/pose_thirteen_category_solve_validation.json)
+executes256 original wrappers without interception with all thirteen categories
+populated and sharing body state. Context, all rows, body data/state and results
+match across four phase masks and zero through three iterations. Builders are not
+executed by this check. Twelve numerical categories, their unresolved producers
+and full group lifecycle remain open; this count is not an engine coverage metric.
