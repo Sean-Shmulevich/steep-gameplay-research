@@ -74,3 +74,19 @@ class LinkSolveTests(unittest.TestCase):
         struct.pack_into('<I',c,0x168,0);struct.pack_into('<I',c,0x104,1)
         solve_pose_link_rows(c,**args)
         self.assertEqual(bytes(args['body_state'][0]),bytes(32))
+
+    def test_constraint_primary_reuses_formula_but_obeys_special_gate(self):
+        for flags,expected in [(12,(10,0,-2)),(0x10030000,(10,0,0))]:
+            c,args=self.fixture(flags)
+            struct.pack_into('<I',c,0x108,0);struct.pack_into('<I',c,0x120,0)
+            struct.pack_into('<I',c,0x128,1)
+            args['constraint_primary_rows']=args['primary_rows'];args['primary_rows']=[]
+            before=bytes(args['constraint_primary_rows'][0])
+            solve_pose_link_rows(c,**args)
+            self.assertEqual(struct.unpack_from('<3f',args['body_state'][7]),expected)
+            if flags==0x10030000:self.assertEqual(bytes(args['constraint_primary_rows'][0]),before)
+
+    def test_missing_constraint_primary_storage_is_explicit(self):
+        c,args=self.fixture();struct.pack_into('<I',c,0x12c,1)
+        with self.assertRaisesRegex(ValueError,'constraint primary'):
+            solve_pose_link_rows(c,**args)

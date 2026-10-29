@@ -8129,3 +8129,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   paired solver after sharing its cofactor helper. Connected both angular families
   into traversal:256 mixed original wrapper comparisons pass with all nine
   supported categories. Sixteen numerical categories and the full lifecycle remain.
+- Connected categories8/9 after confirming the original traversals call the same
+  primary numerical kernels as categories0/1. Their normal-only gate and earlier
+  ordering are preserved.256 mixed eleven-category native comparisons pass,
+  including backward accumulator links. Fourteen numerical categories remain;
+  numerical reuse does not establish shared producers or gameplay semantics.

@@ -4249,3 +4249,27 @@ compares256 uninterrupted native wrapper calls with all nine categories populate
 sharing body-state storage. Context, all rows, body data/state and results match
 across four phase masks and zero through three iterations. Builders are outside
 this comparison. Sixteen categories and the full group lifecycle remain open.
+
+## Reused primary kernels in constraint categories
+
+The original preparation traversal0x19e4710 calls the same paired primary kernel
+0x19e5310 for categories9 and1, and the same clear primary kernel0x19e55d0 for
+categories8 and0. Iteration traversal0x19e4d10 likewise reuses0x19e5840 and0x19e5710.
+This establishes identical numerical kernels, not identical row producers or
+physical meaning. Category9 rows are128 bytes; category8 rows are112 bytes.
+
+`solve_pose_link_rows` now accepts `paired_constraint_primary_rows` and
+`constraint_primary_rows` for categories9 and8. Their traversal counts are
+context12c and128; their arena bases are context64 and60 in16-byte units.
+Both run after angular rows and before the contact primary rows in normal phase.
+Unlike categories1/0, categories9/8 are skipped during the special phase.
+The recovered kernels retain nonnegative result projection and signed relative
+accumulator links, including links to storage preceding the current row.
+
+[Eleven-category comparison](../../native/snow_host/pose_eleven_category_solve_validation.json)
+runs256 uninterrupted original wrappers with categories24,13,12,9,8,1,0,5,4,7,6
+populated. Every retained buffer matches across all four phase masks and zero
+through three iterations. Category8/9 fixtures link backward to shared accumulators
+and share body state with other families. Public tests distinguish normal execution
+from the special-phase skip and reject missing row storage. Fourteen numerical
+categories, their unresolved producers and complete group composition remain open.

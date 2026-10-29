@@ -1,0 +1,18 @@
+{
+  "schema": "pose-eleven-category-solve-validation-v1",
+  "cases": 256,
+  "passed": 256,
+  "method": "offline uninterrupted original solver wrapper and numerical dispatch with categories24,13,12,9,8,1,0,5,4,7,6 populated; no interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1994e80",
+  "comparisons": [
+    "complete context and row bytes",
+    "all body states and result lanes",
+    "unchanged body data"
+  ],
+  "limits": [
+    "Retained rows supplied; builders not executed by this check.",
+    "Four phase masks and zero through three iterations; no unsupported category populated.",
+    "No complete group lifecycle, convergence or live scheduler claim."
+  ]
+}

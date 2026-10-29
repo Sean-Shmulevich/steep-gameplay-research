@@ -1078,3 +1078,9 @@ increments to one body. See LINK_SOLVER.md, "Single angular increment solver".
 Zero trace and singular/nonfinite inputs are rejected. Mixed traversal now accepts
 categories12/13 in normal phase after commands and before contact primary rows.
 Sixteen other categories remain unsupported.
+
+Constraint primary traversal: categories8/9 reuse the validated clear/paired
+primary numerical kernels, before contact primary rows in normal phase only.
+`constraint_primary_rows` and `paired_constraint_primary_rows` provide explicit
+storage. Signed accumulator links resolve from their own category bases.
+See LINK_SOLVER.md, "Reused primary kernels in constraint categories".

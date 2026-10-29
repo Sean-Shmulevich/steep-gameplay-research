@@ -17,8 +17,8 @@ from .pose_tangent_solver import prepare_pose_tangent_row,iterate_pose_tangent_r
 
 def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_rows,
                          body_data, body_state, results, paired_primary_rows=(), paired_tangent_rows=(),
-                         shared_rows=(), paired_shared_rows=(), command_rows=(), angular_rows=(), paired_angular_rows=(), arena=None):
-    """Run native phase/count policy for the nine supported row categories.
+                         shared_rows=(), paired_shared_rows=(), command_rows=(), angular_rows=(), paired_angular_rows=(), constraint_primary_rows=(), paired_constraint_primary_rows=(), arena=None):
+    """Run native phase/count policy for the eleven supported row categories.
 
     Traversal counts come from context108/120, not builder append counters.
     Other row-category counts must be zero. The caller supplies already populated
@@ -26,7 +26,7 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
     """
     if len(context_bytes)<0x17c:raise ValueError('Complete solver context fields required')
     counts=struct.unpack_from('<25I',context_bytes,0x108)
-    if any(value for i,value in enumerate(counts) if i not in (0,1,4,5,6,7,12,13,24)):
+    if any(value for i,value in enumerate(counts) if i not in (0,1,4,5,6,7,8,9,12,13,24)):
         raise ValueError('Unsupported populated row category')
     primary_count,paired_count,secondary_count=counts[0],counts[1],counts[6]
     if primary_count>len(primary_rows) or paired_count>len(paired_primary_rows) or secondary_count>len(secondary_rows):
@@ -41,6 +41,9 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
     angular_count,paired_angular_count=counts[12],counts[13]
     if angular_count>len(angular_rows) or paired_angular_count>len(paired_angular_rows):
         raise ValueError('Insufficient retained angular rows')
+    constraint_count,paired_constraint_count=counts[8],counts[9]
+    if constraint_count>len(constraint_primary_rows) or paired_constraint_count>len(paired_constraint_primary_rows):
+        raise ValueError('Insufficient retained constraint primary rows')
     def location(category,index,stride):
         if arena is None:return {}
         start=struct.unpack_from('<I',context_bytes,0x16c)[0]+16*struct.unpack_from('<I',context_bytes,0x40+4*category)[0]
@@ -52,6 +55,8 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
                 prepare_pose_command_row(row,body_data=body_data,body_state=body_state)
             for row in paired_angular_rows[:paired_angular_count]:prepare_pose_paired_angular_row(row,**args)
             for row in angular_rows[:angular_count]:prepare_pose_angular_row(row,**args)
+            for row in paired_constraint_primary_rows[:paired_constraint_count]:prepare_pose_paired_primary_row(row,**args)
+            for row in constraint_primary_rows[:constraint_count]:prepare_pose_primary_row(row,**args)
         for row in paired_primary_rows[:paired_count]:prepare_pose_paired_primary_row(row,**args)
         for row in primary_rows[:primary_count]:prepare_pose_primary_row(row,**args)
         if not descriptor['special']:
@@ -65,6 +70,8 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
                 iterate_pose_command_row(row,body_data=body_data,body_state=body_state)
             for row in paired_angular_rows[:paired_angular_count]:iterate_pose_paired_angular_row(row,**args)
             for row in angular_rows[:angular_count]:iterate_pose_angular_row(row,**args)
+            for i,row in enumerate(paired_constraint_primary_rows[:paired_constraint_count]):iterate_pose_paired_primary_row(row,**args,**location(9,i,128))
+            for i,row in enumerate(constraint_primary_rows[:constraint_count]):iterate_pose_primary_row(row,**args,**location(8,i,112))
         for i,row in enumerate(paired_primary_rows[:paired_count]):iterate_pose_paired_primary_row(row,**args,**location(1,i,128))
         for i,row in enumerate(primary_rows[:primary_count]):iterate_pose_primary_row(row,**args,**location(0,i,112))
         if not descriptor['special']:
