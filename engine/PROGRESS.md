@@ -8295,3 +8295,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   every allocation byte, including cross-row writes and unused padding. This joins
   layout to numerical execution without separately assembled row lists; row/body
   production and full feedback/poststep composition remain the next boundary.
+- Joined group preparation to body production, kind2 construction, arena solving
+  and body/constraint feedback.256 original-wrapper comparisons match every arena
+  and retained-object byte, plus poststep and angle-service arguments. The runtime
+  adapter binds all six pose builders, while this joined native check covers kind2
+  and empty contacts. Link operations/poststep remain explicit services; secondary
+  update composition has public tests but is not part of this native receipt.

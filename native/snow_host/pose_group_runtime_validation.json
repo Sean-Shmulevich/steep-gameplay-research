@@ -1,0 +1,25 @@
+{
+  "schema": "pose-group-runtime-validation-v1",
+  "cases": 256,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1994da0",
+  "method": "Original group wrapper through counting, retained layout, settings, body buffers, kind2 build, solve and feedback; memset and poststep services supplied, native atan2 outputs observed",
+  "comparisons": [
+    "entire context allocation and retained body/constraint/metadata bytes",
+    "poststep arguments",
+    "atan2 arguments and call counts"
+  ],
+  "coverage": [
+    "single and paired endpoint layouts",
+    "translation and angular states0/1/2",
+    "hard and soft rows, optional drives, swap modes",
+    "one through three normal iterations"
+  ],
+  "limits": [
+    "Empty contact-link arrays; link operations remain explicit services.",
+    "No secondary phase or poststep body integration in this comparison.",
+    "No damping response, allocator growth, callback mutation or live player ownership claim.",
+    "Atan2 output arithmetic remains supplied."
+  ]
+}

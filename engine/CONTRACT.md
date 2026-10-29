@@ -1296,3 +1296,11 @@ from retained layout fields and runs all25 numerical categories. See LINK_SOLVER
 "Complete arena numerical dispatch". Planned counts govern traversal regardless
 of append counters. Rows and body buffers must already be populated; count repair,
 row construction, feedback and full group lifecycle are not implicit.
+
+Joined group runtime: `run_pose_group_runtime` connects raw body input parsing,
+body-buffer production, six-kind pose building, arena solving and body/constraint
+feedback through the recovered group-step orchestrator. See LINK_SOLVER.md,
+"Joined group numerical runtime". Link operations and poststep are explicit
+mandatory services; damping and secondary update require services when reached.
+The joined native validation covers kind2 with empty contact arrays and normal
+phase. It does not establish a complete player tick or mixed-contact lifecycle.

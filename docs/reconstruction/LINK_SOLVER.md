@@ -5876,3 +5876,59 @@ these tests do not establish complete group lifecycle or live-player equivalence
 This adapter can consume a context prepared by `prepare_pose_group` once its body
 buffers and rows have been populated. It removes the need to manually pass25
 separate row lists, while preserving the same numerical and state-domain limits.
+
+## Joined group numerical runtime
+
+`engine.pose_group_runtime.run_pose_group_runtime` binds the existing native-order
+`run_pose_group_step` to body-buffer production, six-kind constraint construction,
+complete arena solving, body-motion feedback and kind2 result feedback. It accepts
+retained raw groups, bodies, constraints and metadata plus explicit pointer-array
+views. The callback argument tokens identify these views, not live process memory.
+
+Body preparation reads basis40/50/60, tensor170/180/190, scalar124, motion1a0/1ac,
+flagsaa and metadata52. It consumes scalar/vector addresses supplied by the group
+orchestrator, preserving the context10 scalar and context0 vector relationship.
+Reached damping pointers require an explicit record map and response service;
+fixed-body and zero-scalar branches do not resolve damping records. Produced data
+and state are copied into their retained arena regions. The normal-phase flag is
+set by the orchestrator before constraint construction.
+
+```text
+produce_body_buffers_into_arena()
+build_links_via_explicit_service()
+select_normal_phase()
+build_constraints_into_arena()
+solve_pose_arena()
+link_feedback_via_explicit_service()
+copy_solved_body_motion()
+copy_kind2_constraint_results()
+if secondary_phase_enabled:
+    clear_body_state()
+    refresh_links_via_explicit_service()
+    solve_pose_arena()
+if secondary_phase_still_enabled:
+    temporarily_apply_secondary_body_state_via_explicit_update_service()
+poststep_via_explicit_service()
+```
+
+No empty callback defaults are provided. Link build/feedback/refresh and poststep
+are mandatory services; secondary body update is required when reached. This
+lets existing implementations connect without silently substituting behavior.
+Array views must describe stable retained spans. Lifetime pinning and concurrent
+mutation are outside the adapter. Count/build mismatch inputs remain unresolved.
+
+[256 joined native comparisons](../../native/snow_host/pose_group_runtime_validation.json)
+run the original group wrapper through counts, retained layout, settings, body
+production, kind2 construction, numerical solve and both feedback paths. Entire
+allocations, raw bodies, constraints and metadata match. Poststep arguments and
+atan2 service arguments/call counts match. Cases cover single/paired endpoints,
+translation/angular states0/1/2, hard/soft rows, optional drives, swaps and one
+through three normal iterations. Native atan2 outputs are supplied; byte-fill and
+poststep are services. Contact arrays are empty, damping is absent, and secondary
+phase is disabled in this native composition check.
+
+Public tests additionally exercise the secondary clear/update/restore sequence,
+required damping resolution and the fixed-body damping bypass. Those tests are
+independent implementation tests, not additional joined native comparisons.
+Full mixed-contact group execution, poststep integration, allocation growth and
+live player ownership remain distinct validation work.
