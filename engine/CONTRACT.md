@@ -1274,3 +1274,12 @@ lever-arm adjustment and per-axis state dispatch. See LINK_SOLVER.md, "Kind2
 translation assembly". Only scalar spring rows publish their feedback indices;
 limit-only and skipped axes preserve them. This remains a stage API, not a full
 kind2 builder. Angular rows/drives and full lifecycle are unresolved.
+
+
+Kind2 complete composition: `build_pose_axis_constraint` now assembles angular
+frames, hard/soft angular rows, limit pairs and direct drives after translation.
+See LINK_SOLVER.md, "Kind2 angular frames and complete composition". All six known
+kinds now dispatch directly. Atan2 and notification effects remain explicit
+services. States0/1/2 agree with count planning; angular state3 emits limits that
+the prepass does not reserve. Full lifecycle and active ownership remain open.
+This supersedes the earlier kind2-external/stage-only descriptions.

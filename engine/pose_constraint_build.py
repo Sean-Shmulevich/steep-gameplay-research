@@ -1,5 +1,6 @@
 """Pose builder dispatch; LINK_SOLVER.md, Constraint builder eligibility and dispatch."""
 import struct
+from .pose_constraint_axes import build_pose_axis_constraint
 from .pose_constraint_cone import build_pose_cone_constraint
 from .pose_constraint_motion import build_pose_motion_constraint
 from .pose_constraint_point import build_pose_point_constraint
@@ -8,12 +9,11 @@ from .pose_constraint_commands import build_pose_command_constraint
 
 
 def build_pose_constraints(context, slots, *, constraints, bodies, metadata,
-                           get_kind, atan2=None, notify=None, additional_builders=None):
+                           get_kind, atan2=None, notify=None):
     """Run the retained pointer-list eligibility loop and six-way kind dispatch.
 
-    get_kind(token) supplies the virtual type service. Reconstructed kinds1/3/4/5/6
-    run directly; reached kind2 requires explicit additional_builders[kind]
-    accepting (context, constraint_token). Unknown uint32 kinds emit no rows.
+    get_kind(token) supplies the virtual type service. All six reconstructed kinds run directly.
+    Kinds2/3/5 require an explicit atan2 service. Unknown uint32 kinds emit no rows.
     The pointer selected before get_kind is retained even if that service edits
     the slot. No traversal-count or result-cache policy is invented here.
     """
@@ -46,6 +46,7 @@ def build_pose_constraints(context, slots, *, constraints, bodies, metadata,
             build_pose_cone_constraint(context,constraint,bodies=bodies,metadata=metadata,
                                        atan2=atan2,notify=notify)
         elif kind == 2:
-            if additional_builders is None or kind not in additional_builders:
-                raise ValueError(f'Kind{kind} builder remains an explicit dependency')
-            additional_builders[kind](context,token)
+            if atan2 is None:
+                raise ValueError('Kind2 requires explicit atan2 service')
+            build_pose_axis_constraint(context,constraint,bodies=bodies,metadata=metadata,
+                                       atan2=atan2,notify=notify)

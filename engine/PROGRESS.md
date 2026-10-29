@@ -8273,3 +8273,11 @@ cases. This is not wired into a live host API and does not pin manager or module
   disabled match all arenas and retained objects. Public checks reconcile216
   state/coefficient combinations with count prepass. Kind2 angular preparation,
   angular row dispatch and optional drives remain to compose.
+
+- Completed kind2 angular-frame preparation, angular state rows and optional
+  direct drives.512 angular-stage and512 full native builder cases match arena
+  bytes, retained objects and service arguments. All six known kinds now have
+  direct reconstructed dispatch. Public tests reconcile54 angular state/hardness
+  combinations with counts. Angular state3 still exposes a prepass/build mismatch;
+  atan2 arithmetic, notification effects, full lifecycle and active rig ownership
+  remain outside this result. No live game session was used for this checkpoint.

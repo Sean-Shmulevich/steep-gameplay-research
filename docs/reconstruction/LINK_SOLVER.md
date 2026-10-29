@@ -5736,3 +5736,64 @@ returns prepared inputs for later angular composition; it is not registered as
 a complete kind2 dispatcher implementation. Angular-frame preparation, angular
 row dispatch and drive composition remain open. No full group lifecycle or active
 player ownership is established by these isolated translation runs.
+
+
+## Kind2 angular frames and complete composition
+
+`engine.pose_constraint_axes.build_pose_axis_constraint` now composes translation,
+angular rows and optional direct drives for the complete kind2 builder at
+RVA0x19e5da0. This supersedes the earlier kind2 composition gaps above. All six
+known kinds now have independent implementations in `build_pose_constraints`.
+These are local constraint producers, not the full scheduler or active rig.
+
+Let A and B be the prepared endpoint world-axis triples. Without swap, choose
+base=A2, other=B0, alternate=B1. With swap choose base=B2, other=A0,
+alternate=A1. Cross products clear W and dot products use XYZ. Operations retain
+float32 rounding, including square root and reciprocal before normalization.
+
+```text
+if abs(dot(base, other)) < float32(0.9999):
+    middle = normalize(cross(base, other))
+    secondary = normalize(cross(middle, base))
+else:
+    secondary = normalize(cross(alternate, base))
+    middle = normalize(cross(base, secondary))
+
+if swapped:
+    triples = [(A0, A1, middle), (middle, A0, secondary), (B2, middle, B1)]
+else:
+    triples = [(B0, middle, B1), (middle, secondary, B0), (A2, A1, middle)]
+```
+
+Each triple contains axis, reference and target for signed-angle calculation.
+Angular records at configbc/d0/e4 contain state, lower bound, upper bound,
+stiffness and damping. If all states are1, frame preparation is skipped.
+State1 emits nothing. State0 emits hard18/19 when stiffness>=float32(1e12),
+otherwise soft20/21 with the existing spring arithmetic. Other states emit two
+category8/9 angular limits: sign=-1 with offset=upper, then sign=+1 with
+offset=-lower. They share one signed-angle evaluation. Endpoint indices are
+completed after emission; angular rows do not publish translation feedback slots.
+
+The builder emits limits for state3 too, but the count prepass only reserves
+angular limit pairs for state2. This is an unresolved input-validity/lifecycle
+boundary. Count agreement is established for states0/1/2, not arbitrary states.
+Do not allocate using the prepass for state3 and assume enough capacity.
+
+Drive records at configf8/104/110 pair with the three angular states. A drive
+requires a nonzero state and enabled byte. It uses the corresponding original
+world axis from A without swap or B with swap, direct mode2, and the stored
+sample and strength. It does not use the constructed middle/secondary axes.
+Unless the suppression byte is set, each reached drive checks the first body's
+owner and metadata notification pointers and calls the supplied notification
+service with that body token and2. Three drives can cause three notifications.
+
+[Angular-stage comparison](../../native/snow_host/pose_kind2_angular_validation.json)
+and [complete-builder comparison](../../native/snow_host/pose_kind2_builder_validation.json)
+each passed512 native cases. Entire arenas and retained objects match. Complete
+builder checks also compare notification arguments and signed-angle service
+arguments/call counts. Native atan2 outputs remain supplied to the independent
+implementation; notification effects and callback-driven mutation are excluded.
+Public tests check all54 angular state/hardness combinations against counts,
+near-parallel fallback, skipped-frame preparation, repeated notification and
+complete dispatcher equivalence. Full group lifecycle, count/build eligibility
+reconciliation and active player ownership remain open.

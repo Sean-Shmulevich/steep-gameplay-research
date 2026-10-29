@@ -1,0 +1,29 @@
+{
+  "schema": "pose-kind2-angular-stage-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x19e5da0",
+  "method": "Complete original kind2 with drives disabled; native atan2 outputs supplied to explicit independent service, no reached notification",
+  "comparisons": [
+    "entire arena, constraints, bodies and metadata",
+    "signed-angle arguments and call counts",
+    "native success result"
+  ],
+  "coverage": [
+    "translation and angular states0 through3",
+    "hard and soft angular rows",
+    "angular limit pairs",
+    "both endpoint layouts and swap modes",
+    "general nonorthogonal axes",
+    "all phase masks"
+  ],
+  "limits": [
+    "Optional drives excluded.",
+    "Independent atan2 arithmetic remains external.",
+    "Finite synthetic inputs and nondegenerate angular frames.",
+    "Full group lifecycle and active player ownership are not established.",
+    "Notification side effects and callback-driven mutation are excluded.",
+    "Angular state3 emits limits despite no corresponding count-prepass reservation; count agreement covers states0/1/2."
+  ]
+}

@@ -34,8 +34,8 @@ class ConstraintDispatchTests(unittest.TestCase):
             build_pose_constraints(c,[1],get_kind=lambda t:kind,**args)
             self.assertEqual(bytes(c),before)
 
-    def test_missing_builder_is_explicit(self):
-        for kind in (2,5):
+    def test_required_angle_service_is_explicit(self):
+        for kind in (2,3,5):
             c,args=self.fixture()
             with self.assertRaisesRegex(ValueError,f'Kind{kind}'):
                 build_pose_constraints(c,[1],get_kind=lambda t:kind,**args)
@@ -44,8 +44,9 @@ class ConstraintDispatchTests(unittest.TestCase):
         c,args=self.fixture();slots=[1,2];calls=[]
         def kind(token):
             slots[0]=2
-            return 2
-        build_pose_constraints(c,slots,get_kind=kind,additional_builders={2:lambda c,t:calls.append(t)},**args)
+            calls.append(token)
+            return 4
+        build_pose_constraints(c,slots,get_kind=kind,**args)
         self.assertEqual(calls,[1,2])
 
     def test_kind3_needs_math_service(self):

@@ -63,3 +63,90 @@ def build_pose_axis_translations(context,constraint,*,bodies,metadata,prepared=N
             build_pose_translation_limit_pair(context,axis=axes[i],body_indices=indices,
                 first_bound=[lo]*4,second_bound=[hi]*4,**common)
     return data
+
+
+def prepare_pose_angular_axes(prepared, *, swapped):
+    """Return three (axis,reference,target) triples for reached angular rows."""
+    import math
+    from .pose_constraint_hinge import _cross
+    a,b=prepared['axes']
+    base,other,alternate=(b[2],a[0],a[1]) if swapped else (a[2],b[0],b[1])
+    def dot(x,y):
+        p=[f32(u*v) for u,v in zip(x[:3],y[:3])]
+        return f32(f32(p[0]+p[1])+f32(p[2]+0.))
+    def normalized(v):
+        length=f32(math.sqrt(dot(v,v)))
+        if length==0:raise ValueError('Nondegenerate kind2 angular frame required')
+        reciprocal=f32(1./length)
+        return [f32(x*reciprocal) for x in v]
+    if abs(dot(base,other))<f32(.9999):
+        middle=normalized(_cross(base,other))
+        secondary=normalized(_cross(middle,base))
+    else:
+        secondary=normalized(_cross(alternate,base))
+        middle=normalized(_cross(base,secondary))
+    if swapped:return [(a[0],a[1],middle),(middle,a[0],secondary),(b[2],middle,b[1])]
+    return [(b[0],middle,b[1]),(middle,secondary,b[0]),(a[2],a[1],middle)]
+
+
+def build_pose_axis_angular_rows(context,constraint,*,prepared,atan2):
+    """Append kind2 angular state rows; optional drives remain separate."""
+    from .snow_pose_hard_row import build_hard_pose_row
+    from .snow_pose_soft_row import build_soft_pose_row
+    from .snow_pose_angle import pose_row_angle
+    from .pose_constraint_limit import build_pose_angular_limit_row
+    config=prepared['config'];single=prepared['single'];indices=prepared['body_indices']
+    records=[struct.unpack_from('<I4f',config,o) for o in (0xbc,0xd0,0xe4)]
+    if all(r[0]==1 for r in records):return
+    triples=prepare_pose_angular_axes(prepared,swapped=bool(constraint[0x59]))
+    u32=lambda o:struct.unpack_from('<I',context,o)[0]
+    for (state,lo,hi,k,d),(axis,reference,target) in zip(records,triples):
+        if state==1:continue
+        if state==0:
+            soft=k<HARD_THRESHOLD
+            category=(20 if soft else 18)+(0 if single else 1)
+            stride=(80 if soft else 64)+(0 if single else 16)
+            count_offset=0xa4+4*category;count=u32(count_offset)
+            row=u32(0x16c)+16*((u32(0x40+4*category)+count*(stride//16))&0xffffffff)
+            if row+stride>len(context):raise ValueError('Complete retained angular row required')
+            args=dict(class_byte=int(single),base_row=u32(0x40+4*category),class_count=count,
+                row_region_offset=u32(0x16c),result_count=u32(0x180),context_scalar=struct.unpack_from('<f',context,0xc)[0],
+                context_flags=u32(0x38),axis=axis,reference=reference,target=target,atan2=atan2)
+            built=(build_soft_pose_row(bytes(context[row:row+stride]),stiffness=[k]*4,damping=[d]*4,**args)
+                   if soft else build_hard_pose_row(bytes(context[row:row+stride]),**args))
+            context[row:row+stride]=built['row']
+            struct.pack_into('<I',context,count_offset,built['next_class_count'])
+            struct.pack_into('<I',context,0x180,built['next_result_count'])
+            struct.pack_into('<HH',context,row,*indices)
+        else:
+            angle=pose_row_angle(axis,reference,target,atan2)['angle']
+            for sign,bound in ((-1.,hi),(1.,-lo)):
+                row=build_pose_angular_limit_row(context,single=single,axis=axis,coordinate=[angle]*4,
+                    sign=[sign]*4,offset=[bound]*4,response_term=[HARD_THRESHOLD]*4,response_mix=[0.]*4)
+                struct.pack_into('<HH',context,row,*indices)
+
+
+def build_pose_axis_constraint(context,constraint,*,bodies,metadata,atan2,notify=None):
+    """Complete kind2 translation, angular and optional direct-drive composition.
+
+    Axis constraint is an authored name. Atan2 and reached body notifications
+    remain explicit services; callback mutation is outside validation coverage.
+    """
+    from .pose_constraint_drive import build_pose_angular_drive_row
+    data=build_pose_axis_translations(context,constraint,bodies=bodies,metadata=metadata)
+    build_pose_axis_angular_rows(context,constraint,prepared=data,atan2=atan2)
+    config=data['config']
+    for i,(state_offset,drive_offset) in enumerate(zip((0xbc,0xd0,0xe4),(0xf8,0x104,0x110))):
+        state=struct.unpack_from('<I',config,state_offset)[0]
+        if state==0 or not config[drive_offset]:continue
+        sample,strength=struct.unpack_from('<2f',config,drive_offset+4)
+        axis=data['axes'][int(bool(constraint[0x59]))][i]
+        row=build_pose_angular_drive_row(context,single=data['single'],mode=2,
+            axis=axis,sample=[sample]*4,impulse_bound=[strength]*4)
+        struct.pack_into('<HH',context,row,*data['body_indices'])
+        if not config[drive_offset+1]:
+            token=struct.unpack_from('<Q',constraint,8)[0];body=bodies[token]
+            if struct.unpack_from('<Q',body,0x10)[0] and struct.unpack_from('<Q',metadata[struct.unpack_from('<Q',body,0x30)[0]],0x20)[0]:
+                if notify is None:raise ValueError('Reached kind2 notification requires service')
+                notify(token,2)
+    return 1
