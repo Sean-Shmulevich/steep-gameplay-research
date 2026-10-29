@@ -1223,3 +1223,10 @@ LINK_SOLVER.md, "Quaternion angular-drive response". Endpoint indices and prepar
 coefficients are preserved for other stages. `pose_scalar_asin` independently
 implements finite[-1,1] output arithmetic; CRT status effects remain excluded.
 Complete kind5 composition and caller ownership remain unresolved.
+
+Ellipse dependencies: `pose_ellipse_project` and `pose_ellipse_normal` reconstruct
+kind5 limit-geometry helpers with positive finite radii. See LINK_SOLVER.md,
+"Elliptical limit projection". Projection targets the boundary even for interior
+points, preserves near-axis tie/sign choices, and uses last-evaluated denominators
+at the19-update cap. Complete angular geometry and constraint composition remain
+open; no player joint ownership is implied.

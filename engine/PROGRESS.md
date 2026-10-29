@@ -8235,3 +8235,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   native builder comparisons match without substituted math outputs. Category12/13
   rows are now constructible through this API. Full kind5 geometry/composition
   and group lifecycle remain open; CRT status side effects are not modeled.
+- Reconstructed kind5 limit projection and ellipse-normal dependencies.8192 native
+  comparisons per helper match both output components, including872 projection
+  iteration-cap cases. Preserved near-axis branches and the final evaluated
+  denominators. Existing quaternion-basis and scalar-trig kernels can be reused
+  for the remaining angular geometry; complete kind5 composition remains open.

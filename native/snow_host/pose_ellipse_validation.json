@@ -1,0 +1,32 @@
+{
+  "schema": "pose-ellipse-validation-v1",
+  "projection_cases": 8192,
+  "normal_cases": 8192,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19f3930",
+    "0x19f4180"
+  ],
+  "method": "Uninterrupted original projection and normal routines; no interception",
+  "iteration_cap_cases": 872,
+  "branch_hits": {
+    "0x19f39b8": 1584,
+    "0x19f3b35": 5691,
+    "0x19f4045": 5691,
+    "0x19f3a84": 917
+  },
+  "comparisons": [
+    "both scalar output bits for each helper"
+  ],
+  "coverage": [
+    "positive unequal and equal radii",
+    "interior and exterior points",
+    "axis and near-axis cases",
+    "positive and negative coordinates"
+  ],
+  "limits": [
+    "Finite bounded synthetic inputs and positive radii.",
+    "No full angular-limit geometry or kind5 composition claim."
+  ]
+}

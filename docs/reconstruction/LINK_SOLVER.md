@@ -5354,3 +5354,59 @@ existing counters. Public regressions additionally cover shortest-sign selection
 frame-before-additive order, untouched endpoint/preparation fields and signed zero.
 Complete kind5 composition, its angular-limit geometry and group lifecycle remain
 unresolved; this closes one producer dependency, not the whole constraint type.
+
+## Elliptical limit projection
+
+Kind5's limit-geometry helper RVA19e9060 calls projection RVA19f3930 and normal
+RVA19f4180 when both supplied extents exceed its small-value threshold.
+`engine/pose_ellipse.py` reconstructs these two dependencies. It does not yet
+compose the complete limit geometry or assign anatomical meanings to its axes.
+
+`pose_ellipse_project(x,y,a,b)` projects onto the boundary of an axis-aligned
+ellipse with positive radii a/b. It does not preserve interior points. Let
+A=a², B=b² and epsilon=float32(1e-4). All arithmetic below rounds to float32
+at each operation, including square roots and division.
+
+For abs(x)<=epsilon, if a<b and abs(y)<b-A/b, select py=B*y/(B-A) and
+px=sign(x)*a*sqrt(abs(1-(py/b)²)). Otherwise select(0,sign(y)*b).
+The abs(y)<=epsilon branch is symmetric, tested second. Zero takes the positive
+sign. Thus the origin maps to the positive shorter-radius endpoint, with the
+positive Y endpoint winning when radii are equal. The implementation retains
+reciprocal-first products in these tests and reconstruction expressions.
+
+For other points, initialize t=0 inside the ellipse, otherwise
+`t=max(a,b)*sqrt(y²+x²)`. Define AX=x²*A and BY=y²*B. Each iteration evaluates:
+
+```text
+u = t+B
+v = t+A
+residual = ((u*u)*(v*v) - (u*u)*AX) - (v*v)*BY
+if abs(residual) < epsilon: stop
+derivative = 2 * (((u*v)*(u+v) - u*AX) - v*BY)
+t = t - residual/derivative
+```
+
+There are at most19 updates. The original code unrolls groups of8 before the
+final scalar loop. If it exhausts the limit, final reconstruction uses the last
+evaluated u/v, without recomputing them after the last t update. This behavior is
+retained; the independent implementation does not add extra convergence steps.
+
+If abs(v)>abs(u), compute px=A*x/v, then
+py=sign(u*y)*b*sqrt(max(0,1-(px/a)²)). Otherwise compute py=B*y/u, then
+px=sign(v*x)*a*sqrt(max(0,1-(py/b)²)). Negative-sign tests are strict. Input radii
+and intermediate arithmetic must be finite and nondegenerate. Authored guards
+reject unsupported degeneracy rather than claiming recovery of IEEE exceptions.
+
+`pose_ellipse_normal(a,b,px,py)` forms n=(px,(a²*py)/b²), computes one rounded
+reciprocal of sqrt(nx²+ny²), and multiplies both components by it. This has the
+ellipse-gradient direction for positive radii, but algebraically substituting a
+different gradient formula could change float32 results.
+
+[Ellipse validation](../../native/snow_host/pose_ellipse_validation.json) records
+8192 projection and8192 normal comparisons against uninterrupted original code.
+Both output components match bit-for-bit in every case. The projection reached
+its iteration cap in872 cases. Coverage includes unequal/equal radii, interior
+and exterior points, both near-axis branches and signed coordinates. The public
+regressions include one synthetic native-output fixture that reaches the cap.
+No game payload is included. Full kind5 geometry, allocation and lifecycle remain
+separate work.
