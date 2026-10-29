@@ -4018,3 +4018,37 @@ orchestration comparison for these tested classes. Link rings are empty in this
 composition receipt. Nonempty payload release, other body/resource classes, live
 reactivation, broadphase publication and complete group solving remain separate
 boundaries. Synthetic comparison is not evidence of an entire original game tick.
+
+## Pose constraint feedback
+
+`engine/pose_constraint_feedback.py` reconstructs routine0x1994080, the pose
+feedback stage after body and contact feedback. Each endpoint's metadata byte52
+bit0 suppresses the constraint; the second endpoint may be null. Eligible entries
+receive a virtual kind query. Only kind2 proceeds, and the array slot is reloaded
+after that query. Getter0x1942bf0 returns the constraint's inline configuration at70.
+
+The result format depends on configuration. All three words at constraintf0/104/118
+must be bitwise zero, and none of the floats atfc/110/124 may compare below the
+float32 threshold999999995904. Then index190 selects one16-byte result and its
+XYZ words copy to19c/1a0/1a4. Otherwise indices190/194/198 independently select
+result records, copying each record's first word to the corresponding destination.
+Each indexffffffff preserves the old destination. Negative zero is nonzero for
+the configuration-word gate. Unordered float comparisons do not select the
+below-threshold branch. Output copies preserve raw bits without float conversion.
+
+Result records start at context plus the unsigned offset at178. The public API
+uses retained byte storage, explicit body/metadata identities and a required
+virtual type-query service. It does not infer constraint type from layout.
+
+[Feedback validation](../../native/snow_host/pose_constraint_feedback_validation.json)
+compares512 offline original calls. All retained bytes and ordered kind queries
+match. Only the virtual kind response is supplied; the original feedback and
+inline getter execute. Public tests cover packed bit preservation, signed-zero
+configuration, scalar sentinel preservation, disabled endpoints and slot reload.
+Floating-point exception flags, row generation, numerical constraint solving and
+live object lifetime are outside this result.
+
+The adjacent pose builder0x19948d0 uses the same endpoint gates, then invokes
+0x19905f0. That helper dispatches virtual kinds1 through6 to six builders.
+These are concrete leads for the remaining non-contact constraint producers;
+feedback recovery alone does not implement those builders or their solvers.

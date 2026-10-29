@@ -1,0 +1,22 @@
+{
+  "schema": "pose-constraint-feedback-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1994080",
+  "method": "Offline original feedback and inline configuration getter; only virtual kind query supplied",
+  "comparisons": [
+    "all context, constraint, body and metadata bytes",
+    "ordered virtual kind queries"
+  ],
+  "coverage": [
+    "endpoint disable flags, nullable second endpoint, non-kind2 skip",
+    "packed XYZ result versus three independent scalar results",
+    "missing-index sentinel preserves old component",
+    "arbitrary result bits, negative-zero configuration bits and unordered bound comparisons"
+  ],
+  "limits": [
+    "Virtual type query supplied; constraint row producers and numerical solves are not covered.",
+    "No live lifetime or concurrency claim; floating-point exception flags not modeled."
+  ]
+}

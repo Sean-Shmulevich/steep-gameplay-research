@@ -1041,3 +1041,9 @@ See LINK_SOLVER.md, "Integrated group poststep". Callers provide matching retain
 metadata identities and explicit trig/resource/release services. Box bounds and
 scalar trig can use recovered implementations. No concurrent lifetime guarantee,
 other-class dispatch or full group-solve claim is supplied.
+
+Pose constraint feedback: `feedback_pose_constraints` applies endpoint gates,
+queries explicit virtual kind and copies kind2 results in packed or scalar mode.
+See LINK_SOLVER.md, "Pose constraint feedback". Missing indices preserve values;
+raw result bits survive unchanged. Row producers, type discovery, floating-point
+exception flags and numerical constraint solving remain separate dependencies.

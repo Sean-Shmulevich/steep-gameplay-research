@@ -8099,3 +8099,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   inactive outcomes cover quiet gating and zero through two resources per body.
   Nonempty link release, other classes, broadphase publication and full group solve
   remain outside this composition receipt.
+- Recovered pose constraint feedback after the group solve.512 original offline
+  calls match all retained bytes and kind queries across packed/scalar result
+  layouts, endpoint gates and missing indices. Public tests cover bit preservation
+  and slot reload after the virtual query. Six kind-dispatched pose builders are
+  identified as the next producer leads; their reconstruction remains open.
