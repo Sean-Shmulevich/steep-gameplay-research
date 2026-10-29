@@ -1192,3 +1192,11 @@ optional category14/15 drive. Hinge is an authored name. See LINK_SOLVER.md,
 body notification requires a supplied callback. Native validation supplies
 observed atan2 output and intercepts notification effects, while checking all
 builder writes and callback arguments. No lifecycle/count-publication claim.
+
+Constraint builder caller: `build_pose_constraints` implements endpoint
+metadata52 eligibility and virtual-kind dispatch. Kinds1/3/4 use reconstructed
+builders; reached kinds2/5/6 require supplied services and unknown kinds skip.
+See LINK_SOLVER.md, "Constraint builder eligibility and dispatch". The selected
+constraint token is retained across the kind query. Planned-count publication
+already exists in `initialize_pose_solver_storage`; integrating prepass, builder
+eligibility and lifecycle remains unfinished, not the local publication formula.

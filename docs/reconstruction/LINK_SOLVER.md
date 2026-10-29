@@ -5100,3 +5100,61 @@ Kinds1,3,4 now have complete row-building paths within their stated domains.
 Kinds2,5,6, outer eligibility integration, count publication, result-cache lifecycle
 and complete group composition remain unfinished. Nothing here establishes that
 this constraint is the player's active trick or ragdoll joint.
+
+## Constraint builder eligibility and dispatch
+
+`engine.pose_constraint_build.build_pose_constraints` connects the retained-list
+loop0x19948d0 and type dispatcher0x19905f0 to the reconstructed kind1/3/4 builders.
+The API takes explicit constraint/body/metadata maps, a slot list and a
+`get_kind(token)` service for virtual slot10. Its sequence is:
+
+```text
+for each slot:
+    constraint = slots[i]
+    if first_body.metadata52 bit0: continue
+    if second_body exists and second_body.metadata52 bit0: continue
+    kind = get_kind(constraint)
+    if kind in 1..6: invoke the selected builder
+    otherwise: continue
+```
+
+The first body is required; a null second body bypasses its eligibility test.
+That does not mean every kind supports a missing second body. The command builder
+supports it, while point and kind3 geometry need both frames. The kind query is
+not called for ineligible entries. The dispatcher retains the selected constraint
+token across the query; it does not reload a replaced current slot. Later slots
+are read when reached.
+
+Kinds1/3/4 call their independent implementations. Kinds2/5/6 remain explicit
+`additional_builders[kind](context, token)` dependencies. Reaching one without
+a supplied implementation raises an error instead of silently skipping work.
+Unknown uint32 kinds emit no row, matching the native default. The outer loop
+does not use the builder's returned boolean to make a further decision.
+
+[Dispatcher comparison](../../native/snow_host/pose_constraint_dispatch_validation.json)
+runs512 original eligibility loops through the original dispatcher and selected
+builders. Synthetic virtual methods return kinds1/3/4/7. Complete arenas and
+source buffers match, along with angle-service inputs and notification arguments.
+The comparison retains the previous explicit-service boundaries: native atan2
+output is observed and supplied to the independent service; body notification
+side effects are intercepted. One list entry is used per native case. Public
+tests additionally cover multiple entries, slot replacement, missing dependencies,
+unknown kinds and nullable second bodies for commands.
+
+### Planned-count correction
+
+Recent sections called count publication unresolved without distinguishing the
+local initializer from full lifecycle composition. The earlier
+[Solver category layout and count initialization](#solver-category-layout-and-count-initialization)
+already establishes the local rule: planned prepass counts are copied into
+context108..16b before construction; append counters at a4..107 start at zero.
+`initialize_pose_solver_storage` implements it. `count_pose_categories` already
+reconstructs the six-kind planned contributions from supplied type results.
+There is no missing post-build copy from append counts to traversal counts.
+
+The remaining integration question is how the complete caller maintains valid
+planned storage and group membership while count and build passes have different
+local gates. The inspected count loop invokes the kind query without the builder
+loop's metadata52 skip checks. Do not repair this difference by inventing count
+compaction or assuming ignored rows are zero. Recover the enclosing lifecycle
+contract before composing arbitrary skipped entries into a full group solve.

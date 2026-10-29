@@ -1,0 +1,27 @@
+{
+  "schema": "pose-constraint-dispatch-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19948d0",
+    "0x19905f0"
+  ],
+  "method": "Original eligibility loop, type dispatcher and complete selected builders; synthetic virtual type methods; native atan2 observed, body notification intercepted",
+  "comparisons": [
+    "complete arenas, constraints, body and metadata storage",
+    "angle inputs and notification arguments"
+  ],
+  "coverage": [
+    "kinds1,3,4 and unknown7",
+    "first and second endpoint skip gates",
+    "single and paired rows",
+    "phase and drive selection"
+  ],
+  "limits": [
+    "One retained list entry per native case.",
+    "Kinds2,5,6 are explicit dependencies, not implemented by this adapter.",
+    "Native atan2 output supplied to independent service; notification effects excluded.",
+    "No full group lifecycle claim."
+  ]
+}

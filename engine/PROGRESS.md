@@ -8212,3 +8212,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   independent service; notification side effects remain external. Kinds1,3,4 now
   have reconstructed builders. Kinds2,5,6 and full lifecycle/count publication
   remain open; no active player-joint ownership claim is made.
+- Connected eligibility/type dispatch to kind1/3/4 builders, with explicit
+  dependencies for2/5/6 and native unknown-kind skipping.512 original-loop checks
+  match retained storage and service arguments. Corrected the recent count gap:
+  planned-count publication and six-kind counting were already reconstructed;
+  remaining work is lifecycle composition, especially the differing count/build
+  eligibility gates, rather than an invented post-build counter copy.
