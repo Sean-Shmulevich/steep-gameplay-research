@@ -3777,3 +3777,30 @@ All context/row bytes, body state and results match across four phase masks and
 zero through three iterations. Both primary families point into their shared
 accumulators. The fixture supplies retained rows; this receipt does not yet execute
 builders before solving or establish complete group lifecycle/convergence.
+
+### Arena composition
+
+`pose_link_arena.build_and_solve_pose_links` connects all four builders and the
+six-category solver using caller-owned retained storage. Arena origin is the
+solver context. Existing layout fields and planned traversal counts define row
+views and result slots. Append counters and global result numbering are read from
+the header and written back after building. Primary links and shared accumulators
+therefore address the same bytes consumed during solving; no repacking is needed.
+
+The API requires an initialized layout and valid counts. The separately recovered
+`count_pose_link_rows`, `plan_pose_solver_layout` and
+`initialize_pose_solver_storage` can supply those stages. It does not infer a new
+count policy or allocate storage. Body data/state mappings remain explicit; callers
+may supply writable views into the same arena. Body-index assignment, production
+of body data, integration into position/orientation and group lifetime remain
+external responsibilities. Failed building is nontransactional and publishes
+consumed counters before propagating the error.
+
+[256 original builder-to-solver comparisons](../../native/snow_host/pose_link_arena_composition_validation.json)
+run original dispatch0x1994970 followed by original solver wrapper0x1994e80 with no
+interception. The reconstruction matches every byte of the retained arena, including
+all six row families, counters, result slots, body data/state and unused ranges,
+plus complete payloads. Fixtures mix metadata families,1..4 contacts, modes0..3,
+disabled gates and profile combination modes. Layout/body data are supplied and
+counts come from the independent prepass. This is a connected contact build/solve
+comparison, not a complete physics tick or full-engine equivalence claim.

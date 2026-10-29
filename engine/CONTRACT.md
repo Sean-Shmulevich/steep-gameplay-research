@@ -984,3 +984,9 @@ paired_shared_rows plus optional context-origin arena storage. It runs primary,
 shared and tangent families in native order and skips shared/tangent in special
 phase. Primary arena offsets come from retained context layout. See LINK_SOLVER.md,
 "Connected six-category solver traversal". Other populated categories still fail.
+
+Arena composition: `build_and_solve_pose_links` consumes initialized context/layout
+storage, explicit body/profile/link mappings and retained payloads. Row/result views
+share the arena, append counters are published, then six-category traversal runs.
+See LINK_SOLVER.md, "Arena composition". No allocation, count inference, body-data
+production, body-index assignment or final body integration is supplied.

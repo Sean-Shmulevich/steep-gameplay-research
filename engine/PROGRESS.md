@@ -8053,3 +8053,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   match six categories across phase/count variants. Tests verify accumulation
   before projection and special-phase accumulation without shared consumption.
   Builder-to-solver composition and complete group lifecycle remain open.
+- Connected builder dispatch directly to six-category solving in one retained arena.
+  256 native builder-then-wrapper comparisons match every arena and payload byte,
+  including resulting body states. Public tests compose recovered count/layout
+  initialization with building/solving. Body-data production, final integration
+  and complete group lifecycle remain outside this composed path.
