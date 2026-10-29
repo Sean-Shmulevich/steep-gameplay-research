@@ -1015,3 +1015,9 @@ motion fields, restoring original motion on normal return. Caller supplies reach
 half-angle trig responses and must refresh parsed transforms before reuse. See
 LINK_SOLVER.md, "Contact correction through transform update". No general body-class
 virtual dispatch, exception rollback or group poststep is supplied.
+
+Bounded scalar trig: `small_angle_sin_cos` implements dispatch-zero finite float32
+inputs up to binary64 pi/4 in magnitude with inspected binary64 polynomial order.
+It may be supplied to half_angle_trig APIs without native observations. See
+LINK_SOLVER.md, "Scalar trig". Larger ranges and alternate dispatch are rejected;
+status flags and nonfinite native behavior are not modeled.

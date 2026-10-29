@@ -3900,3 +3900,27 @@ responses. Native execution is not intercepted. This proves the composed arithme
 and service boundary, not an independently recovered transcendental library.
 Damping is disabled and group phase transitions/clears remain explicit harness work;
 complete original group/poststep execution and live class coverage are not claimed.
+
+### Scalar trig
+
+`pose_scalar_trig.small_angle_sin_cos` independently reconstructs the dispatch-zero
+finite small-angle branches of scalar sine0x1c808c0 and cosine0x1c803c0. Input is
+rounded to float32, promoted to binary64 for polynomial evaluation, then rounded
+back to float32. Domain is `abs(float32(x)) <= binary64(pi/4)`. The float32 value
+nearest pi/4 lies slightly above that boundary and enters native range reduction;
+the largest admitted positive encoding is0x3f490fda.
+
+Sine returns x below2^-13, uses `x - (x*x*x)/6` with inspected multiplication order
+below2^-7, then the inspected degree-nine polynomial. Cosine uses its degree-ten
+polynomial. Exact binary64 coefficient encodings and evaluation order are in the
+module; it does not call host sine/cosine or fuse operations. The tiny sine path's
+floating-point status side effects are not modeled, but signed result zero is.
+
+[8214 input pairs /16428 complete original calls](../../native/snow_host/pose_scalar_small_trig_validation.json)
+match float32 output bits with no interception, including both signs, subnormals,
+threshold neighbors and random encodings through the supported interval. This
+helper can be explicitly supplied as `half_angle_trig` to body integration and
+contact correction; bounded angular integration can now run without observed
+responses. Larger-angle reduction, nonfinite handling, floating-point flags and
+alternate CPU dispatch remain unresolved. Unsupported inputs raise an authored
+error rather than silently selecting a different math library.

@@ -8078,3 +8078,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   native trig pairs are replayed with matching arguments. A public zero-angular
   case verifies translation correction and restoration of first-pass motion.
   Independent trig/damping libraries and complete group/poststep remain unresolved.
+- Recovered independent small-angle scalar sine/cosine.8214 input pairs (16428
+  original calls) match output bits, including signed zero, subnormals and branch
+  boundaries. Body integration can explicitly use this helper without recorded
+  responses in the supported domain. Larger-angle reduction, alternate dispatch,
+  floating-point flags and damping remain unresolved library boundaries.

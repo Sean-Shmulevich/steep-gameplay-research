@@ -1,0 +1,23 @@
+{
+  "schema": "pose-scalar-small-trig-validation-v1",
+  "cases": 8214,
+  "passed": 8214,
+  "calls": 16428,
+  "method": "Complete original scalar sine/cosine calls, dispatch selector zero, no interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x1c808c0",
+    "0x1c803c0"
+  ],
+  "comparisons": [
+    "Exact float32 result bits including signed zero"
+  ],
+  "coverage": [
+    "Both signs, subnormals, small-branch thresholds and largest float32 below pi/4",
+    "Random float32 encodings across supported magnitudes"
+  ],
+  "limits": [
+    "Only finite abs(float32(x)) <= binary64 pi/4",
+    "No range reduction, alternate dispatch, exception flags or nonfinite inputs"
+  ]
+}
