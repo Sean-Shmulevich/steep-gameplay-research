@@ -8262,3 +8262,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   calls match all arena bytes and return addresses without interception. Kind2's
   translation-limit producer and full world-frame/classification composition
   remain open; its angular helpers were already available separately.
+- Reconstructed kind2's two-row translation-limit producer.2048 uninterrupted
+  native calls match full arenas, including strict XYZ-positive gain gating,
+  signed opposite-axis distance, endpoint writes and untouched fields. All three
+  translation helper families now have independent implementations; kind2's
+  world-frame preparation and state-driven composition remain unfinished.

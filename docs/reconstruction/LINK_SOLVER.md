@@ -5640,3 +5640,45 @@ soft rows, both endpoint layouts, all phase masks, signed/near-zero scalar value
 nonuniform coefficients and existing counts. Public tests distinguish cross-product
 signs, phase independence, added-response placement and result reservation.
 Complete kind2 classification, limit rows and top-level composition remain open.
+
+## Paired translation limits
+
+Kind2's RVA19f2fb0 emits two category8/9 rows in one call. The independent
+`build_pose_translation_limit_pair` in `engine/pose_constraint_translation.py`
+reconstructs its full writes, including endpoint indices. Category8 uses112-byte
+rows and category9 uses128-byte rows. It reserves two consecutive result indices.
+The public return tuple of row offsets is our inspection convenience; no meaning
+is assigned to the original return register.
+
+With delta=pointB-pointA, the first direction is the supplied axis and the second
+is its sign-bit negation. Bounds remain supplied four-lane values, without sorting
+or an assumed lower/upper convention:
+
+```text
+first_error = broadcast(dotXYZ(axis,delta)) + first_bound
+second_error = broadcast(dotXYZ(-axis,delta)) - second_bound
+phase_gain = 0.4 if (flags & 0x18000000) == 0x08000000 else 0
+for each error:
+    gain = phase_gain * (-context_c) if all XYZ error lanes > 0 else -context_c
+    response = error * gain
+```
+
+The gate is strictly positive and only considers XYZ. An exact zero in any XYZ
+lane selects full gain. W cannot change the gate but receives the same selected
+gain. Response W is not replaced by an impulse cap. Both dot products are
+computed with their own signed axis; the second is not implemented by negating
+the first dot result. This preserves signed-zero and rounding behavior.
+
+Each row writes direction at20, cross(armA,direction) at30, and paired
+cross(direction,armB) at70. It zeros the qword at50 and the vector at60, preserving
+58..5f and the prepared inverse response at40. Endpoint indices use the low16
+bits of the supplied unsigned values. Allocation/count arithmetic follows the
+existing arena convention. No solver result-cache initialization is added.
+
+[Translation-limit validation](../../native/snow_host/pose_translation_limit_validation.json)
+records2048 uninterrupted native calls without interception. Complete arena bytes
+and unchanged source vectors match across both endpoint layouts, all phase masks,
+nonzero counts, signed context scalars, nonuniform bounds and exact-zero/mixed-lane
+gates. Public tests cover W exclusion, strict positivity, opposite axes, endpoint
+truncation and preservation of untouched fields. Kind2's full caller composition
+and classification remain unresolved; this closes its translation-limit helper.

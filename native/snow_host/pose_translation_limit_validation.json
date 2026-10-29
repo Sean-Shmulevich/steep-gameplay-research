@@ -1,0 +1,26 @@
+{
+  "schema": "pose-translation-limit-validation-v1",
+  "cases": 2048,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x19f2fb0",
+  "method": "Uninterrupted original two-row builder; no interception",
+  "comparisons": [
+    "entire arena bytes",
+    "unchanged input vectors"
+  ],
+  "coverage": [
+    "single and paired rows",
+    "all phase masks",
+    "zero and signed context scalars",
+    "nonuniform bounds",
+    "nonzero append/result counts",
+    "low16 endpoint index writes",
+    "exact zero XYZ boundary and W-excluded gain gate"
+  ],
+  "limits": [
+    "Finite bounded synthetic inputs.",
+    "Returned offset tuple is an authored convenience; native return register is not modeled.",
+    "No complete kind2 classification or composition claim."
+  ]
+}

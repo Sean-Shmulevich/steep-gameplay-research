@@ -1260,3 +1260,10 @@ soft16/17 rows from supplied axis, points and lever arms. See LINK_SOLVER.md,
 soft gain is negative and its coefficient uses the existing spring arithmetic.
 Caller classification and endpoint completion remain external. This does not
 complete kind2's builder or establish physical units.
+
+Kind2 translation limits: `build_pose_translation_limit_pair` emits two completed
+category8/9 rows with opposite axes and independently computed signed distance.
+See LINK_SOLVER.md, "Paired translation limits". The phase gain requires all XYZ
+errors strictly positive; W receives the gain without participating in the gate.
+Bounds are not sorted. The returned offset tuple is authored. Full kind2 caller
+classification and composition remain open.
