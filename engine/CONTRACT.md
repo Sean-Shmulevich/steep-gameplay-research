@@ -1084,3 +1084,9 @@ primary numerical kernels, before contact primary rows in normal phase only.
 `constraint_primary_rows` and `paired_constraint_primary_rows` provide explicit
 storage. Signed accumulator links resolve from their own category bases.
 See LINK_SOLVER.md, "Reused primary kernels in constraint categories".
+
+Paired point solver: category11 preparation/iteration couples linear state and
+angular coefficient matrices, applies cached impulses and bounds each increment.
+See LINK_SOLVER.md, "Paired point solver". The module name describes the math;
+it does not establish a native class or player consumer. Row production and
+traversal integration remain open; finite nonsingular retained inputs are required.

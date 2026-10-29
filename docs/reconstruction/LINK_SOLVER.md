@@ -4273,3 +4273,49 @@ through three iterations. Category8/9 fixtures link backward to shared accumulat
 and share body state with other families. Public tests distinguish normal execution
 from the special-phase skip and reject missing row storage. Fourteen numerical
 categories, their unresolved producers and complete group composition remain open.
+
+## Paired point solver
+
+`engine/pose_paired_point_solver.py` reconstructs category11 preparation0x19efa40
+and iteration0x19f0270 for176-byte rows. "Point" is our descriptive module name,
+not a recovered class name. Row20/30/40 form the first angular coefficient matrix
+A; row80/90/a0 form the second B. Preparation writes an inverse response into
+row50/60/70. Row10 holds XYZ response and a scalar increment limit.
+
+Preparation starts with diagonal first-body mass, adds the contribution from A
+and the first tensor, then diagonal second-body mass, then the B/tensor
+contribution. In exact-real notation:
+
+```text
+K = inverse(diag(M1) + A*T1*transpose(A)
+            + diag(M2) + B*T2*transpose(B))
+```
+
+The implementation retains each float32 multiply/add and uses the recovered
+cofactor inverse. This compact expression does not replace the required operation
+order. Cached result is applied before iterations. Per iteration:
+
+```text
+error = ((A*w1 + v1) - v2) + B*w2 + response.xyz
+increment = clamp(-(K*error), -response.w, response.w)
+result = old_result + increment
+v1 += M1*increment
+w1 += T1*transpose(A)*increment
+v2 -= M2*increment
+w2 += T2*transpose(B)*increment
+```
+
+Angular application uses four-lane dot products against the stored coefficient
+columns, then clears the torque's fourth lane before tensor multiplication.
+Linear updates retain all four lanes. Endpoint writes occur sequentially, so
+coincident body identities retain both reached updates. As with the angular
+families, the limit caps each increment, not the accumulated result.
+
+[Paired point comparison](../../native/snow_host/pose_paired_point_validation.json)
+compares512 preparations and1536 iterations, including the original matrix inverse,
+with no interception. Every row, body-data/state and result byte matches. Fixtures
+include general coefficient matrices, off-diagonal tensors, nonzero fourth lanes
+and coincident indices. Public tests check opposite linear updates, coefficient-led
+angular signs, cached application and singular rejection. Finite nonsingular
+inputs are supported. Row construction, gameplay ownership and mixed traversal
+integration remain separate work.

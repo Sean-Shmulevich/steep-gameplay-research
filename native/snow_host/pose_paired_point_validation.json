@@ -1,0 +1,24 @@
+{
+  "schema": "pose-paired-point-validation-v1",
+  "preparations": 512,
+  "iterations": 1536,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19efa40",
+    "0x19f0270"
+  ],
+  "method": "Offline uninterrupted original preparation, matrix inverse and three iterations; no interception",
+  "comparisons": [
+    "all row, body-data, body-state and result bytes after each call"
+  ],
+  "coverage": [
+    "off-diagonal tensors",
+    "coincident body indices",
+    "nonzero fourth lanes and per-increment bounds"
+  ],
+  "limits": [
+    "Finite nonsingular synthetic rows with positive bounds.",
+    "Row producer, full traversal and gameplay ownership not covered."
+  ]
+}

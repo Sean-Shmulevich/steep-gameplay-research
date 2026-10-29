@@ -8134,3 +8134,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   ordering are preserved.256 mixed eleven-category native comparisons pass,
   including backward accumulator links. Fourteen numerical categories remain;
   numerical reuse does not establish shared producers or gameplay semantics.
+- Recovered category11 coupled linear/angular solver preparation and iteration.
+  512 preparations and1536 iterations match native bytes with general coefficient
+  matrices and off-diagonal tensors. Opposite linear impulses and coefficient-led
+  angular impulses retain exact ordering. Builder, gameplay ownership and shared
+  traversal integration remain open for this family.
