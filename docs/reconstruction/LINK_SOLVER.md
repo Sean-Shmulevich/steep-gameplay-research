@@ -4169,3 +4169,45 @@ Public tests verify normal command effects without a result-array entry, special
 phase preservation and traversal-count independence from append counts. The API
 name is retained for existing callers. This extends the connected numerical
 slice; it does not supply the other18 categories or complete group lifecycle.
+
+## Paired angular increment solver
+
+`engine/pose_paired_angular_solver.py` reconstructs category13 preparation0x19f0630
+and iteration0x19f0930. Normal traversal visits its80-byte rows immediately after
+command rows; the special phase skips it. Body indices occupy the first two
+ushorts; result index is row4. Row10 stores XYZ response and one scalar increment
+limit. Row20/30/40 become the inverse response matrix during preparation.
+
+For each matrix column, preparation adds the first body's diagonal mass component
+to its tensor column, adds the second body's diagonal component, then adds the
+second tensor column. It inverts the resulting3x3 matrix through the recovered
+cofactor helper0x19c9530. Every operation retains float32 rounding. In exact-real
+notation only, this is `K = inverse(T1 + diag(M1) + diag(M2) + T2)`.
+The mass contribution is observed arithmetic; its physical interpretation for this
+angular-only update is not inferred here. Cached result XYZ then updates angular
+state by `w1 += T1*cached` and `w2 -= T2*cached`. Linear states do not change.
+
+Iteration performs:
+
+```text
+error = response.xyz + (w1 - w2)
+increment = clamp(-(K * error), -response.w, response.w)
+result = old_result + increment
+w1 = w1 + T1 * increment
+w2 = w2 - T2 * increment
+```
+
+The bound applies to the current increment, not the accumulated result. Multiple
+iterations can therefore grow the total beyond that bound. First-body writes
+precede second-body reads, including coincident indices. The result retains all
+four lanes; tensor multiplication uses XYZ inputs and updates all four angular
+state lanes. Inverse columns have a zero fourth lane. Finite nonsingular inputs
+define the independent domain; exceptional arithmetic is not substituted.
+
+[Paired angular validation](../../native/snow_host/pose_paired_angular_validation.json)
+compares512 preparations and1536 iterations, including the original matrix inverse,
+without interception. All row, data, state and result bytes match. Fixtures include
+off-diagonal tensors, coincident indices and nonzero fourth lanes. Public tests
+verify accumulation beyond the increment cap, opposite updates on the same body
+and explicit singular rejection. The row builder, gameplay owner and connection
+to the public mixed traversal remain unfinished.

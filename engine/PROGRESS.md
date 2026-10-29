@@ -8119,3 +8119,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   with all seven supported categories match every retained buffer across four
   phase masks and zero through three iterations. Other18 categories remain
   unsupported; this is a mixed numerical slice rather than a full group solve.
+- Recovered category13 paired angular preparation and iteration.512 preparations
+  and1536 iterations match all native retained bytes, including the matrix inverse.
+  The scalar bound limits each increment rather than the accumulated result.
+  Opposite endpoint updates are sequential. Row production, gameplay ownership
+  and integration into the shared traversal remain open.

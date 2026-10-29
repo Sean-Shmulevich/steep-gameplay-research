@@ -1065,3 +1065,9 @@ supports category24 before the six contact categories in normal preparation and
 iteration. Special phase skips command rows. Context168 controls traversal, not
 append count104. See LINK_SOLVER.md, "Mixed command and contact traversal".
 The remaining18 categories and complete group composition are not supplied.
+
+Paired angular solver: `prepare_pose_paired_angular_row` and
+`iterate_pose_paired_angular_row` recover category13 matrix preparation, cached
+application and capped angular increments. See LINK_SOLVER.md, "Paired angular
+increment solver". Caps constrain increments, not accumulated results. Finite
+nonsingular storage is required; builder and mixed traversal remain separate.
