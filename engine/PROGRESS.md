@@ -8043,3 +8043,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   results, including coincident indices. Sequential alias behavior differs from
   paired primary rows and has its own regression test. Paired preparation and
   full traversal integration remain open.
+- Completed paired shared preparation and inversion.512 uninterrupted original
+  preparations followed by1536 iterations match row/state/results, including
+  off-diagonal body tensors and coincident indices. Both shared numerical families
+  now have complete local preparation and iteration. Mixed-category traversal and
+  builder-to-solver integration remain the next validation boundaries.

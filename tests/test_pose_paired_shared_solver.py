@@ -34,3 +34,22 @@ class PairedSharedSolverTests(unittest.TestCase):
         self.assertEqual(struct.unpack_from('<f',args['results'][0])[0],2)
         self.assertEqual(struct.unpack_from('<f',args['body_state'][0],16)[0],3)
         self.assertEqual(struct.unpack_from('<f',args['body_state'][0])[0],0)
+
+    def test_preparation_combines_both_bodies_and_applies_cached_result(self):
+        from engine.pose_paired_shared_solver import prepare_pose_paired_shared_row
+        for same in (False,True):
+            row,args=self.fixture(same)
+            for offset in (0x50,0x80):
+                for j in range(3):
+                    v=[0.]*4;v[j]=1.;struct.pack_into('<4f',row,offset+16*j,*v)
+            args['results'][0][:]=struct.pack('<4f',1,2,3,0)
+            prepare_pose_paired_shared_row(row,**args)
+            for j in range(3):
+                expected=[0.]*4;expected[j]=.25
+                self.assertEqual(struct.unpack_from('<4f',row,0xb0+16*j),tuple(expected))
+            self.assertEqual(row[0xe0:0xf0],bytes(16))
+            if same:
+                self.assertEqual(struct.unpack('<8f',args['body_state'][0]),(0,0,0,0,2,4,6,0))
+            else:
+                self.assertEqual(struct.unpack('<8f',args['body_state'][0]),(1,2,3,0,1,2,3,0))
+                self.assertEqual(struct.unpack('<8f',args['body_state'][1]),(-1,-2,-3,0,1,2,3,0))

@@ -3727,3 +3727,30 @@ second-write-wins behavior; its update helper must not be reused here.
 match all256 row bytes, all state/result lanes and unchanged data, including
 random coincident body indices. Inverse response matrices are supplied finite
 synthetic inputs. Paired preparation and connected traversal remain unvalidated.
+
+### Paired shared patch preparation
+
+`pose_paired_shared_solver.prepare_pose_paired_shared_row` reconstructs0x19f0b70
+and its original inversion helper. It builds the inverse response at+0xb0/+0xc0/
++0xd0 for the256-byte paired shared row. Contributions are accumulated with float32
+rounding in the order `linear(body1), angular(body1), linear(body2), angular(body2)`.
+Each contribution uses the transform/transpose construction in "Shared patch
+preparation". The same L block is used for both linear contributions; each body's
+angular contribution uses its own A block and body tensor.
+
+The first two response rows are masked to XY and the third to Z. The third row is
+normalized by its XYZ length, then multiplied by `mass2 + mass1` before cofactor
+inversion. After inversion its third row is replaced by `[0,0,1/length,0]`, retaining
+the original operation order. Singular rejection is an authored helper guard.
+
+Preparation clears shared+0xe0 and applies the cached result to both bodies: first
+linear/first angular, then opposite second linear/second angular. Coincident body
+indices therefore accumulate sequentially, matching iteration. Result storage is
+not changed by preparation.
+
+[512 preparations and1536 subsequent iterations](../../native/snow_host/pose_paired_shared_preparation_validation.json)
+match complete rows, all body-state/result lanes and unchanged data after every
+stage. Original preparation, inversion and iteration execute without interception.
+Cases include general finite row blocks, off-diagonal body tensors and coincident
+indices. Both shared families now have local preparation/iteration implementations;
+full mixed-category traversal remains a separate validation requirement.

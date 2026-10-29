@@ -1,0 +1,24 @@
+{
+  "schema": "pose-paired-shared-preparation-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "iterations": 1536,
+  "method": "Complete original paired preparation and three iterations without interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "preparations": 512,
+  "routine_rvas": [
+    "0x19f0b70",
+    "0x19c9530",
+    "0x19f19d0"
+  ],
+  "comparisons": [
+    "All256 row bytes including accumulator reset",
+    "All body state and result lanes after preparation and each iteration",
+    "Unchanged body data"
+  ],
+  "limits": [
+    "Finite general row blocks and diagonally dominant tensors with off-diagonal terms",
+    "Finite synthetic inputs and nonsingular projection",
+    "No full traversal"
+  ]
+}

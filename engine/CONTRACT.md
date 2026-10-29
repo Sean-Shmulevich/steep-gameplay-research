@@ -972,3 +972,9 @@ Paired shared iteration: `iterate_pose_paired_shared_row` consumes a prepared256
 row with two body indices and applies sequential first/second updates. Coincident
 indices accumulate both updates. See LINK_SOLVER.md, "Paired shared patch iteration".
 The inverse matrix remains supplied; no paired preparation or traversal claim.
+
+Paired shared preparation: `prepare_pose_paired_shared_row` builds the256-byte row's
+inverse response using both bodies' linear/angular contributions, clears+0xe0 and
+applies cached results sequentially. See LINK_SOLVER.md, "Paired shared patch
+preparation". No supplied inverse matrix is needed in the finite nonsingular domain;
+full mixed-category traversal remains separate.
