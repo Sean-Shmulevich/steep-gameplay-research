@@ -45,3 +45,23 @@ def build_and_solve_pose_links(arena,link_tokens,*,links,bodies,payloads,resourc
         paired_tangent_rows=pools['paired_secondary']['rows'],shared_rows=pools['clear_shared']['rows'],
         paired_shared_rows=pools['paired_shared']['rows'],arena=arena,body_data=body_data,
         body_state=body_state,results=context['result_rows'])
+
+
+def run_pose_contact_pass(arena,link_tokens,*,links,bodies,payloads,resources,profiles,modes,
+                          body_data,body_state,body_tokens,raw_bodies):
+    """Build, solve, publish contact cache and copy motion into retained raw bodies.
+
+    Contact-only slice: pose constraints, secondary phase and poststep are excluded.
+    body_tokens order must correspond to body_state indices and the body's solver
+    index. Parsed body inputs and raw_bodies must describe the same supplied state.
+    """
+    from .pose_link_feedback import write_pose_link_feedback
+    from .pose_body_feedback import write_pose_body_feedback
+    build_and_solve_pose_links(arena,link_tokens,links=links,bodies=bodies,payloads=payloads,
+        resources=resources,profiles=profiles,modes=modes,body_data=body_data,body_state=body_state)
+    counts=struct.unpack_from('<25I',arena,0x108)
+    start=struct.unpack_from('<I',arena,0x178)[0];view=memoryview(arena)
+    results=[view[start+16*i:start+16*(i+1)] for i in range(sum(counts))]
+    write_pose_link_feedback(dict(flags38=struct.unpack_from('<I',arena,0x38)[0],result_rows=results),
+                             link_tokens,links=links,payloads=payloads)
+    write_pose_body_feedback(body_tokens,bodies=raw_bodies,body_state=body_state)

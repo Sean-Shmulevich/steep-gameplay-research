@@ -3804,3 +3804,26 @@ plus complete payloads. Fixtures mix metadata families,1..4 contacts, modes0..3,
 disabled gates and profile combination modes. Layout/body data are supplied and
 counts come from the independent prepass. This is a connected contact build/solve
 comparison, not a complete physics tick or full-engine equivalence claim.
+
+### Contact pass with feedback
+
+`pose_link_arena.run_pose_contact_pass` extends arena composition with the recovered
+post-solve sequence: link cache feedback, then body motion feedback. The existing
+context bit29 controls copying each primary result's first lane into its payload
+cache versus clearing that cache. Body feedback copies solved linear/angular XYZ
+into raw body+0x1a0/+0x1ac, preserving all other bytes. It does not integrate a new
+position or orientation.
+
+Callers supply raw body records and body token order matching solver state indices,
+in addition to the parsed builder inputs. Those representations must describe the
+same retained input state. This adapter intentionally does not invent body-index
+assignment, membership validation or live-memory ownership. It also does not set
+group phase flags, build pose constraints, run the secondary correction phase or
+execute poststep; it is an explicit contact-only composition.
+
+[256 native composed passes](../../native/snow_host/pose_contact_pass_validation.json)
+run original dispatch, solve, link feedback and body feedback without interception.
+Every arena byte, complete payload and complete raw body record matches. Cases
+cover cache-copy and cache-clear flags, both metadata families, contact counts and
+builder modes. Body data/state and layout are supplied, so this does not yet prove
+a complete group step or physical position/orientation integration.

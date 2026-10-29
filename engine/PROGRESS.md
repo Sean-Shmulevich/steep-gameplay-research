@@ -8058,3 +8058,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   including resulting body states. Public tests compose recovered count/layout
   initialization with building/solving. Body-data production, final integration
   and complete group lifecycle remain outside this composed path.
+- Extended contact composition through link-cache and body-motion feedback.256
+  native four-stage passes match the entire arena, complete payloads and raw body
+  bytes with cache-copy and cache-clear flags. Public tests verify cache selection
+  and preservation of all non-motion body fields. Body-buffer production and the
+  full group-step lifecycle remain outside this slice.

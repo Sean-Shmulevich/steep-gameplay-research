@@ -990,3 +990,9 @@ storage, explicit body/profile/link mappings and retained payloads. Row/result v
 share the arena, append counters are published, then six-category traversal runs.
 See LINK_SOLVER.md, "Arena composition". No allocation, count inference, body-data
 production, body-index assignment or final body integration is supplied.
+
+Contact pass: `run_pose_contact_pass` extends arena build/solve with link-cache and
+raw-body motion feedback in recovered order. Explicit body_tokens must correspond
+to body_state order; raw and parsed bodies must agree. See LINK_SOLVER.md, "Contact
+pass with feedback". No group phases, pose constraints, secondary correction,
+position/orientation integration or poststep are implicitly supplied.
