@@ -5126,7 +5126,7 @@ token across the query; it does not reload a replaced current slot. Later slots
 are read when reached.
 
 Kinds1/3/4 call their independent implementations. Kinds2/5/6 remain explicit
-`additional_builders[kind](context, token)` dependencies. Reaching one without
+dependencies in `additional_builders`, keyed by kind and called with context and token. Reaching one without
 a supplied implementation raises an error instead of silently skipping work.
 Unknown uint32 kinds emit no row, matching the native default. The outer loop
 does not use the builder's returned boolean to make a further decision.
