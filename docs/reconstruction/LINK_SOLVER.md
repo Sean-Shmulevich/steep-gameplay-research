@@ -5022,3 +5022,81 @@ it, and its1024-case native comparison was rerun successfully. The newer limit
 producer additionally covers the finite-response branch; the earlier detached
 limit helper models the hard-response branch only. These APIs are not silently
 interchangeable across that branch boundary.
+
+## Kind3 constraint composition
+
+`engine.pose_constraint_hinge.build_pose_hinge_constraint` reconstructs the full
+row-emission sequence of0x19e7580. Hinge is an authored description, not a recovered
+class name. The API uses retained context, constraint, body and metadata storage,
+an explicit atan2 service and an optional notification service. It does not access
+live memory or copy traversal counts from append counters.
+
+Configuration is inline at constraint70, copied as90 bytes before angle evaluation:
+
+| Constraint offset, hexadecimal | Use in the builder |
+| --- | --- |
+| 70,80 | local attachment points, first/second body |
+| 90,a0 | local axis vectors, first/second body |
+| b0,c0 | local reference vectors, first/second body |
+| d0,d4 | angular interval bounds |
+| d8 | optional drive mode, zero disables |
+| dc | current scalar for the bounded drive getter |
+| e0,e4 | drive difference bound and impulse-bound input |
+| e8,ec | limit response term and response mix |
+| f0 byte | suppresses optional body notification when nonzero |
+
+The second body's metadata50 bit15 selects paired versus single numerical rows,
+as in kind1. Both body frames are needed. World anchors and center-relative arms
+use the previously recovered point-builder arithmetic. Let R1/R2 be frame bases:
+
+```text
+u = R1 * local_axis1
+v = R2 * local_axis2
+p = R1 * local_reference1
+q = R2 * local_reference2
+h = cross(u,p)
+C = matrix whose rows are zero, p, h
+D = matrix whose rows are zero, -p, -h  # paired only
+phase_factor = context_c * (0.4 if normal_pose_build_phase else 0)
+linear_response = (world_anchor1-world_anchor2) * phase_factor
+angular_response = C * (cross(v,u) * phase_factor)
+```
+
+The first emitted row is category22 or23. Its coupled coefficient matrices are
+cross_matrix(-arm1) and, for a paired row, cross_matrix(arm2). Its angular
+coefficient matrices are C and D above. The angular cache at rowf0 is explicitly
+zeroed; the external result is only reserved, not initialized. Prepared inverse
+fields remain untouched. The builder writes both numerical body indices.
+
+Next it obtains one signed angle using `pose_row_angle(v,p,q,atan2)`. The swap
+byte at constraint59 changes the interval from[lower,upper] to[-upper,-lower];
+it does not change these angle-helper arguments. The adjacent-revolution selector
+processes that angle. Two limit rows then use axis v, first sign=-1 and bound=upper,
+then sign=+1 and bound=-lower, with both response inputs broadcast from e8/ec.
+Both rows receive endpoint indices after the limit helper returns.
+
+If drive mode is nonzero, the source scalar comes from the d0/d4/dc getter and is
+negated when swap is set. The drive helper receives axis v, this broadcast sample,
+the selected angle as reference, and broadcast bounds from e0/e4. It appends one
+category14/15 row and the caller completes the endpoint indices.
+
+After drive emission, the builder requests `notify(first_body_token,2)` only if
+configuration f0 is zero, the first body's pointer10 is nonzero and its metadata
+pointer20 is nonzero. The independent API requires a callback when this path is
+reached; it does not replace the notification with an implicit no-op. Callback
+side effects are outside this reconstruction. The cleanup callee in the analyzed
+image is a bare return, and the builder returns byte1.
+
+[Whole-builder validation](../../native/snow_host/pose_kind3_builder_validation.json)
+executes512 complete original calls covering both layouts, four phase masks,
+swap selection, hard/finite-response limit paths, drive modes0–3 and notification
+gates. Every arena, source, body and metadata byte matches, as do return values,
+atan2 inputs and notification arguments. Native atan2 runs normally; its output is
+observed and supplied to the independent service. Only the notification call is
+intercepted. Thus this proves builder composition conditional on the explicit
+math and notification services, not reconstruction of those service internals.
+
+Kinds1,3,4 now have complete row-building paths within their stated domains.
+Kinds2,5,6, outer eligibility integration, count publication, result-cache lifecycle
+and complete group composition remain unfinished. Nothing here establishes that
+this constraint is the player's active trick or ragdoll joint.

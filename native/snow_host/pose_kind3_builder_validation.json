@@ -1,0 +1,28 @@
+{
+  "schema": "pose-kind3-builder-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x19e7580",
+  "method": "Complete original kind3 builder; native atan2 arguments/results observed and supplied to independent service; only body notification intercepted",
+  "comparisons": [
+    "entire arena, constraint, bodies and metadata",
+    "angle service arguments",
+    "return byte and notification arguments"
+  ],
+  "coverage": [
+    "both endpoint layouts",
+    "all four phase masks",
+    "swap flag",
+    "hard and finite-response limits",
+    "drive modes0 through3",
+    "notification gates",
+    "general finite frame/anchor inputs"
+  ],
+  "limits": [
+    "Synthetic finite retained inputs.",
+    "Independent atan2 service supplied with observed native outputs; no native transcendental reconstruction claim.",
+    "Body notification side effects excluded; callback arguments validated.",
+    "No solver count publication, full group lifecycle or gameplay ownership claim."
+  ]
+}

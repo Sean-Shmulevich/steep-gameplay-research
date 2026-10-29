@@ -1184,3 +1184,11 @@ retains the original subtract-and-compare scalar selection from d0/d4/dc. See
 LINK_SOLVER.md, "Kind3 angle interval selection". The existing signed-angle helper
 remains reusable with an explicit atan2 service; platform bit equivalence is not
 claimed. The arena drive API now delegates to the earlier detached drive builder.
+
+Kind3 composition: `build_pose_hinge_constraint` consumes retained frames and
+inline configuration, then emits category22/23, two category8/9 rows and an
+optional category14/15 drive. Hinge is an authored name. See LINK_SOLVER.md,
+"Kind3 constraint composition". The atan2 service remains explicit; a reached
+body notification requires a supplied callback. Native validation supplies
+observed atan2 output and intercepts notification effects, while checking all
+builder writes and callback arguments. No lifecycle/count-publication claim.

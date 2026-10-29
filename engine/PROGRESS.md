@@ -8206,3 +8206,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   Consolidated the arena drive adapter onto the existing detached implementation
   and reran1024 native checks. Full kind3 geometry/row composition and optional
   notification remain unfinished; atan2 is still an explicit external service.
+- Composed kind3 geometry, two-stage row, both angular limits and optional drive.
+  512 complete native builder comparisons match all retained bytes, angle inputs
+  and notification arguments. Native atan2 outputs are supplied to the explicit
+  independent service; notification side effects remain external. Kinds1,3,4 now
+  have reconstructed builders. Kinds2,5,6 and full lifecycle/count publication
+  remain open; no active player-joint ownership claim is made.
