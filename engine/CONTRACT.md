@@ -1363,3 +1363,10 @@ swap-removed, appended to the inactive list, and their body tokens appended to t
 tracked list. See LINK_SOLVER.md, "Completed-group transfer". Indices must be
 consistent before entry. The inactive flag and stale array tails are preserved.
 Growth is an explicit service; concurrent list mutation is outside this contract.
+
+Pose dispatcher: `dispatch_pose_workers` reconstructs callback publication,
+caller-help and completion polling with explicit atomic, queue, notify and wait
+services. See LINK_SOLVER.md, "Dispatcher claim and completion counters". Valid
+admission requires at least one worker and a free slot among32. Queued work has
+separate unclaimed and unfinished counts. Return waits for unfinished count to
+be nonpositive. This is a service-bound control-flow model, not a new thread pool.

@@ -1,0 +1,30 @@
+{
+  "schema": "pose-dispatch-validation-v1",
+  "cases": 256,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18b7ca0",
+  "method": "Original dispatcher, native queue publication/pop and atomic counter instructions in Unicorn; callback, memcpy and opaque notify/wait paths supplied as services",
+  "comparisons": [
+    "whole dispatcher storage including ring and counters",
+    "publication/notification/callback/wait order and arguments",
+    "both counter arrays at every callback and simulated external completion"
+  ],
+  "coverage": [
+    "single-worker direct call",
+    "admission cap",
+    "null and nonnull argument tables",
+    "occupied completion slots",
+    "caller-help drains queue",
+    "external claims deferred until wait service",
+    "ring split-copy and uint32 cursor wrap"
+  ],
+  "completion_wait_calls": 334,
+  "limits": [
+    "Opaque notify call plus post-call marker and opaque wait block are intercepted; platform behavior and protected wrappers are not decoded.",
+    "External claims/completions are scripted, not concurrent native threads.",
+    "Public dispatcher requires queue and atomic services; private serial ring adapter is not a released concurrent queue.",
+    "No zero-worker or exhausted-slot native behavior is asserted; public guards reject those cases.",
+    "Offline synthetic records; no live session."
+  ]
+}

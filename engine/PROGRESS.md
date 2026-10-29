@@ -8346,3 +8346,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   Public two-pass composition excludes retired groups from the next active batch.
   Native allocators, dispatcher synchronization, wake integration and live lifetime
   remain separate. Transfer preserves inactive flags and does not reset bodies.
+- Reconstructed dispatcher publication, caller-help and completion polling with
+  explicit atomic/queue/platform services. Separate counters track unclaimed and
+  unfinished callbacks.256 original-dispatcher comparisons match full storage and
+  event/counter snapshots, including334 waits for scripted claimed-but-unfinished
+  work. This establishes the local normal-return completion boundary; concurrent
+  lifetime, platform wrappers, cancellation and nested dispatch remain unresolved.

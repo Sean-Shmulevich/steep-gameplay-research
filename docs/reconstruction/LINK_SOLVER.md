@@ -6306,3 +6306,85 @@ outside this result. Public tests additionally connect transfer to batch complet
 across two passes: a synthetic inactive outcome removes that group from the next
 pass and does not append its bodies again. This composition test is not a live
 sleep/wake observation or proof of dispatcher synchronization.
+
+## Dispatcher claim and completion counters
+
+The batch wrapper calls `0x18b7ca0`. Its independent control-flow implementation is
+`engine/pose_dispatch.py`; receipt:
+[`pose_dispatch_validation.json`](../../native/snow_host/pose_dispatch_validation.json).
+The routine is synchronous at its completion-counter boundary. It does not return
+merely because the queue has been emptied or every callback has been claimed.
+
+The dispatcher admits the unsigned minimum of requested workers and its configured
+capacity. With one worker, it directly invokes the callback with argument-table
+entry0, or null if no table was supplied, and a true caller-thread flag. With more
+workers, it searches32 completion slots. A successful compare-exchange reserves a
+zero unfinished counter with worker_count-1 and initializes a separate unclaimed
+counter to the same value. Both exclude the callback run directly by the caller.
+
+Each remaining worker gets a24-byte queued record containing a tag, completion-slot
+index, callback pointer and argument. The caller publishes these records and calls
+an opaque notification path for each corresponding worker handle. It then invokes
+its own callback. While its unclaimed counter is positive, it helps consume queued
+records. For each record it decrements that record's unclaimed counter, invokes the
+callback with the caller-thread flag true, then decrements the unfinished counter.
+It may therefore help records belonging to another completion slot. This helper
+path does not test the record tag. It exits queue-help if no complete record is
+available, then polls its own unfinished counter and enters an opaque wait/yield
+path until that counter is nonpositive.
+
+```python
+workers = min(requested, dispatcher.capacity)
+if workers == 1:
+    invoke(callback, argument(0), caller_thread=True)
+    return
+slot = reserve_zero_unfinished_slot(workers - 1)
+unclaimed[slot] = workers - 1
+for index in range(1, workers):
+    publish(tag, slot, callback, argument(index))
+    notify(worker_handle(index))
+invoke(callback, argument(0), caller_thread=True)
+while signed32(atomic_read(unclaimed[slot])) > 0:
+    record = try_take_complete_record()
+    if record is None:
+        break
+    atomic_decrement(unclaimed[record.slot])
+    invoke(record.callback, record.argument, caller_thread=True)
+    atomic_decrement(unfinished[record.slot])
+while signed32(atomic_read(unfinished[slot])) > 0:
+    wait_or_yield()
+```
+
+A separate inspection of worker-consumer block `0x18b80f9` confirms the same
+before/after callback decrements, but passes a false caller-thread flag. Its broader
+wait loop and other record types are not implemented here. The pose worker thunk
+`0x18e3340` ignores that flag: it takes the argument as a job record, loads the owner
+from that record and enters the existing group batch worker. Thus the argument
+pointer table and initialized job owner fields remain necessary inputs.
+
+The counters have distinct meanings. If two queued callbacks have been claimed
+but are still executing, unclaimed is0 while unfinished remains2. The caller stops
+helping its queue but still waits. Only callback return decrements unfinished.
+Under valid counter ownership and successful normal-return callbacks, this gives
+the batch wrapper the completion boundary needed before resetting batch count and
+transferring inactive groups. It does not establish safe scheduler mutation or
+live object ownership for arbitrary mods.
+
+256 offline native comparisons execute the original dispatcher, queue publication,
+queue reads and atomic instructions. Whole dispatcher bytes and event sequences
+match. Counter snapshots at callbacks and simulated external completion match too.
+Cases include single-worker dispatch, admission caps, occupied slots, null argument
+tables, caller-help, ring split-copy and uint32 cursor wrap. Scripted external
+workers claim jobs during notification but delay completion until the wait service;
+334 wait-service calls occur across the comparison. No concurrent native threads
+or live game are involved.
+
+Opaque notification and wait blocks, callback execution and memcpy are supplied
+services. The notification boundary includes a post-call marker byte; the wait
+boundary includes its stack adjustment. Their platform/protected implementations
+are not decoded by this experiment. The public dispatcher requires explicit
+atomic and queue services. Its serial atomic adapter is only for tests, not a
+thread-safe implementation. It rejects zero admitted workers and exhausted slots
+with authored errors; native behavior for those invalid admissions is not asserted.
+Callback exceptions, cancellation, nested dispatch, starvation, slot reuse races
+and platform memory-order guarantees remain unresolved integration questions.
