@@ -8224,3 +8224,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   the dispatcher and reran its512-case comparison including both endpoint layouts.
   Four top-level builders are now reconstructed; kinds2/5 and complete group
   lifecycle remain open. No physical damping or player ownership is inferred.
+- Reconstructed the quaternion product and dominant-component matrix converter
+  used by kind5's angular drive.4096 uninterrupted native cases per helper match
+  all output bits, including all four converter branches, signed zeros and
+  aliased destinations. No math substitution was required. Normalization belongs
+  to the caller and remains separate. Complete kind5 composition is still open.

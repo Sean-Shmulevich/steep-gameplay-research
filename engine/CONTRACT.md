@@ -1208,3 +1208,10 @@ multiplier. See LINK_SOLVER.md, "Motion-aware primary constraint producer".
 Single-endpoint construction ignores second-body center/motion fields. Kind6 is
 connected to the eligibility dispatcher; only kinds2/5 remain external builders.
 Finite retained inputs and bounded storage define the supported domain.
+
+Pose quaternion inputs: `multiply_pose_quaternions` and
+`pose_matrix_to_quaternion` preserve scalar float32 ordering and dominant-component
+branch ties. See LINK_SOLVER.md, "Quaternion inputs to angular drive". Neither
+normalizes or repairs its input. The latter consumes three XYZ columns and
+ignores optional fourth lanes. Both are verified local dependencies of the kind5
+angular drive; complete builder composition and active ownership remain open.

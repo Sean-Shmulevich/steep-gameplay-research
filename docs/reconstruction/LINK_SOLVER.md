@@ -5227,3 +5227,63 @@ was expanded and rerun with kinds1/3/4/6 and unknown7. All512 cases pass. Kinds2
 remain explicit external dependencies. Numerical solving already supports the
 emitted categories; complete group lifecycle and active gameplay ownership remain
 unresolved.
+
+## Quaternion inputs to angular drive
+
+The kind5 angular-drive helper at RVA19f32f0 calls matrix-to-quaternion
+RVA18c0b60 and quaternion multiplication RVA18c09e0. Independent implementations
+are in `engine/pose_quaternion.py`. These are local recovered kernels, not a
+claim that the entire kind5 builder or its gameplay ownership is established.
+
+`multiply_pose_quaternions` takes two XYZW operands. With first=(x,y,z,w) and
+second=(a,b,c,d), its scalar operation order is:
+
+```text
+out.x = (((c*y)-(b*z))+(a*w))+(x*d)
+out.y = (((a*z)-(c*x))+(b*w))+(y*d)
+out.z = (((b*x)-(a*y))+(c*w))+(z*d)
+out.w = (w*d)-(((b*y)+(a*x))+(c*z))
+```
+
+Each multiplication, addition and subtraction rounds to float32. This is the
+Hamilton product in the stated operand order, with no normalization or sign
+canonicalization. Changing operand order changes rotation composition.
+
+`pose_matrix_to_quaternion` accepts three XYZ columns, with optional unused
+fourth lanes. Use column names X=(xx,xy,xz), Y=(yx,yy,yz), Z=(zx,zy,zz).
+The converter computes four candidates:
+
+```text
+W = (yy+xx)+zz
+X = (xx-yy)-zz
+Y = (yy-xx)-zz
+Z = (zz-xx)-yy
+```
+
+Starting with W, it replaces the selected candidate only on a strict greater
+comparison, in X/Y/Z order. Equal candidates preserve W/X/Y/Z priority. Set
+`major = 0.5*sqrt(candidate+1)` and `scale = 0.25/major`, rounding each operation
+to float32. The selected branch produces XYZW as follows:
+
+| Selected | X output | Y output | Z output | W output |
+| --- | --- | --- | --- | --- |
+| W | (yz-zy)*scale | (zx-xz)*scale | (xy-yx)*scale | major |
+| X | major | (yx+xy)*scale | (zx+xz)*scale | (yz-zy)*scale |
+| Y | (yx+xy)*scale | major | (zy+yz)*scale | (zx-xz)*scale |
+| Z | (zx+xz)*scale | (zy+yz)*scale | major | (xy-yx)*scale |
+
+This routine does not repair nonorthogonal frames, normalize the result, or
+force W positive. A zero matrix yields quaternion(0,0,0,0.5), not identity.
+The drive caller performs separate normalization; it must not be silently moved
+inside either helper. The public implementation supports finite, bounded
+consumed inputs. Overflow and nondefault floating-point modes remain outside
+its verified domain.
+
+[Quaternion comparison](../../native/snow_host/pose_quaternion_validation.json)
+records4096 uninterrupted original calls per helper. All output bits match.
+Matrix branch counts are W1204, X955, Y960, Z977. Cases include rotations,
+general matrices, half-turns, equal candidates, signed zeros, ignored fourth
+lanes and destination aliasing. Source bytes outside the destination remain
+unchanged. The product's returned address also matches. No native calls were
+intercepted and no math service was substituted. The source image and comparison
+script remain private; this receipt contains no game payload.

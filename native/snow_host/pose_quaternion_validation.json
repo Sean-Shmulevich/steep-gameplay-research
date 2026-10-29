@@ -1,0 +1,36 @@
+{
+  "schema": "pose-quaternion-validation-v1",
+  "product_cases": 4096,
+  "matrix_cases": 4096,
+  "matrix_branch_counts": {
+    "w": 1204,
+    "x": 955,
+    "y": 960,
+    "z": 977
+  },
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18c09e0",
+    "0x18c0b60"
+  ],
+  "method": "Offline uninterrupted original routines; no interception or substituted math",
+  "comparisons": [
+    "all output float32 bits",
+    "source bytes outside aliased destination",
+    "product returned output address"
+  ],
+  "coverage": [
+    "general finite nonunit operands",
+    "rotation and general nonorthogonal matrices",
+    "all four dominant-component branches",
+    "signed zero and equal candidates",
+    "ignored matrix W NaNs",
+    "output aliases either product operand or matrix input"
+  ],
+  "limits": [
+    "Finite bounded synthetic XYZ and quaternion inputs; overflow, NaNs in consumed values and nondefault floating-point modes not covered.",
+    "No quaternion normalization is performed by either helper.",
+    "Does not validate the complete kind5 angular drive builder or active gameplay ownership."
+  ]
+}
