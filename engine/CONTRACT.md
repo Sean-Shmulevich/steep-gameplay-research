@@ -1370,3 +1370,11 @@ services. See LINK_SOLVER.md, "Dispatcher claim and completion counters". Valid
 admission requires at least one worker and a free slot among32. Queued work has
 separate unclaimed and unfinished counts. Return waits for unfinished count to
 be nonpositive. This is a service-bound control-flow model, not a new thread pool.
+
+Retained batch pass: `run_retained_pose_batch_pass` composes group ordering,
+batching, synchronous dispatcher policy, numerical workers and completed-group
+transfer. See LINK_SOLVER.md, "Joined retained batch execution". Job records must
+alias the context fields updated by batching, with owner pointers initialized.
+Queue/atomic/growth/class services remain explicit. Interior pointer-array views
+reference live retained slots instead of copied group lists. This serial reference
+composition does not establish a concurrent host or native job construction.

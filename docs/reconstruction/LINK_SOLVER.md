@@ -6388,3 +6388,58 @@ thread-safe implementation. It rejects zero admitted workers and exhausted slots
 with authored errors; native behavior for those invalid admissions is not asserted.
 Callback exceptions, cancellation, nested dispatch, starvation, slot reuse races
 and platform memory-order guarantees remain unresolved integration questions.
+
+## Joined retained batch execution
+
+`engine/pose_batch_runtime.py` joins group ordering and batch construction,
+dispatcher publication/completion policy, the pose worker thunk, retained numerical
+workers and completed-group transfer. It accepts the existing worker service map
+and explicit dispatcher queue/atomic/notify/wait services. It does not allocate
+threads, install a game hook or infer job ownership. Job records must alias the
+context fields updated by batch construction. The argument table supplies those
+job addresses, and each job's owner pointer must already be initialized.
+
+The authored `RetainedPointerArrays` adapter resolves aligned interior pointers
+into supplied arrays. This matters because each batch points to its first slot
+inside the active-group array. A copied list would hide later slot changes. The
+adapter returns a view of retained slots, resolves replacements on a new lookup,
+and rejects ambiguous overlapping interior spans. Exact registered bases take
+precedence. It supplies address resolution, not an original allocator or class.
+
+Call `run_retained_pose_batch_pass` with a context token, dispatcher record, scalar,
+settings token, callback identity, aliased job map, worker services and dispatcher
+services. Sorting and both storage-growth policies remain explicit. The callback
+adapter reads each job's owner pointer and invokes the numerical worker; unrelated
+callbacks encountered during queue-help require an explicit alternate callback
+service. Completion then transfers inactive groups using the same retained lists.
+
+[`pose_joined_batch_validation.json`](../../native/snow_host/pose_joined_batch_validation.json)
+records256 comparisons beginning at the original batch wrapper. Native execution
+continues through the original dispatcher, thunk, batch worker, solver/free-motion
+route, body/contact/kind2 construction, numerical solving and feedback, secondary
+correction, poststep integration/box bounds, contact retirement and final group
+transfer. The caller executes its direct callback and the remaining queued
+callback. The complete solver allocation, retained records, world/job/batch state,
+dispatcher ring/counters and active/inactive/tracked arrays match. Allocation and
+release requests and angle arguments match too.
+
+Each fixture contains one physical group and30 empty groups, enough to form two
+batches. Empty groups are synthetic work-distribution fixtures, not a claim about
+normal live topology. Across these cases439 body transforms change and56 physical
+groups become inactive. Solver and bypass routes, quiet checking, all four contact
+settings modes and both endpoint layouts are covered. Separate public tests run
+two consecutive composed passes and verify that retired groups produce no further
+body updates or scratch allocations on the next empty pass.
+
+Native allocation, notification, standard byte-copy/fill and protected pool return
+remain supplied services. Atan2 output is observed from the native routine and
+supplied to the independent numerical path. Storage capacity is retained; only the
+known constructor-selected body and box-resource implementations are exercised.
+This is offline normal-return composition, not live ownership, concurrent replay,
+all-body-class fidelity, native job construction or a complete engine frame.
+
+Run the public composition tests with:
+
+```sh
+python3 -m unittest discover -s tests -p 'test_pose_batch_runtime.py'
+```

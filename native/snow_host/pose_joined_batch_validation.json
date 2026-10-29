@@ -1,0 +1,30 @@
+{
+  "schema": "pose-joined-batch-validation-v1",
+  "cases": 256,
+  "passed": true,
+  "inactive_physical_groups": 56,
+  "changed_body_transforms": 439,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18e2fb0",
+  "method": "Original batch wrapper through original dispatcher, pose thunk, batch worker, mixed contact/kind2 numerical solve, secondary correction, integration/box bounds, contact retirement and completed-group transfer; allocator, notification, memset/memcpy and pool-return services supplied; atan2 results observed",
+  "comparisons": [
+    "whole solver allocation and all retained numerical records",
+    "context, aliased jobs, batch records, dispatcher ring and counters",
+    "active, inactive and tracked arrays including stale tails",
+    "allocation/release requests and angle arguments"
+  ],
+  "coverage": [
+    "one physical group and30 empty groups across two batches",
+    "two admitted worker callbacks executed on the calling thread",
+    "solver and bypass routes",
+    "mixed contacts/kind2 and paired/unpaired endpoint layouts",
+    "quiet-check on/off and completed-group transfer"
+  ],
+  "limits": [
+    "Caller-help execution only; no concurrent native workers.",
+    "Empty groups are synthetic batching fixtures, not claims about normal live topology.",
+    "Retained capacity; native allocation, notification and protected pool internals supplied.",
+    "Atan2 remains observed output; constructor-selected body/box classes only.",
+    "Native job construction and live player ownership remain unproven."
+  ]
+}

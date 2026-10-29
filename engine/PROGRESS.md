@@ -8352,3 +8352,10 @@ cases. This is not wired into a live host API and does not pin manager or module
   event/counter snapshots, including334 waits for scripted claimed-but-unfinished
   work. This establishes the local normal-return completion boundary; concurrent
   lifetime, platform wrappers, cancellation and nested dispatch remain unresolved.
+- Connected batch construction, synchronous dispatch policy, numerical workers and
+  completed-group transfer in one retained API.256 original-wrapper comparisons
+  match full numerical state, aliased jobs, dispatcher ring/counters and membership
+  lists;439 transforms change and56 physical groups retire. Public repeated-pass
+  tests confirm exclusion after retirement. Caller-thread execution, explicit
+  platform/allocator services, supplied atan2 and synthetic empty groups limit
+  this result; native job construction and concurrent/live ownership remain open.
