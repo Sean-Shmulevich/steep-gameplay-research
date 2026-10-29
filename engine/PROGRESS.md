@@ -8114,3 +8114,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   coincident endpoints. The solver uses per-command cached impulses and sequential
   body updates. This supersedes the numerical-solver gap for this row family;
   traversal integration and higher-level command producers remain open.
+- Integrated command rows into the shared solver traversal before contact rows,
+  preserving the secondary-phase skip.256 uninterrupted original wrapper calls
+  with all seven supported categories match every retained buffer across four
+  phase masks and zero through three iterations. Other18 categories remain
+  unsupported; this is a mixed numerical slice rather than a full group solve.

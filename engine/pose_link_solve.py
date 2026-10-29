@@ -3,6 +3,7 @@
 Evidence: LINK_SOLVER.md, Connected primary and tangent solver slice.
 """
 import struct
+from .pose_command_solver import prepare_pose_command_row,iterate_pose_command_row
 from .pose_shared_solver import prepare_pose_shared_row,iterate_pose_shared_row
 from .pose_paired_shared_solver import prepare_pose_paired_shared_row,iterate_pose_paired_shared_row
 from .pose_solver_control import run_pose_solver
@@ -14,8 +15,8 @@ from .pose_tangent_solver import prepare_pose_tangent_row,iterate_pose_tangent_r
 
 def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_rows,
                          body_data, body_state, results, paired_primary_rows=(), paired_tangent_rows=(),
-                         shared_rows=(), paired_shared_rows=(), arena=None):
-    """Run native phase/count policy for the six supported row categories.
+                         shared_rows=(), paired_shared_rows=(), command_rows=(), arena=None):
+    """Run native phase/count policy for the seven supported row categories.
 
     Traversal counts come from context108/120, not builder append counters.
     Other row-category counts must be zero. The caller supplies already populated
@@ -23,7 +24,7 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
     """
     if len(context_bytes)<0x17c:raise ValueError('Complete solver context fields required')
     counts=struct.unpack_from('<25I',context_bytes,0x108)
-    if any(value for i,value in enumerate(counts) if i not in (0,1,4,5,6,7)):
+    if any(value for i,value in enumerate(counts) if i not in (0,1,4,5,6,7,24)):
         raise ValueError('Unsupported populated row category')
     primary_count,paired_count,secondary_count=counts[0],counts[1],counts[6]
     if primary_count>len(primary_rows) or paired_count>len(paired_primary_rows) or secondary_count>len(secondary_rows):
@@ -33,12 +34,17 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
     shared_count,paired_shared_count=counts[4],counts[5]
     if shared_count>len(shared_rows) or paired_shared_count>len(paired_shared_rows):
         raise ValueError('Insufficient retained shared rows')
+    command_count=counts[24]
+    if command_count>len(command_rows):raise ValueError('Insufficient retained command rows')
     def location(category,index,stride):
         if arena is None:return {}
         start=struct.unpack_from('<I',context_bytes,0x16c)[0]+16*struct.unpack_from('<I',context_bytes,0x40+4*category)[0]
         return dict(arena=arena,row_offset=start+index*stride)
     args=dict(body_data=body_data,body_state=body_state,results=results)
     def prepare(descriptor,cursor):
+        if not descriptor['special']:
+            for row in command_rows[:command_count]:
+                prepare_pose_command_row(row,body_data=body_data,body_state=body_state)
         for row in paired_primary_rows[:paired_count]:prepare_pose_paired_primary_row(row,**args)
         for row in primary_rows[:primary_count]:prepare_pose_primary_row(row,**args)
         if not descriptor['special']:
@@ -47,6 +53,9 @@ def solve_pose_link_rows(context_bytes, *, base_token, primary_rows, secondary_r
             for row in paired_tangent_rows[:paired_tangent_count]:prepare_pose_paired_tangent_row(row,**args)
             for row in secondary_rows[:secondary_count]:prepare_pose_tangent_row(row,**args)
     def iterate(descriptor,cursor):
+        if not descriptor['special']:
+            for row in command_rows[:command_count]:
+                iterate_pose_command_row(row,body_data=body_data,body_state=body_state)
         for i,row in enumerate(paired_primary_rows[:paired_count]):iterate_pose_paired_primary_row(row,**args,**location(1,i,128))
         for i,row in enumerate(primary_rows[:primary_count]):iterate_pose_primary_row(row,**args,**location(0,i,112))
         if not descriptor['special']:

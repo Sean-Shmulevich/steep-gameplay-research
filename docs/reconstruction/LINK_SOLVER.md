@@ -4147,3 +4147,25 @@ body-data and body-state bytes match after every call. Cases include off-diagona
 tensor entries, nonzero fourth lanes, coincident indices and cached impulses.
 These formulas identify a bounded impulse solve. They do not yet identify which
 player/animation producers populate the commands or establish full group fidelity.
+
+## Mixed command and contact traversal
+
+`solve_pose_link_rows` now accepts `command_rows` alongside the six recovered
+contact row families. Category24's traversal count is context168, independently
+of builder append count104. Normal preparation and every normal iteration visit
+commands first, followed by paired-primary, clear-primary, paired-shared,
+clear-shared, paired-tangent and clear-tangent rows. The special phase omits
+commands, shared rows and tangents, retaining the primary rows. Other populated
+categories still raise an explicit unsupported-category error.
+
+[Mixed traversal validation](../../native/snow_host/pose_seven_category_solve_validation.json)
+compares256 uninterrupted original wrapper calls with all seven categories
+populated. All context, row, body-state, body-data and result bytes match across
+four phase masks and zero through three iterations. Command rows share body
+indices with contact rows, so their effects feed into later contact processing.
+Builders are outside this comparison; rows are synthetic retained inputs.
+
+Public tests verify normal command effects without a result-array entry, special
+phase preservation and traversal-count independence from append counts. The API
+name is retained for existing callers. This extends the connected numerical
+slice; it does not supply the other18 categories or complete group lifecycle.

@@ -45,3 +45,32 @@ class LinkSolveTests(unittest.TestCase):
     def test_unsupported_categories_fail_explicitly(self):
         c,args=self.fixture();struct.pack_into('<I',c,0x10c,1)
         with self.assertRaises(ValueError):solve_pose_link_rows(c,**args)
+
+    def command_fixture(self,flags):
+        c=bytearray(0x190);struct.pack_into('<I',c,0x38,flags);struct.pack_into('<I',c,0x168,1)
+        row=bytearray(912);struct.pack_into('<i',row,0x24,1);row[0x20]=1
+        struct.pack_into('<4f',row,0x30,1,0,0,0)
+        for off,val in [(0x70,2),(0x80,-1),(0x90,1),(0xa0,.25)]:struct.pack_into('<4f',row,off,*([val]*4))
+        data=bytearray(struct.pack('<16f',1,0,0,0,0,1,0,0,0,0,1,0,1,1,1,1))
+        args=dict(base_token=0,primary_rows=[],secondary_rows=[],command_rows=[row],
+                  body_data=[data],body_state=[bytearray(32)],results=[])
+        return c,args
+
+    def test_command_normal_phase_updates_body_without_result_array(self):
+        c,args=self.command_fixture(4)
+        solve_pose_link_rows(c,**args)
+        self.assertEqual(struct.unpack_from('<f',args['body_state'][0])[0],1)
+        self.assertEqual(struct.unpack_from('<f',args['command_rows'][0],0xa0)[0],1)
+
+    def test_special_phase_preserves_command_row_and_body(self):
+        c,args=self.command_fixture(0x10030000)
+        row=bytes(args['command_rows'][0]);state=bytes(args['body_state'][0])
+        solve_pose_link_rows(c,**args)
+        self.assertEqual(bytes(args['command_rows'][0]),row)
+        self.assertEqual(bytes(args['body_state'][0]),state)
+
+    def test_command_append_count_does_not_drive_traversal(self):
+        c,args=self.command_fixture(4)
+        struct.pack_into('<I',c,0x168,0);struct.pack_into('<I',c,0x104,1)
+        solve_pose_link_rows(c,**args)
+        self.assertEqual(bytes(args['body_state'][0]),bytes(32))

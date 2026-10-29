@@ -1059,3 +1059,9 @@ Command constraint solving: `prepare_pose_command_row` and
 bounded updates for category24. See LINK_SOLVER.md, "Command constraint solving".
 Finite nonsingular arithmetic, six-command storage bound and explicit body data
 are required. Full traversal integration and gameplay command ownership remain open.
+
+Mixed command/contact traversal: `solve_pose_link_rows` accepts `command_rows` and
+supports category24 before the six contact categories in normal preparation and
+iteration. Special phase skips command rows. Context168 controls traversal, not
+append count104. See LINK_SOLVER.md, "Mixed command and contact traversal".
+The remaining18 categories and complete group composition are not supplied.
