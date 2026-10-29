@@ -24,3 +24,15 @@ class ScalarTrigTests(unittest.TestCase):
         self.assertAlmostEqual(first[0],.87758256,places=6)
         self.assertAlmostEqual(abs(first[1]),.47942554,places=6)
         self.assertAlmostEqual(sum(v*v for v in first),1.,places=6)
+
+    def test_reduced_quadrants_and_common_range(self):
+        from engine.pose_scalar_trig import scalar_sin_cos
+        for x,expected in ((1.,(.84147098,.54030231)),(2.,(.90929743,-.41614684)),
+                           (4.,(-.7568025,-.65364362)),(-2.,(-.90929743,-.41614684))):
+            actual=scalar_sin_cos(x)
+            for a,b in zip(actual,expected):self.assertAlmostEqual(a,b,places=6)
+        self.assertEqual(scalar_sin_cos(.5),small_angle_sin_cos(.5))
+        for x in (500000.,-500000.,float('inf')):
+            with self.assertRaises(ValueError):scalar_sin_cos(x)
+        last=struct.unpack('<f',struct.pack('<I',0x48f423ff))[0]
+        self.assertTrue(all(abs(v)<=1 for v in scalar_sin_cos(last)))

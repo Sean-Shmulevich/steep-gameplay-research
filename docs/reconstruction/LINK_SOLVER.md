@@ -3924,3 +3924,40 @@ contact correction; bounded angular integration can now run without observed
 responses. Larger-angle reduction, nonfinite handling, floating-point flags and
 alternate CPU dispatch remain unresolved. Unsupported inputs raise an authored
 error rather than silently selecting a different math library.
+
+### Scalar trig range reduction and independent composition
+
+`pose_scalar_trig.scalar_sin_cos` extends the independent dispatch-zero pair to
+`abs(float32(x)) < 500000`. Above pi/4 it reduces the absolute input by the nearest
+multiple of pi/2, using inspected binary64 split constants:
+
+```text
+n = truncate(abs(x) * inverse_pi_over_two + 0.5)
+head = abs(x) - n * pi_over_two_high
+reduced = head - n * pi_over_two_tail
+if exponent(abs(x)) - exponent(reduced) > 15:
+    next_head = head - n * tail_high
+    error = (head - next_head) - n * tail_high
+    reduced = next_head - (n * tail_low - error)
+```
+
+The initial reduced exponent selects tiny/cubic/full-polynomial branches even
+when cancellation correction runs. Quadrant and input sign select sine versus
+cosine polynomial and final sign. All split constants, binary64 operation order
+and final float32 conversion are explicit in the module. No host trig is used.
+
+[16508 input pairs /33016 original calls](../../native/snow_host/pose_scalar_reduced_trig_validation.json)
+match output bits, including cancellation neighbors near multiples of pi/2 and the
+largest float32 below500000. An initial wider-domain comparison failed in cosine;
+inspection established its500000 large-reducer threshold versus sine's16000000.
+The paired API therefore rejects the wider unsupported interval. The failure was
+a domain assumption, not repaired by tuning polynomial coefficients.
+
+[256 complete contact/transform compositions](../../native/snow_host/pose_contact_independent_trig_validation.json)
+now match all arena, payload and body bytes with317 independently computed trig
+pairs. Native observation hooks check requested arguments only; no observed result
+is fed to the reconstruction. This supersedes the trig-replay limitation of the
+previous composition receipt for these cases. Damping remains disabled, getter
+initialization is supplied, and complete group/poststep/live lifetime remain open.
+Large-argument reduction, alternate CPU dispatch, nonfinite handling and status
+flags remain outside the scalar API contract.

@@ -1021,3 +1021,9 @@ inputs up to binary64 pi/4 in magnitude with inspected binary64 polynomial order
 It may be supplied to half_angle_trig APIs without native observations. See
 LINK_SOLVER.md, "Scalar trig". Larger ranges and alternate dispatch are rejected;
 status flags and nonfinite native behavior are not modeled.
+
+Reduced scalar trig: `scalar_sin_cos` extends exact dispatch-zero arithmetic to
+finite float32 magnitudes below500000 via split-pi/2 reduction and cancellation
+correction. It can supply integration without recorded responses. See LINK_SOLVER.md,
+"Scalar trig range reduction and independent composition". Wider/nonfinite inputs
+and alternate dispatch remain unsupported; no libm fallback is silently selected.

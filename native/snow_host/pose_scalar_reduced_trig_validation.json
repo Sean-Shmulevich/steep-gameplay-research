@@ -1,0 +1,23 @@
+{
+  "schema": "pose-scalar-reduced-trig-validation-v1",
+  "cases": 16508,
+  "passed": 16508,
+  "calls": 33016,
+  "method": "Complete original scalar sine/cosine calls, dispatch selector zero, no interception",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x1c808c0",
+    "0x1c803c0"
+  ],
+  "comparisons": [
+    "Exact float32 result bits including signed zero"
+  ],
+  "coverage": [
+    "Both signs, subnormals, small-branch thresholds and quadrant/cancellation neighbors and largest float32 below500000",
+    "Random float32 encodings across supported magnitudes"
+  ],
+  "limits": [
+    "Only finite abs(float32(x)) <500000",
+    "Large-argument reduction, alternate dispatch, exception flags and nonfinite inputs remain unsupported"
+  ]
+}

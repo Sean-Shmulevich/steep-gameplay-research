@@ -8083,3 +8083,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   boundaries. Body integration can explicitly use this helper without recorded
   responses in the supported domain. Larger-angle reduction, alternate dispatch,
   floating-point flags and damping remain unresolved library boundaries.
+- Recovered scalar split-pi/2 reduction through the common sine/cosine domain below
+  500000.33016 original calls match output bits. Re-ran256 complete contact/transform
+  comparisons with317 independently computed trig pairs; all arena/payload/body bytes
+  match without replaying native results. Wider cosine reduction starts earlier
+  than sine and remains explicit, alongside damping and full group/poststep gaps.
