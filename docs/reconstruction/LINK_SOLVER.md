@@ -6073,3 +6073,50 @@ reuse. Count/build invalid-state admission, damping, allocator growth, other bod
 classes and live ownership remain open. The supplied atan2 and pool-return service
 boundaries remain unchanged. Public tests cover fresh frame/motion reads, cleared
 contact spans,72-byte resource strides and four successive integrated passes.
+
+## Group batch worker admission
+
+`engine.pose_group_worker.run_pose_group_worker` reconstructs worker RVA0x18e31b0,
+reached through thunk0x18e3340. It captures the job's source-context token at0,
+scalar atc and settings token at10. Each work claim is an atomic fetch-add1 on the
+caller's context448. The returned old uint32 index is compared to the captured
+source context's current batch count440. These two context identities may differ.
+The independent worker requires an explicit claim service;
+`claim_pose_batch_serial` is only a serial equivalent, not a synchronization API.
+
+Batch storage comes from source438, with16-byte descriptors: uint32 group count
+at0 and pointer-array identity at8. The count is captured for each batch; its array
+pointer is reread for each group. The actual dispatch is:
+
+```text
+while (index = fetch_add(owner.claim448, 1)) < source.batch_count440:
+    batch = source.batch_array438[index]
+    for group in batch's captured count:
+        if settings.byte20 == 0 and uint32(group.link_count + group.pose_count) != 0:
+            solve_group(group, reusable_request)
+        else:
+            if not (group.body_count == 1 and first_body.metadata52 bit3):
+                advance_free_motion(group.body_span, request.scalar, settings.vector8)
+            poststep(group, request.scalar, settings.byte14, thresholds34/38/3c)
+if request.buffer:
+    release(request.buffer)
+```
+
+The worker initializes one request with null buffer and zero capacity, reuses it
+across solved groups, and releases its last buffer after exhausting claims. The
+claim that discovers exhaustion still increments the counter. The free path
+passes the complete settings14 byte to poststep, unlike the solver's bit0 flag
+packing. A single fixed body skips free-motion advancement but still reaches
+poststep. No group inactive-flag test occurs in this worker. Earlier selection
+into the batch source must therefore be studied separately; this is not evidence
+that the outer scheduler always processes sleeping groups.
+
+[512 native worker comparisons](../../native/snow_host/pose_group_worker_validation.json)
+execute the original lock-xadd loop with numerical solve, free-motion advancement,
+poststep and final release as explicit recording services. All retained bytes,
+service order/arguments, scratch reuse and release match. Coverage includes empty
+and multiple batches, exhausted initial indices, differing context identities,
+bypass bytes0/1/2, wrapped count sums, fixed-body shortcut and poststep bytes0/1/2/255.
+These are worker-control comparisons, not a concurrent scheduler proof or an
+uninterrupted worker-plus-numerical-solve receipt. The branch target0x1957590 is
+free-motion update; its raw body arithmetic and batch formation remain next leads.

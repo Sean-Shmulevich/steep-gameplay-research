@@ -1,0 +1,28 @@
+{
+  "schema": "pose-group-worker-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18e31b0",
+  "method": "Original batch worker and lock-xadd claims with solve, free-motion, poststep and final buffer release supplied as recording services",
+  "comparisons": [
+    "all retained context/job/settings/batch/group/body/metadata/array bytes",
+    "complete service order and arguments",
+    "scratch reuse and final release"
+  ],
+  "coverage": [
+    "empty and multiple batches",
+    "claim index already beyond batch count",
+    "different claim-owner and batch-source contexts",
+    "solve bypass byte0/1/2",
+    "wrapped link-plus-pose count",
+    "single fixed-body shortcut",
+    "raw poststep enable bytes0/1/2/255",
+    "inactive group flag does not gate worker"
+  ],
+  "limits": [
+    "Single emulated worker; no concurrent claim ordering or lifetime proof.",
+    "Numerical services are intercepted in this worker-specific comparison.",
+    "Batch construction and earlier active-list selection remain external."
+  ]
+}

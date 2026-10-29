@@ -1333,3 +1333,10 @@ joined runtime. See LINK_SOLVER.md, "Repeated retained group passes". Eager pars
 requires stable well-formed records. Every invocation refreshes frame/motion and
 contact/resource counts. Direct repeated calls do not supply scheduler admission,
 contact generation, sleep/wake policy, allocator growth or live atomicity.
+
+Group batch worker: `run_pose_group_worker` reconstructs atomic-claim admission,
+solver versus free-motion dispatch and per-worker scratch reuse/release. See
+LINK_SOLVER.md, "Group batch worker admission". Claim and numerical operations are
+explicit services. `claim_pose_batch_serial` is not thread-safe. Inactive group
+flags are not tested at this boundary; earlier collection selection and batch
+construction remain separate from the validated worker loop.

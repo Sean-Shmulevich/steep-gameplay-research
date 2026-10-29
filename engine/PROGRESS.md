@@ -8323,3 +8323,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   total, without resetting transforms or contact state between calls.89 payloads
   are released once; cleared counts exclude their stale entries on later passes.
   This verifies state carryover, not scheduler admission or contact regeneration.
+- Reconstructed the group batch worker above the numerical wrapper.512 native
+  control-flow comparisons match claims, solve/free-motion routing, scratch reuse,
+  poststep arguments and final release. The worker does not gate on group inactive
+  flags; source collection admission is earlier. Atomic concurrency, batch
+  formation and the free-motion numerical branch remain separate work.
