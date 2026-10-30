@@ -8427,3 +8427,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   match170 callback and128 release calls plus all bytes and callback-boundary states.
   Public body-removal composition now invokes this destructor. Inspected cleanup
   stubs are no-ops; allocator/callback effects and other dynamic types remain open.
+- Joined container, metadata-tree, body-ring and kind4 destruction paths in one
+  native comparison:256 fixtures match all bytes,306 queued constraints,1088 release
+  calls and563 callbacks. Added runnable `python3 -m engine.pose_cleanup_bench`
+  with public fixture state/event inspection. Tree-value types are synthetic;
+  allocator/callback effects and live lifetime remain explicit boundaries.

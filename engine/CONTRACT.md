@@ -1478,3 +1478,13 @@ base tables. Deleting flag bit0 with bit2 clear calls supplied release(token).
 The inspected alternate-size and cleanup calls are return-only stubs. This contract
 covers inspected base/kind4 wrappers, not arbitrary derived destructors. It does
 not remove provider membership; callers must establish that separately.
+
+### Joined container cleanup
+
+`remove_retained_pose_container` binds the recovered container wrapper to tree
+removal and cross-owner body processing, using the provider's tree descriptor at
++d0. It supplies no new cleanup policy. Virtual kind/destruction and allocation
+remain explicit services; callers must bind destruction for the actual object type.
+The same output descriptor receives body-edge and child queue entries in native
+order. Retained storage must not alias incompatible records or contain invalid
+membership. This serial adapter does not provide synchronization or reclamation.

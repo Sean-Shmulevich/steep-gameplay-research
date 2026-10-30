@@ -7182,3 +7182,49 @@ Public tests additionally join body removal to the reconstructed destructor.
 
 Remaining boundaries are allocator effects, callback effects, other derived
 wrappers, actual tree-value classes, and live/concurrent/reentrant lifetime safety.
+
+## Joined container cleanup
+
+`remove_retained_pose_container` binds container removal to the reconstructed tree
+and body helpers. It aliases the provider's tree descriptor at+d0, rather than
+copying tree state into a disconnected object. Both body processing and container
+child processing append to the same output descriptor. Kind and destruction remain
+virtual services; known base/kind4 records can use `destroy_pose_constraint`.
+This binding adds no new deletion or queueing policy.
+
+[The joined native receipt](../../native/snow_host/pose_joined_cleanup_validation.json)
+compares256 full container cleanup scenarios. Original container removal, tree
+lookup/deletion/rebalancing, body traversal, provider unregistration, ring detach,
+kind4 virtual methods, base destruction and callback forwarding execute together.
+Only the external callback and allocator free are authored recording services.
+The native kind4 method at `0xd4bb10` returns4. No kind-query interception is needed.
+
+Every provider/container/body/metadata/constraint/tree/array/output/manager byte
+matches, with306 queued constraints,1088 release calls and563 callbacks. Cases use
+four bodies in randomized visit order, one through eight individual edges, zero
+through three child constraints, a three-node tree, both metadata gates, and all
+three container removal positions. This supersedes the earlier open joined-check
+boundary while retaining its scope limits.
+
+Tree values are synthetic known kind4 records. The test does not establish the
+dynamic types stored in a live gameplay tree. Output storage retains capacity,
+so native allocation growth is outside this receipt. Callback side effects and
+actual allocator reclamation remain supplied. No live/concurrent safety follows.
+
+### Runnable cleanup inspection
+
+```sh
+python3 -m engine.pose_cleanup_bench
+```
+
+The public example builds an authored synthetic fixture and runs the actual joined
+reconstruction. Its JSON shows tree-value destruction first, cross-owner constraint
+removal next, then child queueing and moved-container repair. One same-owner edge
+remains registered and linked. It exposes final registries, body heads, deferred
+queue, tree counts and ordered callback/release intents. Tokens are fixture IDs,
+not game addresses. Releasing storage is recorded, not performed.
+
+This is an inspection API for the independent reconstruction. It neither injects
+into the game nor declares arbitrary native objects safe to delete. Public tests
+check the complete retained state and event order, including preservation of the
+internal edge and separation between destroyed and queued records.

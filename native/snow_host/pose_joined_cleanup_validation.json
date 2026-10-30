@@ -1,0 +1,40 @@
+{
+  "schema": "pose-joined-container-cleanup-validation-v1",
+  "cases": 256,
+  "queued_constraints": 306,
+  "release_calls": 1088,
+  "callback_calls": 563,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18d1130",
+    "0x19598d0",
+    "0x1959c50",
+    "0x1959d90",
+    "0x18d0cf0",
+    "0x18d0e30",
+    "0x195c270",
+    "0x19442e0",
+    "0x19a1670",
+    "0x18b73f0"
+  ],
+  "method": "Original full container cleanup including tree/body/rings/kind4 virtual/destructor paths; only external callback and allocator free are authored recording services",
+  "comparisons": [
+    "all provider/container/body/metadata/constraint/tree/array/output/manager bytes",
+    "callback and allocator free identities/order/arguments"
+  ],
+  "coverage": [
+    "four bodies with randomized visit order",
+    "one through eight individually registered edges",
+    "zero through three child constraints",
+    "three-node tree with null and kind4 fixture values",
+    "first middle last container removal",
+    "metadata queue/destroy gates and optional callback"
+  ],
+  "limits": [
+    "Tree values use synthetic known kind4 fixtures; original gameplay tree-value types remain unknown.",
+    "Retained capacity; allocation growth not exercised.",
+    "No callback side effects or actual allocator reclamation.",
+    "No insertion, live concurrency or arbitrary dynamic-type proof."
+  ]
+}

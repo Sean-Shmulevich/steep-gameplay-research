@@ -1123,3 +1123,15 @@ profiles and terrain samples are explicit. The command needs no game files.
 It runs contact generation and cache processing, not body integration or the solver.
 See [terrain-cache inspection contract](../docs/reconstruction/LINK_SOLVER.md#terrain-cache-inspection-cli)
 for schema, storage boundaries and evidence distinctions.
+
+### Container cleanup inspection
+
+```sh
+python3 -m engine.pose_cleanup_bench
+```
+
+Runs an authored synthetic fixture through the reconstructed container, body-tree,
+endpoint-ring and known kind4 destructor paths. JSON reports final memberships,
+body heads, deferred queue and ordered callback/release intents. No game files are
+needed. Storage release is recorded, not executed. See
+[the cleanup contract and native comparison limits](../docs/reconstruction/LINK_SOLVER.md#joined-container-cleanup).
