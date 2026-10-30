@@ -1421,3 +1421,10 @@ appends the supplied object and filters its captured child count into the second
 command list. See LINK_SOLVER.md, "Command registry population". Growth and kind
 lookup are explicit services. The container return is its pre-growth insertion
 index; neither path deduplicates records or supplies lifetime ownership.
+
+Endpoint rings: `attach_pose_endpoint_rings` and `detach_pose_endpoint_rings`
+reconstruct two-endpoint circular link insertion/removal. See LINK_SOLVER.md,
+"Endpoint ring registration and removal". Selector2 uses body90, selector1 body80,
+selector0 body88. Neighbor fields depend on which endpoint matches the body.
+Both endpoint bodies and consistent retained rings are required; no lifetime,
+duplicate insertion, repeated removal or concurrent mutation policy is added.

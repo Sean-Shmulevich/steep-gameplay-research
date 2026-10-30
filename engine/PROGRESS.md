@@ -8396,3 +8396,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   registries and feeds them into preparation without synthesized command lists.
   Notification effects, removal, semantic container ownership and concrete gameplay
   callbacks remain unresolved; allocation continues as an explicit service.
+- Decoded the registration "notification" as two-endpoint circular ring insertion,
+  and reconstructed matching removal.512 native fixtures match4608 operations with
+  no instruction interception. Selector2 links command constraints through body90;
+  endpoint-specific neighbor links and predecessor head replacement are preserved.
+  Individual registration now has a public test using real ring insertion. Provider
+  removal, null endpoint admission, duplicate safety and live lifetime remain open.

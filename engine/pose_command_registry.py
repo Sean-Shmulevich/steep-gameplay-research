@@ -23,10 +23,11 @@ def _append(provider,offset,token,arrays,grow):
 
 
 def register_pose_constraint(provider,token,*,arrays,grow,notify,get_kind):
-    """Register one constraint, then classify it after notification.
+    """Register one constraint, attach endpoint rings, then classify it.
 
     grow(provider,descriptor_offset,capacity) updates storage/pointer/capacity and
-    preserves active entries. notify(token,2) supplies the native side effects.
+    preserves active entries. notify(token,2) supplies endpoint-ring insertion;
+    the service name is retained for API compatibility.
     get_kind(token) supplies the virtual method's uint32 result. The first command
     list is70; the general constraint list is60. No inferred duplicate rejection.
     """

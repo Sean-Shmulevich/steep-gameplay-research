@@ -6805,3 +6805,65 @@ Both registered command entries reach preparation in list order; the noncommand
 child does not. This is executable registration-to-preparation composition on
 synthetic data. Removal, actual notification effects, deserialization, object
 lifetime and concrete gameplay callback discovery remain outside the result.
+
+## Endpoint ring registration and removal
+
+The previously opaque registration service `0x195c170` is now decoded: it attaches
+a record to circular lists on both endpoint bodies. It is not a generic wake/event
+notification. `engine/pose_endpoint_rings.py` implements insertion and the matching
+removal `0x195c270`, including body-head accessors `0x18baba0` and `0x18bb430`.
+The existing registration API keeps its `notify` keyword for compatibility; callers
+can bind it directly to `attach_pose_endpoint_rings`.
+
+Selector2 reads/writes body+0x90, selector1 body+0x80, and selector0 body+0x88.
+Individual command registration passes2, establishing its body+0x90 linkage.
+A record's first endpoint uses next/previous fields+0x20/+0x28; its second uses
++0x30/+0x38. For a neighboring record, the routine chooses first-endpoint fields
+only if that neighbor's endpoint+8 equals the body being processed. Otherwise it
+uses second-endpoint fields. There is no general ring-node abstraction in the
+observed representation: the same constraint carries links for two different bodies.
+
+Insertion processes first endpoint then second. An empty body head becomes the
+new record, whose endpoint links both point to itself. For a populated ring, the
+record is inserted immediately after the head: it points forward to the head's
+successor and backward to the head, then the two neighbors are repaired. The body
+head remains unchanged.
+
+```python
+for endpoint_port in [first, second]:
+    body = record.endpoint(endpoint_port)
+    head = body.head(selector)
+    if head is null:
+        record.next(endpoint_port) = record
+        record.previous(endpoint_port) = record
+        body.head(selector) = record
+    else:
+        following = head.next_for(body)
+        record.next(endpoint_port) = following
+        record.previous(endpoint_port) = head
+        head.next_for(body) = record
+        following.previous_for(body) = record
+```
+
+Removal repairs the predecessor's next link and successor's previous link. If the
+removed record was the body head, the head becomes its predecessor, not its
+successor. A singleton clears the body head. After both endpoints are processed,
+all four record linkage fields are zeroed. Endpoint identities and unrelated body
+head fields remain unchanged. Provider list removal is a separate operation.
+
+[`pose_endpoint_rings_validation.json`](../../native/snow_host/pose_endpoint_rings_validation.json)
+compares512 fixtures containing one through eight records across four bodies.
+The original insertion/removal and accessors execute without interception. Every
+body/record byte matches after each operation:4608 operation comparisons total.
+Random endpoint orientation and insertion/removal order cover singleton and larger
+rings, both neighbor endpoint layouts, and head/non-head removal. All selected body
+heads are empty after removing every record. A public composition test replaces
+the individual-registration service with actual reconstructed ring insertion.
+
+The valid tested domain has distinct, valid endpoint bodies and consistent rings.
+The native helper does not special-case a null endpoint. How any nullable command
+constraint is admitted to this registration path remains an upstream question.
+Duplicate insertion and repeated removal are not made idempotent by this model.
+Earlier mocked registration tests showing duplicate provider entries do not prove
+that duplicate structural insertion is safe. No synchronization, live ownership,
+reclamation or arbitrary concurrent mod mutation is established by these checks.

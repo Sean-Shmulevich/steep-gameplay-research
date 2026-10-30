@@ -1,0 +1,32 @@
+{
+  "schema": "pose-endpoint-rings-validation-v1",
+  "cases": 512,
+  "operation_comparisons": 4608,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x195c170",
+    "0x195c270",
+    "0x18baba0",
+    "0x18bb430"
+  ],
+  "method": "Original insertion/removal and body-head accessors run without instruction interception",
+  "comparisons": [
+    "all body and constraint bytes after every insertion and removal",
+    "final empty selected body heads",
+    "unrelated head fields and padding preserved"
+  ],
+  "coverage": [
+    "selectors0/1/2",
+    "one through eight records across four distinct bodies",
+    "random endpoint orientation and insertion/removal order",
+    "singleton/multiple-member rings",
+    "head and non-head removal",
+    "neighbor first/second endpoint port selection"
+  ],
+  "limits": [
+    "Consistent retained rings with distinct valid endpoints; null/self endpoints, duplicate insertion and repeated removal not asserted.",
+    "No concurrent synchronization or live lifetime proof.",
+    "Provider list removal is separate from endpoint-ring removal."
+  ]
+}
