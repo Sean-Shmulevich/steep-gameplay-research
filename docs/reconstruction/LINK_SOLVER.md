@@ -6923,3 +6923,61 @@ checks endpoint metadata bit0 and appends eligible children to another output
 collection for later work, before removing the registered container. That broader
 path includes body processing and remains a separate reconstruction task. Live
 ownership, safe reclamation and concurrent mod mutation remain unresolved.
+
+## Container removal and deferred children
+
+`unregister_pose_constraint_container` reconstructs `0x18d1130..0x18d1369`.
+The earlier container-removal gap is now narrowed to its supplied body/tree
+services and allocation. This is a separate operation from individual removal.
+
+```python
+body_count, saved_index = container.body_count, container.index
+for i in range(body_count):
+    body = reload(container.bodies)[i]
+    if body.metadata.flags52 & 8:
+        remove_tree_body(provider.tree, body)
+    process_body(provider, body, output)
+child_count = container.child_count
+for i in range(child_count):
+    child = reload(container.children)[i]
+    first, second = child.endpoints  # captured before virtual kind query
+    if get_kind(child) == 4:
+        swap_remove_first_match(provider.second_command_list, child)
+    if first.metadata.flags52 & 1: continue
+    if second and second.metadata.flags52 & 1: continue
+    append(output, child)
+swap_remove_at(provider.containers, saved_index)
+old_owner = container.owner
+container.owner, container.backlink, container.index = 0, 0, UINT32_MAX
+if saved_index < provider.container_count:
+    moved = provider.containers[saved_index]
+    moved.owner, moved.backlink, moved.index = old_owner, provider + 8, saved_index
+```
+
+Body count and insertion index are captured before services. Child count is
+captured after body processing. Both array pointers are reread on each iteration;
+endpoint metadata pointers are read after the kind query even though endpoint
+identities were captured before it. Kind4 removal occurs even when metadata later
+blocks output queueing. The queue is deferred work, not proof of destruction.
+
+Output storage grows from zero to8, otherwise doubles, with alignment16/tag0x19.
+The wrapper supplies allocation, then writes capacity and clamps count before
+appending. It rejects uint32 allocation-size overflow instead of reproducing
+unsafe wrapped allocation. Missing child membership and invalid container indices
+also have authored errors. Earlier changes remain applied if a service fails.
+The removed-index constant at `0x29ca0f8` is UINT32_MAX in the inspected image.
+
+[The native comparison receipt](../../native/snow_host/pose_container_removal_validation.json)
+covers512 fixtures and767 queued children, matching all retained bytes and body/tree
+service order. Cases include first/middle/last removal, zero through eight children,
+metadata gates and nullable second endpoints. Tree removal and body processing are
+recording-only services in this comparison. Output capacity is retained, so native
+allocation is not validated here. Public tests separately exercise relocating
+allocation and mutation-sensitive count, pointer and endpoint capture rules.
+
+The body service at `0x18d0cf0` has a further inspected lead: it walks selector2
+endpoint rings, removes cross-owner constraints through individual unregistration,
+then queues or destroys them according to output availability and metadata gates.
+It restarts from the body's current head after removal. This service has not yet
+been reconstructed or included in this native comparison. Tree removal at
+`0x19598d0`, live lifetime and concurrent mutation remain separate work.

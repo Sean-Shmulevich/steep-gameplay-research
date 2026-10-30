@@ -8407,3 +8407,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   provider arrays, bodies and links. Removal does not destroy/free the object.
   Missing-member handling is an authored guard; container removal has a distinct
   deferred-child path and remains separate. Live/concurrent ownership stays open.
+- Reconstructed container unregistration, deferred child filtering and moved-container
+  backlink repair.512 original-wrapper comparisons match all retained bytes and
+  service order, including767 queued children. Public tests cover relocation and
+  callback-sensitive capture timing. Tree/body processing remain supplied services;
+  native output allocation and live/concurrent reclamation are not established.

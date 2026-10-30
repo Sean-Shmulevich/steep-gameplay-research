@@ -1,0 +1,28 @@
+{
+  "schema": "pose-container-removal-validation-v1",
+  "cases": 512,
+  "queued_children": 767,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18d1130"
+  ],
+  "method": "Original container removal with recording-only tree/body services and authored kind method; retained output capacity",
+  "comparisons": [
+    "all provider/container/body/metadata/constraint/output/array bytes",
+    "tree and body service ordering and arguments"
+  ],
+  "coverage": [
+    "zero through eight children",
+    "zero through four bodies",
+    "first middle last container removal",
+    "kind4 and other kinds",
+    "both metadata gates and null second endpoint",
+    "stale tails and moved-container backlinks"
+  ],
+  "limits": [
+    "Tree removal and body processing are supplied services, not joined native behavior.",
+    "Output growth is excluded from native comparison.",
+    "No live ownership, concurrency or safe reclamation proof."
+  ]
+}

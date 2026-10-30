@@ -1435,3 +1435,15 @@ located general entry. See LINK_SOLVER.md, "Individual registration removal".
 General pointer/count are reloaded after detachment. Missing membership raises an
 authored error; native invalid-index writes are not reproduced. No destruction,
 freeing, duplicate-ring safety or container-removal equivalence is implied.
+
+### Container registration removal
+
+`unregister_pose_constraint_container` follows LINK_SOLVER.md, "Container removal
+and deferred children". It captures body count and container index before callbacks,
+processes bodies through explicit services, captures child count afterward, removes
+kind4 children from the second command registry, and queues children whose endpoint
+metadata bit0 is clear. It swap-removes the container and repairs the moved object's
+owner/index/backlink. Valid serial membership and writable retained storage are
+required. Tree removal, cross-owner body processing and output allocation remain
+supplied services. Missing membership and capacity overflow raise authored errors;
+this is not an atomic or concurrent removal API.
