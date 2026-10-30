@@ -1,7 +1,7 @@
 import struct
 import unittest
 from engine.pose_endpoint_rings import attach_pose_endpoint_rings,detach_pose_endpoint_rings
-from engine.pose_command_registry import register_pose_constraint
+from engine.pose_command_registry import register_pose_constraint,unregister_pose_constraint
 
 
 class RingTests(unittest.TestCase):
@@ -42,6 +42,13 @@ class RingTests(unittest.TestCase):
         self.assertEqual(arrays[100][0],10);self.assertEqual(arrays[200][0],10)
         self.assertEqual(struct.unpack_from('<Q',b[1],0x90)[0],10)
         self.assertEqual(struct.unpack_from('<Q',b[2],0x90)[0],10)
+        unregister_pose_constraint(p,10,arrays=arrays,get_kind=lambda t:4,
+            detach=lambda t,s:detach_pose_endpoint_rings(t,s,records=r,bodies=b))
+        self.assertEqual(struct.unpack_from('<I',p,0x68)[0],0)
+        self.assertEqual(struct.unpack_from('<I',p,0x78)[0],0)
+        self.assertEqual(r[10][0x20:0x40],bytes(32))
+        self.assertEqual(struct.unpack_from('<Q',b[1],0x90)[0],0)
+        self.assertEqual(struct.unpack_from('<Q',b[2],0x90)[0],0)
 
 
 if __name__=='__main__':unittest.main()

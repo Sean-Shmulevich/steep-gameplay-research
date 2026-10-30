@@ -62,6 +62,31 @@ class RegistryTests(unittest.TestCase):
             constraints={77:r},bodies={1:body},metadata={2:bytearray(0x60)},invoke=invoke)
         self.assertEqual(calls,[(7,1,0,4.,1)]*2)
 
+    def test_individual_removal_order_and_first_match(self):
+        from engine.pose_command_registry import unregister_pose_constraint
+        p,a,g,e=self.fixture()
+        for token in (77,88,77):
+            register_pose_constraint(p,token,arrays=a,grow=g,notify=lambda *x:None,get_kind=lambda t:4)
+        events=[]
+        def detach(token,selector):
+            events.append((token,selector,struct.unpack_from('<I',p,0x78)[0],
+                           struct.unpack_from('<I',p,0x68)[0]))
+        unregister_pose_constraint(p,77,arrays=a,get_kind=lambda t:4,detach=detach)
+        self.assertEqual(events,[(77,2,2,3)])
+        self.assertEqual(a[struct.unpack_from('<Q',p,0x60)[0]][:3],[77,88,77])
+        self.assertEqual(struct.unpack_from('<I',p,0x68)[0],2)
+
+    def test_missing_membership_guard_and_noncommand_removal(self):
+        from engine.pose_command_registry import unregister_pose_constraint
+        p,a,g,e=self.fixture();before=bytes(p)
+        with self.assertRaises(ValueError):
+            unregister_pose_constraint(p,77,arrays=a,get_kind=lambda t:4,detach=lambda *x:self.fail('detach'))
+        self.assertEqual(bytes(p),before)
+        register_pose_constraint(p,77,arrays=a,grow=g,notify=lambda *x:None,get_kind=lambda t:2)
+        calls=[]
+        unregister_pose_constraint(p,77,arrays=a,get_kind=lambda t:2,detach=lambda *x:calls.append(x))
+        self.assertEqual(calls,[(77,2)]);self.assertEqual(struct.unpack_from('<I',p,0x68)[0],0)
+
     def test_doubling_and_captured_container_return(self):
         p,a,g,e=self.fixture();struct.pack_into('<II',p,0x58,1,1)
         old=struct.unpack_from('<Q',p,0x50)[0];a[old]=[33]

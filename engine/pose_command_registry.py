@@ -53,3 +53,31 @@ def register_pose_constraint_container(provider,token,*,containers,arrays,grow,g
         if get_kind(child)==4:
             _append(provider,0x80,child,arrays,grow)
     return original_count
+
+
+def unregister_pose_constraint(provider,token,*,arrays,get_kind,detach):
+    """Remove an individual registration, detach rings, then remove general entry.
+
+    Only the first matching entry is removed; slots are replaced by the last
+    active entry and inactive tails remain untouched. detach(token,2) supplies
+    endpoint-ring removal. No destructor or storage release is called here.
+    Missing membership raises an authored ValueError instead of reproducing the
+    native UINT32_MAX index and out-of-bounds write.
+    """
+    def locate(offset):
+        slots=arrays[_pointer(provider,offset)]
+        for index in range(_u32(provider,offset+8)):
+            if slots[index]==token:return index
+        raise ValueError('Constraint absent from required provider list')
+    general_index=locate(0x60)
+    if get_kind(token)==4:
+        command_index=locate(0x70)
+        count=(_u32(provider,0x78)-1)&0xffffffff
+        struct.pack_into('<I',provider,0x78,count)
+        slots=arrays[_pointer(provider,0x70)]
+        slots[command_index]=slots[count]
+    detach(token,2)
+    count=(_u32(provider,0x68)-1)&0xffffffff
+    struct.pack_into('<I',provider,0x68,count)
+    slots=arrays[_pointer(provider,0x60)]
+    slots[general_index]=slots[count]

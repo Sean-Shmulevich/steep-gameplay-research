@@ -1,0 +1,31 @@
+{
+  "schema": "pose-command-lifecycle-validation-v1",
+  "cases": 512,
+  "operation_comparisons": 4608,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18cffe0",
+    "0x18d0e30",
+    "0x195c170",
+    "0x195c270"
+  ],
+  "method": "Original provider insertion/removal and endpoint ring operations without instruction interception; authored fixture kind method returns a stored field",
+  "comparisons": [
+    "every provider, body, constraint and array byte after each operation",
+    "stale tails and unrelated fields",
+    "final empty selected body heads"
+  ],
+  "coverage": [
+    "one through eight records across four bodies",
+    "kind4 and other kinds",
+    "random endpoint orientation and insertion/removal order",
+    "head and non-head ring removal",
+    "first/middle/last provider slot removal"
+  ],
+  "limits": [
+    "Retained capacity8; native growth excluded from this joined lifecycle receipt.",
+    "Consistent membership and distinct valid endpoints; missing entries, duplicates and null endpoints are not native-tested.",
+    "No destructor, reclamation, concurrency or live ownership proof."
+  ]
+}

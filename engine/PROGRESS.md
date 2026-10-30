@@ -8402,3 +8402,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   endpoint-specific neighbor links and predecessor head replacement are preserved.
   Individual registration now has a public test using real ring insertion. Provider
   removal, null endpoint admission, duplicate safety and live lifetime remain open.
+- Reconstructed individual provider unregistration and joined it with endpoint-ring
+  detachment.512 fixtures match4608 original registration/removal operations across
+  provider arrays, bodies and links. Removal does not destroy/free the object.
+  Missing-member handling is an authored guard; container removal has a distinct
+  deferred-child path and remains separate. Live/concurrent ownership stays open.

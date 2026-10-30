@@ -6867,3 +6867,59 @@ Duplicate insertion and repeated removal are not made idempotent by this model.
 Earlier mocked registration tests showing duplicate provider entries do not prove
 that duplicate structural insertion is safe. No synchronization, live ownership,
 reclamation or arbitrary concurrent mod mutation is established by these checks.
+
+## Individual registration removal
+
+`unregister_pose_constraint` reconstructs provider removal `0x18d0e30`. It first
+searches the general collection at+0x60 for the first matching identity and retains
+that index. It then queries the constraint kind. For kind4, it searches the first
+command list at+0x70, decrements its active count and fills the matching slot with
+the last active pointer. It calls selector2 endpoint-ring detachment before
+performing the corresponding swap removal in the general collection.
+
+```python
+general_index = first_match(provider.general_constraints, constraint)
+if get_kind(constraint) == 4:
+    command_index = first_match(provider.first_command_list, constraint)
+    swap_remove(provider.first_command_list, command_index)
+detach_endpoint_rings(constraint, selector=2)
+swap_remove(provider.general_constraints, general_index)
+```
+
+The general collection's pointer/count are reread after ring detachment, but the
+search index is the value captured earlier. Neither list tail is cleared. Only the
+first matching identity is removed. This does not make duplicate structural
+registration safe; the separate ring membership invariants still apply.
+
+The native search uses UINT32_MAX when an identity is absent, then continues into
+count decrement and indexed writes. The independent API raises ValueError for a
+missing required membership instead. This is an authored guard, not a recovered
+native exception. The reconstruction is not transactional: callback failure or an
+invalid concurrent mutation can leave earlier changes applied. Valid serial
+membership is the tested contract.
+
+[`pose_command_lifecycle_validation.json`](../../native/snow_host/pose_command_lifecycle_validation.json)
+compares512 fixtures across4608 registration/removal operations. Original provider
+registration, provider removal, endpoint-ring insertion/removal and body-head
+accessors execute without instruction interception. A small authored fixture
+virtual method returns each record's supplied kind; it does not stand in for a
+claimed original class implementation. Every provider/body/constraint/array byte
+matches after every operation, including stale tails and unrelated fields. Cases
+cover one through eight records, all six supplied kinds, mixed endpoint orientation,
+random registration/removal order, and first/middle/last list slots. Storage remains
+within retained capacity8. Native growth was separately tested as a service, not
+retested inside this joined lifecycle result.
+
+Public composition tests now register and unregister using the real reconstructed
+ring operations. Both active collection counts and selected body heads return to
+zero, while endpoint links are cleared. No destructor or free call occurs in this
+provider removal routine. Static base-destructor inspection at `0x19a1670` separately
+checks whether the first ring-link field is nonzero before invoking detachment;
+its remaining registration/notification/free behavior is not covered here.
+
+Container removal is not interchangeable with individual removal. A separate
+inspected path around `0x18d11a9` removes kind4 children from the second command list,
+checks endpoint metadata bit0 and appends eligible children to another output
+collection for later work, before removing the registered container. That broader
+path includes body processing and remains a separate reconstruction task. Live
+ownership, safe reclamation and concurrent mod mutation remain unresolved.

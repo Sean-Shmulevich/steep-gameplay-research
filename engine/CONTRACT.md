@@ -1428,3 +1428,10 @@ reconstruct two-endpoint circular link insertion/removal. See LINK_SOLVER.md,
 selector0 body88. Neighbor fields depend on which endpoint matches the body.
 Both endpoint bodies and consistent retained rings are required; no lifetime,
 duplicate insertion, repeated removal or concurrent mutation policy is added.
+
+Individual unregistration: `unregister_pose_constraint` removes the first command
+entry for kind4, detaches selector2 endpoint rings, then swap-removes the previously
+located general entry. See LINK_SOLVER.md, "Individual registration removal".
+General pointer/count are reloaded after detachment. Missing membership raises an
+authored error; native invalid-index writes are not reproduced. No destruction,
+freeing, duplicate-ring safety or container-removal equivalence is implied.
