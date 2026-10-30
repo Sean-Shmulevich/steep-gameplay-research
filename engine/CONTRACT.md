@@ -1548,3 +1548,14 @@ unresolved destinations. Failed rows remain in original order; resolved rows lea
 the queue. It returns all-resolved without changing reader20. Temporary allocation,
 queue growth and atomic retain remain services. Valid serial capacity and stable
 storage are required; no transactional rollback or live lifetime proof is implied.
+
+### Base constraint deserialization
+
+`deserialize_pose_constraint_base` follows LINK_SOLVER.md, "Base object registration
+and complete command loading". It appends object/type9fb9 before reading fields,
+loads optional userdata301, legacy endpoints2602, endpoint/key block2c02, ring-link
+references2c03 and owner/index/swap2609. Reference failures set reader20 but do not
+abort. Endpoint keys are derived immediately from current pointers, not repaired
+by deferred replay. Growth is supplied; malformed pointer/key derivation fails
+rather than inventing data. `deserialize_pose_command_record` joins this base path
+to actual framing, references and command loading, without lifecycle registration.

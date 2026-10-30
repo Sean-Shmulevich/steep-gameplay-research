@@ -8462,3 +8462,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   memcpy/atomic operations. Public tests join enqueue/replay and confirm successful
   references are not retained again on retry. Object-table population and actual
   loader completion/lifetime remain open; scratch allocation stays a service.
+- Joined base object-table registration, userdata/endpoints/link/owner fields and
+  specialized kind4 command loading.512 native full loads match without instruction
+  interception, including645 deferred references. Public tests cover relocated table
+  growth and load-to-replay composition. Immediate endpoint-key derivation exposes
+  an unresolved forward-reference refresh dependency; callback assignment and actual
+  asset-corpus/live registration remain open.

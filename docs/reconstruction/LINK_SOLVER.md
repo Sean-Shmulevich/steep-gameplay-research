@@ -7595,3 +7595,61 @@ verify that already-resolved objects are not retained again, and compose typed
 reference enqueue with replay. They also check full failed-row preservation and
 zero destinations. Original object-table population, allocator mutation, real
 asset graphs and concurrent/live lifetime remain outside this result.
+
+## Base object registration and complete command loading
+
+`pose_constraint_decode.deserialize_pose_constraint_base` reconstructs `0x19a17f0`
+and the constraint-specific use of link reader `0x1958d70` and userdata reader
+`0x18c0d40`. `deserialize_pose_command_record` joins these with specialized kind4
+loading, actual block framing and typed references. No base-decoder placeholder
+remains in this entry point. Allocation growth is still supplied.
+
+The reader first appends `(constraint_pointer, type0x9fb9)` to its16-byte object
+table, growing from0 to8 or doubling capacity as needed. Count increases before
+the pointer/type writes; entry padding remains untouched. Registration precedes
+field loading, so references to this new table index can resolve immediately.
+This is serialization identity registration, not physics provider/ring insertion.
+
+All following base searches scan at most three blocks and do not require a match:
+
+| Tag | Minimum payload | Effect when present |
+| --- | --- | --- |
+| 0301 | 8 | Copy raw userdata to object50; absent block explicitly zeros it |
+| 2602 | 9 | First endpoint reference/type9fb6; presence byte; optional second endpoint reference, or clear second |
+| 2c02 | 8 | Two endpoint references/type9fb6; recompute paired metadata54 keys at18/1c |
+| 2c03 | 16 | Four type9fb9 references into20,30,28,38 in that order |
+| 2609 | 13 | Type9fba reference into60, uint32 index68, normalized swap flag59 |
+
+Tags and object offsets in this table are hexadecimal; payload lengths are decimal.
+Minimum sizes are the native checks, not full guaranteed consumption lengths. For
+example, two typed references normally need16 bytes, while2c02 requests only8.
+The bounded reconstruction raises on an actual overread rather than following an
+unsafe native load beyond a malformed payload. No silent padding is manufactured.
+
+A false typed-reference result sets reader20 and loading continues. A forward
+reference is considered successful and leaves the destination unchanged until
+replay. Endpoint keys are recomputed from the pointers currently stored after2c02:
+second null contributes key0; first must be a valid body. No canonical reordering
+occurs here. A later2c02 can overwrite endpoints loaded by2602. Link fields are
+loaded as serialized references, without calling ring insertion helpers.
+
+This exposes an unresolved dependency for forward endpoint references. Key
+recomputation occurs immediately, but replay only repairs pointers. It does not
+refresh18/1c. Fixtures in the native comparison keep key-source pointers valid and
+immediately resolved. Upstream load ordering or a later refresh must be established
+before claiming arbitrary serialized graphs are ready for simulation.
+
+[Complete native reader comparison](../../native/snow_host/pose_full_command_decoding_validation.json)
+covers512 loads with no instruction interception. Original object-table append,
+base/link/userdata loading, framing, typed references, deferred append and kind4
+commands execute together. Every object/reader/table/fixup/body/metadata/input byte
+matches, with645 deferred references.256 outputs retain a preexisting error flag.
+Cases vary optional legacy/new endpoint blocks, overrides, null/forward references,
+self-reference, ring-field ordering, userdata, relation/index/swap fields and0..6
+commands. Object/fixup capacities are retained; no allocation calls are needed.
+
+Public tests add relocating object-table growth, full load then forward-reference
+replay, missing-field preservation, and continued loading after a type mismatch.
+Callback1f8 remains untouched by these readers. This completes the inspected
+base/kind4 field-loading chain, not callback assignment, safe physics registration,
+actual asset-corpus coverage or arbitrary object graph reconstruction.
