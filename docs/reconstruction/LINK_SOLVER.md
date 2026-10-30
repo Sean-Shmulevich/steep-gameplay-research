@@ -7330,3 +7330,72 @@ rejection is an authored guard after base writes, not rollback or a native error
 When the request gate is closed, no virtual reset is reached or type-checked.
 Concrete gameplay command production, other body classes and live ownership remain
 unresolved. This result does not establish all automatic reactivation triggers.
+
+## Serialized kind4 command records
+
+The callback search exposed a separate command-input path: specialized reader
+`0x19443f0`. `deserialize_pose_command_constraint` reconstructs this consumer with
+explicit base-decoder and block-reader services. It does not claim to decode the
+full asset envelope or identify the callback producer.
+
+```python
+read_base(constraint, reader)
+if select_block(reader, tag=0x2607, size=5, scan_limit=3, required=True):
+    constraint.count74 = read_u32_bits(reader)
+    constraint.single70 = read_byte(reader) != 0
+index = 0
+while index < signed_i32(constraint.count74):
+    if select_block(reader, tag=0x2608, size=64, scan_limit=3, required=True):
+        for word in range(16):
+            constraint.commands[index].word[word] = read_u32_bits(reader)
+    index += 1
+```
+
+Block2607 contains four count bytes and one normalized boolean. Each block2608
+contains the exact64-byte command layout already consumed by the category24 row
+builder: four XYZ vectors and four scalar words. The loader copies raw bits;
+no float conversion, endian reinterpretation beyond the little-endian word copy,
+angle conversion or normalization is introduced. Per-word cursor reads preserve
+the native sequence. Reader framing remains the `0x18c0590` service. Inspection establishes that3
+is a scan limit, not a format version, and the final true argument requests an
+error flag when no matching block is found. Native headers have magic0xecd7 in
+the high16 bits, the tag in the low16, followed by a total block byte size. The
+reader can scan up to three candidate blocks. Malformed headers or missing required
+blocks set reader20; the consumer itself continues according to the false result.
+
+Absent2607 leaves count and single mode unchanged. Absent2608 leaves that command
+slot unchanged, but its index is still consumed. The signed count is reloaded on
+every loop comparison, so base/block services that change it affect iteration.
+Negative counts skip all command blocks. The native path has no six-record clamp;
+the independent loader rejects signed counts above6 to prevent writes outside
+inline storage. Short reader responses also raise an authored error. Neither guard
+is rollback; header/base writes may already have happened.
+
+The loader does not assign callback1f8 or userdata50. The generic kind4 factory
+uses default construction `0x1944190`, which initializes callback1f8 to zero.
+Therefore loading inline command records does not prove that a valid per-step
+producer callback exists. The original preparation path invokes callback1f8 when
+its metadata gates admit it, with no inspected null check. Upstream registration,
+callback installation or selection must still be established for any live object.
+The clone at `0x1944340` copies callback and userdata from a source; it is not an
+independent producer. No additional direct constructor caller was established in
+this pass. These are boundaries, not proof that no indirect producer exists.
+
+The supplied base reader at `0x19a17f0` has concrete further leads: it records an
+object/type pair0x9fb9, reads endpoint references under tag2602/type0x9fb6, and
+reads pointer60/index68/swap59 under tag2609/type0x9fba. Reference fixups and the
+reader's error/registration behavior are not implemented in this specialized API.
+
+[Native consumer comparison](../../native/snow_host/pose_command_decode_validation.json)
+covers512 cases and844 loaded command blocks. All constraint and reader bytes,
+service ordering, tags, sizes, scan limits and required flags match. Original native
+per-word loads/stores/cursor updates execute; base decoding and block selection
+are supplied. Fixtures cover missing headers/records, counts-1/0/1..6, nonzero
+boolean normalization and raw random word patterns. No asset corpus or native
+framing comparison is implied.
+
+Public tests additionally feed decoded records into the existing command-row
+builder and check XYZ expansion and scalar broadcasting. They cover count mutation,
+missing-block preservation, callback-pointer preservation and authored malformed
+input guards. The full resource reader, callback producer and live selection remain
+open, with clear independent entry points for further reconstruction.

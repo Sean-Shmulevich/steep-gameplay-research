@@ -1507,3 +1507,13 @@ reset, checking each reached body table against a caller-supplied known-class
 identity. It does not equate reset with group reactivation. A type mismatch raises
 an authored error at the virtual call boundary after preceding constructor writes;
 this API is not transactional. Command production remains a supplied callback.
+
+### Serialized kind4 command loading
+
+`deserialize_pose_command_constraint` follows LINK_SOLVER.md, "Serialized kind4
+command records". Base deserialization runs first, then present2607 updates count
+and normalized single flag; signed positive count controls2608 records. Each present
+record copies sixteen four-byte words into its64-byte slot. Missing blocks preserve
+storage and count is reread on each loop condition. Block selection, cursor reads
+and base reference resolution are services. Counts above6 and short reads have
+authored guards; no callback pointer is manufactured or registered by this path.

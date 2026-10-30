@@ -8442,3 +8442,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   all object/body/metadata bytes with only command production supplied. Added a typed
   construction adapter and unsupported-class guard. Reset is not full group wake;
   other body classes, concrete command callbacks and live ownership remain open.
+- Reconstructed serialized kind4 count/flag and64-byte command block consumption.
+ 512 native cases/844 command blocks match object/reader bytes and service calls;
+  public tests join decoded records to the category24 row builder. Missing blocks
+  preserve slots and count is signed/reloaded. Full framing/base reference fixups
+  remain services; this path does not assign the still-unresolved callback producer.

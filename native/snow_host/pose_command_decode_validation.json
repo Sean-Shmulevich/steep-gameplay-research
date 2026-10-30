@@ -1,0 +1,26 @@
+{
+  "schema": "pose-command-decode-validation-v1",
+  "cases": 512,
+  "command_blocks_loaded": 844,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x19443f0",
+  "method": "Original specialized block consumer with supplied base decoder and block selector; original per-word cursor reads/writes",
+  "comparisons": [
+    "all constraint and reader bytes",
+    "base/block service order and tag/size/scan_limit/required arguments"
+  ],
+  "coverage": [
+    "missing/present header and command blocks",
+    "negative zero and1..6 counts",
+    "nonzero single flag normalization",
+    "stale slot preservation",
+    "raw random word patterns"
+  ],
+  "limits": [
+    "No original block framing, base reference resolution or asset corpus.",
+    "Counts above6 rejected by authored guard; native invalid writes not reproduced.",
+    "Callback identity/production not decoded by this path.",
+    "Disjoint reader/object storage; no aliasing or concurrent mutation proof."
+  ]
+}
