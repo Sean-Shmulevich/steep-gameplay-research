@@ -8390,3 +8390,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   shows individually registered kind4 constraints in the first list and kind4
   children of registered objects in the second. Concrete gameplay identities,
   registration effects, deserialization and live ownership remain unresolved.
+- Reconstructed individual and child-container command registration.512 native
+  comparisons match kind filtering, append/growth, notification ordering, retained
+  arrays and container insertion-index returns. Public composition builds both
+  registries and feeds them into preparation without synthesized command lists.
+  Notification effects, removal, semantic container ownership and concrete gameplay
+  callbacks remain unresolved; allocation continues as an explicit service.

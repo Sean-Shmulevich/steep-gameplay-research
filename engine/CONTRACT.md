@@ -1413,3 +1413,11 @@ provider's spans70/78 and80/88 to the recovered preparation driver and kind4 upd
 wrapper. See LINK_SOLVER.md, "Command registry to preparation". Provider pointers
 and slots are read at the observed uses; active counts are captured per loop.
 Callbacks remain supplied. No deduplication or ownership/lifetime assertion is added.
+
+Pose command registration: `register_pose_constraint` appends to the general
+constraint collection, calls the observed notification service with argument2,
+then appends kind4 to the first command list. `register_pose_constraint_container`
+appends the supplied object and filters its captured child count into the second
+command list. See LINK_SOLVER.md, "Command registry population". Growth and kind
+lookup are explicit services. The container return is its pre-growth insertion
+index; neither path deduplicates records or supplies lifetime ownership.

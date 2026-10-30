@@ -1,0 +1,30 @@
+{
+  "schema": "pose-command-registration-validation-v1",
+  "cases": 512,
+  "individual_cases": 256,
+  "container_cases": 256,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18cffe0",
+    "0x18d0080"
+  ],
+  "method": "Original registration routines with supplied relocating growth, kind lookup and notification services",
+  "comparisons": [
+    "whole provider, container, constraint and array bytes including stale tails and relocated arrays",
+    "service order and arguments",
+    "container insertion-index return"
+  ],
+  "coverage": [
+    "kind4 filtering and noncommand kinds",
+    "empty through eight child entries",
+    "repeated child identities",
+    "existing general/command/container entries",
+    "retained capacity and zero/doubling growth"
+  ],
+  "limits": [
+    "Native allocation, notification effects and actual kind virtual methods are supplied.",
+    "Container semantic class and lifetime remain unresolved.",
+    "No deduplication, removal, concurrency or live session is established."
+  ]
+}

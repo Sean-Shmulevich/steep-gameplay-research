@@ -6744,3 +6744,64 @@ Public composition tests additionally mutate a later slot during callback execut
 This removes provider lookup and individual preparation as supplied services in the
 joined adapter. Concrete gameplay callback production, registration effects,
 deserialization validity and concurrent ownership remain unresolved.
+
+## Command registry population
+
+`engine/pose_command_registry.py` reconstructs individual registration
+`0x18cffe0` and child-container registration `0x18d0080`. This supersedes the prior
+static-only classification of these two paths; their allocation and notification
+services remain supplied.
+
+Individual registration appends the constraint to the provider's general collection
+at+0x60, calls the observed notification helper with argument2, then asks the
+constraint's virtual kind method. Only kind4 is appended to the first command list
+at+0x70. Kind lookup happens after notification, not before it. Collection append
+reloads pointer/count after growth. Neither path rejects duplicate identities.
+
+```python
+append(provider.general_constraints, constraint)
+notify(constraint, 2)
+if get_kind(constraint) == 4:
+    append(provider.first_command_list, constraint)
+```
+
+Container registration captures the provider's object-list count before growth,
+appends the supplied object at+0x50, then captures that object's child count+0x60.
+For each child it reloads the child-array pointer+0x58, reads the slot, asks its kind
+and appends kind4 to the second command list at provider+0x80. It returns the
+original object-list insertion index. Changing the source child count during a
+callback does not change the captured loop bound; changing the array pointer can
+change later visited children. The object's semantic class remains unresolved.
+
+```python
+insertion_index = provider.objects.count
+append(provider.objects, container)
+child_count = container.child_count
+for index in range(child_count):
+    child = container.current_child_array[index]
+    if get_kind(child) == 4:
+        append(provider.second_command_list, child)
+return insertion_index
+```
+
+All inspected append sites request capacity8 when empty, otherwise double the
+uint32 capacity. Growth is invoked only when count equals capacity. The independent
+API requires the service to preserve active slots and publish the new pointer and
+capacity. It does not reinterpret corrupted count/capacity combinations or provide
+native allocation semantics. Notification behavior remains supplied; argument2 is
+an observed value, not an inferred wake/sleep label.
+
+[`pose_command_registration_validation.json`](../../native/snow_host/pose_command_registration_validation.json)
+contains256 individual and256 container comparisons. The original routines execute
+with recording kind/notification services and relocating storage-growth services.
+Every provider/object/constraint/array byte matches, including inactive tails and
+relocated arrays. Service ordering, growth requests and the insertion-index return
+match. Fixtures cover noncommand kinds, zero through eight child entries, existing
+collection entries, repeated identities and growth/no-growth cases.
+
+Public composition tests register an individual command and a container containing
+that same command plus a noncommand child, then run the retained preparation API.
+Both registered command entries reach preparation in list order; the noncommand
+child does not. This is executable registration-to-preparation composition on
+synthetic data. Removal, actual notification effects, deserialization, object
+lifetime and concrete gameplay callback discovery remain outside the result.
