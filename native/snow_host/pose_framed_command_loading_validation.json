@@ -1,0 +1,29 @@
+{
+  "schema": "pose-framed-command-loading-validation-v1",
+  "cases": 512,
+  "error_flagged_results": 363,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19443f0",
+    "0x18c0590"
+  ],
+  "method": "Original command consumer plus original block selector and inline cursor reads; base object/reference reader supplied",
+  "comparisons": [
+    "all constraint/reader/input bytes"
+  ],
+  "coverage": [
+    "unknown blocks skipped within scan limit",
+    "scan limit exhaustion",
+    "missing count header",
+    "truncated payload streams and malformed magic",
+    "counts0..6",
+    "existing error state",
+    "repeated failed search leaves cursor unchanged"
+  ],
+  "limits": [
+    "Base reference resolution supplied as no-op; no real asset corpus.",
+    "Unsafe count and external pointer domains guarded by independent implementation.",
+    "No gameplay callback assignment or live registration proof."
+  ]
+}

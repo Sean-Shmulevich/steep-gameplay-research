@@ -7399,3 +7399,73 @@ builder and check XYZ expansion and scalar broadcasting. They cover count mutati
 missing-block preservation, callback-pointer preservation and authored malformed
 input guards. The full resource reader, callback producer and live selection remain
 open, with clear independent entry points for further reconstruction.
+
+## Tagged block framing and cursor rules
+
+`pose_block_reader.select_pose_block` reconstructs `0x18c0590`. This replaces the
+framing service used by specialized command loading. The public
+`deserialize_retained_pose_command` adapter joins the reader and command consumer;
+base object/reference decoding remains supplied.
+
+Reader state comprises buffer pointer0, uint32 byte length8, payload cursor10,
+next-block cursor18 and error byte20. All offsets here are hexadecimal. Each header
+has two little-endian uint32 words: `0xecd70000 | tag16` and total block size,
+including the8-byte header. The requested payload size is a minimum, not an exact
+size requirement. No header version field is consumed by this routine.
+
+```python
+candidate = reader.next_block
+for attempt in range(uint32(scan_limit)):
+    if candidate + 8 > buffer_end: break
+    magic_tag, total = header(candidate)
+    if magic_tag.high16 != 0xecd7 or total < 8 or candidate + total > buffer_end:
+        reader.error = 1
+        return False
+    if magic_tag.low16 == uint32(requested_tag):
+        if total < uint32(min_payload) + 8:
+            reader.error = 1
+            return False
+        reader.payload_cursor = candidate + 8
+        reader.next_block = candidate + total
+        return True
+    candidate += total
+if low_byte(required): reader.error = 1
+return False
+```
+
+The search cursor is local until a match succeeds. Exhaustion, invalid data and
+short matching payloads preserve both stored cursors. This includes skipped valid
+blocks: a failed later search does not commit their traversal. Ordinary absence
+sets error only when required; malformed magic/size/bounds always sets it. A short
+remaining header counts as absence. Success never clears a prior error byte and
+does not refuse to proceed merely because that byte was already set.
+
+The requested tag is uint32, while header tags are16 bits; a request above65535
+cannot match by truncation. Payload-size addition uses the zero-extended uint32
+size plus8. Valid retained buffers require nonwrapping ranges and an in-range
+next-block cursor; the independent implementation rejects invalid external pointer
+domains rather than reproducing unsafe native memory reads.
+
+`read_pose_block_bytes` is an authored bounded adapter for the original consumer's
+inline loads and cursor advances. It reads only through the selected block end.
+It is not presented as a separately recovered native helper. Header selection may
+permit extra payload bytes; the next search still begins at the stored block end,
+not at a partially consumed payload cursor.
+
+[Selector comparison](../../native/snow_host/pose_block_reader_validation.json):
+1024 native calls without instruction interception match return booleans, every
+reader byte and unchanged input bytes. Cases cover scan limits, matching/missing
+and oversized requested tags, wrong magic, total-size failures, truncated headers,
+minimum payload failures, required/optional absence and existing error state.
+
+[Joined reader/command comparison](../../native/snow_host/pose_framed_command_loading_validation.json):
+512 original command loads use the original selector and native inline reads,
+with only base reference loading supplied. All object/reader/input bytes match.
+Unknown-block skipping, exhausted search, missing headers, truncated streams,
+malformed magic, counts0..6 and retained errors are included;363 outputs carry an
+error flag. Those are intentional error-path comparisons, not successful assets.
+
+Public tests cover cursor rollback on failure, error persistence after success,
+bounded reads and complete tagged bytes reaching inline command storage. No real
+asset corpus, base reference fixup or callback-production proof is claimed. The
+next reader dependency is base object registration and typed reference resolution.

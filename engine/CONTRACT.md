@@ -1517,3 +1517,14 @@ record copies sixteen four-byte words into its64-byte slot. Missing blocks prese
 storage and count is reread on each loop condition. Block selection, cursor reads
 and base reference resolution are services. Counts above6 and short reads have
 authored guards; no callback pointer is manufactured or registered by this path.
+
+### Tagged block reader
+
+`select_pose_block` follows LINK_SOLVER.md, "Tagged block framing and cursor rules".
+It scans at most the supplied uint32 number of headers from reader18, validates
+magic/total-size/bounds, and matches a uint16 header tag against the uint32 request.
+Success writes payload cursor10 and next-block cursor18 without clearing error20.
+Failure preserves both cursors; malformed blocks set error regardless of required,
+while ordinary absence sets it only when required. Buffer/cursor validity checks
+outside the native domain are authored guards. `read_pose_block_bytes` is a bounded
+adapter for the observed inline reads, not a separately recovered native function.

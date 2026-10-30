@@ -1,0 +1,28 @@
+{
+  "schema": "pose-block-reader-validation-v1",
+  "cases": 1024,
+  "successful_selections": 86,
+  "error_byte_one": 822,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18c0590",
+  "method": "Original selector with no instruction interception",
+  "comparisons": [
+    "return boolean",
+    "every reader byte and unchanged input buffer"
+  ],
+  "coverage": [
+    "zero and bounded scan limits",
+    "matching/nonmatching/out-of-range requested tags",
+    "wrong magic short/oversized blocks",
+    "truncated header",
+    "cursor at buffer end and later block",
+    "minimum payload size failure",
+    "required/optional absence",
+    "prior error byte preservation"
+  ],
+  "limits": [
+    "Synthetic retained buffers; no real asset corpus or base reference fixups.",
+    "Invalid external pointers/wrapping ranges are authored-guarded, not native-tested."
+  ]
+}

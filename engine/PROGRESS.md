@@ -8447,3 +8447,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   public tests join decoded records to the category24 row builder. Missing blocks
   preserve slots and count is signed/reloaded. Full framing/base reference fixups
   remain services; this path does not assign the still-unresolved callback producer.
+- Reconstructed tagged block framing, bounded search and error/cursor semantics.
+ 1024 native selector cases match without interception;512 joined command-reader
+  cases match with only base reference loading supplied. Added retained-buffer API
+  and bounded payload-read adapter. Malformed fixtures deliberately retain error
+  state; real asset corpus and base reference fixups remain unresolved.
