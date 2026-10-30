@@ -7293,3 +7293,40 @@ match. This supersedes the earlier supplied-base limitation. Concrete command
 production and body virtual effects remain supplied, as do live ownership and
 allocation. Default construction at `0x19a1600` is inspected but not implemented
 by this API; arbitrary other derived constructors are not covered.
+
+## Construction-triggered body quiet reset
+
+The constructor's body virtual+0x28 now joins an earlier decoded method. The known
+physical-body table `0x29c99a8` resolves this slot to `0x18be770`, exactly the reset
+used by ordinary-group reactivation. It clears metadata53's low nibble and stores
+positive zero in body timer28. All motion, transforms, unrelated body fields and
+the metadata high nibble remain unchanged.
+
+`construct_retained_pose_command` binds the reconstructed base and specialized
+kind4 constructors to `reset_pose_body_quiet_state`. It checks each reached body's
+primary table against the supplied known-class identity before applying the reset.
+The table identity is build-specific evidence, not an arbitrary-body reset license.
+The separately known box-resource table `0x29c9ac8` has serialization code at this
+slot; it must not be treated as the physical-body class.
+
+A nonzero request low byte and two priority15 endpoints admit both resets, in
+original caller order. The command callback subsequently sees reset timer/state
+but still receives original endpoint ordering, even if storage was canonicalized.
+Neither reset transfers a group to an active collection, repairs group indices,
+queues group links or performs registration. Calling this a complete group wake
+would overstate the constructor's effects.
+
+[Native joined check](../../native/snow_host/pose_construction_body_reset_validation.json)
+runs512 original base/kind4 constructions with actual physical-body virtual calls,
+original endpoint canonicalization and command initialization. Only command
+production is supplied. All constraint/body/metadata bytes and callback arguments
+match across random prior timers, state nibbles and motion bytes, priority gates,
+nullable second endpoints and request values. The previously supplied body-virtual
+boundary is closed for this class in this construction path.
+
+Public tests verify reset visibility at the initial command callback, preservation
+of metadata high bits, and rejection of an unsupported reached body table. That
+rejection is an authored guard after base writes, not rollback or a native error.
+When the request gate is closed, no virtual reset is reached or type-checked.
+Concrete gameplay command production, other body classes and live ownership remain
+unresolved. This result does not establish all automatic reactivation triggers.

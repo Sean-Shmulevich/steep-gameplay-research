@@ -8437,3 +8437,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   base/kind4 constructor cases match all bytes and original-order callback arguments.
   Callback enable defaults are now explained. Body virtual and concrete command
   production remain services; construction does not register provider/ring state.
+- Connected constraint-construction virtual28 to the already reconstructed known-body
+  quiet reset.512 joined native constructors now execute actual body resets and match
+  all object/body/metadata bytes with only command production supplied. Added a typed
+  construction adapter and unsupported-class guard. Reset is not full group wake;
+  other body classes, concrete command callbacks and live ownership remain open.

@@ -42,4 +42,35 @@ class BaseConstructTests(unittest.TestCase):
         self.assertEqual(struct.unpack_from('<I',self.r,0x74)[0],7);self.assertEqual(self.r[0x5a],1)
 
 
+    def test_known_body_reset_is_visible_to_initial_command_callback(self):
+        from engine.pose_constraint_construct import construct_retained_pose_command
+        self.fixture(1,1,8,3)
+        for b in self.bodies.values():
+            struct.pack_into('<Q',b,0,500);struct.pack_into('<f',b,0x28,9.5)
+        for m in self.metadata.values():m[0x53]=0xb7
+        observed=[]
+        def invoke(*args):
+            observed.append((args[1:3],tuple(bytes(b[0x28:0x2c]) for b in self.bodies.values()),
+                             tuple(m[0x53] for m in self.metadata.values())))
+        construct_retained_pose_command(self.r,constraint_token=9,owner_token=77,first_body=1,second_body=2,
+            callback_token=88,userdata=99,request_byte=1,base_tables=(100,200),command_tables=(300,400),
+            body_table=500,bodies=self.bodies,metadata=self.metadata,invoke=invoke)
+        self.assertEqual(observed,[((1,2),(bytes(4),bytes(4)),(0xb0,0xb0))])
+        self.assertEqual(struct.unpack_from('<QQ',self.r,8),(2,1))
+
+    def test_wrong_body_class_rejected_at_reached_virtual_boundary(self):
+        from engine.pose_constraint_construct import construct_retained_pose_command
+        self.fixture(1,1,1,2)
+        args=dict(constraint_token=9,owner_token=77,first_body=1,second_body=2,callback_token=88,
+            userdata=99,request_byte=1,base_tables=(100,200),command_tables=(300,400),body_table=500,
+            bodies=self.bodies,metadata=self.metadata,invoke=lambda *a:self.fail('unsupported body'))
+        with self.assertRaisesRegex(ValueError,'Unsupported body table'):
+            construct_retained_pose_command(self.r,**args)
+        # Base writes precede the virtual call; this is deliberately not rollback.
+        self.assertEqual(struct.unpack_from('<Q',self.r,0)[0],100)
+        args.update(request_byte=0,invoke=lambda *a:None)
+        construct_retained_pose_command(self.r,**args)
+        self.assertEqual(struct.unpack_from('<Q',self.r,0)[0],300)
+
+
 if __name__=='__main__':unittest.main()

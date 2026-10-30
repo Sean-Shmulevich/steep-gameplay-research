@@ -1498,3 +1498,12 @@ base lifecycle defaults. The fifth argument's low byte gates original-endpoint
 virtual28 calls, only when both nonnull endpoints have bit15 set. Owner argument
 is unused by the inspected path. Body virtual effects and table identities remain
 supplied; this constructor performs no provider/ring registration.
+
+### Known-body command construction
+
+`construct_retained_pose_command` follows LINK_SOLVER.md, "Construction-triggered
+body quiet reset". It binds base and kind4 construction to the existing body quiet
+reset, checking each reached body table against a caller-supplied known-class
+identity. It does not equate reset with group reactivation. A type mismatch raises
+an authored error at the virtual call boundary after preceding constructor writes;
+this API is not transactional. Command production remains a supplied callback.

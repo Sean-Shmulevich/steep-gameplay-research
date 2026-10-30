@@ -40,3 +40,31 @@ def construct_pose_constraint_base(record,*,constraint_token,first_body,second_b
     if request_byte&255 and prioritized(first_body) and second_body and prioritized(second_body):
         visit_body(first_body);visit_body(second_body)
     return constraint_token
+
+
+def construct_retained_pose_command(record,*,constraint_token,owner_token,
+        first_body,second_body,callback_token,userdata,request_byte,base_tables,
+        command_tables,body_table,bodies,metadata,invoke):
+    """Bind base/kind4 construction to the known physical-body quiet reset.
+
+    body_table must identify the inspected physical-body class for this fixture
+    or build. It is checked only when the virtual28 path is reached; other body
+    classes are not silently assigned this behavior. Command production is supplied.
+    Evidence: LINK_SOLVER.md, Construction-triggered body quiet reset.
+    """
+    from .pose_body_quiet_state import reset_pose_body_quiet_state
+    from .pose_command_prepare import construct_pose_command_constraint
+    def visit(body_token):
+        body=bodies[body_token]
+        if struct.unpack_from('<Q',body,0)[0]!=body_table:
+            raise ValueError('Unsupported body table for construction quiet reset')
+        reset_pose_body_quiet_state(body,metadata[struct.unpack_from('<Q',body,0x30)[0]])
+    def base(token,first,second,owner,request):
+        construct_pose_constraint_base(record,constraint_token=token,first_body=first,
+            second_body=second,owner_token=owner,request_byte=request,tables=base_tables,
+            bodies=bodies,metadata=metadata,visit_body=visit)
+    construct_pose_command_constraint(record,constraint_token=constraint_token,
+        owner_token=owner_token,first_body=first_body,second_body=second_body,
+        callback_token=callback_token,userdata=userdata,request_byte=request_byte,
+        table=command_tables[0],secondary_table=command_tables[1],bodies=bodies,
+        metadata=metadata,construct_base=base,invoke=invoke)

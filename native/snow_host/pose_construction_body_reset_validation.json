@@ -1,0 +1,31 @@
+{
+  "schema": "pose-construction-body-reset-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19441e0",
+    "0x19a1530",
+    "0x19a1480",
+    "0x19440c0",
+    "0x18be770"
+  ],
+  "method": "Original base/kind4 construction with actual constructor-selected body virtual quiet reset; command callback supplied",
+  "comparisons": [
+    "all constraint/body/metadata bytes",
+    "initial command callback endpoints/scalar/mode/userdata/default storage"
+  ],
+  "coverage": [
+    "all priority combinations",
+    "random unsigned keys",
+    "nullable second endpoint",
+    "request gate",
+    "random prior timer/state/motion bytes",
+    "counts0/1/6/7/UINT32_MAX"
+  ],
+  "limits": [
+    "Known physical-body table only.",
+    "Concrete command production remains supplied.",
+    "No group reactivation, registration, live concurrency or allocator proof."
+  ]
+}
