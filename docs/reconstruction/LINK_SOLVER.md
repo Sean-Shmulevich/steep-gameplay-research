@@ -7533,3 +7533,65 @@ not evidence that the public API is safe for concurrent live mutation.
 Public tests add relocating fixup growth, pointer publication before retain,
 failed-read cursor consumption, and composition with actual block framing.
 Original object types, delayed replay and loader completion ordering remain open.
+
+## Deferred reference replay
+
+`replay_pose_references` reconstructs `0x18c0710`. It completes the deferred path
+of ordinary and counted reference reads for retained serial storage. It returns
+true only if every queued fixup resolves, without changing reader error20 itself.
+
+```python
+scratch = allocate(entry_fixup_count * 24) if entry_fixup_count else empty
+object_count = reader.object_count
+fixups = captured_span(reader.fixups, reader.fixup_count)
+remaining = []
+for fixup in fixups:
+    if fixup.index >= object_count or objects[fixup.index].type != fixup.type:
+        *fixup.destination = null
+        remaining.append(copy_all_24_bytes(fixup))
+    else:
+        *fixup.destination = objects[fixup.index].pointer
+        if fixup.retain:
+            atomic_increment_u32((*fixup.destination) + 8)
+reader.fixup_count = 0
+ensure_fixup_capacity(len(remaining))
+reader.fixup_count = len(remaining)
+copy_remaining_to_front(remaining)
+release(scratch)
+return len(remaining) == 0
+```
+
+Object count and fixup pointer/end are captured after initial scratch allocation.
+The object-table pointer is reloaded for each in-range row. Success writes the
+pointer before the retain operation; the destination pointer/value are reread for
+retention. Both out-of-range indices and type mismatches zero the destination and
+preserve the entire24-byte row, including padding, in stable order for retry.
+Successful rows disappear from the active queue. Inactive tail bytes are not cleared.
+No null-sentinel special case exists in replay.
+
+Scratch initially holds the entry fixup count, with24-byte elements, alignment16
+and allocator tag0x18. The native routine also has scratch growth branches for
+allocator-driven changes to the input span. The reconstruction requires stable
+serial storage and rejects scratch overflow; that mutation domain is not claimed.
+Final queue growth starts at the needed count when capacity is zero, otherwise
+repeatedly doubles. Under ordinary valid capacity, failed rows cannot outnumber
+the input, so retained capacity suffices. Allocation and retain remain services.
+
+The reader reset entry at `0x18c02c0` clears buffer/cursor fields, invokes replay,
+then zeros both object and fixup counts. Its handling of unsuccessful replay is a
+separate lifecycle question; this API exposes the replay result rather than
+silently treating unresolved destinations as complete.
+
+[Native replay comparison](../../native/snow_host/pose_reference_replay_validation.json)
+covers512 cases with zero through eight fixups. Original replay, native memcpy and
+atomic increments execute together; only temporary allocation/free is supplied.
+All reader/table/fixup/destination/object bytes, return flag and allocation arguments
+match. There are1760 unresolved rows across the fixtures and141 retains. Cases
+include mixed index/type failures, ordinary/counted references, stable compaction,
+reference-count wrapping and preservation of existing reader error state.
+
+Public tests run successive replay passes after table population/type correction,
+verify that already-resolved objects are not retained again, and compose typed
+reference enqueue with replay. They also check full failed-row preservation and
+zero destinations. Original object-table population, allocator mutation, real
+asset graphs and concurrent/live lifetime remain outside this result.

@@ -1538,3 +1538,13 @@ instead retain a resolved object and mark deferred rows for retention. Forward
 indices append24-byte destination/index/type/retain records without changing the
 destination. Failure does not set reader error itself. Allocation and atomic retain
 are explicit services; deferred replay and real object lifetimes remain unresolved.
+
+### Deferred reference replay
+
+`replay_pose_references` follows LINK_SOLVER.md, "Deferred reference replay".
+It snapshots object count and the fixup span after scratch allocation, resolves
+matching index/type rows, retains counted pointers after publication, and zeroes
+unresolved destinations. Failed rows remain in original order; resolved rows leave
+the queue. It returns all-resolved without changing reader20. Temporary allocation,
+queue growth and atomic retain remain services. Valid serial capacity and stable
+storage are required; no transactional rollback or live lifetime proof is implied.

@@ -1,0 +1,28 @@
+{
+  "schema": "pose-reference-replay-validation-v1",
+  "cases": 512,
+  "unresolved_rows": 1760,
+  "retain_operations": 141,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18c0710",
+  "method": "Original replay, native memcpy and atomic retains; scratch allocator/free supplied",
+  "comparisons": [
+    "return all-resolved flag",
+    "all reader/table/fixup/destination/object bytes",
+    "scratch allocation byte count/alignment/tag and free order"
+  ],
+  "coverage": [
+    "zero through eight fixups",
+    "resolved out-of-range and type-mismatch rows",
+    "counted and ordinary references",
+    "mixed stable failure compaction",
+    "reference count wrapping",
+    "reader error byte preserved"
+  ],
+  "limits": [
+    "Retained queue capacity and stable serial storage.",
+    "Allocator-driven input mutation/scratch reallocation excluded.",
+    "Actual reclamation, live concurrency and object registration not established."
+  ]
+}

@@ -8457,3 +8457,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   records,475 rejected reads and113 retains, including uint32 count wraparound.
   Public tests compose framing and reference loading and cover relocating fixup
   growth. Object registration, deferred replay and real lifetime remain open.
+- Reconstructed deferred reference replay, failure zeroing and stable retry queue.
+ 512 native cases match all bytes,1760 unresolved rows and141 retains with original
+  memcpy/atomic operations. Public tests join enqueue/replay and confirm successful
+  references are not retained again on retry. Object-table population and actual
+  loader completion/lifetime remain open; scratch allocation stays a service.

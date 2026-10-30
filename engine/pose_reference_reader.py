@@ -49,3 +49,54 @@ def read_pose_reference(reader,destination,expected_type,*,destination_token,
     struct.pack_into('<I',rows,offset+12,expected_type)
     rows[offset+16]=int(reference_counted)
     return True
+
+
+def replay_pose_references(reader,*,object_tables,fixup_arrays,destinations,
+        allocate_scratch,release_scratch,grow_fixups,retain):
+    """Resolve pending rows, zero failures and retain only failures for retry.
+
+    destinations maps exact slot tokens to writable8-byte views. Scratch allocation
+    receives byte count and returns writable storage; release receives that storage.
+    Valid serial capacity is required. Native scratch reallocation under allocator-
+    driven queue mutation is outside this adapter's contract.
+    """
+    initial_count=struct.unpack_from('<I',reader,0x40)[0]
+    scratch=allocate_scratch(initial_count*24) if initial_count else bytearray()
+    count=struct.unpack_from('<I',reader,0x40)[0]
+    object_count=struct.unpack_from('<I',reader,0x30)[0]
+    rows=fixup_arrays[struct.unpack_from('<Q',reader,0x38)[0]] if count else b''
+    pending=0
+    for i in range(count):
+        offset=i*24
+        index=struct.unpack_from('<I',rows,offset+8)[0]
+        valid=index<object_count
+        table=None
+        if valid:
+            table=object_tables[struct.unpack_from('<Q',reader,0x28)[0]]
+            valid=struct.unpack_from('<I',rows,offset+12)[0]==struct.unpack_from('<I',table,index*16+8)[0]
+        slot=struct.unpack_from('<Q',rows,offset)[0]
+        if valid:
+            pointer=struct.unpack_from('<Q',table,index*16)[0]
+            struct.pack_into('<Q',destinations[slot],0,pointer)
+            if rows[offset+16]:
+                slot=struct.unpack_from('<Q',rows,offset)[0]
+                retain(struct.unpack_from('<Q',destinations[slot],0)[0])
+        else:
+            struct.pack_into('<Q',destinations[slot],0,0)
+            if (pending+1)*24>len(scratch):
+                raise ValueError('Fixup span grew beyond allocated scratch capacity')
+            scratch[pending*24:(pending+1)*24]=rows[offset:offset+24]
+            pending+=1
+    struct.pack_into('<I',reader,0x40,0)
+    capacity=struct.unpack_from('<I',reader,0x44)[0]
+    if pending>capacity:
+        new_capacity=capacity or pending
+        while new_capacity<pending:new_capacity*=2
+        if new_capacity>0xffffffff//24:raise ValueError('Fixup allocation exceeds uint32 byte size')
+        grow_fixups(reader,new_capacity)
+    struct.pack_into('<I',reader,0x40,pending)
+    if pending:
+        target=fixup_arrays[struct.unpack_from('<Q',reader,0x38)[0]]
+        target[:pending*24]=scratch[:pending*24]
+    if initial_count:release_scratch(scratch)
+    return pending==0
