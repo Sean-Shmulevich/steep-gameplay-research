@@ -8417,3 +8417,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   byte,223 queued constraints and935 supplied destructor calls. Public container
   composition now uses this helper. Destruction effects, tree removal and native
   output allocation remain services; live/concurrent lifetime is not established.
+- Reconstructed metadata-keyed body tree search, red-black deletion/rotations and
+  free-slot retirement.256 native fixtures/5834 operations match all bytes and4053
+  destructor calls, with every identified repair branch exercised. Public tests
+  check tree/free-list invariants and container composition. Insertion, actual
+  destructor effects and live/concurrent ownership remain unresolved.

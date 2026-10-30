@@ -7035,3 +7035,89 @@ Native destructor/free effects, joined container-plus-body binary comparison,
 tree membership removal and live/concurrent reclamation remain unresolved.
 The helper's null-second skip does not establish that null-ended records can be
 admitted through the separately recovered two-endpoint registration routine.
+
+## Body metadata tree removal
+
+`pose_body_tree.remove_pose_tree_body` reconstructs search/removal at `0x19598d0`,
+node retirement at `0x1959c50`, structural deletion/rebalancing at `0x1959d90`,
+and rotations at `0x1959bb0` and `0x18da970`. This closes the tree-removal service
+used for container bodies with metadata52 bit3 set, apart from value destruction.
+
+The key is the body's metadata uint32 at+0x54. Search compares unsigned keys.
+A missing key or empty root returns without changes. Nodes occupy32 bytes:
+
+| Offset | Meaning in this path |
+| --- | --- |
+| 0 / 4 / 8 | Signed left / right / parent indices; -1 is absent |
+| 12 | Red byte:0 black,1 red |
+| 13 | Free-slot marker |
+| 16 | Value pointer |
+| 24 | Unsigned key |
+
+Descriptor fields are node pointer0, active count8, free count12, root index20,
+and free-list head24. Capacity and unrelated bytes are preserved. This is an
+indexed red-black tree, not a spatial traversal or a pointer-based tree.
+
+```python
+matched = lookup_unsigned(body.metadata.key54)
+if matched is absent: return
+saved_value = matched.value
+physical = matched
+if matched.left and matched.right:
+    physical = rightmost(matched.left)
+    matched.key, matched.value = physical.key, physical.value
+unlink_and_rebalance(physical)
+retire_slot(physical.index)
+if saved_value:
+    deleting_destructor(saved_value, 1)
+```
+
+Absent children use index -1, not index zero. Two-child removal copies only the
+predecessor's key and value, leaving the target's structural fields in place.
+The saved original value is destroyed after structural and free-list changes.
+A null value still removes the node. Missing lookup is a no-op.
+
+Structural removal links the sole child, if any, to the removed node's parent.
+Removing red needs no repair. A nonnull replacement of a black node is painted
+black. A black leaf propagates a black-height deficit through its parents:
+
+- A red sibling is painted black, its parent red, and the parent rotated toward
+  the deficit. The sibling is then reloaded.
+- A black parent with two black sibling children paints the sibling red and
+  propagates the deficit upward.
+- A red parent with two black sibling children paints the sibling red and parent
+  black, ending repair.
+- A red near child with black far child first rotates the sibling away from the
+  deficit, exchanging their colors.
+- The final sibling takes the parent's color; parent and far child become black;
+  rotation toward the deficit ends repair.
+
+The executable implementation preserves the native branch order and both rotation
+layouts. The public invariant test separately checks parent links, strict key
+ordering, root color, no adjacent red nodes and equal black heights after removal.
+
+Slot retirement has two cases. An interior removed slot becomes free: byte13=1,
+left=-1, right=old free head, old head.left=removed index, free head=removed index,
+free count increases and active count decreases. A removed last occupied slot
+instead scans backward over existing free-marked slots, unlinking them from the
+free list and decrementing free count. It finally decrements active count. No
+allocation shrinks, payload clears or blanket node resets occur. Retired bytes
+outside those writes remain stale. Active+free counts define the retained logical
+prefix, which can become shorter than the allocated array.
+
+[Native comparison receipt](../../native/snow_host/pose_body_tree_removal_validation.json)
+covers256 synthetic trees and5834 lookup/removal operations, with4053 recorded
+value destructor calls. Initial valid all-black trees contain1/3/7/15/31/63 nodes,
+with permuted physical indices and unsigned keys across the uint32 range.
+Random complete deletion produces changing tree shapes and colors. Instrumented
+instruction coverage confirms every identified deletion repair branch, both
+rotations, predecessor copying, interior retirement and trailing-free trimming.
+Every descriptor/node/body/metadata/value byte matches after every operation.
+Original search, tree mutation and slot retirement run without interception;
+only the value destructor is an authored recording method.
+
+Public tests additionally compose the tree helper with container removal and
+verify that tree mutation/destruction precedes body processing. Native insertion,
+value-destructor effects, concrete gameplay value classes and concurrent/live
+ownership remain unresolved. These checks do not establish a general concurrent
+container API or prove that arbitrary game objects can be deleted safely.

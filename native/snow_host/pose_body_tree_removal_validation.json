@@ -1,0 +1,44 @@
+{
+  "schema": "pose-body-tree-removal-validation-v1",
+  "cases": 256,
+  "lookup_removal_operations": 5834,
+  "destroy_calls": 4053,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19598d0",
+    "0x1959c50",
+    "0x1959d90",
+    "0x1959bb0",
+    "0x18da970"
+  ],
+  "method": "Original search/removal/rebalancing/free-slot maintenance without interception; authored recording-only value destructor",
+  "comparisons": [
+    "all descriptor/node/body/metadata/value bytes after every operation",
+    "original matched value destructor identity and flag",
+    "final empty root/free-list and zero active/free counts"
+  ],
+  "coverage": [
+    "perfect all-black initial trees of1/3/7/15/31/63 nodes then randomized complete removal",
+    "permuted physical slots",
+    "unsigned keys across full uint32 range",
+    "missing keys and repeated removal",
+    "null and nonnull values",
+    "blacken_child",
+    "final_left_rotation",
+    "final_right_rotation",
+    "interior_free_slot",
+    "predecessor_copy",
+    "propagate_black_deficit",
+    "red_parent_absorbs_deficit",
+    "red_sibling",
+    "rotate_near_left",
+    "rotate_near_right",
+    "tail_free_scan"
+  ],
+  "limits": [
+    "Fixtures are synthetic valid trees; insertion is not reconstructed or native-tested.",
+    "Destructor effects are not supplied beyond call recording.",
+    "No live gameplay identity, concurrency or reclamation proof."
+  ]
+}

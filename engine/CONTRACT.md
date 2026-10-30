@@ -1458,3 +1458,13 @@ both metadata52 bit0 flags clear; otherwise it calls supplied destroy(token,1).
 After every removal it restarts at the current body head. Valid serial rings and
 membership are required. Growth and destruction are services; this does not prove
 native destructor effects, lifetime safety or concurrent traversal.
+
+### Body metadata tree removal
+
+`pose_body_tree.remove_pose_tree_body` follows LINK_SOLVER.md, "Body metadata tree
+removal". The tree uses uint32 keys, signed node indices with -1 sentinel,32-byte
+nodes and a retained node array. Removal copies predecessor key/value for two-child
+nodes, repairs red-black structure, and updates free-slot links/counts without
+shrinking storage. It destroys only the originally matched nonnull value through
+an explicit service. Valid serial tree/free-list invariants are required; no
+allocation, insertion, gameplay identity or live reclamation guarantee is implied.
