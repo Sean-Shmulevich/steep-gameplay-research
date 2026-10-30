@@ -6981,3 +6981,57 @@ then queues or destroys them according to output availability and metadata gates
 It restarts from the body's current head after removal. This service has not yet
 been reconstructed or included in this native comparison. Tree removal at
 `0x19598d0`, live lifetime and concurrent mutation remain separate work.
+
+## Cross-owner body ring processing
+
+`process_pose_body_constraints` reconstructs `0x18d0cf0..0x18d0e24` and closes the
+body-processing service described in container removal above. It uses the existing
+individual unregistration and endpoint-ring detachment implementations.
+
+```python
+edge = anchor = body.head90
+while edge:
+    first, second = edge.endpoints
+    first_owner = first.metadata.owner20
+    second_owner = second.metadata.owner20 if second else 0
+    if not second_owner or first_owner == second_owner:
+        edge = edge.first_next if body == first else edge.second_next
+        if edge == anchor: break
+        continue
+    unregister_individual(provider, edge)
+    if output is not None and not (first.metadata.flags52 & 1) \
+                          and not (second.metadata.flags52 & 1):
+        append(output, edge)
+    else:
+        deleting_destructor(edge, 1)
+    edge = anchor = body.head90
+```
+
+The owner comparison is asymmetric. A null or unowned second endpoint preserves
+an edge. A zero first owner still differs from a nonzero second owner and triggers
+removal. Internal edges remain registered. Endpoint identities are captured before
+unregistration; metadata pointers and flags are reread afterward. Queueing requires
+both bit0 flags clear. Without output storage, all removed edges go to the virtual
+destructor, regardless of those flags. Destruction itself remains supplied.
+
+Every successful removal restarts traversal from the current head. The routine
+does not retain a potentially stale next-edge pointer across detachment/destruction.
+This explains its repeated scan of internal edges. It still assumes valid serial
+ring membership; there is no observed concurrency or lifetime protection here.
+Output growth uses the descriptor helper at `0x18d8160`, with capacity8 initially
+and doubling thereafter. The reconstruction supplies that helper and rejects
+allocation-size overflow as an authored guard.
+
+[Native comparison receipt](../../native/snow_host/pose_body_removal_validation.json):
+512 synthetic fixtures,2048 body passes,223 queued constraints and935 destructor
+calls. Original traversal, individual removal and ring detachment execute together.
+All retained bytes match after every body pass, as do destructor identity/order/flag.
+The fixture kind method and destructor are authored services; the destructor only
+records a call. Output capacity is retained in native checks. Public tests cover
+relocating growth, zero-owner asymmetry, preserved internal edges, restart behavior,
+and a container removal composed with the real reconstructed body helper.
+
+Native destructor/free effects, joined container-plus-body binary comparison,
+tree membership removal and live/concurrent reclamation remain unresolved.
+The helper's null-second skip does not establish that null-ended records can be
+admitted through the separately recovered two-endpoint registration routine.

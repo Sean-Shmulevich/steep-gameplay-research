@@ -1447,3 +1447,14 @@ owner/index/backlink. Valid serial membership and writable retained storage are
 required. Tree removal, cross-owner body processing and output allocation remain
 supplied services. Missing membership and capacity overflow raise authored errors;
 this is not an atomic or concurrent removal API.
+
+### Cross-owner body constraint removal
+
+`process_pose_body_constraints` follows LINK_SOLVER.md, "Cross-owner body ring
+processing". It scans body90, leaves edges with null/unowned second endpoints or
+matching metadata owners, and unregisters other edges through the real registry
+and ring functions. It queues removed edges only with an output descriptor and
+both metadata52 bit0 flags clear; otherwise it calls supplied destroy(token,1).
+After every removal it restarts at the current body head. Valid serial rings and
+membership are required. Growth and destruction are services; this does not prove
+native destructor effects, lifetime safety or concurrent traversal.

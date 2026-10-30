@@ -148,3 +148,43 @@ def unregister_pose_constraint_container(provider,token,output,*,provider_token,
         struct.pack_into('<Q',moved,0x20,owner)
         struct.pack_into('<I',moved,0x30,original_index)
         struct.pack_into('<Q',moved,0x28,provider_token+8)
+
+
+def process_pose_body_constraints(provider,body_token,output,*,constraints,bodies,
+        metadata,arrays,get_kind,destroy,grow_output):
+    """Unregister cross-owner edges, queue or destroy, then restart at body90.
+
+    Evidence: LINK_SOLVER.md, Cross-owner body ring processing.
+    grow_output(descriptor,capacity) implements the full descriptor growth helper.
+    destroy(token,1) supplies the virtual deleting destructor. None means no output.
+    Owner comparison is asymmetric: a zero second owner prevents removal, while
+    a zero first owner does not. Metadata flags are reread after unregistration.
+    """
+    from .pose_endpoint_rings import detach_pose_endpoint_rings
+    current=anchor=_pointer(bodies[body_token],0x90)
+    while current:
+        record=constraints[current]
+        first=_pointer(record,8);second=_pointer(record,0x10)
+        first_owner=_pointer(metadata[_pointer(bodies[first],0x30)],0x20)
+        second_owner=_pointer(metadata[_pointer(bodies[second],0x30)],0x20) if second else 0
+        if not second_owner or first_owner==second_owner:
+            current=_pointer(record,0x20 if body_token==first else 0x30)
+            if current==anchor:return
+            continue
+        unregister_pose_constraint(provider,current,arrays=arrays,get_kind=get_kind,
+            detach=lambda t,s:detach_pose_endpoint_rings(t,s,records=constraints,bodies=bodies))
+        if (output is not None
+                and not metadata[_pointer(bodies[first],0x30)][0x52]&1
+                and not metadata[_pointer(bodies[second],0x30)][0x52]&1):
+            capacity=_u32(output,12)
+            if _u32(output,8)==capacity:
+                new_capacity=capacity*2 if capacity else 8
+                if new_capacity>0x1fffffff:
+                    raise ValueError('Output allocation size exceeds uint32 byte size')
+                grow_output(output,new_capacity)
+            count=_u32(output,8)
+            arrays[_pointer(output,0)][count]=current
+            struct.pack_into('<I',output,8,count+1)
+        else:
+            destroy(current,1)
+        current=anchor=_pointer(bodies[body_token],0x90)

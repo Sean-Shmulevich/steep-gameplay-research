@@ -8412,3 +8412,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   service order, including767 queued children. Public tests cover relocation and
   callback-sensitive capture timing. Tree/body processing remain supplied services;
   native output allocation and live/concurrent reclamation are not established.
+- Reconstructed cross-owner body ring processing and joined real individual removal
+  and endpoint detachment.512 native fixtures/2048 body passes match every retained
+  byte,223 queued constraints and935 supplied destructor calls. Public container
+  composition now uses this helper. Destruction effects, tree removal and native
+  output allocation remain services; live/concurrent lifetime is not established.

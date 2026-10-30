@@ -1,0 +1,33 @@
+{
+  "schema": "pose-body-constraint-removal-validation-v1",
+  "cases": 512,
+  "body_passes": 2048,
+  "queued_constraints": 223,
+  "destroy_calls": 935,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18d0cf0",
+    "0x18d0e30",
+    "0x195c270"
+  ],
+  "method": "Original body traversal, provider removal and ring detachment; supplied fixture kind method and recording-only destructor; retained output capacity",
+  "comparisons": [
+    "all provider/body/metadata/constraint/output/array bytes after each body pass",
+    "destructor identities/order/flag"
+  ],
+  "coverage": [
+    "zero through eight constraints across four bodies",
+    "random endpoint orientation and body processing order",
+    "zero/equal/different owners",
+    "both metadata gates",
+    "output present and absent",
+    "restart after removal and retained internal edges"
+  ],
+  "limits": [
+    "No original destructor/free effects; callback records only.",
+    "Native output growth excluded.",
+    "Valid distinct endpoints and consistent rings; null endpoint registration not established.",
+    "No live lifetime or concurrent mutation proof."
+  ]
+}
