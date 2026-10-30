@@ -1528,3 +1528,13 @@ Failure preserves both cursors; malformed blocks set error regardless of require
 while ordinary absence sets it only when required. Buffer/cursor validity checks
 outside the native domain are authored guards. `read_pose_block_bytes` is a bounded
 adapter for the observed inline reads, not a separately recovered native function.
+
+### Typed serialized references
+
+`read_pose_reference` follows LINK_SOLVER.md, "Typed references and deferred writes".
+It consumes a marker/type word, then an index only if the marker/type matches.
+Ordinary references recognize null sentinelffffeeee; reference-counted references
+instead retain a resolved object and mark deferred rows for retention. Forward
+indices append24-byte destination/index/type/retain records without changing the
+destination. Failure does not set reader error itself. Allocation and atomic retain
+are explicit services; deferred replay and real object lifetimes remain unresolved.

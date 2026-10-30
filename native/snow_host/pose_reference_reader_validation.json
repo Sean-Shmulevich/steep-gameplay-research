@@ -1,0 +1,35 @@
+{
+  "schema": "pose-reference-reader-validation-v1",
+  "cases": 1024,
+  "immediate_successes": 237,
+  "deferred_successes": 312,
+  "rejected": 475,
+  "retain_operations": 113,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18c0410",
+    "0x18c0340",
+    "0x18c0300"
+  ],
+  "method": "Original ordinary/counted reference readers and retained fixup append without interception, including native lock xadd",
+  "comparisons": [
+    "return boolean",
+    "every reader/destination/object-table/fixup/object/input byte"
+  ],
+  "coverage": [
+    "ordinary null sentinel versus counted deferred sentinel",
+    "valid type and mismatch",
+    "wrong marker",
+    "uint32 expected type exceeding16 bits",
+    "in-range and forward indices",
+    "retained fixup padding and old destination preservation",
+    "counted object reference increment"
+  ],
+  "limits": [
+    "Retained fixup capacity; allocator growth supplied in independent API.",
+    "Deferred replay not included.",
+    "Synthetic serial fixtures; native atomic instruction execution does not prove concurrent API safety.",
+    "Bounded input reads are authored guards for malformed storage."
+  ]
+}

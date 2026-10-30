@@ -8452,3 +8452,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   cases match with only base reference loading supplied. Added retained-buffer API
   and bounded payload-read adapter. Malformed fixtures deliberately retain error
   state; real asset corpus and base reference fixups remain unresolved.
+- Reconstructed ordinary/counted typed-reference loading and deferred destination
+  records.1024 uninterrupted native cases match237 immediate resolutions,312 deferred
+  records,475 rejected reads and113 retains, including uint32 count wraparound.
+  Public tests compose framing and reference loading and cover relocating fixup
+  growth. Object registration, deferred replay and real lifetime remain open.

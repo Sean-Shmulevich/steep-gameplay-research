@@ -7469,3 +7469,67 @@ Public tests cover cursor rollback on failure, error persistence after success,
 bounded reads and complete tagged bytes reaching inline command storage. No real
 asset corpus, base reference fixup or callback-production proof is claimed. The
 next reader dependency is base object registration and typed reference resolution.
+
+## Typed references and deferred writes
+
+`pose_reference_reader.read_pose_reference` reconstructs ordinary pointer reader
+`0x18c0410`, counted pointer reader `0x18c0340`, and retained-capacity fixup append
+`0x18c0300`. These are the typed-reference services reached by base constraint
+loading. Framing and payload cursors use the reader described above.
+
+```python
+marker = read_u32()
+if marker.high16 != 0x73cb or marker.low16 != uint32(expected_type):
+    return False
+index = read_u32()
+if ordinary_pointer and index == 0xffffeeee:
+    destination = null
+    return True
+if index < reader.object_count:
+    entry = reader.objects[index]
+    if entry.type != expected_type: return False
+    destination = entry.pointer
+    if counted_pointer: atomic_increment_u32(entry.pointer + 8)
+else:
+    reader.fixups.append(destination_address, index, expected_type, counted_pointer)
+return True
+```
+
+Object table entries are16 bytes: pointer0,type8, with remaining bytes untouched.
+The table descriptor is reader28/count30/capacity34. Forward references append to
+reader38/count40/capacity44. Fixup entries are24 bytes: destination pointer0,
+uint32 index8,type12,retain byte16, and seven preserved padding bytes. These field
+offsets within entries are decimal; reader offsets are hexadecimal.
+
+The deferred destination is a pointer to the eventual output slot, not its current
+value. Enqueueing leaves that output slot untouched and still returns success.
+The counted variant records retain byte1 for later replay. It does not special-case
+ordinary null sentinelffffeeee; that value is treated as a forward index when it
+is outside the current object count. Do not apply nullable-pointer rules to it.
+
+Malformed marker/type consumes only the first word. A table type mismatch consumes
+both words. Both return false without changing the destination or setting reader20.
+Callers such as base constraint loading set the error flag themselves. Immediate
+success publishes the pointer before the counted variant's `lock xadd` increments
+the uint32 count at object+8. The reconstruction requires an explicit retain service
+for that operation; it does not pretend a Python write supplies cross-thread atomicity.
+
+Fixup growth requests8 slots initially, then doubles. The existing capacity helper
+uses24-byte elements, alignment16 and allocator tag0x18. Allocation remains a service;
+counts/pointers are reread after growth. The independent API rejects byte-size
+overflow and bounds payload reads as authored guards. Errors are not transactional.
+Deferred fixup replay, object-table population and real allocation are separate work.
+
+[Native comparison](../../native/snow_host/pose_reference_reader_validation.json)
+covers1024 cases with no instruction interception, including the actual native
+atomic increment. Every reader/destination/table/fixup/object/input byte and return
+boolean matches:237 immediate successes,312 deferred successes,475 rejected reads,
+and113 retains. Fixtures cover ordinary null versus counted deferred sentinel,
+marker/type failures, expected types exceeding16 bits, forward indices, padding,
+unchanged deferred destinations and count values including UINT32_MAX wraparound.
+Retained fixup capacity suffices in all native cases. This is serial fixture proof,
+not evidence that the public API is safe for concurrent live mutation.
+
+Public tests add relocating fixup growth, pointer publication before retain,
+failed-read cursor consumption, and composition with actual block framing.
+Original object types, delayed replay and loader completion ordering remain open.
