@@ -1488,3 +1488,13 @@ remain explicit services; callers must bind destruction for the actual object ty
 The same output descriptor receives body-edge and child queue entries in native
 order. Retained storage must not alias incompatible records or contain invalid
 membership. This serial adapter does not provide synchronization or reclamation.
+
+### Base constraint construction
+
+`construct_pose_constraint_base` follows LINK_SOLVER.md, "Base construction and
+endpoint canonicalization". It orders endpoints by metadata50 bit15 first, then
+unsigned metadata54 key; writes paired keys18, clears ring fields and initializes
+base lifecycle defaults. The fifth argument's low byte gates original-endpoint
+virtual28 calls, only when both nonnull endpoints have bit15 set. Owner argument
+is unused by the inspected path. Body virtual effects and table identities remain
+supplied; this constructor performs no provider/ring registration.

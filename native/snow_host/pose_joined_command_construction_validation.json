@@ -1,0 +1,28 @@
+{
+  "schema": "pose-joined-command-construction-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19441e0",
+    "0x19a1530",
+    "0x19a1480",
+    "0x19440c0"
+  ],
+  "method": "Original base and specialized constructors joined with original ordering and defaults; body virtual and command callback supplied",
+  "comparisons": [
+    "all constraint/body/metadata bytes",
+    "original-order callback endpoints, scalar/mode/userdata/default command storage",
+    "body virtual ordering"
+  ],
+  "coverage": [
+    "canonical priority/key ordering",
+    "null second endpoint",
+    "request gate",
+    "callback count0/1/6/7/UINT32_MAX preserved"
+  ],
+  "limits": [
+    "Body virtual and concrete command production are services.",
+    "No registration, live ownership or allocator proof."
+  ]
+}

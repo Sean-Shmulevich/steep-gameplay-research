@@ -1,0 +1,32 @@
+{
+  "schema": "pose-base-construction-validation-v1",
+  "cases": 1024,
+  "endpoint_swaps": 396,
+  "body_virtual_calls": 308,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19a1530",
+    "0x19a1480",
+    "0x75e600"
+  ],
+  "method": "Original base constructor, endpoint ordering and return-only stub; authored recording-only body virtual28",
+  "comparisons": [
+    "all object/body/metadata bytes",
+    "body virtual identity/order and object snapshot",
+    "return identity"
+  ],
+  "coverage": [
+    "all endpoint priority flag combinations",
+    "equal ascending descending uint32 keys including sign boundary",
+    "null second endpoint",
+    "request bytes0/1/2/255",
+    "unrelated bytes preserved"
+  ],
+  "limits": [
+    "Body virtual effects supplied; concrete class behavior remains unresolved.",
+    "No provider or endpoint-ring registration occurs.",
+    "Native default constructor and other derived types excluded.",
+    "No live ownership or callback reentrancy proof."
+  ]
+}

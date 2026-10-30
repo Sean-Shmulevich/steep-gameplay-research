@@ -8432,3 +8432,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   calls and563 callbacks. Added runnable `python3 -m engine.pose_cleanup_bench`
   with public fixture state/event inspection. Tree-value types are synthetic;
   allocator/callback effects and live lifetime remain explicit boundaries.
+- Reconstructed base constraint construction and priority/key endpoint ordering.
+ 1024 native cases match396 swaps and308 body virtual calls;512 additional joined
+  base/kind4 constructor cases match all bytes and original-order callback arguments.
+  Callback enable defaults are now explained. Body virtual and concrete command
+  production remain services; construction does not register provider/ring state.

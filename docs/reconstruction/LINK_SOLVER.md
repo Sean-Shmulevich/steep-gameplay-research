@@ -7228,3 +7228,68 @@ This is an inspection API for the independent reconstruction. It neither injects
 into the game nor declares arbitrary native objects safe to delete. Public tests
 check the complete retained state and event order, including preservation of the
 internal edge and separation between destroyed and queued records.
+
+## Base construction and endpoint canonicalization
+
+`construct_pose_constraint_base` reconstructs `0x19a1530` and endpoint ordering
+`0x19a1480`. It closes the base-construction service in the earlier specialized
+kind4 constructor, apart from two conditional body virtual calls.
+
+Endpoint priority is metadata50 bit15. A set bit sorts ahead of a clear bit.
+Within the same priority class, unsigned metadata54 keys sort ascending; equal
+keys preserve input order. A null second endpoint remains null with key0.
+
+```python
+swap = second is not None and (
+    (not first.priority15 and second.priority15)
+    or (first.priority15 == second.priority15 and second.key54 < first.key54)
+)
+stored_first, stored_second = (second, first) if swap else (first, second)
+record.endpoints8_10 = stored_first, stored_second
+record.keys18_1c = stored_first.key54, stored_second.key54_or_zero
+record.ring_links20_38 = 0, 0, 0, 0
+record.index48 = UINT32_MAX
+record.userdata50 = 0
+record.swap59 = 0
+record.callback_enabled5a = 1
+record.pointer60 = 0
+record.index68 = UINT32_MAX
+record.tables = base_tables
+if low_byte(request) and first.priority15 and second and second.priority15:
+    first.virtual28()
+    second.virtual28()
+```
+
+The pseudocode groups assignments for readability. The implementation preserves
+observed publication order: ring/index/userdata defaults, primary/secondary tables,
+then flag/pointer/index defaults, before the body calls. Unrelated bytes including
++0x4c..0x4f,+0x58,+0x5b..0x5f and+0x6c..0x6f remain unchanged.
+The apparent owner argument in R9 is not consumed by this base path; endpoint
+initialization overwrites R9. No provider insertion or endpoint-ring attachment
+occurs here. The final `0x75e600` call is the previously inspected return-only stub.
+
+Body calls use the original argument order, regardless of canonicalized storage.
+Both eligibility checks finish before the first virtual call; there is no second
+eligibility check between calls. Concrete body virtual+0x28 effects remain a
+service, not an inferred wake or activation operation. Construction supports a
+nullable second endpoint, but this does not resolve admission to two-ended rings.
+
+The specialized kind4 constructor then overwrites tables/userdata, derives swap59
+from requested-first versus stored-first, and swaps callback arguments back. Thus
+canonical storage and original callback ordering coexist. Its single flag still
+uses the stored second endpoint's priority bit. Initial callback mode0/scalar0 and
+count behavior remain as previously decoded.
+
+[Base comparison](../../native/snow_host/pose_base_construction_validation.json):
+1024 fixtures match all bytes and body-call snapshots, including396 endpoint swaps
+and308 body virtual calls. Cases cover all priority combinations, equal/ordered
+keys across the unsigned sign boundary, nullable second endpoints and request
+bytes0/1/2/255. Original base construction/ordering execute; body calls record only.
+
+[Joined specialized comparison](../../native/snow_host/pose_joined_command_construction_validation.json):
+512 fixtures execute original base and kind4 constructors plus original command
+default initialization. All bytes, body-call ordering and command callback arguments
+match. This supersedes the earlier supplied-base limitation. Concrete command
+production and body virtual effects remain supplied, as do live ownership and
+allocation. Default construction at `0x19a1600` is inspected but not implemented
+by this API; arbitrary other derived constructors are not covered.
