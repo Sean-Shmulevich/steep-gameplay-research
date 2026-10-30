@@ -60,3 +60,18 @@ def deserialize_pose_command_record(record,reader,*,constraint_token,buffers,
             constraint_token=constraint_token,buffers=buffers,object_tables=object_tables,
             fixup_arrays=fixup_arrays,grow_objects=grow_objects,grow_fixups=grow_fixups,
             bodies=bodies,metadata=metadata))
+
+
+def load_pose_constraint_object(reader,*,buffers,create,deserialize):
+    """Read required kind envelope, create object, call its reader, return identity.
+
+    create(uint16_kind) supplies the factory, deserialize(token,reader) supplies
+    dynamic reader dispatch. This path does not replay fixups or register physics
+    membership. Evidence: LINK_SOLVER.md, Tagged factory entry and outer load ordering.
+    """
+    if not select_pose_block(reader,0x2601,2,3,True,buffers=buffers):return 0
+    kind=struct.unpack('<H',read_pose_block_bytes(reader,2,buffers=buffers))[0]
+    token=create(kind)
+    if not token:raise ValueError('Constraint factory returned null')
+    deserialize(token,reader)
+    return token

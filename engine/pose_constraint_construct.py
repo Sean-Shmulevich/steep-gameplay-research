@@ -68,3 +68,23 @@ def construct_retained_pose_command(record,*,constraint_token,owner_token,
         callback_token=callback_token,userdata=userdata,request_byte=request_byte,
         table=command_tables[0],secondary_table=command_tables[1],bodies=bodies,
         metadata=metadata,construct_base=base,invoke=invoke)
+
+
+def initialize_pose_command_constraint(record,*,base_tables,command_tables):
+    """Recovered default base/kind4 construction; no endpoint or callback calls.
+
+    Evidence: LINK_SOLVER.md, Tagged factory entry and outer load ordering.
+    Preserves unrelated padding and fields just as the inspected writes do.
+    """
+    from .pose_command_prepare import initialize_pose_command_storage
+    record[8:0x40]=bytes(0x38)
+    struct.pack_into('<I',record,0x48,0xffffffff)
+    struct.pack_into('<Q',record,0x50,0)
+    struct.pack_into('<Q',record,0,base_tables[0]);struct.pack_into('<Q',record,0x40,base_tables[1])
+    struct.pack_into('<H',record,0x59,0x100)
+    struct.pack_into('<Q',record,0x60,0);struct.pack_into('<I',record,0x68,0xffffffff)
+    record[0x70]=0
+    struct.pack_into('<Q',record,0,command_tables[0]);struct.pack_into('<I',record,0x74,0)
+    struct.pack_into('<Q',record,0x40,command_tables[1])
+    initialize_pose_command_storage(memoryview(record)[0x78:0x1f8])
+    struct.pack_into('<Q',record,0x1f8,0)

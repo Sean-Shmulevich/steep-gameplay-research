@@ -7653,3 +7653,57 @@ replay, missing-field preservation, and continued loading after a type mismatch.
 Callback1f8 remains untouched by these readers. This completes the inspected
 base/kind4 field-loading chain, not callback assignment, safe physics registration,
 actual asset-corpus coverage or arbitrary object graph reconstruction.
+
+## Tagged factory entry and outer load ordering
+
+`load_pose_constraint_object` reconstructs envelope entry `0x18d46e0`. It requests
+required block2601 with minimum payload2 and scan limit3, consumes a uint16 kind,
+creates that kind through the factory, invokes its virtual reader at+0x18, and
+returns the object pointer. A missing envelope returns null. The native entry
+assumes factory success and dereferences the result; the independent entry raises
+an authored error on null instead. Creation/dynamic dispatch remain services for
+kinds not reconstructed through this entry point.
+
+The kind4 branch of factory `0x18d47f0` allocates512 bytes, alignment16, tag0x2e,
+then invokes default constructor `0x1944190`. `initialize_pose_command_constraint`
+reconstructs this and base default `0x19a1600`: endpoints/paired keys/ring links
+are zero; base index48/index68 are UINT32_MAX; userdata50/pointer60 are zero;
+swap59=0,callback-enabled5a=1; single70/count74=0; six command records get their
+known defaults; callback1f8=0. Unrelated bytes remain unchanged. The kind4 tables
+are published before virtual field loading. No initial command callback runs.
+
+[Factory-to-reader native comparison](../../native/snow_host/pose_kind4_factory_loading_validation.json)
+covers512 cases. Original tagged entry, kind4 factory, base/default constructors,
+virtual dispatch, complete field loading, block reader and reference handling all
+execute. Only the512-byte object allocation is supplied. Every object/reader/table/
+fixup/body/metadata/input byte, allocation request and returned identity matches.
+Object and fixup capacities are retained. Callback1f8 remains zero after the full
+factory load, confirming that this path alone does not install a command producer.
+
+### Outer ordering evidence
+
+Static inspection of the outer reader around `0x18b6030..0x18b60e4` places its
+container-body loop before its constraint loop. Each body uses `0x18d4650`, which
+reads required kind block0c01, constructs the body, invokes virtual+0x80 loading,
+then virtual+0x88 finalization. Afterward the outer loop assigns the returned body's
+metadata owner20 to its container and its body index18. It then loads resource
+objects through `0x18d4760`, followed by constraints through `0x18d46e0`.
+
+After further object loops, it calls reference replay `0x18c0710` at `0x18b6165`
+and proceeds to `0x18b6740` without branching on the replay result. Finalization
+contains protected collection access and a later optional pass of body virtual+0x88.
+The latter is resource backlink repair for the known body table, not an observed
+constraint paired-key refresh. Full finalization is not reconstructed here.
+
+This ordering supports the inference that endpoints belonging to already-loaded
+container bodies can resolve immediately during later constraint loading. It does
+not establish arbitrary cross-container/external forward endpoints, all object
+classes or all asset layouts. The earlier endpoint-key dependency remains explicit
+for graphs outside the inspected ordering. No universal key-refresh step has been
+invented. A full native outer-loader comparison and real asset graph inspection
+are still needed to strengthen that inference.
+
+Public tests cover default construction followed by actual field loading, null
+callback preservation, serialization registration, default command words, padding,
+missing envelopes and null factory guards. They do not claim that a newly loaded
+kind4 object is admitted to callback preparation or physics provider membership.

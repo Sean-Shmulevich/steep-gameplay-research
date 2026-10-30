@@ -8468,3 +8468,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   growth and load-to-replay composition. Immediate endpoint-key derivation exposes
   an unresolved forward-reference refresh dependency; callback assignment and actual
   asset-corpus/live registration remain open.
+- Reconstructed default kind4 construction and tagged factory entry.512 native
+  factory-to-reader cases match with only object allocation supplied; callback stays
+  null after loading. Static outer-loader evidence places container bodies before
+  constraints and replay afterward, supporting immediate endpoint availability on
+  that path. Full outer finalization, arbitrary graphs and callback installation
+  remain unresolved; no inferred key-refresh behavior was added.

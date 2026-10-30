@@ -1559,3 +1559,13 @@ abort. Endpoint keys are derived immediately from current pointers, not repaired
 by deferred replay. Growth is supplied; malformed pointer/key derivation fails
 rather than inventing data. `deserialize_pose_command_record` joins this base path
 to actual framing, references and command loading, without lifecycle registration.
+
+### Default construction and tagged object entry
+
+`initialize_pose_command_constraint` follows LINK_SOLVER.md, "Tagged factory entry
+and outer load ordering". It initializes base defaults, kind4 tables, six command
+records, zero count/single flag/callback while preserving unrelated bytes.
+`load_pose_constraint_object` reads required2601 kind tag then calls supplied create
+and deserialize services. Missing envelope returns0; a null factory result raises
+an authored error instead of native null dereference. No provider registration,
+callback installation or graph completion is implied by successful object loading.
