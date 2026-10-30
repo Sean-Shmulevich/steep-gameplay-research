@@ -7121,3 +7121,64 @@ verify that tree mutation/destruction precedes body processing. Native insertion
 value-destructor effects, concrete gameplay value classes and concurrent/live
 ownership remain unresolved. These checks do not establish a general concurrent
 container API or prove that arbitrary game objects can be deleted safely.
+
+## Constraint destructor and release flags
+
+`destroy_pose_constraint` reconstructs the base destructor `0x19a1670` and the
+shared deleting policy in the base wrapper `0x19a1700` and kind4 wrapper
+`0x19442e0`. The kind4 constructor installs table `0x29caa30`; inspection of its first slot
+confirms wrapper `0x19442e0`. A runtime object still needs a matching type identity.
+This implementation does not assume all tree values or derived constraints share it.
+
+```python
+linked = constraint.first_next20 != 0
+constraint.table0, constraint.table40 = base_tables
+if linked:
+    detach_endpoint_rings(constraint, selector=2)
+if constraint.callback_enabled5a:
+    callback = callback_manager.callback28
+    if callback:
+        callback(constraint, 1, constraint.userdata50)
+# observed cleanup target is return-only in the inspected image
+constraint.table40 = final_secondary_table
+constraint.table0 = final_primary_table
+if deleting_flags & 1 and not deleting_flags & 4:
+    allocator.free(constraint)
+return constraint_identity
+```
+
+Base table identities are image-relative `0x29cb740` and `0x29cb760`; final table
+identities are `0x29c9fd0` and `0x29c9800`. The reconstruction takes these as supplied
+identities. The linked check occurs before table publication, and callback invocation
+occurs after any endpoint detachment but before final table publication.
+
+The callback manager comes from global `0x33365e0`. Forwarder `0x18b73f0` reads its
+callback at+0x28 and calls it with object,1,userdata. An enabled object with a null
+manager callback makes no call. The meaning and concrete producer of that callback
+remain unresolved. Callback user data is captured before manager lookup.
+
+Normal deleting flags1 call allocator virtual+0x18 through global `0x33365b8`.
+With bit0 clear, base destruction still runs but storage release is skipped. With
+bits0 and2 set, the base wrapper passes object,size0x70 to `0x75e600`; kind4 passes
+object,size0x200. That target is `ret 0` in the inspected image, as is the earlier
+base cleanup call to the same target. These are observed no-ops, not evidence of
+an unimplemented free or notification. This claim is build/image-specific.
+
+This destructor does not remove provider arrays. Body processing already performs
+individual unregistration before calling it; cleared ring fields then prevent a
+second detach. Direct destruction of an attached object only detaches its rings
+and can leave stale provider membership. Callers must preserve the full lifecycle.
+The wrapper returns the original identity even after allocator release; that return
+does not imply a live object or safe access afterward.
+
+[Native comparison receipt](../../native/snow_host/pose_constraint_destruction_validation.json)
+covers512 fixtures,170 optional callbacks and128 allocator releases. Original base
+and kind4 wrappers, ring detachment, callback forwarding and return-only stubs run.
+Every retained constraint/body/manager byte matches, including full object snapshots
+at callback/release boundaries, argument ordering and returned identity. Fixtures
+cover flags0..7, linked/unlinked records with neighbors, callback enable and null
+callback gates. Callback and allocator free are authored recording services.
+Public tests additionally join body removal to the reconstructed destructor.
+
+Remaining boundaries are allocator effects, callback effects, other derived
+wrappers, actual tree-value classes, and live/concurrent/reentrant lifetime safety.

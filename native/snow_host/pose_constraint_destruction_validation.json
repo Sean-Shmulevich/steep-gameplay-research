@@ -1,0 +1,36 @@
+{
+  "schema": "pose-constraint-destruction-validation-v1",
+  "cases": 512,
+  "callback_calls": 170,
+  "release_calls": 128,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x19a1670",
+    "0x19a1700",
+    "0x19442e0",
+    "0x18b73f0",
+    "0x195c270",
+    "0x75e600"
+  ],
+  "method": "Original base/kind4 deleting wrappers, optional native ring detachment and callback forwarding; authored recording-only callback and allocator free",
+  "comparisons": [
+    "all constraint/body/manager bytes",
+    "callback/release order and arguments",
+    "full object bytes at callback and release boundaries",
+    "returned original object token"
+  ],
+  "coverage": [
+    "flags0 through7",
+    "linked and unlinked records with neighboring edges",
+    "callback enable gate and null/present manager callback",
+    "base and kind4 wrappers",
+    "actual return-only cleanup stub execution"
+  ],
+  "limits": [
+    "Allocator free and external callback effects are supplied, not reconstructed.",
+    "Provider membership removal is not performed by this destructor.",
+    "Other derived wrappers and tree-value dynamic types not established.",
+    "No live lifetime, reentrancy or concurrency proof."
+  ]
+}

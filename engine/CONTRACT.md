@@ -1468,3 +1468,13 @@ nodes, repairs red-black structure, and updates free-slot links/counts without
 shrinking storage. It destroys only the originally matched nonnull value through
 an explicit service. Valid serial tree/free-list invariants are required; no
 allocation, insertion, gameplay identity or live reclamation guarantee is implied.
+
+### Constraint destruction
+
+`destroy_pose_constraint` follows LINK_SOLVER.md, "Constraint destructor and
+release flags". It publishes base tables, conditionally detaches selector2 rings,
+optionally invokes manager28 callback(token,1,userdata50), and publishes final
+base tables. Deleting flag bit0 with bit2 clear calls supplied release(token).
+The inspected alternate-size and cleanup calls are return-only stubs. This contract
+covers inspected base/kind4 wrappers, not arbitrary derived destructors. It does
+not remove provider membership; callers must establish that separately.

@@ -8422,3 +8422,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   destructor calls, with every identified repair branch exercised. Public tests
   check tree/free-list invariants and container composition. Insertion, actual
   destructor effects and live/concurrent ownership remain unresolved.
+- Reconstructed base/kind4 constraint destruction: conditional ring detach, optional
+  manager callback, table transitions and deleting flags.512 native comparisons
+  match170 callback and128 release calls plus all bytes and callback-boundary states.
+  Public body-removal composition now invokes this destructor. Inspected cleanup
+  stubs are no-ops; allocator/callback effects and other dynamic types remain open.
