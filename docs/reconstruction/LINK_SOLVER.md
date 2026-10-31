@@ -8028,3 +8028,38 @@ parameter-record kinds, restore motion and finalize a resource backlink. Its
 public test checks the resulting values and service sequence. These are authored
 fixture bytes, not extracted assets; this example does not establish live-world
 registration, complete asset compatibility or original-engine equivalence.
+
+## Known-body resource transform reset
+
+Known physical-body table29c99a8 virtualD0 resolves to18a99a0. This is a local
+transform update, not resource removal. It calls18a80f0 on the entry's transform
+slot with the supplied frame. The loader passes identity and update_now=0, which
+can return private transform storage to its pool but does not clear resource10,
+release the resource or change its backlinks.
+
+After transform assignment, nonzero low-byte update_now invokes18bc750(body,0).
+Bodyb0 is then set to the inverse of that byte's truth value. The entry-array pointer
+is reloaded, and entry44 bit0 gates the remaining work. If that bit is clear,
+bodyaa is preserved. If set, update_now=0 or metadata52 bit3 sets bodyaa bit4.
+Otherwise calls18bf970 and18bfb70 occur in order, then bodyaa bit4 is cleared.
+The immediate derived-refresh operations remain explicit services in
+`update_pose_resource_transform`; their effects are not invented here.
+
+`reset_known_pose_resource` binds the loader's deferred path to the recovered
+transform setter and flags. `deserialize_known_pose_body` now uses this binding
+by default, retaining an optional caller-supplied dispatch for other body classes.
+Array initialization later overwrites entries, so this reset itself must not be
+misreported as destruction of the previous resource.
+
+512 additional joined native reader/finalizer comparisons pass without instruction
+interception on occupied arrays, exercising the real known virtualD0 and dirty
+flags. These fixtures use identity transforms, so no transform free occurs in that
+joined comparison. Existing transform-storage comparisons cover private-to-identity
+release separately. Public tests check that reset preserves the resource pointer,
+releases private transform storage, and that immediate callbacks precede entry-array
+reload and respect metadata/entry gates. See
+`native/snow_host/pose_body_occupied_loading_validation.json`.
+
+Open boundaries remain pool/growth ownership, immediate derived refresh effects,
+resource lifetime outside this setter and live provider registration. No real
+asset corpus or live game was used for this pass.

@@ -12,13 +12,19 @@ def deserialize_known_pose_body(body,reader,*,body_token,buffers,metadata,
         object_tables,fixup_arrays,grow_objects,grow_fixups,entry_arrays,
         identity_token,transforms,allocate_transform,release_transform,
         parameter_records,allocate_parameter,release_parameter,
-        reset_resource,grow_entries):
+        reset_resource=None,grow_entries=None):
     """Join base, resource-array, entry, transform, motion and parameter decoding.
 
     Requires an already constructed known-class body and retained dependencies.
-    Pools, array growth and virtualD0 reset are explicit services. Does not replay
+    Pools and array growth are explicit services. The default virtualD0 reset
+    uses the known body implementation; callers can supply another dispatch. Does not replay
     references, finalize resource backlinks or register the body with physics.
     """
+    if reset_resource is None:
+        from .pose_resource_transform_update import reset_known_pose_resource
+        reset_resource=lambda b,i,f,z:reset_known_pose_resource(b,i,f,z,
+            entry_arrays=entry_arrays,identity_token=identity_token,transforms=transforms,
+            allocate=allocate_transform,release=release_transform)
     references=dict(buffers=buffers,metadata=metadata,object_tables=object_tables,
                     fixup_arrays=fixup_arrays,grow_fixups=grow_fixups)
     def base(b,r):

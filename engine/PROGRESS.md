@@ -8521,3 +8521,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   and existing parameters. Added runnable synthetic loading bench with nonidentity
   transform and parameter allocation. Combined native reset/growth/allocation and
   actual physics-provider registration remain unvalidated.
+- Resolved known virtualD0 as transform reset plus deferred-refresh flags, not
+  resource destruction. Default joined loading now uses the actual reconstructed
+  deferred path.512 occupied-array native reader/finalizer comparisons pass without
+  interception on identity transforms. Public tests cover private-transform release
+  without resource removal and immediate-call gates/order. Pool/growth ownership,
+  derived refresh effects and live provider registration remain open.

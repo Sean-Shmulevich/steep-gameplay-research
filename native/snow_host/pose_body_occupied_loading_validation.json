@@ -1,0 +1,32 @@
+{
+  "schema": "pose-body-occupied-loading-validation-v1",
+  "cases": 512,
+  "deferred_references": 305,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18a93e0",
+    "0x18bc6f0"
+  ],
+  "method": "Original full known-body reader followed by original resource finalizer without instruction interception",
+  "comparisons": [
+    "all body, metadata, entries, reader, tables, fixups, resources, parameters and input bytes"
+  ],
+  "coverage": [
+    "occupied array known virtualD0 reset and dirty flags",
+    "base and middle transform override",
+    "zero through six entries and placeholders",
+    "immediate, null, forward and duplicate resources",
+    "legacy flags",
+    "motion and state words",
+    "existing parameter record updates",
+    "resource backlink finalization"
+  ],
+  "limits": [
+    "Occupied arrays use identity transforms; transform-pool release is not reached.",
+    "Retained capacities and parameter storage; no allocation/free paths.",
+    "Entry transforms are identity; nonidentity storage covered separately.",
+    "No deferred replay or provider registration in this receipt.",
+    "Synthetic offline fixture corpus only."
+  ]
+}

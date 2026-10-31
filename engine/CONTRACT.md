@@ -1652,3 +1652,13 @@ body plus retained identity maps. Pool/growth/reset services are still explicit.
 Deserialization, deferred replay, resource finalization and physics registration
 remain separate lifecycle operations; a successful local read does not prove any
 of the latter occurred. No missing resource or metadata is synthesized.
+
+### Known resource transform reset
+
+`update_pose_resource_transform` follows LINK_SOLVER.md, "Known-body resource
+transform reset". It updates the local transform first, optionally invokes bounds
+refresh, writes deferred byteb0 and reloads entry storage before testing flag0.
+Flag0 controls bodyaa bit4 and optional derived refresh calls. The loader's
+update_now=0 path requires no derived services and does not clear/release resource10.
+`deserialize_known_pose_body` now uses this known reset when no override is supplied.
+Pool release still precedes transform-slot publication; resource lifetime is separate.
