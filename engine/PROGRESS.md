@@ -8515,3 +8515,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   actual resource-entry/transform decoding and check relocated reset arrays and
   nonterminating growth detection. Whole-pipeline native validation and virtualD0
   effects remain open; no full body-load equivalence claimed.
+- Joined all known-body decoding layers and resource finalization.512 full native
+  reader/finalizer cases match without instruction interception, including305
+  deferred references. Domain is fresh retained arrays, identity entry transforms
+  and existing parameters. Added runnable synthetic loading bench with nonidentity
+  transform and parameter allocation. Combined native reset/growth/allocation and
+  actual physics-provider registration remain unvalidated.

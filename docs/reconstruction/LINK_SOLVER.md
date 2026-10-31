@@ -7996,3 +7996,35 @@ The complete known-body pipeline is now composable from the base reader, this
 middle reader, the physical-state reader and finalizer. Whole-pipeline native
 validation, virtualD0 effects, allocation/reallocation ownership and real resource
 corpus remain open. No full body-load equivalence is claimed by the local tests.
+
+## Joined physical-body loading
+
+`pose_body_loading_runtime.deserialize_known_pose_body` composes the actual
+base identity/metadata reader, middle resource-array reader, resource references
+and transform storage, physical state/motion reader and sparse parameter setters.
+It requires a constructed known-class body and explicit retained object maps.
+Pool operations, array growth and virtualD0 reset remain external services.
+It does not silently replay references, finalize backlinks or register physics.
+Call the recovered resource finalizer separately at the caller's observed point.
+
+512 comparisons run original18a93e0 and then18bc6f0 without instruction
+interception. Every retained body/metadata/entry/reader/table/fixup/resource/
+parameter/input byte matches. Cases include zero through six entries, placeholders,
+305 deferred references, duplicate resource backlinks, legacy flags, motion/state
+words and updates to existing optional parameter storage. This is joined native
+validation within a bounded domain: arrays start empty with sufficient capacity,
+entry transforms are identity and parameter records already exist. It does not
+cover virtual reset, growth, allocation or release in the combined native run.
+See `native/snow_host/pose_body_loading_runtime_validation.json`.
+
+Run the independent synthetic example with:
+
+```sh
+python3 -m engine.pose_body_loading_bench
+```
+
+It uses supplied pools to decode a nonidentity resource transform, allocate both
+parameter-record kinds, restore motion and finalize a resource backlink. Its
+public test checks the resulting values and service sequence. These are authored
+fixture bytes, not extracted assets; this example does not establish live-world
+registration, complete asset compatibility or original-engine equivalence.

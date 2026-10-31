@@ -1642,3 +1642,13 @@ capacity, initializes72-byte entries and dispatches non-placeholder entries. The
 stored decoded count counts reader attempts, including failed entry reads. Base,
 virtual reset, growth and entry reader remain explicit services. Repeating capacity
 cycles and short retained storage raise authored errors instead of hanging/faulting.
+
+### Joined known-body deserialization
+
+`deserialize_known_pose_body` follows LINK_SOLVER.md, "Joined physical-body loading".
+It composes the base reader, array replacement, resource entry/transform loading,
+physical fields and sparse setters. Inputs are an already constructed known-class
+body plus retained identity maps. Pool/growth/reset services are still explicit.
+Deserialization, deferred replay, resource finalization and physics registration
+remain separate lifecycle operations; a successful local read does not prove any
+of the latter occurred. No missing resource or metadata is synthesized.
