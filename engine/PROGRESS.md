@@ -8555,3 +8555,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   calls and all registry/row/TLS bytes with callback effects supplied. Public tests
   cover registry replacement, same-event append and nested flag behavior. Listener
   registration writers, exception handling and cross-thread guarantees remain open.
+- Reconstructed body-listener append and first-match removal.512 append plus512
+  removal native comparisons pass without interception at retained capacity. Joined
+  public tests cover self-removal, same-event append and deferred compaction, plus
+  duplicates and descriptor relocation. Missing membership is an authored guarded
+  error; native code assumes it exists. Installed listener ownership/threading and
+  registry startup/shutdown remain open before any live mod-hook claim.

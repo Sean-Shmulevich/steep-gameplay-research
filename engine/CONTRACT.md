@@ -1711,3 +1711,12 @@ is set, removes disabled rows backwards with stable shifting and clears27bc.
 Stale tail bytes survive. Registry access and callback code are services; no locking,
 recursive dispatch depth or exception guarantees are inferred. Counts are retained
 signed-domain values for compaction, not arbitrary malformed native buffers.
+
+### Body listener registration and removal
+
+`pose_body_event_registry` follows LINK_SOLVER.md, "Body listener registration and
+removal". Append sets enabled1, copies opaque seven-byte padding and increments
+count after publication. Capacity grows0→8 or doubles through a service; duplicates
+are accepted. Removal matches the first pointer even if disabled, then either
+marks it disabled plus TLS cleanup request during dispatch or shifts it out
+immediately. Missing membership raises an authored KeyError without writes.

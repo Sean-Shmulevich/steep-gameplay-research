@@ -8223,3 +8223,39 @@ arguments match across append, disable and cleanup-request mutations. Public tes
 also check registry replacement, absent cleanup requests and nested flag behavior.
 See `native/snow_host/pose_body_events_validation.json`. These single-thread synthetic
 fixtures do not establish live concurrency or safe arbitrary listener mutation.
+
+## Body listener registration and removal
+
+Append18bb2c0 captures the global listener descriptor once and constructs a16-byte
+row containing callback0 and enabled byte8=1. The remaining seven bytes come from
+uninitialized stack padding and have no established semantics. It grows capacity
+from0 to8 or doubles it through18bb310, reloads count/array from the captured
+descriptor, copies the entire row, then increments count. There is no duplicate
+check and no dispatch gate. Registry replacement during allocator activity does
+not redirect this append to the replacement descriptor.
+
+Removal18bb610 searches callback pointers in order and accepts the first match,
+including a disabled row. During dispatch, identified by TLS27bd, it clears that
+row's enabled byte and sets TLS27bc for later compaction. Otherwise it decrements
+count and shifts the suffix down16 bytes immediately, preserving order and stale
+tail bytes. Repeated removal of a duplicated callback during dispatch keeps finding
+the already-disabled first row, so another duplicate can remain enabled.
+
+The native routine does not guard a failed search before using index-1; callers
+must establish membership. `remove_pose_body_listener` raises an authored KeyError
+before writes instead. `register_pose_body_listener` requires explicit seven-byte
+padding rather than inventing recovered padding values. Growth remains supplied.
+No locks occur in these local routines, but that does not prove all callers are
+unsynchronized or that arbitrary cross-thread calls are safe.
+
+512 native append and512 native removal comparisons pass without instruction
+interception, using retained capacity and deterministic native stack padding.
+All registry/listener/TLS bytes match. Public tests join registration, self-removal,
+append during notification and deferred compaction; they also cover duplicate
+behavior, missing-membership guard and relocating growth. See
+`native/snow_host/pose_body_event_registry_validation.json`.
+
+This supplies the local listener lifecycle needed to study mod hooks. Installed
+listener identities, their scheduling/thread ownership, registry startup/shutdown
+and allocator integration remain open. These are offline synthetic comparisons,
+not authorization or evidence for safe injection into a running game.

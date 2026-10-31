@@ -1,0 +1,27 @@
+{
+  "schema": "pose-body-event-registry-validation-v1",
+  "registration_cases": 512,
+  "removal_cases": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18bb2c0",
+    "0x18bb610"
+  ],
+  "method": "Original append/removal, TLS reads and memcpy without instruction interception; deterministic stack padding supplied",
+  "comparisons": [
+    "all registry/listener/TLS bytes after append and removal"
+  ],
+  "coverage": [
+    "duplicate callbacks",
+    "first match includes disabled rows",
+    "active-dispatch deferred removal",
+    "inactive immediate stable removal",
+    "opaque padding and stale tails"
+  ],
+  "limits": [
+    "Retained capacity; growth tested publicly as service.",
+    "Only valid membership; native missing-listener path is unsafe.",
+    "Single-thread offline fixtures; no live hook safety claim."
+  ]
+}
