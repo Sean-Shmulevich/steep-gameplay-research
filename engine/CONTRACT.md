@@ -1662,3 +1662,14 @@ Flag0 controls bodyaa bit4 and optional derived refresh calls. The loader's
 update_now=0 path requires no derived services and does not clear/release resource10.
 `deserialize_known_pose_body` now uses this known reset when no override is supplied.
 Pool release still precedes transform-slot publication; resource lifetime is separate.
+
+### Inline resource-array storage
+
+`resize_pose_resource_array` follows LINK_SOLVER.md, "Inline resource-array
+storage". Known descriptorb8 stores pointer/count16/capacity16, with one inline
+72-byte entry atc8. Growth allocates from inline or reallocates external storage;
+requests0/1 return to inline and record capacity1. A request equal to current
+capacity is a no-op. Shrinking clamps count but does not destroy any entry.
+Allocator services retain their ownership semantics; supported capacity is uint16.
+The map's inline view aliases body storage, and stale external buffers may remain
+in evidence maps after supplied release. They must not be treated as live objects.

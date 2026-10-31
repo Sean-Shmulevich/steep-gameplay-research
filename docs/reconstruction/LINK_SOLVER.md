@@ -8063,3 +8063,36 @@ reload and respect metadata/entry gates. See
 Open boundaries remain pool/growth ownership, immediate derived refresh effects,
 resource lifetime outside this setter and live provider registration. No real
 asset corpus or live game was used for this pass.
+
+## Inline resource-array storage
+
+Resize helper18bcbb0 receives the descriptor at bodyb8. Pointer is descriptor0,
+count is uint16+8, capacity is uint16+a, and inline storage begins at+10, or bodyc8.
+That inline area holds one72-byte entry. A request equal to current capacity returns
+immediately, even if count would otherwise require clamping.
+
+For requested capacity greater than1, inline storage switches to allocator
+allocation of72*capacity bytes, alignment16, tag0x4c. It publishes the new pointer
+then copies current count*72 bytes from inline storage. External storage uses
+reallocation with the same size/alignment/tag and publishes the returned pointer.
+Both paths store the requested low16 capacity. The retained API supports uint16
+capacity rather than native oversized/wrapping allocation inputs.
+
+For requests0/1, external storage moves back to inline. Request1 copies exactly
+72 bytes before freeing old storage; request0 skips the copy, preserving stale
+inline bytes. Free occurs while the old pointer is still published. The pointer
+then switches to inline and stored capacity becomes1 for either request. An
+already-inline array just gets capacity1. All non-no-op paths finally clamp count
+to the requested value. No entry/resource/transform destruction occurs here.
+
+`pose_resource_array_storage.resize_pose_resource_array` implements this policy
+with allocator services. The inline map view aliases the body's own bytes. Released
+external buffers can remain in evidence maps but are not live storage.512 native
+comparisons match all bytes and allocator events:199 allocations,171 reallocations
+and57 frees. Original memcpy runs unmodified. Public tests also connect inline
+growth to the array reader and check copy-before-free, stale-byte preservation and
+same-capacity no-op. See `native/snow_host/pose_resource_array_storage_validation.json`.
+
+This identifies array-buffer ownership only. It does not establish resource or
+transform destruction policy, allocator synchronization, or live-safe mutation.
+Combined whole-reader allocation-path validation remains separate work.

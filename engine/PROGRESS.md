@@ -8527,3 +8527,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   interception on identity transforms. Public tests cover private-transform release
   without resource removal and immediate-call gates/order. Pool/growth ownership,
   derived refresh effects and live provider registration remain open.
+- Reconstructed one-entry inline resource-array storage, allocation/reallocation,
+  shrink-to-inline and count clamping.512 native comparisons match199 allocations,
+ 171 reallocations and57 frees with allocator services supplied. Public tests join
+  inline growth to actual array decoding. Resizing does not destroy resources or
+  transforms; their lifetime and combined whole-reader allocation paths remain open.

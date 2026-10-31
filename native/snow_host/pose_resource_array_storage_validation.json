@@ -1,0 +1,30 @@
+{
+  "schema": "pose-resource-array-storage-validation-v1",
+  "cases": 512,
+  "events": {
+    "allocate": 199,
+    "reallocate": 171,
+    "release": 57
+  },
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18bcbb0",
+  "method": "Original resize policy and memcpy; allocator virtual calls supplied as recording retained services",
+  "comparisons": [
+    "all body, old storage and new storage bytes",
+    "allocator order and size/alignment/tag arguments"
+  ],
+  "coverage": [
+    "inline to external",
+    "external reallocation",
+    "external to inline zero/one",
+    "same-capacity no-op",
+    "count clamping",
+    "preserved stale/padding bytes"
+  ],
+  "limits": [
+    "Allocator/free effects supplied; no resource destruction inferred.",
+    "uint16 capacity retained domain.",
+    "Offline synthetic fixtures only."
+  ]
+}
