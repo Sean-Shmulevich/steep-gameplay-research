@@ -1,0 +1,26 @@
+{
+  "schema": "pose-body-controller-events-validation-v1",
+  "cases": 1024,
+  "service_calls": 2181,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18b8670",
+  "method": "Original event switch and metadata writes; protected enter/leave and invoked callees supplied as recording services",
+  "comparisons": [
+    "all body/metadata/owner/controller bytes",
+    "ordered operation targets and arguments"
+  ],
+  "coverage": [
+    "events0..16",
+    "null controller",
+    "priority and quiet-state gates",
+    "metadata flags gates",
+    "event0 stamp update",
+    "priority mutation before final virtual notification"
+  ],
+  "limits": [
+    "Callee implementations and synchronization semantics supplied.",
+    "Static installation known, active runtime listener/thread ownership unverified.",
+    "Synthetic offline fixtures only."
+  ]
+}

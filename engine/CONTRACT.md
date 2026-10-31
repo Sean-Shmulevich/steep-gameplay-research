@@ -1729,3 +1729,12 @@ identities". It captures the manager global once. Event10 forwards the body to
 other uint32 events return. Those manager operations remain supplied. Raw bodyb0
 must not be generalized across body classes or confused with the known physical
 body's byteb0 dirty flag. This routing alone does not establish live class safety.
+
+### Controller body-event routing
+
+`dispatch_pose_body_controller_event` follows LINK_SOLVER.md, "Controller body-event
+routing". It ignores10..12 before pointer traversal, resolves controller through
+metadata20/owner20, and brackets the0..9 switch with supplied synchronization calls.
+It preserves priority/quiet/flags gates, event0 stamp writes and callback order.
+Unknown event values still resolve controller and enter/leave. Callee effects,
+lock semantics and dynamic virtual implementations remain explicit services.

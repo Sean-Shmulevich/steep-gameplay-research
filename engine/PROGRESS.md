@@ -8567,3 +8567,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   branch map, connecting notifications to tree removal and quiet-state dispatch.
   That larger switch remains static evidence, not implemented equivalence; active
   listener membership, class compatibility and thread ownership remain unresolved.
+- Implemented controller-facing body listener0..9 routing and direct metadata writes.
+ 1024 native comparisons match2181 callee/synchronization calls with effects supplied,
+  including callback priority mutation. Public tests bind known event1 virtual28 to
+  actual quiet reset and preserve motion. This supersedes the static-only switch
+  boundary; callee effects, live listener/thread identity and lock semantics remain
+  open before any general mod-hook API claim.

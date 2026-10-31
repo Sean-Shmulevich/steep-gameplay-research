@@ -8313,3 +8313,33 @@ quiet-state virtual dispatch, and supplies concrete leads for provider-membershi
 and group updates. It does not establish thread ownership, meanings of every event,
 callee equivalence or safe asynchronous hooks. Next validation should cover this
 switch with explicit callback effects, then bind already reconstructed callees.
+
+## Controller body-event routing
+
+`pose_body_controller_events.dispatch_pose_body_controller_event` now implements
+the previously static18b8670 switch documented under "Registered body listener
+identities". It preserves the early10..12 return, metadata/owner/controller chain,
+null-controller return, protected enter/leave positions and all0..9 branch gates.
+Unknown event values still traverse that chain and enter/leave when a controller
+exists. The protected calls remain synchronization services; their implementation
+is not inferred from placement alone.
+
+Event0's metadata1c stamp assignment occurs before18b8860. Events0/1 reload body
+metadata and controller28 after preceding callbacks to compute the final virtual+a8
+priority boolean. The retained implementation therefore does not cache a priority
+value across a state-changing callback. Event1 body virtual+28 can be bound to the
+known physical-body quiet reset only when that class identity is established.
+
+1024 native switch comparisons match all body/metadata/owner/controller bytes and
+2181 service calls, with protected enter/leave and callees supplied. Fixtures cover
+priority/quiet/flag gates, stamp mismatches, null controller and callback changes
+to priority. Public tests join event1 to the recovered known-body quiet reset,
+confirming timer/state clearing while motion survives, and check event0 ordering,
+event3 tree selection and event4 gating. See
+`native/snow_host/pose_body_controller_events_validation.json`.
+
+This supersedes the earlier statement that the larger switch is static-only;
+its routing and direct writes are now locally native-compared. Group-transition,
+refresh, provider and remaining controller-event effects still require bindings
+or reconstruction. No active listener identity, runtime scheduling, lock ownership
+or general live mod-hook safety follows from these offline fixtures.
