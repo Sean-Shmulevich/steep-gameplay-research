@@ -1673,3 +1673,13 @@ capacity is a no-op. Shrinking clamps count but does not destroy any entry.
 Allocator services retain their ownership semantics; supported capacity is uint16.
 The map's inline view aliases body storage, and stale external buffers may remain
 in evidence maps after supplied release. They must not be treated as live objects.
+
+### Resource-array destruction pass
+
+`clear_pose_body_resources` follows LINK_SOLVER.md, "Resource-array destruction
+pass". Captured uint16 count drives reverse traversal. Each nonnull resource is
+notified, virtually destroyed with flag1, cleared through reloaded entry storage,
+then decrements body110 with uint32 wrap. Its private transform is released and
+replaced by identity. Null resources skip all these actions, including transform
+release. Final countc0 is zero; capacity/storage remain. Registry notification,
+resource deletion and transform pool return remain explicit services.

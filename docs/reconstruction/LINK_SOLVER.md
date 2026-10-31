@@ -8096,3 +8096,36 @@ same-capacity no-op. See `native/snow_host/pose_resource_array_storage_validatio
 This identifies array-buffer ownership only. It does not establish resource or
 transform destruction policy, allocator synchronization, or live-safe mutation.
 Combined whole-reader allocation-path validation remains separate work.
+
+## Resource-array destruction pass
+
+Routine18bc790 captures bodyc0 and traverses entries in reverse order. Unlike the
+loader's transform reset, this path invokes each nonnull resource's deleting
+virtual method. For every nonnull resource:
+
+1. Capture resource key10 and call registry dispatcher18b74b0 with descriptor
+   `{body,index}`, event1 and that key. Descriptor padding is not semantic data.
+2. Reload the resource vtable and invoke its first method with deletion flag1.
+3. Reload bodyb8, clear the same entry's resource10, and decrement body110 as uint32.
+4. Reload bodyb8 again and inspect transform18. If not shared identity, return it
+   through18ba6a0 and replace the transform pointer in the captured entry storage
+   with shared identity.
+
+A null resource skips the entire sequence, including transform cleanup. The
+original therefore leaves any private transform attached to such an entry alone.
+The reason for that ownership arrangement remains unresolved; the reconstruction
+does not silently add cleanup. Final bodyc0 becomes0, while array pointer/capacity
+remain unchanged. Counter110 can underflow if initial state is inconsistent.
+
+`pose_resource_array_clear.clear_pose_body_resources` implements traversal and
+mutation with registry notification, resource deletion and transform return supplied.
+Callbacks may relocate entry storage; the implementation preserves the observed
+reload points. A transform-return callback does not cause the final identity write
+to chase another relocation: that write uses the already captured array.
+
+512 native comparisons pass with1363 notification/destruction pairs and680
+transform returns, covering null entries, reverse order, shared/private transforms
+and counter underflow. Public tests also exercise array relocation and callback
+changes to the count. See `native/snow_host/pose_resource_array_clear_validation.json`.
+Registry dispatch internals, concrete resource destructors and whole-body lifetime
+remain open. These are synthetic offline fixtures, not proof of live-safe deletion.

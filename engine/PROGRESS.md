@@ -8532,3 +8532,9 @@ cases. This is not wired into a live host API and does not pin manager or module
  171 reallocations and57 frees with allocator services supplied. Public tests join
   inline growth to actual array decoding. Resizing does not destroy resources or
   transforms; their lifetime and combined whole-reader allocation paths remain open.
+- Reconstructed reverse resource destruction pass: registry notification, deleting
+  virtual dispatch, resource clearing, uint32 counter decrement and private-transform
+  return.512 native comparisons match1363 destruction pairs and680 transform returns
+  with services supplied. Null-resource entries deliberately skip transform cleanup.
+  Public tests cover relocation/reload points and captured counts. Registry/resource
+  destructor internals and whole-body lifetime remain open.
