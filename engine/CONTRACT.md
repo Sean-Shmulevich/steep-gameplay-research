@@ -1601,3 +1601,14 @@ supplied services; allocate(kind) must register a nonnull retained record before
 returning its token. Release sees the still-published token; clearing follows its
 return. Native null allocation faults become authored ValueErrors. No parameter
 units, gameplay names or live concurrency guarantees are inferred.
+
+### Base body identity and metadata loading
+
+`pose_body_base_decode` follows LINK_SOLVER.md, "Base body identity and metadata
+loading". It registers type9fb6 before references, reads low/high16 halves into
+body1c, resolves owner and ring heads through existing typed-reference machinery,
+loads metadata bounds/raw fields/flags, and restores body flags/userdata/transform.
+Required failures set reader error but do not roll back or abort. Optional owner
+and userdata absence explicitly clears their fields; absent ring blocks preserve
+heads. Metadata53 keeps its high nibble; metadata50 and54 are not loaded here.
+Object/fixup growth remains supplied and retained identities are required.

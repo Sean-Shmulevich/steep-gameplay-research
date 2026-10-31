@@ -7826,3 +7826,47 @@ services. All body/record bytes and allocation/release events match. The receipt
 is `native/snow_host/pose_body_parameters_validation.json`. Public tests also join
 serialized blocks, motion restoration and all five setters, and cover the shared
 record's lifetime across sequential changes. No live game or asset corpus was used.
+
+## Base body identity and metadata loading
+
+Base reader18bade0 appends `(body_token, type9fb6)` to the reader's object table
+before any block selection. It increments the count before writing the entry,
+leaves entry padding intact, and grows capacity from0 to8 or doubles it through
+18ab920. The following75e600 call is a return-only stub in the inspected image.
+
+All selectors scan at most three blocks. Exact destination behavior follows:
+
+| Block | Required/minimum | Meaning established by writes |
+| --- | --- | --- |
+|0c02|yes/2|Low16 bits of body1c; default0 when selection fails.|
+|0c0d|no/2|High16 bits of body1c; default0 when absent.|
+|0c03|no/4|Typed9fba owner reference into body10; absent explicitly clears it. The reference itself normally consumes8 bytes.|
+|0c05|yes/58|Metadata reader18be5d0, detailed below.|
+|0c06|yes/1|Raw flag byte into bodyaa; an optional following uint16 into bodya8, otherwise0. One trailing byte is ignored.|
+|0c07|no/0|Typed9fbb reference into body80; absent leaves previous value.|
+|0c0a|no/0|Typed9fb9 constraint-ring head into body90; absent leaves previous value.|
+|0c04|no/8|Raw userdata into body20; absent explicitly clears it.|
+|0c0b|no/48|Four XYZ triples into body40/50/60/70; fourth lanes remain untouched.|
+
+The metadata target is the existing pointer at body30. Its reader copies six
+raw bounds words to metadata4..18, then eight bytes to30 and24 bytes to38..4f.
+The24-byte helper1941780 performs raw8/8/4/4-byte copies. The final two payload
+bytes replace the low nibble of metadata53 and all of metadata52 respectively.
+The high nibble of53 survives. This path does not write metadata owner20,
+priority word50 or runtime tree key54. Consequently, deserialization alone does
+not establish runtime identity/key assignment or physics-provider membership.
+
+`pose_body_base_decode` implements this path using actual framing, typed
+references and deferred fixups. Failed typed reads set reader20 but do not abort.
+Missing required blocks likewise allow subsequent work; no rollback occurs.
+Malformed reference payloads shorter than the actual reference read fail through
+our bounded-read guard rather than reproducing native out-of-block reads.
+
+512 native comparisons pass without instruction interception, including344
+forward-reference fixups, required-block failures, legacy flag variants and
+preservation of unrelated bytes. All body, metadata, reader, table, fixup and
+input bytes match. The native fixtures retain capacity; public tests additionally
+cover relocating table growth and body loading followed by constraint registration
+and deferred ring-head replay. See `native/snow_host/pose_body_base_decode_validation.json`.
+Resource entries and the middle body reader remain separate unresolved loading
+work; real asset-corpus and live lifecycle validation have not been performed.

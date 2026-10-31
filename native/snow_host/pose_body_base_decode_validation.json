@@ -1,0 +1,28 @@
+{
+  "schema": "pose-body-base-decode-validation-v1",
+  "cases": 512,
+  "deferred_references": 344,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18bade0",
+    "0x18be5d0",
+    "0x1941780"
+  ],
+  "method": "Original base body reader, metadata reader, block selector, typed references and object registration without instruction interception",
+  "comparisons": [
+    "all body, metadata, reader, object table, fixup and input bytes"
+  ],
+  "coverage": [
+    "missing and short required blocks",
+    "optional fields and explicit absent defaults",
+    "legacy flags with zero, one or two extension bytes",
+    "immediate, null, forward and wrong-type references",
+    "raw transform and metadata lane preservation"
+  ],
+  "limits": [
+    "Retained capacities; allocation growth excluded from native comparison.",
+    "No resource-array decoding, key allocation or provider registration.",
+    "Synthetic offline blocks only, not real asset corpus or live validation."
+  ]
+}

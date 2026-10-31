@@ -8491,3 +8491,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   unordered NaN/default branches. Added reader-to-setter composition and lifecycle
   tests. Pool locking, base resource decoding and parameter gameplay meanings remain
   open; these are offline synthetic comparisons.
+- Reconstructed base body object-table registration, typed owner/ring references,
+  bounds/metadata flags, legacy body flags, userdata and transform loading.512
+  uninterrupted native comparisons pass, including344 deferred references. Public
+  tests cover table relocation and later constraint-ring replay. Runtime key54 and
+  priority50 are not written by this path; resource-entry decoding and actual
+  lifecycle registration remain open.681-test baseline extended with four tests.
