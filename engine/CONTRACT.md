@@ -1720,3 +1720,12 @@ count after publication. Capacity grows0→8 or doubles through a service; dupli
 are accepted. Removal matches the first pointer even if disabled, then either
 marks it disabled plus TLS cleanup request during dispatch or shifts it out
 immediately. Missing membership raises an authored KeyError without writes.
+
+### Registered ownership-manager listener
+
+`dispatch_pose_body_owner_event` follows LINK_SOLVER.md, "Registered body listener
+identities". It captures the manager global once. Event10 forwards the body to
+18dad60, event11 forwards raw bodyb0 to18dac90, event12 forwards the body to18daf80;
+other uint32 events return. Those manager operations remain supplied. Raw bodyb0
+must not be generalized across body classes or confused with the known physical
+body's byteb0 dirty flag. This routing alone does not establish live class safety.

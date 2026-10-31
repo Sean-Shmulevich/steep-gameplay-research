@@ -8259,3 +8259,57 @@ This supplies the local listener lifecycle needed to study mod hooks. Installed
 listener identities, their scheduling/thread ownership, registry startup/shutdown
 and allocator integration remain open. These are offline synthetic comparisons,
 not authorization or evidence for safe injection into a running game.
+
+## Registered body listener identities
+
+Direct call-site inspection identifies two concrete listener registrations. These
+are static installation paths, not a claim that both are active in every session.
+
+- Manager insertion18da8d0 registers18da5e0 when its collection count18 is zero,
+  before inserting through18da700. Surrounding protected calls use manager30 as
+  a synchronization object; their exact locking semantics remain unvalidated.
+- Controller initialization19a4370 calls each child virtual+8, installs two other
+  callbacks through18ba3d0/18ba3e0, then registers18b8670. Its teardown19a4320
+  unregisters18b8670 before visiting child virtual+20 in reverse order.
+
+Listener18da5e0 captures manager global33368f0 and routes uint32 events as follows:
+
+| Event | Argument | Target operation |
+| --- | --- | --- |
+|10|body pointer|18dad60|
+|11|raw qword bodyb0|18dac90|
+|12|body pointer|18daf80|
+|other|none|return|
+
+`pose_body_owner_events.dispatch_pose_body_owner_event` implements this exact
+routing with manager operations supplied.512 native comparisons pass for targets,
+arguments and unchanged body bytes. Public tests connect it to the actual
+broadcaster. See `native/snow_host/pose_body_owner_events_validation.json`.
+The bodyb0 argument is class-sensitive: it must not be equated with the known
+physical body's byteb0 dirty flag without establishing which body classes emit11.
+
+The second listener18b8670 has a larger controller-facing switch. It immediately
+ignores10..12. For other events it resolves `body30 -> metadata20 -> owner20` as
+its controller; a null controller returns. Its protected enter/leave calls use
+controller50. Events outside0..9 perform no switch action after that resolution.
+The following table records static branch behavior, not yet a reconstructed or
+native-compared implementation of these callees:
+
+| Event | Gate and action |
+| --- | --- |
+|0|If priority50 bit15 is clear, compare metadata1c to controller4c; on mismatch copy the latter and call18b8860(body). If priority is set and quiet nibble53 is2, call18b8380(controller,body), then18b8860(body). Finally call controller28 virtual+a8 with boolean `priority bit15 is clear`.|
+|1|For priority bodies, quiet nibble2 calls18b8380; other quiet values call body virtual+28. Then invoke controller28 virtual+a8 with the same priority boolean.|
+|2|Call18b8380(controller,body).|
+|3|Only if metadata52 bit3 is set: obtain tree from controller20 through11fd350, then call known tree-removal19598d0(tree,body).|
+|4|Only if metadata52 bit0 is clear: call18d0a90(controller20,body).|
+|5|Same bit0 gate, then18d16c0(controller20,body).|
+|6|Call18b8b60(controller,body).|
+|7|Call18b8a40(controller,body).|
+|8|Call18b9530(controller,body).|
+|9|Call18b9610(controller,body).|
+
+This establishes a direct link from body notifications to known tree removal and
+quiet-state virtual dispatch, and supplies concrete leads for provider-membership
+and group updates. It does not establish thread ownership, meanings of every event,
+callee equivalence or safe asynchronous hooks. Next validation should cover this
+switch with explicit callback effects, then bind already reconstructed callees.

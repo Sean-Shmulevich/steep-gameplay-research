@@ -8561,3 +8561,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   duplicates and descriptor relocation. Missing membership is an authored guarded
   error; native code assumes it exists. Installed listener ownership/threading and
   registry startup/shutdown remain open before any live mod-hook claim.
+- Identified two concrete body-listener registration paths. Reconstructed the
+  ownership-manager listener's events10/11/12 routing;512 native comparisons pass
+  with manager operations supplied. Documented the second listener's exact0..9
+  branch map, connecting notifications to tree removal and quiet-state dispatch.
+  That larger switch remains static evidence, not implemented equivalence; active
+  listener membership, class compatibility and thread ownership remain unresolved.

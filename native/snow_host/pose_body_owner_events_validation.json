@@ -1,0 +1,22 @@
+{
+  "schema": "pose-body-owner-events-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18da5e0",
+  "method": "Original registered listener routing; three manager operations supplied as recording services",
+  "comparisons": [
+    "manager operation identity and arguments",
+    "body unchanged"
+  ],
+  "coverage": [
+    "events10/11/12",
+    "ignored and uint32-truncated events",
+    "raw bodyb0 versus body-token argument"
+  ],
+  "limits": [
+    "Manager operation internals supplied.",
+    "Listener installation proved statically, not active runtime membership.",
+    "Class compatibility and thread ownership unresolved."
+  ]
+}
