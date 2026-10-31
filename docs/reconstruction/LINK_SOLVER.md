@@ -8129,3 +8129,33 @@ and counter underflow. Public tests also exercise array relocation and callback
 changes to the count. See `native/snow_host/pose_resource_array_clear_validation.json`.
 Registry dispatch internals, concrete resource destructors and whole-body lifetime
 remain open. These are synthetic offline fixtures, not proof of live-safe deletion.
+
+## Resource notification and box destruction
+
+Notification18b74b0 is one optional callback, not a registry-list traversal.
+It captures manager20, returns if null, otherwise copies the caller's16-byte
+body/index descriptor to a local stack object and calls the callback with
+`(descriptor_copy,uint32_event,resource_key)`. Callback changes to the copy do
+not alter the caller's descriptor. The last four descriptor bytes are copied
+padding with no established meaning; synthetic examples may initialize them but
+must not describe that initialization as native behavior.
+
+The known box table29c9ac8 first virtual method is18aa740. It publishes teardown
+table29c9a88, reads attached object20 and, if nonnull, invokes that object's
+virtual+8. It then clears20 and publishes base table29c9800. Deleting flag1 with
+flag4 clear returns the box to its pool. Flags1+4 call75e600(size0x50), the observed
+return-only stub. Without flag1 no storage return occurs. The returned identity
+is not a lifetime guarantee. Attached object release and pool synchronization
+remain supplied; this is not proof of an atomic reference-count decrement.
+
+`pose_resource_lifecycle` implements both operations.512 notification comparisons
+and512 box-destructor comparisons pass with callback/child/pool effects supplied.
+Checks include descriptor mutation isolation, uint32 event truncation, all low
+three deleting flags and resource bytes at callback boundaries. Public tests join
+notification forwarding and box destruction to the reverse resource cleanup pass.
+See `native/snow_host/pose_resource_lifecycle_validation.json`.
+
+The actual installed notification callback, attached-object class and other
+resource subclasses remain open. No callback-list behavior, global registry cleanup
+or live-safe deletion is inferred from this forwarding function. All validation
+used synthetic offline objects.

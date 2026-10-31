@@ -1,0 +1,28 @@
+{
+  "schema": "pose-resource-lifecycle-validation-v1",
+  "notification_cases": 512,
+  "box_destruction_cases": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18b74b0",
+    "0x18aa740"
+  ],
+  "method": "Original optional notification forwarding and box destructor; callback, child virtual+8 and protected box-pool return supplied",
+  "comparisons": [
+    "descriptor copy isolation and callback arguments",
+    "resource bytes at child/storage calls and return",
+    "release gates"
+  ],
+  "coverage": [
+    "null callback and attached object",
+    "all low three deleting flags",
+    "callback descriptor mutation",
+    "vtable transition before child release"
+  ],
+  "limits": [
+    "Pool free-list and locking effects supplied.",
+    "Attached object virtual implementation unknown.",
+    "Known box class only; synthetic offline cases."
+  ]
+}

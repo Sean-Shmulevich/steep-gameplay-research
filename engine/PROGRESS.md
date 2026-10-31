@@ -8538,3 +8538,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   with services supplied. Null-resource entries deliberately skip transform cleanup.
   Public tests cover relocation/reload points and captured counts. Registry/resource
   destructor internals and whole-body lifetime remain open.
+- Resolved resource notification as a single optional callback with descriptor-copy
+  isolation. Reconstructed known box destructor's attached-object release, table
+  transitions and deleting-flag gates.512 notification plus512 destructor native
+  comparisons pass with callback/child/pool services supplied. Public tests join
+  both to reverse cleanup. Installed callback and attached-object implementation
+  remain unresolved; no registry-list semantics or live deletion claim added.

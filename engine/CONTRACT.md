@@ -1683,3 +1683,12 @@ then decrements body110 with uint32 wrap. Its private transform is released and
 replaced by identity. Null resources skip all these actions, including transform
 release. Final countc0 is zero; capacity/storage remain. Registry notification,
 resource deletion and transform pool return remain explicit services.
+
+### Resource notification and box destruction
+
+`pose_resource_lifecycle` follows LINK_SOLVER.md, "Resource notification and box
+destruction". Notification reads optional manager20 once and forwards an isolated
+16-byte descriptor copy plus uint32 event/key. Box destruction publishes its
+teardown table, calls attached object's virtual+8, clears resource20, publishes
+base table and conditionally returns storage for flags1 without4. Callback and
+pool internals are services; returned token is not proof of a live object.
