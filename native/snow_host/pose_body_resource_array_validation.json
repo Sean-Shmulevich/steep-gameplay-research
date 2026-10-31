@@ -1,0 +1,24 @@
+{
+  "schema": "pose-body-resource-array-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18bc1b0",
+  "method": "Original array reader, selectors and identity constructors; base reader, virtual reset, growth and entry reader supplied as recording services",
+  "comparisons": [
+    "all body, entry-array and reader bytes",
+    "service order and arguments"
+  ],
+  "coverage": [
+    "absent array block",
+    "zero through eight new entries",
+    "nonnull old resource reset",
+    "growth from four to eight",
+    "placeholder and failed entry attempts"
+  ],
+  "limits": [
+    "Entry reader effect in fixtures is a synthetic error-only service.",
+    "No full body load equivalence or actual resource teardown proven.",
+    "Offline synthetic fixtures only."
+  ]
+}

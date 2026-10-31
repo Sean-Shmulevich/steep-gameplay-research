@@ -7960,3 +7960,39 @@ float32 diagonal rounding, NaN, signed zero, infinity and preserved padding.
 Public tests join resource decoding to actual transform allocation. See
 `native/snow_host/pose_transform_storage_validation.json`. All fixtures are
 synthetic and offline; real resource ownership/concurrency remain unvalidated.
+
+## Resource-array loading lifecycle
+
+Middle reader18bc1b0 calls base18bade0, optionally reads0e01/min48 as four XYZ
+triples overriding body40/50/60/70, then selects optional0e02/min4. Without0e02,
+array state and body110 remain unchanged. With it, the reader captures old uint16
+countc0 and walks72-byte entries, reloading bodyb8 each iteration. Every nonnull
+resource triggers virtualD0(body,index,identity_transform,0). Its concrete cleanup
+semantics remain supplied here; neither removal nor release is assumed.
+
+Only after those calls does it read the new uint32 count. If greater than uint16
+capacityc2, capacity repeatedly doubles with16-bit wrap before18bcbb0 growth.
+Certain starting capacities/counts never converge. The retained implementation
+raises on a repeated capacity instead of reproducing a nonterminating loop.
+It stores count's low16 bits in bodyc0 and uses the full count as the loop bound.
+
+Each new entry initializes owner0, index8, null resource10 and identity transform18;
+entry20..3f become all ones,40 becomes zero,44 becomes `(old & 0xdf) | 0x1f`.
+Other padding survives. It then scans exactly one block for optional0e04/min0.
+A match marks a placeholder. Otherwise it calls the resource-entry reader and
+increments a local attempt count regardless of that reader's error. The final
+attempt count is stored at body110. It is not a count of successfully resolved
+resources. Array pointers reload for each entry after growth.
+
+`pose_body_resource_array` implements this lifecycle with explicit base/reset/
+growth/entry services and recovered identity construction.512 native comparisons
+pass for body/array/reader bytes and service order, using an error-only entry
+service to exercise failed attempts. Native framing and identity constructors run
+unmodified. Public tests additionally compose actual entry decoding and transform
+storage, and exercise array relocation during resets. See
+`native/snow_host/pose_body_resource_array_validation.json`.
+
+The complete known-body pipeline is now composable from the base reader, this
+middle reader, the physical-state reader and finalizer. Whole-pipeline native
+validation, virtualD0 effects, allocation/reallocation ownership and real resource
+corpus remain open. No full body-load equivalence is claimed by the local tests.

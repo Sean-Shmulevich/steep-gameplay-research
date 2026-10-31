@@ -1631,3 +1631,14 @@ A constructor selects shared identity or fresh storage; replacement reuses priva
 storage, allocates from shared identity, or releases private storage back to shared
 identity. Only XYZ lanes are copied; fourth lanes remain intact. Pool services and
 identity token are supplied. No live sharing/locking policy is inferred.
+
+### Resource-array loading lifecycle
+
+`deserialize_pose_body_resource_array` follows LINK_SOLVER.md, "Resource-array
+loading lifecycle". It runs base loading, optional transform override, then
+optional array replacement. It captures the old count but reloads the array before
+each nonnull-resource reset. It reads the new count after resets, doubles uint16
+capacity, initializes72-byte entries and dispatches non-placeholder entries. The
+stored decoded count counts reader attempts, including failed entry reads. Base,
+virtual reset, growth and entry reader remain explicit services. Repeating capacity
+cycles and short retained storage raise authored errors instead of hanging/faulting.

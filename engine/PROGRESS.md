@@ -8509,3 +8509,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   transform storage to resource-entry decoding; public tests cover threshold
   neighbors, padding and lifecycle transitions. Pool synchronization and enclosing
   resource-array lifetime remain open; no live claims added.
+- Reconstructed middle body reader's transform override, old-resource reset order,
+  uint16 capacity growth, entry initialization/placeholders and attempt counter.
+ 512 native comparisons pass with explicit lifecycle services. Public tests join
+  actual resource-entry/transform decoding and check relocated reset arrays and
+  nonterminating growth detection. Whole-pipeline native validation and virtualD0
+  effects remain open; no full body-load equivalence claimed.
