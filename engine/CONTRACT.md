@@ -1757,3 +1757,14 @@ enter(controller+50), load context from controller30, transition(context,body),
 virtual28(body), leave(controller+50) execute in order. Gates are not rechecked after
 enter. Synchronization and dynamic dispatch effects remain supplied; no exception
 unwind or safe live-thread contract is inferred.
+
+### Body connectivity refresh
+
+`refresh_pose_body_connectivity` follows LINK_SOLVER.md, "Body connectivity refresh".
+It captures the controller through metadata/owner, walks body80's circular link
+ring and copies24 bytes per record from+8. Successor is+20 when endpoint8 matches
+body, otherwise+30. Null head skips every downstream operation. Nonempty rings
+call collect(provider38,rows), rebuild(context30,output), retire(provider38,output,1),
+reloading controller fields between calls. Scratch allocation is abstracted; the
+output list is shared across services. Malformed-ring ValueError is an authored
+guard; callee effects and allocation failures are not reconstructed here.

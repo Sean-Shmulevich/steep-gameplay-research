@@ -8432,3 +8432,63 @@ and gates during enter to establish the reload boundary. A public composition te
 runs the reconstructed inner selection and known quiet reset, showing the outer
 reset still occurs when selection is skipped. This is local control-flow evidence,
 not live-safe scheduling or proof of lock ownership.
+
+### Body connectivity refresh
+
+Controller event0 reaches `18b8860`, reconstructed logically by
+`engine/pose_body_connectivity_refresh.py`. This is a connectivity operation, not
+merely a transform refresh. It captures controller through body30→metadata20→owner20,
+then reads the body's circular link head at80 through getter `12f2f20`.
+
+```text
+controller = body.metadata.owner.controller
+seed = body.link_head80
+if seed == null: return
+rows = []
+current = seed
+repeat:
+    rows.append(copy24(current + 8))
+    current = current.next20 if current.endpoint8 == body else current.next30
+until current == seed
+output = collect(controller.provider38, rows)
+rebuild(controller.context30, output)
+retire(controller.provider38, output, 1)
+```
+
+Names collect/rebuild/retire are authored service labels. The three callees are
+`18dedf0`, `18e28d0`, `18de440`. Controller identity stays captured; its context30
+and provider38 fields are reloaded at their respective call sites. The same mutable
+output descriptor passes through all three. An empty head skips all calls; a
+nonempty ring still calls the latter stages if collection returns no entries.
+
+Native scratch storage starts with64 inline24-byte rows and doubles at capacity
+through `18b9450`; the output starts with512 inline pointer slots. External output
+storage is freed before external input storage, with nonzero-capacity and noninline
+pointer checks. The public logical API abstracts this scratch ownership rather
+than claiming allocation-level equivalence. Its malformed-ring ValueError is an
+authored guard; native traversal assumes a valid circular ring.
+
+Validation: `native/snow_host/pose_body_connectivity_refresh_validation.json`
+records512 offline comparisons spanning17500 copied rows,1512 downstream calls
+and42 supplied scratch growth/free pairs. Both endpoint orientations, empty rings,
+capacity crossing and callback changes to controller fields are covered. Native
+getter and traversal run; stack probing, allocation and downstream effects are
+supplied. Public tests verify snapshot copies and shared mutable output identity.
+No live concurrent traversal guarantee follows from this test.
+
+Further static leads, not yet implemented by this module:
+
+- `18dedf0` clears output count, filters each row by its first endpoint's metadata:
+  priority50 bit15 must be set and state53 low nibble must differ from2. It searches
+  a provider tree using the row's third qword as an unsigned key. A match appends
+  the node's value pointer and removes the tree node through `19a40b0`. This is a
+  destructive selection, not a read-only neighbor query.
+- `18e28d0` zeroes context464..46b, skips selected objects with flags84 bit1, and
+  follows endpoint8→body.group10. Groups with a0 and a1 both zero are marked a1=1
+  and queued once; `19581c0(group,object)` runs for each eligible selected object.
+  The subsequent group loop clears a1 before calling `18e2de0` and increments
+  context464. Those callee effects and full group rebuild remain unresolved.
+- `18de440` consumes that same selected-object array. Its opening calls include
+  `195c270(object,1)` and `1958ba0(object)` before provider queue handling. Do not
+  equate the authored label retire with complete destruction until the rest of
+  this routine and its callees have been reconstructed.

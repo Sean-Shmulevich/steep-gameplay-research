@@ -1,0 +1,27 @@
+{
+  "schema": "pose-body-connectivity-refresh-validation-v1",
+  "cases": 512,
+  "rows": 17500,
+  "service_calls": 1512,
+  "scratch_growths": 42,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18b8860",
+  "method": "Original ring traversal and call sequence; downstream operations, stack probe and scratch allocator supplied",
+  "comparisons": [
+    "24-byte row snapshots and order",
+    "downstream arguments and shared output changes",
+    "all fixture bytes"
+  ],
+  "coverage": [
+    "empty rings",
+    "mixed endpoint orientations",
+    "1..70 records including inline-capacity crossing",
+    "context/provider mutation between callbacks"
+  ],
+  "limits": [
+    "Scratch allocation is abstracted in public API; native fixture uses supplied growth/free.",
+    "Downstream selection, group update and cleanup internals supplied.",
+    "No live validation or concurrent mutation guarantee."
+  ]
+}

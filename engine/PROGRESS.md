@@ -8585,3 +8585,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   and callees supplied. A joined test establishes quiet reset even when inner selection
   is skipped. Nested same-token entry is now explicit; concrete lock semantics and
   live thread ownership remain open. Connectivity refresh is the next separate gap.
+- Reconstructed the controller connectivity refresh's circular-link snapshots and
+  ordered three-stage dispatch.512 native comparisons match17500 copied rows and
+  1512 calls, including42 scratch-capacity crossings with allocator services.
+  Public API abstracts scratch ownership. Static inspection identifies destructive
+  tree selection and deduplicated group-update work downstream; those internals
+  remain explicit services, not reconstructed effects or live-safe mod operations.
