@@ -1,0 +1,24 @@
+{
+  "schema": "pose-body-events-validation-v1",
+  "cases": 512,
+  "callback_calls": 1248,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18a7f60",
+  "method": "Original TLS-aware broadcaster and compaction memcpy, with listener callback effects supplied",
+  "comparisons": [
+    "all registry/listener/TLS bytes",
+    "callback body/event and dispatch flags"
+  ],
+  "coverage": [
+    "empty, enabled and disabled listeners",
+    "cleanup flag initially set or set during callback",
+    "append during dispatch",
+    "disable current/all listeners",
+    "stable compaction and stale tails"
+  ],
+  "limits": [
+    "Callback code supplied.",
+    "Single-thread retained fixtures; no locking, live concurrency or recursive-dispatch safety claim."
+  ]
+}

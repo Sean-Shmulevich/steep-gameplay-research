@@ -8191,3 +8191,35 @@ The remaining body-event broadcaster has a distinct enabled-listener loop and
 thread-local dispatch/deferred-update state; it must not be confused with the
 single resource-event callback. Its full behavior and outer body-storage deletion
 remain open, along with live-safe lifecycle coordination.
+
+## Body-event listener dispatch
+
+Broadcaster18a7f60 obtains a thread-local state block through the Windows TLS
+index and GS table. It captures that TLS base, loads the global listener descriptor,
+sets TLS27bd to1 and visits16-byte rows in increasing index order. Each row has a
+callback pointer at0 and enabled byte at8. Enabled rows receive `(body,uint32_event)`.
+The global registry pointer reloads after each callback, and count is rechecked
+before the next index. Listener rows are not snapshotted: appends may receive the
+same event, disabling a later row skips it, and registry replacement continues at
+the current next index in the replacement array.
+
+After dispatch it sets TLS27bd to0. If TLS27bc is nonzero, it walks the then-current
+count backwards and removes disabled rows by decrementing count and shifting the
+remaining suffix down16 bytes. Remaining listener order is stable; vacated tail
+bytes are not cleared. Registry pointer reloads after each copy. TLS27bc is cleared
+at completion. Disabled rows persist if no cleanup request is present.
+
+`pose_body_events.dispatch_pose_body_event` implements this using retained registry,
+rows and TLS bytes. It supplies callback code and global registry access explicitly.
+It does not invent a recursion counter or restore the previous dispatch flag: nested
+dispatch clears that same byte before returning to its outer callback. This is an
+observed local consequence, not a claim that recursive notification is supported.
+Exception unwinding, listener-registration writers and cross-thread synchronization
+remain open.
+
+512 native comparisons execute original GS/TLS reads, listener traversal and memcpy
+compaction with1248 supplied callback calls. All registry/row/TLS bytes and callback
+arguments match across append, disable and cleanup-request mutations. Public tests
+also check registry replacement, absent cleanup requests and nested flag behavior.
+See `native/snow_host/pose_body_events_validation.json`. These single-thread synthetic
+fixtures do not establish live concurrency or safe arbitrary listener mutation.

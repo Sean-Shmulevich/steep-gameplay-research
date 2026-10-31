@@ -1701,3 +1701,13 @@ external entry storage, zeros entry pointer/capacity, broadcasts body event10,
 returns metadata and publishes final table identity. Tables and external effects
 are supplied. Metadata pointer is read after notification and remains stale after
 release. The outer deleting wrapper's body-storage return is not included.
+
+### Body-event listener dispatch
+
+`dispatch_pose_body_event` follows LINK_SOLVER.md, "Body-event listener dispatch".
+It sets TLS27bd, invokes enabled16-byte listener rows with body/event32, reloads the
+registry after callbacks and rechecks its live count. It clears27bd, then if27bc
+is set, removes disabled rows backwards with stable shifting and clears27bc.
+Stale tail bytes survive. Registry access and callback code are services; no locking,
+recursive dispatch depth or exception guarantees are inferred. Counts are retained
+signed-domain values for compaction, not arbitrary malformed native buffers.

@@ -8550,3 +8550,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   actual resource cleanup before array/metadata release. Metadata30 stays stale;
   outer body free, body-listener dispatch and provider-unregistration coordination
   remain open. No live-safe deletion or whole-engine equivalence implied.
+- Reconstructed TLS-aware body-event broadcasting, live-count traversal and stable
+  deferred removal of disabled listeners.512 native comparisons match1248 callback
+  calls and all registry/row/TLS bytes with callback effects supplied. Public tests
+  cover registry replacement, same-event append and nested flag behavior. Listener
+  registration writers, exception handling and cross-thread guarantees remain open.
