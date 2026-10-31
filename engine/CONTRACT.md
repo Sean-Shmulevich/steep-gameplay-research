@@ -1738,3 +1738,13 @@ metadata20/owner20, and brackets the0..9 switch with supplied synchronization ca
 It preserves priority/quiet/flags gates, event0 stamp writes and callback order.
 Unknown event values still resolve controller and enter/leave. Callee effects,
 lock semantics and dynamic virtual implementations remain explicit services.
+
+### Body-event group transition
+
+`transition_pose_body_group` follows LINK_SOLVER.md, "Body-event group transition".
+It gates reassignment on metadata52 bit3, compares a raw predicate byte to initial
+special-group membership, optionally removes/revalidates/reassigns, then finalizes
+the selected group. Predicate and group operations remain services. Original group
+is retained if no reassignment path runs; the body group is reloaded after that
+path even when virtual8 rejects admission. Quiet reset applies only to ordinary
+new-group selection with state2. No universal player-wake semantics are inferred.

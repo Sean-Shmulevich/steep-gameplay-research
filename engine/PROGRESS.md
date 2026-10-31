@@ -8573,3 +8573,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   actual quiet reset and preserve motion. This supersedes the static-only switch
   boundary; callee effects, live listener/thread identity and lock semantics remain
   open before any general mod-hook API claim.
+- Reconstructed body-event group selection before group finalization.1024 offline
+  native comparisons match2584 calls and all fixture bytes with group operations
+  supplied. Captured versus reloaded group identity and raw predicate bytes are
+  preserved; public tests compose ordinary selection with known quiet reset and
+  verify motion preservation. Controller synchronization wrapper, connectivity
+  refresh and live class/thread safety remain unresolved.

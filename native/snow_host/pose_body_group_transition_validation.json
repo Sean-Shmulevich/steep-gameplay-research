@@ -1,0 +1,27 @@
+{
+  "schema": "pose-body-group-transition-validation-v1",
+  "cases": 1024,
+  "calls": 2584,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18e14f0",
+  "method": "Original group selection routine with predicate, group operations and virtual methods supplied as recording/mutating services",
+  "comparisons": [
+    "ordered service identities and arguments",
+    "body bytes",
+    "metadata bytes",
+    "context bytes"
+  ],
+  "coverage": [
+    "metadata gate",
+    "priority and quiet state",
+    "initial special-group membership",
+    "raw predicate bytes 0/1/2",
+    "admission rejection",
+    "callback mutations of group, flags and quiet state"
+  ],
+  "limits": [
+    "Callee internals supplied, not validated by this comparison.",
+    "Synthetic offline fixtures; no live player or thread-safety proof."
+  ]
+}

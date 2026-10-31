@@ -8343,3 +8343,51 @@ its routing and direct writes are now locally native-compared. Group-transition,
 refresh, provider and remaining controller-event effects still require bindings
 or reconstruction. No active listener identity, runtime scheduling, lock ownership
 or general live mod-hook safety follows from these offline fixtures.
+
+### Body-event group transition
+
+The controller's group-transition helper reaches `18e14f0`. Its local selection
+flow is reconstructed in `engine/pose_body_group_transition.py`. Tokens below
+identify objects; they are not portable addresses or claims about player identity.
+
+```text
+group = body.group
+if metadata.flags52 & 8:
+    was_special = byte(group == context.special410)
+    if predicate(context, body).low_byte != was_special:
+        remove_body(context, body)
+        if body.virtual8(1).low_byte != 0:
+            metadata = reload(body.metadata)
+            if !(metadata.priority50 & 0x8000):
+                target = context.special408
+            elif metadata.flags52 & 8 and predicate(context, body).low_byte != 0:
+                target = context.special410
+            else:
+                target = obtain_group(context)
+                if reload(body.metadata).state53 & 15 == 2:
+                    body.virtual28()
+            append_body(target, body)
+        group = reload(body.group)
+finalize_group(context, group)
+```
+
+The first predicate comparison uses the raw byte, not boolean normalization:
+return2 differs from membership1. The second predicate uses a nonzero test.
+If reassignment is skipped, finalization uses the initially captured group even
+if the predicate changes the body's group field. Once reassignment is entered,
+that field is reloaded even if virtual8 rejects admission. Group acquisition can
+change metadata before the state2 test. Only ordinary selection takes that local
+virtual28 reset path; special targets do not.
+
+Evidence anchors: predicate `18e1dd0`, remove `18e23c0`, obtain `18e19c0`, append
+`19573c0`, finalizer `18e11b0`. Append and finalizer have separate reconstructions;
+the known physical body's virtual28 is the quiet reset described above. Dynamic
+class identity must still be established before binding that implementation live.
+
+Validation: `native/snow_host/pose_body_group_transition_validation.json` records
+1024 offline native comparisons, matching2584 ordered calls plus body, metadata
+and context bytes. Predicate, group operations and virtual methods are supplied
+recording/mutating services. Public tests compose the known quiet reset, checking
+that motion survives. This validates local selection and ordering, not callee
+internals, live thread ownership, or a general player-wake API. The surrounding
+controller synchronization wrapper and connectivity refresh remain separate work.
