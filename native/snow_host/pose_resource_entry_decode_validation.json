@@ -1,0 +1,24 @@
+{
+  "schema": "pose-resource-entry-decode-validation-v1",
+  "cases": 512,
+  "deferred_references": 111,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18bc4a0",
+  "method": "Original resource-entry reader, framing and typed references; transform setter supplied as recording service",
+  "comparisons": [
+    "all entry/body/metadata/reader/table/fixup/input bytes",
+    "transform XYZ argument and entry state at call"
+  ],
+  "coverage": [
+    "95-byte legacy through98-byte extended entries",
+    "missing and short blocks",
+    "immediate, wrong-type, null and forward references",
+    "optional flag defaults and preserved high bits"
+  ],
+  "limits": [
+    "Transform allocation and shared identity ownership remain supplied.",
+    "Retained reference capacities only.",
+    "Synthetic offline fixtures; no live or asset-corpus validation."
+  ]
+}

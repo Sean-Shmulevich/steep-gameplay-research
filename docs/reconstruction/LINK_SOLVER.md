@@ -7870,3 +7870,47 @@ cover relocating table growth and body loading followed by constraint registrati
 and deferred ring-head replay. See `native/snow_host/pose_body_base_decode_validation.json`.
 Resource entries and the middle body reader remain separate unresolved loading
 work; real asset-corpus and live lifecycle validation have not been performed.
+
+## Serialized body resource entries
+
+Reader18bc4a0 selects required0e03/min95 with scan limit3. It reads a typed9fb7
+resource reference into entry10, captures four XYZ triples as a local transform,
+then writes eight bytes at entry20,24 bytes at28..3f and four bytes at40. Failed
+reference resolution marks reader20 and continues; forward references retain the
+old pointer and enqueue its exact destination slot for later replay.
+
+The payload ends with three required bytes A/B/C and up to three optional bytes
+D/E/F. Low bits are packed into entry44 as follows, preserving existing bits6..7:
+
+```text
+entry.flags = old_flags & 0xc0
+            | (F & 1) | (A & 1)<<1 | (E & 1)<<2
+            | (B & 1)<<3 | (C & 1)<<4 | (D & 1)<<5
+```
+
+Absent D defaults0. If the payload cursor's low32 bits equal the block end's
+low32 bits after D, E defaults to the boolean expression:
+
+```text
+(metadata.priority_word & 0x8000) == 0
+or (metadata.flags52 & 8) != 0
+or A != 0
+```
+
+The A comparison uses the whole byte before final low-bit packing. Otherwise E
+is read when one byte remains, defaulting0 on an out-of-range cursor. Absent F
+defaults1. These are exact storage rules; semantic names for all six bits remain
+unproved. The lower32 cursor comparison is preserved rather than silently widened.
+
+After every field write, reader calls18a80f0 on the transform pointer at entry18.
+`deserialize_pose_resource_entry` supplies this through `set_transform(entry,
+packed_xyz48)`. The native stack's fourth lanes are uninitialized and not passed
+as meaningful values. Transform allocation/shared-identity ownership remain open.
+
+512 original-reader comparisons match all retained bytes, including111 forward
+references, with only the transform setter supplied as a recording service.
+Fixtures cover95..98-byte payloads, missing/short blocks and typed-reference
+outcomes. Public tests check full-byte fallback versus low-bit packing, explicit
+flag overrides, preserved fields and exact deferred destinations. See
+`native/snow_host/pose_resource_entry_decode_validation.json`. No live or real
+asset-corpus validation is claimed; the enclosing array lifecycle remains open.

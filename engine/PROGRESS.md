@@ -8497,3 +8497,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   tests cover table relocation and later constraint-ring replay. Runtime key54 and
   priority50 are not written by this path; resource-entry decoding and actual
   lifecycle registration remain open.681-test baseline extended with four tests.
+- Reconstructed resource-entry typed references, raw fields, transform arguments
+  and six packed flags with metadata-dependent legacy defaults.512 native reader
+  comparisons pass, including111 deferred references, with transform ownership
+  supplied. Public tests cover byte-versus-bit fallback, explicit overrides and
+  failed/forward references. Enclosing array lifecycle and transform storage remain
+  open; all validation used synthetic offline blocks.

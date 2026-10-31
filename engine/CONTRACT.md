@@ -1612,3 +1612,12 @@ Required failures set reader error but do not roll back or abort. Optional owner
 and userdata absence explicitly clears their fields; absent ring blocks preserve
 heads. Metadata53 keeps its high nibble; metadata50 and54 are not loaded here.
 Object/fixup growth remains supplied and retained identities are required.
+
+### Serialized resource entry
+
+`deserialize_pose_resource_entry` follows LINK_SOLVER.md, "Serialized body resource
+entries". Required0e03/min95 restores typed9fb7 resource reference, captures four
+XYZ triples, writes entry20..43 and assembles low six entry44 bits with legacy
+metadata-dependent defaults. High two bits survive. The transform service receives
+packed48 raw bytes after field writes; pointer storage/allocation remains external.
+Malformed bounded reads raise rather than reading outside the selected payload.
