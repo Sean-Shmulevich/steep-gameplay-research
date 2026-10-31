@@ -7914,3 +7914,49 @@ outcomes. Public tests check full-byte fallback versus low-bit packing, explicit
 flag overrides, preserved fields and exact deferred destinations. See
 `native/snow_host/pose_resource_entry_decode_validation.json`. No live or real
 asset-corpus validation is claimed; the enclosing array lifecycle remains open.
+
+## Shared identity transform storage
+
+Constructor18bb6a0 and setter18a80f0 share identity comparison18a8050. The shared
+identity token is image-relative3336780 in this build, but the reconstruction
+requires it as an explicit identity token rather than treating that address as
+portable storage. The comparison checks the nine basis components against the
+identity matrix and translation XYZ against zero with tolerance float32(1e-6).
+Diagonal subtraction is rounded to float32 before absolute value and comparison.
+Only strict ordered greater-than rejects identity, so NaN does not reject it;
+positive/negative infinity does. Fourth lanes are neither tested nor copied.
+
+```text
+construct(slot, frame):
+    if near_identity(frame): slot = shared_identity
+    else: slot = allocate(); copy_XYZ(slot, frame)
+
+assign(slot, frame):
+    if slot == shared_identity:
+        if near_identity(frame): return
+        slot = allocate()
+    else if near_identity(frame):
+        release(slot)
+        slot = shared_identity
+        return
+    copy_XYZ(slot, frame)
+```
+
+Construction does not release any old slot value. Assignment reuses existing
+private storage when the incoming transform remains nonidentity. Release happens
+before the slot is replaced, and new slots are published before XYZ writes.
+Allocation and release pool internals remain supplied. Native null-allocation
+faults become explicit authored errors in the retained implementation.
+
+`pose_transform_storage` implements these operations and
+`deserialize_retained_pose_resource_entry` joins them to resource loading. Its
+input is four packed XYZ triples; retained transforms use64 bytes and preserve
+their fourth lanes. This removes the transform-setter placeholder from entry
+loading without inventing stack padding or pool synchronization semantics.
+
+1024 native comparisons pass with only pool allocation/free supplied, including
+431 allocations and98 releases. Fixtures test exact tolerance neighbors,
+float32 diagonal rounding, NaN, signed zero, infinity and preserved padding.
+Public tests join resource decoding to actual transform allocation. See
+`native/snow_host/pose_transform_storage_validation.json`. All fixtures are
+synthetic and offline; real resource ownership/concurrency remain unvalidated.

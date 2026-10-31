@@ -8503,3 +8503,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   supplied. Public tests cover byte-versus-bit fallback, explicit overrides and
   failed/forward references. Enclosing array lifecycle and transform storage remain
   open; all validation used synthetic offline blocks.
+- Reconstructed shared-identity transform construction/replacement, float32
+  tolerance checks, private-storage reuse and release.1024 native comparisons
+  match431 allocations and98 releases with pool services supplied. Joined actual
+  transform storage to resource-entry decoding; public tests cover threshold
+  neighbors, padding and lifecycle transitions. Pool synchronization and enclosing
+  resource-array lifetime remain open; no live claims added.

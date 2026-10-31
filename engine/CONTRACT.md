@@ -1621,3 +1621,13 @@ XYZ triples, writes entry20..43 and assembles low six entry44 bits with legacy
 metadata-dependent defaults. High two bits survive. The transform service receives
 packed48 raw bytes after field writes; pointer storage/allocation remains external.
 Malformed bounded reads raise rather than reading outside the selected payload.
+
+### Shared identity transform storage
+
+`pose_transform_storage` follows LINK_SOLVER.md, "Shared identity transform storage".
+Four packed XYZ triples are compared to identity with float32 diagonal subtraction
+and tolerance float32(1e-6). Strict ordered greater-than rejects; NaN does not.
+A constructor selects shared identity or fresh storage; replacement reuses private
+storage, allocates from shared identity, or releases private storage back to shared
+identity. Only XYZ lanes are copied; fourth lanes remain intact. Pool services and
+identity token are supplied. No live sharing/locking policy is inferred.

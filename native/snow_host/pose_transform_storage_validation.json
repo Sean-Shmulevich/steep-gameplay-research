@@ -1,0 +1,33 @@
+{
+  "schema": "pose-transform-storage-validation-v1",
+  "cases": 1024,
+  "events": {
+    "allocate": 431,
+    "release": 98
+  },
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18bb6a0",
+    "0x18a80f0",
+    "0x18a8050"
+  ],
+  "method": "Original constructors/setter and identity test; pool allocate/free supplied as recording services",
+  "comparisons": [
+    "slot bytes",
+    "private transform bytes including preserved padding",
+    "source unchanged",
+    "allocation/release events"
+  ],
+  "coverage": [
+    "shared/private identity transitions",
+    "constructor versus assignment",
+    "exact tolerance neighbors",
+    "diagonal float32 subtraction",
+    "signed zero, NaNs, infinity"
+  ],
+  "limits": [
+    "Pool synchronization and free-list effects supplied.",
+    "Synthetic offline transforms only; not live validation."
+  ]
+}
