@@ -8544,3 +8544,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   comparisons pass with callback/child/pool services supplied. Public tests join
   both to reverse cleanup. Installed callback and attached-object implementation
   remain unresolved; no registry-list semantics or live deletion claim added.
+- Reconstructed known physical/middle/base body destructor ordering, parameter
+  releases, entry-storage disposal, event10 and post-notification metadata release.
+ 512 native comparisons match with external effects supplied. Public tests compose
+  actual resource cleanup before array/metadata release. Metadata30 stays stale;
+  outer body free, body-listener dispatch and provider-unregistration coordination
+  remain open. No live-safe deletion or whole-engine equivalence implied.

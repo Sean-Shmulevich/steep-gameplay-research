@@ -8159,3 +8159,35 @@ The actual installed notification callback, attached-object class and other
 resource subclasses remain open. No callback-list behavior, global registry cleanup
 or live-safe deletion is inferred from this forwarding function. All validation
 used synthetic offline objects.
+
+## Known-body destructor layers
+
+Physical destructor18be6b0 publishes table29c99a8, returns nonnull parameter1b8
+to its scalar/vector pool, clears that pointer, then does the same for parameter1c0
+and its separate triple pool. It tail-calls middle destructor18bb780, which
+publishes29c98c8 and invokes the reverse resource cleanup18bc790. It then performs
+the equivalent of resize-to-zero on the resource descriptor: nonzero capacity
+permits external buffer release and temporary inline reset; zero capacity skips
+that release. Finally it zeros bodyb8 andc2 regardless and calls base18a7bc0.
+
+The base destructor publishes29c9808 and calls body-event broadcaster18a7f60 with
+event10. Metadata30 is captured after that notification, returned to its pool and
+left as a stale field value. The final table becomes29c9800. This is not the outer
+deleting wrapper, which separately decides whether to return body storage.
+
+`pose_body_destruction.destroy_known_pose_body` implements these layers, reusing
+the resize policy and accepting the recovered reverse cleanup as a binding. Pool
+operations and body-event listener dispatch remain explicit services. It does not
+claim to unregister physics provider membership or detach all constraints.
+
+512 native comparisons pass for body bytes, service order and identities, table
+state at callbacks, optional parameters and inline/external/zero-capacity storage.
+Notification fixtures replace metadata30, confirming the subsequent pool return
+uses the new pointer. Resource cleanup is supplied in that native receipt, while
+public tests compose the recovered cleanup and verify its ordering before array
+release and event10. See `native/snow_host/pose_body_destruction_validation.json`.
+
+The remaining body-event broadcaster has a distinct enabled-listener loop and
+thread-local dispatch/deferred-update state; it must not be confused with the
+single resource-event callback. Its full behavior and outer body-storage deletion
+remain open, along with live-safe lifecycle coordination.

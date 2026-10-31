@@ -1692,3 +1692,12 @@ destruction". Notification reads optional manager20 once and forwards an isolate
 teardown table, calls attached object's virtual+8, clears resource20, publishes
 base table and conditionally returns storage for flags1 without4. Callback and
 pool internals are services; returned token is not proof of a live object.
+
+### Known-body destructor layers
+
+`destroy_known_pose_body` follows LINK_SOLVER.md, "Known-body destructor layers".
+It releases optional scalar/vector then triple records, clears resources, frees
+external entry storage, zeros entry pointer/capacity, broadcasts body event10,
+returns metadata and publishes final table identity. Tables and external effects
+are supplied. Metadata pointer is read after notification and remains stale after
+release. The outer deleting wrapper's body-storage return is not included.

@@ -1,0 +1,27 @@
+{
+  "schema": "pose-body-destruction-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18be6b0",
+    "0x18bb780",
+    "0x18a7bc0"
+  ],
+  "method": "Original layered destructor with parameter/metadata pools, resource cleanup, array free and body notification supplied as recording services",
+  "comparisons": [
+    "all body bytes",
+    "service order, tokens, flags and vtable state"
+  ],
+  "coverage": [
+    "optional parameter presence",
+    "inline/external/zero-capacity storage",
+    "post-notification metadata pointer reload",
+    "final descriptor zeroing"
+  ],
+  "limits": [
+    "Resource cleanup compared separately; supplied in this receipt.",
+    "Body listener implementation and pool internals remain supplied.",
+    "No outer deleting-wrapper body free or live lifetime proof."
+  ]
+}
