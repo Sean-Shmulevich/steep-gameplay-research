@@ -1579,3 +1579,14 @@ identities are overwritten by the last encountered entry. `load_pose_body_object
 loads required kind block0c01, calls provider608's factory, then deserialize and
 finalize services in order. Missing block or null factory result returns0. Neither
 operation performs bounds refresh or assumes arbitrary body virtual classes.
+
+### Physical-body serialized state
+
+`deserialize_physical_pose_body` follows LINK_SOLVER.md, "Physical-body serialized
+state". Base loading runs first as an explicit service. Required1001 restores23
+raw words into the noncontiguous body120..198 fields, then reads optional byte1c8
+without normalization, defaulting it to0 only when that selected block has no byte
+left. Required1002 restores24 bytes at1a0. Optional1003 and1004 invoke supplied
+setters in native order. Missing blocks preserve their destination fields and
+required failures retain the reader error. This does not decode the base resource
+array or implement setter side effects. Bounded payload reads are authored guards.

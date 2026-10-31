@@ -8479,3 +8479,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   match all bytes, including duplicate-resource last-write behavior. Public tests
   compose load/finalization/bounds refresh. This is resource repair, not constraint
   key refresh; full body decoding and real resource ownership remain unresolved.
+- Reconstructed the physical-body reader's23 state words, six motion words,
+  legacy optional flag and ordered parameter-setter calls.512 native comparisons
+  match all body/reader bytes and service calls with original block selection.
+  Public tests cover padding, raw NaN/signed-zero bits, required failures with
+  later motion loading and captured setter arguments. Base resource decoding and
+  five setter effects remain explicit services; no live/corpus claim is made.

@@ -1,0 +1,26 @@
+{
+  "schema": "pose-physical-body-decode-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18a93e0",
+  "method": "Original physical-body reader and block selector; base reader and five setter callees supplied as recording services",
+  "comparisons": [
+    "all body bytes",
+    "all reader bytes",
+    "setter arguments and invocation order",
+    "cursor at each setter call"
+  ],
+  "coverage": [
+    "required blocks absent or short",
+    "92-byte legacy and extended state blocks",
+    "raw motion words including arbitrary float bit patterns",
+    "optional setting combinations",
+    "prior error preservation"
+  ],
+  "limits": [
+    "Base object/resource decoding remains supplied.",
+    "Setter effects are not implemented or validated by this comparison.",
+    "Synthetic data only; no live or real asset-corpus validation."
+  ]
+}

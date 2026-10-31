@@ -7755,3 +7755,37 @@ Public tests cover body-load service order, null creation, the four-byte minimum
 versus two-byte kind consumption, last-entry overwrite and finalization composed
 with the existing bounds-refresh implementation. Dynamic body classes, the actual
 resource corpus, allocator ownership and complete outer finalization remain open.
+
+## Physical-body serialized state
+
+The known physical-body reader at RVA18a93e0 calls the base resource/body reader
+18bc1b0, then processes four blocks through the recovered selector. All scans use
+limit3. This establishes a serialized-data connection to the motion fields used
+by the existing integration/secondary-update kernels, without identifying a
+player-specific caller or proving that a particular save uses these blocks.
+
+| Block | Required/minimum | Effect |
+| --- | --- | --- |
+|1001|yes/92 bytes|Copy23 raw words: five at120..130, then XYZ triples at140,150,160,170,180,190. Preserve the fourth lanes and other padding. If another byte remains, copy it unchanged to1c8; otherwise set1c8 to0.|
+|1002|yes/24 bytes|Copy six raw words into motion fields1a0..1b4.|
+|1003|no/16 bytes|Capture scalar and XYZ triple, then call scalar setter18a98d0 followed by vector setter18a9e90.|
+|1004|no/12 bytes|Capture three scalars before calling18a9c30,18a9b00,18a9d60 in that order.|
+
+A failed selection does not copy that block's fields. Required failures set the
+reader error but do not stop later block attempts. A missing1001 therefore leaves
+1c8 untouched; a selected legacy92-byte1001 explicitly clears it. The flag byte
+is not boolean-normalized. The reference implementation passes setter arguments
+as raw little-endian bytes to preserve signed zero and NaN payloads. It does not
+assign names or units to unproved parameters.
+
+`pose_body_decode.deserialize_physical_pose_body` implements this reader with
+base loading and the five setter effects supplied explicitly. It uses actual
+block selection and bounded payload reads.512 synthetic native comparisons pass
+for all body/reader bytes and setter arguments, order and cursor positions. The
+original block selector ran unmodified; base and setter calls were recording
+services. See `native/snow_host/pose_physical_body_decode_validation.json`.
+
+Remaining work includes the base body's resource records and reference graph,
+setter allocation/derived-state effects, real serialized-corpus validation and
+joining loading to the scheduler's actual body registration. This evidence does
+not provide a complete body factory or restore a running game from saved state.
