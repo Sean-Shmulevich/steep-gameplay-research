@@ -8391,3 +8391,44 @@ recording/mutating services. Public tests compose the known quiet reset, checkin
 that motion survives. This validates local selection and ordering, not callee
 internals, live thread ownership, or a general player-wake API. The surrounding
 controller synchronization wrapper and connectivity refresh remain separate work.
+
+### Controller group-transition wrapper
+
+The controller listener's transition service is `18b8380`, now reconstructed as
+`engine/pose_body_controller_transition.py`. It supplies the missing outer ordering
+around the preceding group-selection routine:
+
+```text
+if body.metadata.flags52 & 1 or body.group == null:
+    return
+enter(controller + 0x50)
+context = reload(controller.context30)
+transition_body_group(context, body)
+body.virtual28()
+leave(controller + 0x50)
+```
+
+The gates are evaluated before enter and are not rechecked. The context is loaded
+only after enter. Virtual28 runs after every normally returning inner transition,
+including when that inner routine skips reassignment. For the known physical-body
+implementation this resets quiet state and its accumulator, preserving motion;
+other dynamic body classes require their own implementation. This outer reset is
+separate from the inner ordinary-target/state2 reset and from finalizer resets.
+The parent controller listener already brackets its switch in synchronization on
+the same controller+50 token. Thus the static call chain contains nested entry on
+the same token; the reconstruction does not substitute a non-reentrant lock or
+claim to establish the protected implementation's actual locking semantics.
+
+Protected call sites `18b83b2` and `18b83d1` resume at decoded continuations
+`18b83b8` and `18b83d7` respectively. Linear disassembly through intervening bytes
+misidentifies instruction boundaries. These sites are treated as explicit supplied
+synchronization services, not executed protected-code equivalents. No exception
+cleanup guarantee is added.
+
+Validation: `native/snow_host/pose_body_controller_transition_validation.json`
+records512 offline native comparisons of wrapper gates, calls and fixture bytes,
+with synchronization, inner transition and virtual28 supplied. Tests mutate context
+and gates during enter to establish the reload boundary. A public composition test
+runs the reconstructed inner selection and known quiet reset, showing the outer
+reset still occurs when selection is skipped. This is local control-flow evidence,
+not live-safe scheduling or proof of lock ownership.

@@ -8579,3 +8579,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   preserved; public tests compose ordinary selection with known quiet reset and
   verify motion preservation. Controller synchronization wrapper, connectivity
   refresh and live class/thread safety remain unresolved.
+- Reconstructed the controller group-transition wrapper: pre-entry gates, context
+  reload after synchronization, inner transition, unconditional virtual28 on normal
+  return, then leave.512 offline native comparisons pass with protected synchronization
+  and callees supplied. A joined test establishes quiet reset even when inner selection
+  is skipped. Nested same-token entry is now explicit; concrete lock semantics and
+  live thread ownership remain open. Connectivity refresh is the next separate gap.

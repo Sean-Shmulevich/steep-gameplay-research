@@ -1,0 +1,24 @@
+{
+  "schema": "pose-body-controller-transition-validation-v1",
+  "cases": 512,
+  "service_calls": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18b8380",
+  "method": "Original wrapper gates and instruction flow; protected synchronization call sites, inner transition and virtual28 supplied as recording/mutating services",
+  "comparisons": [
+    "ordered calls and arguments",
+    "controller, body and metadata bytes"
+  ],
+  "coverage": [
+    "flag and null-group gates",
+    "context reloaded after enter",
+    "gate mutation during enter",
+    "reset after inner transition"
+  ],
+  "limits": [
+    "Protected synchronization skipped to decoded continuation sites; lock semantics not emulated.",
+    "Inner transition and dynamic virtual28 supplied.",
+    "Synthetic offline fixtures, not live thread-safety validation."
+  ]
+}

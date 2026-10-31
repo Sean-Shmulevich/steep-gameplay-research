@@ -1748,3 +1748,12 @@ the selected group. Predicate and group operations remain services. Original gro
 is retained if no reassignment path runs; the body group is reloaded after that
 path even when virtual8 rejects admission. Quiet reset applies only to ordinary
 new-group selection with state2. No universal player-wake semantics are inferred.
+
+### Controller group-transition wrapper
+
+`transition_controller_pose_body` follows LINK_SOLVER.md, "Controller group-transition
+wrapper". Metadata52 bit0 or null body.group prevents every service call. Otherwise
+enter(controller+50), load context from controller30, transition(context,body),
+virtual28(body), leave(controller+50) execute in order. Gates are not rechecked after
+enter. Synchronization and dynamic dispatch effects remain supplied; no exception
+unwind or safe live-thread contract is inferred.
