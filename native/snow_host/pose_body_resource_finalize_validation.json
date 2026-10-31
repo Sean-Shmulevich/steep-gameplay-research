@@ -1,0 +1,21 @@
+{
+  "schema": "pose-body-resource-finalize-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18bc6f0",
+  "method": "Original known-body virtual88 and return-only base stub without interception",
+  "comparisons": [
+    "all body/entry/resource bytes"
+  ],
+  "coverage": [
+    "zero through eight resource entries",
+    "null resources",
+    "duplicate resources with last-entry overwrite",
+    "arbitrary owner/index and preserved unrelated bytes"
+  ],
+  "limits": [
+    "Known physical-body implementation only.",
+    "No complete body deserialization, real resource corpus or live ownership proof."
+  ]
+}

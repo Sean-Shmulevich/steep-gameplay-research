@@ -7707,3 +7707,51 @@ Public tests cover default construction followed by actual field loading, null
 callback preservation, serialization registration, default command words, padding,
 missing envelopes and null factory guards. They do not claim that a newly loaded
 kind4 object is admitted to callback preparation or physics provider membership.
+
+## Body load entry and resource backlinks
+
+`pose_body_load.load_pose_body_object` reconstructs entry `0x18d4650`: select
+required block0c01 with minimum4 bytes and scan limit3, consume its first uint16
+kind, call the factory from provider608, then invoke body virtual80 deserialization
+and virtual88 finalization. The remaining two minimum payload bytes are not consumed
+by this entry. Both missing envelope and null factory result return null. This
+null behavior differs from the constraint load entry's unchecked native result.
+Factory and dynamic reader/finalizer selection are explicit services in this API.
+
+For the known physical-body table `0x29c99a8`, virtual80 is `0x18a93e0` and virtual88
+is `0x18bc6f0`. The reader calls `0x18bc1b0`, which calls base body reader
+`0x18bade0`; the latter registers object/type0x9fb6. Full body field decoding remains
+separate work. The finalizer is reconstructed as `finalize_pose_body_resources`:
+
+```python
+count = uint16(body.resource_count_c0)
+for i in range(count):
+    entry = reload(body.entries_b8)[i]  # stride72 bytes
+    if entry.resource16:
+        entry.resource16.owner30 = entry.owner0
+        entry.resource16.index38 = entry.index8
+```
+
+Body/resource offsets are hexadecimal; entry field suffixes0/8/16 and stride72 are
+decimal. Count is captured once and the entry-array pointer reloaded per iteration.
+Null resources are skipped. Repeated identities are not deduplicated; the last
+entry overwrites prior backlinks. No bounds, transforms, body timers, constraint
+keys or registration arrays are changed. The leading base call reaches the
+previously inspected return-only stub.
+
+These are the same72-byte entries used by bounds refresh, which reads resource16
+and transform24. Finalization fills resource ownership; bounds refresh later
+composes transforms and asks each resource for bounds. They are separate operations.
+The outer loader's optional second virtual88 pass can repair these backlinks after
+reference replay, but is not evidence of a constraint paired-key refresh.
+
+[Native finalizer comparison](../../native/snow_host/pose_body_resource_finalize_validation.json)
+covers512 fixtures with zero through eight entries, null/duplicate resources and
+arbitrary owner/index values. Original known-class finalizer and base stub execute
+without interception. Every body, entry and resource byte matches. This receipt
+does not include the outer body-load entry or full body deserialization.
+
+Public tests cover body-load service order, null creation, the four-byte minimum
+versus two-byte kind consumption, last-entry overwrite and finalization composed
+with the existing bounds-refresh implementation. Dynamic body classes, the actual
+resource corpus, allocator ownership and complete outer finalization remain open.

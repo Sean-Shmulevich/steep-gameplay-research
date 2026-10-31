@@ -8474,3 +8474,8 @@ cases. This is not wired into a live host API and does not pin manager or module
   constraints and replay afterward, supporting immediate endpoint availability on
   that path. Full outer finalization, arbitrary graphs and callback installation
   remain unresolved; no inferred key-refresh behavior was added.
+- Reconstructed known-body post-load resource owner/index backlinks and the typed
+  body-load entry with explicit factory/reader dispatch.512 native finalizer cases
+  match all bytes, including duplicate-resource last-write behavior. Public tests
+  compose load/finalization/bounds refresh. This is resource repair, not constraint
+  key refresh; full body decoding and real resource ownership remain unresolved.

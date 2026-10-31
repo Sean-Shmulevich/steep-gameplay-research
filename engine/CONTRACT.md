@@ -1569,3 +1569,13 @@ records, zero count/single flag/callback while preserving unrelated bytes.
 and deserialize services. Missing envelope returns0; a null factory result raises
 an authored error instead of native null dereference. No provider registration,
 callback installation or graph completion is implied by successful object loading.
+
+### Body post-load resource backlinks
+
+`finalize_pose_body_resources` follows LINK_SOLVER.md, "Body load entry and resource
+backlinks". It captures uint16 bodyc0, reloads bodyb8 entries per iteration, skips
+null resource16 and copies entry owner0/index8 to resource30/38. Repeated resource
+identities are overwritten by the last encountered entry. `load_pose_body_object`
+loads required kind block0c01, calls provider608's factory, then deserialize and
+finalize services in order. Missing block or null factory result returns0. Neither
+operation performs bounds refresh or assumes arbitrary body virtual classes.
