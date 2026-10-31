@@ -1590,3 +1590,14 @@ left. Required1002 restores24 bytes at1a0. Optional1003 and1004 invoke supplied
 setters in native order. Missing blocks preserve their destination fields and
 required failures retain the reader error. This does not decode the base resource
 array or implement setter side effects. Bounded payload reads are authored guards.
+
+### Sparse body parameter records
+
+`pose_body_parameters` implements LINK_SOLVER.md, "Sparse body parameter setters".
+Body1b8 points to a16-byte XYZ/scalar record, absent for all-zero defaults; body1c0
+points to three float32 lanes, absent for all-minus-one defaults. Setters preserve
+raw bits and native unordered-equality branches. Pool allocation/release remain
+supplied services; allocate(kind) must register a nonnull retained record before
+returning its token. Release sees the still-published token; clearing follows its
+return. Native null allocation faults become authored ValueErrors. No parameter
+units, gameplay names or live concurrency guarantees are inferred.

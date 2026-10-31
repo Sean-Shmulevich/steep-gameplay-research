@@ -8485,3 +8485,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   Public tests cover padding, raw NaN/signed-zero bits, required failures with
   later motion loading and captured setter arguments. Base resource decoding and
   five setter effects remain explicit services; no live/corpus claim is made.
+- Replaced all five physical-reader setter services with reconstructed sparse
+  scalar/vector and three-parameter record behavior.1024 native comparisons pass
+  with pool acquisition/return supplied, including initialization, disposal and
+  unordered NaN/default branches. Added reader-to-setter composition and lifecycle
+  tests. Pool locking, base resource decoding and parameter gameplay meanings remain
+  open; these are offline synthetic comparisons.

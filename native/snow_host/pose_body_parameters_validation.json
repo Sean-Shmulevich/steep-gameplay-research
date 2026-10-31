@@ -1,0 +1,31 @@
+{
+  "schema": "pose-body-parameters-validation-v1",
+  "cases": 1024,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18a98d0",
+    "0x18a9e90",
+    "0x18a9c30",
+    "0x18a9b00",
+    "0x18a9d60"
+  ],
+  "method": "Original setter branches, raw stores and initialization; protected pool acquisition/return regions supplied as recording services",
+  "comparisons": [
+    "all body bytes",
+    "all retained record bytes",
+    "allocation/release events"
+  ],
+  "coverage": [
+    "absent and existing records",
+    "all five setters",
+    "zero and minus-one defaults",
+    "signed zero, NaNs, infinities",
+    "record initialization and disposal"
+  ],
+  "limits": [
+    "Pool locks, free lists and allocation failure not emulated.",
+    "No gameplay names or units inferred.",
+    "Synthetic offline fixtures, not live validation."
+  ]
+}

@@ -7789,3 +7789,40 @@ Remaining work includes the base body's resource records and reference graph,
 setter allocation/derived-state effects, real serialized-corpus validation and
 joining loading to the scheduler's actual body registration. This evidence does
 not provide a complete body factory or restore a running game from saved state.
+
+## Sparse body parameter setters
+
+The optional1003/1004 serialized blocks feed two sparse records. These are local
+storage/lifetime rules, not established gameplay names or units.
+
+- Body1b8 points to16 bytes: XYZ at0/4/8 and scalar at12. Scalar setter18a98d0
+  checks the incoming scalar against zero, then existing XYZ. If all match the
+  defaults, it returns the record to its pool and clears1b8. Otherwise it allocates
+  when absent, initializes XYZ to positive zero and writes the raw scalar word.
+  Vector setter18a9e90 mirrors this rule, checking incoming XYZ and existing scalar;
+  a new vector record initializes only the scalar to positive zero.
+- Body1c0 points to three raw float32 parameters, defaulting to minus one. Setters
+  18a9c30/18a9b00/18a9d60 write lanes0/1/2 respectively. When absent, a default input
+  does nothing; a nondefault input allocates, initializes all three lanes to-1 and
+  writes its lane. When present, the lane is written first. If all three lanes then
+  compare equal to-1, the record is returned and1c0 cleared. Bytes beyond the three
+  lanes are not initialized by these setters.
+
+These comparisons use UCOMISS with JE/JNE and no parity check. An unordered NaN
+therefore takes the same branch as equality. Both signs of zero match zero. Raw
+words are retained on writes, including NaN payloads and signed zero. This is
+recovered behavior, not a recommended generic floating-point equality policy.
+
+`pose_body_parameters` implements all five setters. Pool allocation and return
+are explicit services. A return callback observes the old pointer still published;
+clearing occurs after it returns. `deserialize_retained_physical_pose_body` joins
+these setters to the physical reader, leaving only base loading and pool services
+supplied. Native pool locks/free-list manipulation and null-allocation faults are
+not reproduced; a null result raises an authored error.
+
+1024 synthetic comparisons execute the original setter branches, initialization
+and stores, with protected pool acquisition/return regions replaced by recording
+services. All body/record bytes and allocation/release events match. The receipt
+is `native/snow_host/pose_body_parameters_validation.json`. Public tests also join
+serialized blocks, motion restoration and all five setters, and cover the shared
+record's lifetime across sequential changes. No live game or asset corpus was used.
