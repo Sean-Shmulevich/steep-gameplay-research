@@ -9184,3 +9184,71 @@ implausible counts.
 together with the sort comparator `18df4a0`. Every other callee is a supplied service.
 
 ```text
+# 18df4e0: new links
+total = sum(slot[i].count10 for i < workers)             # u32 wrap; unrolled by 2, plain sum
+provider.count30 = 0
+if total > provider.cap34:
+    provider.reserve(+0x28, total if cap == 0 else cap doubled until >= total)   # 18defa0, tag 0x22
+provider.count30 = total
+dst = provider.ptr28
+for each slot: copy(dst, slot.ptr8, slot.count10 * 8) (1c6afb0); dst += bytes    # count re-read here
+sort(provider.ptr28, provider.count30, 8, 0x1418df4a0)                           # 1c8fd50
+i = 0
+while i < provider.count30:                    # count and pointer re-read every pass
+    link = provider.ptr28[i]
+    attach(link, 1)                            # 195c170
+    insert(provider+8, key = qword[link+0x18], link)     # 18de6a0
+    i += 1
+
+# 18df630: neighbor records (owner +0x18/+0x20 -> provider +0x58/+0x60/+0x64), no sort
+reserve is 18df0c0 (tag 0x24); attach(record, 0); insert(provider+0x38, key, record)  # 18de830
+tail jump: 18dea90(provider)
+
+# 18df4a0 comparator (receives pointers to the 8-byte elements)
+for off in (8, 0x10): d = a.off.body30.kind54 - b.off.body30.kind54  (u32 wrap, signed result); return first nonzero
+```
+
+Behavior worth preserving:
+
+- The provider count is cleared before the reserve and set to the total afterward. A
+  reserve is only requested when the total exceeds the old capacity. Existing contents
+  are not copied; the old data is dead.
+- The requested capacity is the total when the capacity is 0, else the old capacity
+  doubled (u32) until it reaches the total. A wrapping double (capacity at or over
+  0x80000000) never terminates natively; the Python module raises OverflowError.
+- `18defa0` and `18df0c0` are `18def10`'s body with tags 0x22 and 0x24 (byte-identical
+  apart from the allocator-global address, the tag and the branch targets).
+- The comparator subtracts as u32 and returns a wrapped result: kinds 3 and 0xffffffff
+  give +4, so the 0xffffffff body sorts as if it were -1. It is not a true ordering of
+  unsigned kinds.
+- Key read: `[(link or -8) + 0x18]`. A null entry would be read from address 0x10.
+- Attach selector is 1 for new links and 0 for neighbor records. The neighbor merge does
+  not sort.
+
+Validation: `native/snow_host/pose_pair_link_merge_validation.json` covers 1,280 offline
+comparisons: 512 native 18df4e0 runs, 512 native 18df630 runs and 256 native 18df4a0
+runs. Native routines run over the memory image; reserve, copy, sort, attach, both
+inserts and 18dea90 are intercepted at entry. Compared: ordered service calls and
+arguments, provider vector descriptor at reserve, sort and finish, provider
+count/pointer at each attach, all 0xb0000 fixture bytes, and the signed comparator result.
+Worker counts range 0..32 (108 zero-worker, 510 odd). 518 reserve calls and 506 runs
+without one; 26,118 entries total, at most 146 per run. 256 mutation trials shrink the
+provider count or swap its array pointer during attach/insert (158 changed the walk).
+The harness was shown to fail twice. Not clearing the count before the reserve fails at
+case 6. Hoisting the count out of the walk loop fails at case 3.
+
+Composition test: `tests/test_pose_pair_link_merge.py` runs the real retire, the real
+dispatcher and the real pair worker inside `run_pose_pair_link_jobs`, then binds
+`merge_links` and `merge_neighbors` to the two new functions. Worker 0 creates 25
+links; two foreign links and two neighbor records stand in for other workers. All 27
+links are sorted, attached and inserted in key order, the neighbor records are
+inserted at provider+0x38, and `18dea90` is called last.
+
+Static leads, not implemented:
+
+- `18dea90(provider)` walks the provider+0x38 tree (root +0x4c, 32-byte nodes) from the
+  leftmost node by successor and, for each node's value, sets value+0x58 = 4 when
+  value+0x5c is 0, then clears value+0x5c.
+- `18de6a0(tree, &key, &value)` and `18de830` are the tree inserts (red-black; 18de6a0
+  starts with a vector grow at +0x10 when full). The sort `1c8fd50` is the shared 8-byte
+  element sort whose stability is unknown.
