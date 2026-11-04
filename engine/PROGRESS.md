@@ -8622,3 +8622,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   refresh -> provider tree selection -> group link removal/rebuild -> ring detach, link
   reset and owner queue, with RB-tree, ring, group-index and queue invariants; process
   callee stays a stub.
+- Added `engine/pose_group_process_bytes.py`: byte-model adapter for 18e2de0 (group +0x10/+0x18,
+  context +0x410, body +0x30, metadata +0x52) reusing `process_pose_group`; 9 unit/composition tests
+  (rebuild + `remove_pose_group_link` + adapter), 512-case Unicorn byte comparison with an injected-bug
+  failure proof. Service internals remain unresolved.

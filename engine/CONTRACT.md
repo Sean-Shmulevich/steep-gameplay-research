@@ -1822,3 +1822,16 @@ advances 32-bit modulo the divisor. A zero divisor raises ZeroDivisionError afte
 the first push, where native takes a divide fault. Nothing is freed. The
 IndexError for undersized queue storage is an authored guard. Allocator and pool
 internals, queue consumers and concurrency are not modeled.
+
+### engine.pose_group_process_bytes
+
+- `process_pose_group_bytes(context, group_token, *, contexts, groups, bodies, metadata,
+  slot_arrays, finalize, eligible, remove_body, append_body, allocate, prepare,
+  acquire_group, migrate, release, remove_group, destroy)`: recovered RVA 0x18e2de0 on
+  raw bytearrays (group +0x10 body-array pointer, +0x18 uint32 count; context +0x410
+  group410; body +0x30 metadata pointer; metadata +0x52 flags8). Live views, no copies.
+  Services receive tokens; `allocate(nbytes)` returns a writable byte buffer; prepare/migrate
+  get `dict(slots=QwordArray, count)`. `make_pose_group_process(**same)` returns the
+  `process(context, group_token)` callable for `rebuild_pose_body_connectivity`. Service
+  internals and any bytes they write remain UNRESOLVED. Evidence:
+  native/snow_host/pose_group_process_bytes_validation.json.

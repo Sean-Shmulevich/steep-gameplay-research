@@ -1,0 +1,28 @@
+{
+  "schema": "pose-group-process-bytes-validation-v1",
+  "cases": 512,
+  "passed": 512,
+  "retired_cases": 96,
+  "method": "offline Unicorn execution of complete outer routine 18e2de0 with called services intercepted; engine.pose_group_process_bytes run on raw bytearrays with identical start bytes",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18e2de0",
+  "injected_bug": {
+    "description": "metadata flags8 read from +0x53 instead of +0x52",
+    "detected_at_trial": 1
+  },
+  "comparisons": [
+    "return low byte",
+    "ordered service arguments",
+    "context 0x470 bytes",
+    "group 0x100 bytes",
+    "body-token array 0x80 bytes",
+    "destination storage 0x80 bytes",
+    "every body 0x200 bytes",
+    "every metadata 0x100 bytes"
+  ],
+  "limits": [
+    "All called services supplied; validates orchestration and field offsets, not service internals.",
+    "Regions are random garbage outside the modeled fields; destruction effects, allocation failure, concurrency and protected callers excluded.",
+    "Synthetic retained bodies and storage; no game launch or live observation."
+  ]
+}

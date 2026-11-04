@@ -8673,7 +8673,9 @@ Static leads for the supplied callees:
 - `19581c0(group, object)` is reconstructed as group link-array removal (see
   "Group link-array removal"). A public composition test binds it as this stage's
   link service.
-- `18e2de0` is ordinary-group processing, already reconstructed as
+- `18e2de0` now has a byte-model adapter, `engine/pose_group_process_bytes.py`
+  (CENTRAL_IMPULSE.md, "Ordinary-group processing on raw bytes"). Original lead:
+  `18e2de0` is ordinary-group processing, already reconstructed as
   `engine.pose_group_process.process_pose_group` (CENTRAL_IMPULSE.md, "Ordinary-group
   processing and retirement"). That module uses a dict representation, so the
   two are not yet composed through a shared byte model.

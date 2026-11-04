@@ -16153,6 +16153,42 @@ This validates orchestration. The earlier continuous partition receipt separatel
 executes the internal preparation/selection/migration helpers. Neither receipt
 proves native destruction effects, live lifetime safety or protected outer callers.
 
+
+### Ordinary-group processing on raw bytes
+
+`engine.pose_group_process_bytes.process_pose_group_bytes` runs the recovered outer
+routine RVA0x18e2de0 on byte-model state (the representation used by
+`rebuild_pose_body_connectivity` and `remove_pose_group_link`) by exposing live,
+write-through views to `process_pose_group`; nothing is copied, so there is no
+write-back step. Field offsets were read from the 0x18e2de0 disassembly and match the
+fields the native harness writes:
+
+- group+0x10 qword: pointer to the body-token qword array (0x1418e2e28, 0x1418e2ee1)
+- group+0x18 uint32: body count, read immediately after finalize 18e11b0 (0x1418e2df2)
+- context+0x410 qword: destination group token (group410), reloaded after eligibility
+  and body removal (0x1418e2e5b, 0x1418e2eff)
+- body+0x30 qword: pointer to metadata; metadata+0x52 byte flags8, bit3 gates transfer
+  (0x1418e2e2f/e33, 0x1418e2ee9/eed)
+- group+0x00 vtable slot0 called as (group,1) for destruction (0x1418e2e08..e15)
+
+The group's link array (+0x40 pointer, +0x48 count) and the rebuild's +0xa0/+0xa1 flags
+are a different part of the group: this routine reads neither. Body count (+0x18) and link
+count (+0x48) are independent. Service internals (finalize, eligibility, body removal and
+append, preparation, acquisition, migration, group removal, release, destruction) remain
+caller-supplied and UNRESOLVED as to which other bytes they write; the temporary
+{pointer,count} destination descriptor is a native stack object, kept as
+`dict(slots=QwordArray,count)`. Tokens are map keys standing in for pointers.
+`make_pose_group_process(...)` returns the `process(context, group_token)` callable for the
+rebuild stage.
+
+[512 byte-level comparisons](../../native/snow_host/pose_group_process_bytes_validation.json)
+run the original routine offline with services intercepted and the adapter on identical
+start bytes (random garbage outside modeled fields); they compare return values, ordered
+service arguments, and the final context (0x470), group (0x100), body-token array, destination
+storage, every body (0x200) and every metadata record (0x100) byte for byte. A deliberate
+bug (flags8 read from +0x53) fails the harness at trial 1. Orchestration and field offsets
+only; no destruction, lifetime or live-game claims.
+
 ### Group destructor storage cleanup
 
 The ordinary-group acquisition path calls constructor RVA0x19570f0. That
