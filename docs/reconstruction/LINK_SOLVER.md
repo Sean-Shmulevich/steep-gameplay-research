@@ -9124,3 +9124,55 @@ Limits:
 - **No landing moment:** a combined forward-and-jump hold was rejected by the
   input helper. No landing-contact moment was isolated, and the crash snapshots
   came from riding into terrain.
+
+### Pair link free-list rebalance
+
+`1989e60(contexts, n)` is reconstructed by `engine/pose_link_free_list_rebalance.py`. It is the
+`rebalance` service of the pair link job orchestration. It has no native callees; the pointer-vector
+growth (`18def10`, tag 0x28, alignment 0x10) is inlined three times.
+
+`contexts` is an array of n pointers, each to slot owner + 0x28. Each context holds three pointer
+vectors at +0x00, +0x10 and +0x20 (owner +0x28 recycled link free list, +0x38 vector, +0x48 neighbor
+free list), each {pointer, count u32 at +8, capacity u32 at +0xC}.
+
+```text
+for v in 0..2:  limit[v] = (sum of ctx[i].vec[v].count) / n + 1     # u32, computed once up front
+for p in 0 .. 2n-1:                                                  # u32
+    src = ctx[p % n];  dst = ctx[(p + 1) % n]
+    for v in 0..2:
+        while src.vec[v].count > limit[v]:
+            pop last pointer from src.vec[v]
+            if dst.vec[v].count == capacity: reserve(dst.vec[v], 2*capacity or 8)
+            push it on dst.vec[v]
+```
+
+Behavior worth preserving:
+
+- Limits are fixed before any move. A surplus only travels one ring hop per pass, so with 2n
+  passes a large surplus on one context ends as limit, limit, ..., remainder (for example 9 on
+  one of three contexts becomes 4, 4, 1, not 3, 3, 3).
+- Elements move from the tail of the source and are appended in that order, so order reverses.
+- Vector 0, 1 and 2 are independent, each with its own limit; the per-vector loop is do-while
+  guarded by a count test.
+- A single context never moves (limit exceeds its own count). Zero contexts divides by zero; not
+  asserted, the leaf raises ZeroDivisionError.
+- The contexts array is read as pointers, so the orchestration's gathered list (owner + 0x28) is
+  passed straight through.
+
+Validation: `native/snow_host/pose_link_free_list_rebalance_validation.json`, 512 randomized
+Unicorn cases (harness `analysis/command-executor-audit/check_pose_link_free_list_rebalance.py`).
+Native 1989e60 runs in full, including inlined growth; only the three allocator vtable entries are
+stubs. Compared: ordered allocator calls with arguments, and every fixture byte (context array,
+vector headers, element arrays, newly allocated arrays). 1..8 contexts; 313 cases moved elements
+(13203 elements), 191 were already balanced, 8 were zero-context faults; 88 allocations from empty
+storage and 4222 reallocations. Moves occurred in vector 0, 1 and 2 in 280, 276 and 287 cases. The
+harness failed when the limit's +1 was dropped. Unit tests: `tests/test_pose_link_free_list_rebalance.py`
+(9 tests), including a composition that binds the leaf as the `rebalance` service of
+`run_pose_pair_link_jobs` and checks that the gathered contexts are levelled 12,0,0 to 5,5,2 with
+conservation.
+
+Not covered: aliased context pointers (would not terminate natively), counts above capacity, 32-bit
+sum wrap, live behavior. The allocator stays supplied.
+
+Static leads: the only 32-bit hazards are the sum wrap and `2n` pass count wrap; both need
+implausible counts.

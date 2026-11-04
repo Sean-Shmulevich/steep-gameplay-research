@@ -1,0 +1,38 @@
+{
+  "schema": "pose-link-free-list-rebalance-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "zero_context_faults": 8,
+  "max_contexts": 8,
+  "rebalanced_cases": 313,
+  "balanced_cases": 191,
+  "allocations": 88,
+  "reallocations": 4222,
+  "elements_moved": 13203,
+  "vector_cases_with_moves": [
+    280,
+    276,
+    287
+  ],
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1989e60",
+  "method": "Original 0x1989e60 runs natively in Unicorn over the memory image, including its inlined pointer-vector growth. Only the three allocator vtable entries (+8/+0x10/+0x18) are supplied stubs. The Python reconstruction runs on the same fixtures with an authored mirror allocator.",
+  "comparisons": [
+    "ordered allocator calls with every argument (size, alignment, tag, old pointer)",
+    "all fixture bytes: context pointer array, the three vector headers of every context, initial element arrays and newly allocated arrays",
+    "divide-fault occurrence for zero contexts"
+  ],
+  "coverage": [
+    "1..8 contexts, plus zero contexts (divide fault)",
+    "skewed, random, balanced, near-limit and full-capacity count shapes",
+    "null and nonnull storage, capacity equal to or above count, growth from zero (8) and doubling",
+    "all three vectors at +0, +0x10 and +0x20 with independent limits"
+  ],
+  "limits": [
+    "Contexts are distinct pointers; aliased context pointers are not exercised (they would not terminate natively).",
+    "Allocator is a supplied stand-in; the mirror is authored and not engine behavior.",
+    "Counts above capacity and 32-bit sum wrap are not exercised.",
+    "Zero-context fault is compared only as occurrence plus memory state.",
+    "No live validation, no concurrency."
+  ]
+}

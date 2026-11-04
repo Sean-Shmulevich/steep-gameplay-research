@@ -1879,3 +1879,10 @@ binds to `reserve_pose_pointer_vector`. Divisor 0 raises ZeroDivisionError after
 first push. Undersized queue storage raises an authored IndexError.
 
 ---
+
+### rebalance_pose_link_free_lists (0x1989e60)
+
+`engine.pose_link_free_list_rebalance.rebalance_pose_link_free_lists(mem, contexts, count, *, allocator)`.
+Levels three pointer vectors per context across n contexts using fixed limits of mean + 1 and 2n
+one-hop ring passes. Allocator is supplied. Offsets are evidence anchors. Validated against native
+code over 512 Unicorn cases; no claim of original-engine equivalence.
