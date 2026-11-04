@@ -8784,3 +8784,20 @@ Static leads, not implemented:
 - The pool-return blocks in `1958720`/`1958ba0` push onto free lists at globals
   0x143336bb0/0x143336bb8 and 0x143336aa8/0x143336ab0, under obfuscated thunks.
   They remain supplied.
+
+### Connectivity refresh end-to-end composition
+
+`tests/test_pose_connectivity_full_chain.py` composes the whole refresh chain over one
+shared token-to-bytearray memory model: `refresh_pose_body_connectivity` with collect
+`select_pose_provider_links` (destructive red-black selection), rebuild
+`rebuild_pose_body_connectivity` with link `remove_pose_group_link`, and retire
+`retire_pose_body_connectivity` with detach `detach_pose_endpoint_rings`, reset
+`reset_pose_link_state` and reserve `reserve_pose_pointer_vector` (fake allocator). The
+same link records serve as ring records, tree node values (key = link+0x18, equal to the
+third qword of the copied row), group members and queued pointers. No representation
+mismatch was found. Only the per-group process callee (`18e2de0`) is a recording stub, and
+the allocator is an authored stand-in. The fixture (including the red-black tree builder)
+is authored synthetic data: this is composition coverage of recovered modules, not live
+evidence. Observations: refresh passes divisor 1 to retire, so every link queues to the
+provider's slot-0 owner; tree, group arrays and rings are all checked for post-state
+invariants; with all links ineligible, rebuild and retire still run with an empty output.

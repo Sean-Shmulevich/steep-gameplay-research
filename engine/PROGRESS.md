@@ -8618,3 +8618,7 @@ cases. This is not wired into a live host API and does not pin manager or module
   are supplied. Collect and retire stages of the refresh now compose with
   reconstructed code. Rebuild `18e28d0` and the per-worker queue consumer
   (`18ddc40` → `18b7ca0`) remain open.
+- Added `tests/test_pose_connectivity_full_chain.py`: end-to-end synthetic composition of
+  refresh -> provider tree selection -> group link removal/rebuild -> ring detach, link
+  reset and owner queue, with RB-tree, ring, group-index and queue invariants; process
+  callee stays a stub.
