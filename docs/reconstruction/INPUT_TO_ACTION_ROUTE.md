@@ -198,7 +198,7 @@ invocation, locking under contention or sample freshness.
 
 ### Concrete service storage
 
-The owner constructor at `0x444f20` installs primary table `0x1e67338`
+The owner constructor at `0x444f20` installs primary table `0x1e67338` (reflection metadata names this class `mManagerFactory`, see [Anvil cross-title check](ANVIL_CROSS_TITLE.md); the authored label "service owner" is kept for provenance)
 and a secondary service table `0x1e67420` at `owner+0x10`. The primary table
 contains initialization method `0x47bdc0`, whose tail calls the initialization
 helper described above. This joins the service receiver to a constructed type;

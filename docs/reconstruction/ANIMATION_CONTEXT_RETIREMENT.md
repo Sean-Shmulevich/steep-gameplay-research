@@ -698,6 +698,7 @@ identifies primary table RVA `0x1ebbf78`; its slot `0x48` contains this caller.
 Another path at RVA `0x892720` clears a referenced collection before tail-calling
 it. The separate reattachment wrapper at RVA `0x124ccd0` also reaches parent
 detachment, so teardown is not yet confined to destruction or one scheduler job.
+Reflection metadata names the classes whose slot `0x48` holds these teardown functions as `DominoScriptExecutionContext`, `EntityGroup` and `WorldEntityGroup` (see [Anvil cross-title check](ANVIL_CROSS_TITLE.md)); the authored labels are kept for provenance.
 
 The [lifecycle order model](../../reference/entity_deactivation.py) expresses the
 following original order under stable component-array and nonmutating callback
@@ -785,6 +786,7 @@ Direct caller inspection finds three routes: a collection destructor at RVA
 `0x892300` using its embedded collection at `+0x90`. Higher callers also reach the
 reset/rebuild path. These roles describe inspected local operations; their
 selected-world identity and scheduler phase are not established.
+Reflection metadata names the classes whose slot `0x48` holds the functions at `0x892300` and `0x892720` as `DominoScriptExecutionContext`, `EntityGroup` and `WorldEntityGroup` (see [Anvil cross-title check](ANVIL_CROSS_TITLE.md)); the authored labels are kept for provenance.
 
 ### Snapshot implications and next join
 

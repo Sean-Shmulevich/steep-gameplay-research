@@ -497,7 +497,7 @@
       "source": "runtime/testbench/run37/trick_motion/private/EVIDENCE.md",
       "published": "docs/systems/body/pose-follower/evidence.md",
       "source_sha256": "aa7aef17abb376342884b8e3cd2fa0cbd8a6fb8aa641372eafe24b177f16d7fb",
-      "published_sha256": "904ac8f4116a25c95a44ebd681d15a41ef7502321167ba69766b784afcc24ba4"
+      "published_sha256": "7ead5b4cecab23a7361a665060444a0a588ca15d3faf0cd979b08db8e394eea6"
     },
     {
       "source": "runtime/testbench/run38/animation/CLIENT_LOGIC.md",
@@ -521,7 +521,7 @@
       "source": "runtime/testbench/run38/animation/private/NEXT_TRACE.md",
       "published": "docs/systems/animations/runtime-binding/trace-recipe.md",
       "source_sha256": "63d1d6ca328c3cd5d6898ddc32ad3bd035ad6d9e3168aecbc63fb6c05e74c921",
-      "published_sha256": "eafdbc22f9745dd74c634e3049b043cc37ef2fc196f9a7b2938c23a5ef869303"
+      "published_sha256": "1e8281ecfa80813c2c31ca63c13f832b09704fba6daadd86431164c3aefa62c6"
     },
     {
       "source": "runtime/testbench/run38/environment/CLIENT_LOGIC.md",
@@ -545,7 +545,7 @@
       "source": "runtime/testbench/run38/environment/private/EVIDENCE.md",
       "published": "docs/systems/world/environment-runtime/evidence.md",
       "source_sha256": "3a9b557d8aad15b8e4ce55d1d45f51893b33b3e5948c0baeab0c86caccc613c4",
-      "published_sha256": "e807794378e6a16b32822137cdb871f409f3c8905881becaec8c651913b490a6"
+      "published_sha256": "ec424b10048dd7965645490326e6ad20ce9a3a5a20f71a734bbfe93d64385d9e"
     },
     {
       "source": "runtime/testbench/run38/input_timing/CLIENT_LOGIC.md",
@@ -593,7 +593,7 @@
       "source": "runtime/testbench/run38/trick_motion/private/EVIDENCE.md",
       "published": "docs/systems/tricks/target-publication/evidence.md",
       "source_sha256": "96ab9ba521c97343a22d4b9f1f49d593cbbc78bcb9ca0db44f9b6f65cdc3faa4",
-      "published_sha256": "5ef2d7a0cef835bea384f7dabac1dabe938d500809e071fb248c34b173bcba32"
+      "published_sha256": "b94c4d2145456856607adc4c10221aec44dfa75d187d65441959c06acc72996f"
     },
     {
       "source": "runtime/testbench/run39/WALKING_PLAN.md",

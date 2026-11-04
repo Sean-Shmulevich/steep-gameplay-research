@@ -6,7 +6,7 @@ Image `analysis/steep-memory-image.exe`, RVA-aligned at base `0x140000000`, SHA2
 
 ## P1. Actor owner and receiver limits
 
-`1404de010.asm` calls `14136ca00` on the same receiver, then installs table `141e7a350`. The base snowboard constructor reaches `141368e60 ->14084f610`. `14084f610:84f62e` initializes actor+10 to zero. This is the dynamic owner/entity pointer, not an embedded entity constructor.
+`1404de010.asm` calls `14136ca00` on the same receiver, then installs table `141e7a350` (reflection metadata names this class `PlayerSnowboardComponent`, see [Anvil cross-title check](../../../reconstruction/ANVIL_CROSS_TITLE.md); the authored label is kept for provenance). The base snowboard constructor reaches `141368e60 ->14084f610`. `14084f610:84f62e` initializes actor+10 to zero. This is the dynamic owner/entity pointer, not an embedded entity constructor.
 
 `1405266f0:5268fa..526909` supplies `[[state+40]+10]` and the target matrix to `14124d0f0`. `14124d0f0:24d0f7/24d0fc` stores the same pointer twice in a 24-byte packet, `24d106` stores flags31, and `24d10e` calls entity virtual+90.
 

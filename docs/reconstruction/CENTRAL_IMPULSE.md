@@ -599,7 +599,7 @@ inspected snow table does not directly contain this callback target.
 
 ### Live markup ownership joins the acquired actor's component chain
 
-The callback's table is now identified: the owned component table `0x1e789b8`
+The callback's table is now identified: the owned component table `0x1e789b8` (reflection metadata names this class `GR_cPlayerComponent`, see [Anvil cross-title check](ANVIL_CROSS_TITLE.md); the authored label is kept for provenance)
 contains `0x14053c760` at slot `0x4b0`. Its destructor also installs that table,
 supporting the table origin rather than inferring an offset from an arbitrary
 nearby function pointer. This is the component previously observed in the

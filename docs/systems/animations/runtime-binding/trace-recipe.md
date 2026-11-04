@@ -719,7 +719,7 @@ separate from actual delivery and do not infer an atomic three-array snapshot.
 
 ## Three-array destructor and compatible owner layout
 
-Candidate constructor `140d28e10` (299): headers at owner+110/+1a0/+230,
+Candidate constructor `140d28e10` (299; reflection metadata names this class `AnimComponent`, see [Anvil cross-title check](../../../reconstruction/ANVIL_CROSS_TITLE.md); the authored label is kept for provenance): headers at owner+110/+1a0/+230,
 inline buffers +120/+1b0/+240, header dwords +118/+1a8/+238 =8010.
 Vtable `141f1fad8` slot0 `140d2c9f0` (52) calls destructor `140d2b5c0`
 (360), which passes owner+110 to `140d2bcc0`. Producer context identity not

@@ -26,8 +26,8 @@ A bounded Highball/D3DMetal session reached gameplay through startup navigation,
 | Batch (registry entry) | Source count | Storage capacity | Remaining | Player receivers |
 | --- | --- | --- | --- | --- |
 | `Physic::PreBeforeSimulation` (24) | 0 | 0 | 0 | none |
-| `Ai::UpdateAIPreUpdate` (5) | 1 | 1 | 0 | index 0: owned component, table `0x1e789b8`, slot `0x270` -> `0x67ceb0` |
-| `Physic::BeforeSimulation` (25) | 5 | 5 | 0 | index 2: **the acquired actor pointer**, table `0x1e7a350`, slot `0x270` -> `0x564ee0`, storage index 2; index 1: owned component, table `0x1ee5a40` |
+| `Ai::UpdateAIPreUpdate` (5) | 1 | 1 | 0 | index 0: owned component, table `0x1e789b8` (reflection metadata names this class `GR_cPlayerComponent`, see [Anvil cross-title check](ANVIL_CROSS_TITLE.md); the authored label is kept for provenance), slot `0x270` -> `0x67ceb0` |
+| `Physic::BeforeSimulation` (25) | 5 | 5 | 0 | index 2: **the acquired actor pointer**, table `0x1e7a350` (reflection metadata names this class `PlayerSnowboardComponent`, see [Anvil cross-title check](ANVIL_CROSS_TITLE.md); the authored label is kept for provenance), slot `0x270` -> `0x564ee0`, storage index 2; index 1: owned component, table `0x1ee5a40` (reflection metadata names this class `BipedComponent`, see [Anvil cross-title check](ANVIL_CROSS_TITLE.md); the authored label is kept for provenance) |
 
 Both passes matched. The actor match is pointer equality with the acquisition's actor, whose table and `actor+0x10 == entity` link the acquisition already guards. The animation Kino membership reproduced at source and storage index 3 of 4.
 
