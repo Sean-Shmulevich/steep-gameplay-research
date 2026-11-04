@@ -227,3 +227,4 @@ Start with [status](STATUS.md), [engine reconstruction](ENGINE_RECONSTRUCTION.md
 See [map decoding update](reconstruction/MAP_DECODING_UPDATE.md) for the pinned terrain container, height/class/material codec, floor-height and map-structure specifications.
 
 - [Link row construction and numerical solving](reconstruction/LINK_SOLVER.md): profile resolution, complete supported builder, primary/tangent equations, body buffers and feedback.
+- [Anvil cross-title check](reconstruction/ANVIL_CROSS_TITLE.md): third-party Ghost Recon Wildlands AnvilNext 2.0 facts tested against Steep. Covers reflection class names for authored labels and archive codec corrections.

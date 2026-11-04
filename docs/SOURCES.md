@@ -23,3 +23,5 @@ The local `analysis/snow_game` package contained accompanying data and runnable 
 - [Ghidra BSim documentation](https://ghidra.re/ghidra_docs/GhidraClass/BSim/README.html): possible future comparison of builds; no PS4 build comparison has been completed here.
 
 There are no game download links in this repository.
+
+- [GhostReconWildlands-AnvilNext2.0-Documentation](https://github.com/Firejumper93/GhostReconWildlands-AnvilNext2.0-Documentation) (Firejumper93, CC BY-NC 4.0): third-party Ghost Recon Wildlands engine notes. Only facts were used, re-derived against Steep in [the cross-title check](reconstruction/ANVIL_CROSS_TITLE.md). No text was copied, and no Wildlands value is presented as a Steep fact without a Steep test.
