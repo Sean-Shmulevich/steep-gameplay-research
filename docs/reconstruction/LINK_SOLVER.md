@@ -8920,8 +8920,9 @@ Behavior worth preserving:
 - Retire does not free links. The next pair job that needs a new link reuses one in
   LIFO order: the destructor runs, then the object is reinitialized in place. The
   inline contact storage at +0x68 has capacity 1.
-- In a refill, only the last of the 5 pushed objects is returned unconstructed. The
-  other 4 are destroyed and reinitialized when they are popped later.
+- In a refill, the last of the 5 pushed objects is returned without destructor or
+  reinitialization. The refill itself constructs all 5 (see "Pair link worker callees").
+  The other 4 are destroyed and reinitialized when they are popped later.
 - Flags +0x84 are read after the destructor.
 - The worker never reads the dispatcher's caller-thread flag.
 - The handlers recompute A/B from the pair, but the link triple is reread after acquire.
