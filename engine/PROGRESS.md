@@ -8599,3 +8599,10 @@ cases. This is not wired into a live host API and does not pin manager or module
   (`18de440`) remain supplied; neither is a live-safe mod operation.
 - Reconstructed `19581c0` (`engine/pose_group_link_remove.py`): group link-array swap-last removal with index repair; 5 unit tests, 512-case native leaf comparison of all fixture bytes. Closes the `19581c0` lead in the `18e28d0` notes (corrects the assumption that it appends).
 - `1958ba0` reconstructed (`engine/pose_link_state_reset.py`): link endpoint clear, contact-span retirement and held-payload (+0x78) return; 512-case native comparison with both pool-return blocks supplied, harness failure proven by injected bug, 4 unit tests. Binds as the post-`195c270` service in `18de440`.
+- Reconstructed the connectivity refresh's rebuild stage `18e28d0`. It deduplicates
+  groups through byte a1 and orders the link and group-process services.
+  512 native comparisons with 3,625 scripted callback mutations match
+  11,735 link and 7,167 process calls (30 callback-induced re-queues). Every fixture
+  byte also matches, and 8 cases cross the 512-slot inline queue. A deliberate
+  a1-clear reorder fails the comparison. `19581c0` and `18e2de0` remain supplied;
+  this is not a live-safe mod operation.

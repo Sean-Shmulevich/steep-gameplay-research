@@ -1,0 +1,38 @@
+{
+  "schema": "pose-body-connectivity-rebuild-validation-v1",
+  "cases": 512,
+  "selected": 13998,
+  "initial_flag_skip_slots": 2219,
+  "links": 11735,
+  "processed": 7167,
+  "requeues": 30,
+  "mutations": 3625,
+  "growth_cases": 8,
+  "queue_growths": 10,
+  "queue_frees": 8,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18e28d0",
+  "method": "Original rebuild gates, group dedup queue, counter writes and call order run natively; 19581c0, 18e2de0, queue growth 18df270, allocator free slot18 and stack probe supplied",
+  "comparisons": [
+    "link/process call order and arguments",
+    "group a0/a1 bytes at each link call and a1 at each process call",
+    "context464 value at each process call",
+    "all context, descriptor, output-array, object, body and group bytes"
+  ],
+  "coverage": [
+    "empty outputs",
+    "flags84 bit1 skips with other flag bits random",
+    "shared and preset-a0/a1 groups",
+    "duplicate selected objects",
+    "callback mutation of output slots, flags, body/group links, a0/a1 and the counter pair",
+    "re-queue after link clears a1",
+    "8 cases with 513..1099 distinct groups crossing the 512 inline queue slots"
+  ],
+  "limits": [
+    "19581c0 and 18e2de0 effects supplied as recorded services; their internals are not validated here.",
+    "Queue storage growth/free supplied and abstracted from the public API.",
+    "Callback shrinking of output count is outside the API contract; native reads stale retained storage.",
+    "No live validation or concurrent mutation guarantee."
+  ]
+}

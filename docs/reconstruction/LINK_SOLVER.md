@@ -8606,3 +8606,78 @@ reset_pose_link_state(link):
 Quirks: endpoints are cleared first, so the rings (+0x20..+0x3f) are left exactly as `195c270` left them and the record can no longer be traced to its bodies. The contact span is the same one cleared by `clear_pose_link_contacts` (wrapper `0x1958b90` is equivalent but not called here); only the count is reset, entry bytes and capacity persist. The held payload at +0x78 is returned to a different pool global than the contact payloads (`[rip+0x19dded8]` versus `[rip+0x19de3c8]`); the visible publication writes the old free-list head into the payload, decrements the pool count at +0x28 and installs the payload as head at +0x30, bracketed by obfuscated protected calls. +0x78 is cleared only after the return, and a null +0x78 is skipped. Routine does not free the link itself; its role as retirement of link state (not destruction) is an authored label.
 
 Validation. `analysis/command-executor-audit/check_pose_link_state_reset.py` runs the original routine in Unicorn for 512 randomized cases (341 with a held payload, 171 null; 0..16 contact entries, 1624 contact releases, 681 null contact payloads, 129 empty spans), supplying both protected pool-return blocks (`0x19587e9`, `0x1958bd1`) as recording services. It compares service order and arguments, the full 0x90-byte link snapshot at every service call, final link bytes, the contact entry array including slack past the active extent, and return address/stack pointer. All 512 pass; a deliberately injected bug (skipping the +0x78 clear) fails at trial 1 and was reverted. Limits: pool locks and free-list publication are not run or validated, payloads are opaque tokens, malformed counts and live concurrency are excluded. Receipt: `native/snow_host/pose_link_state_reset_validation.json`.
+
+### Body connectivity rebuild
+
+The connectivity refresh's rebuild stage `18e28d0` (RVA0x18e28d0..0x18e2a53) is
+reconstructed by `engine/pose_body_connectivity_rebuild.py`. It receives
+controller.context30 and the selected-object output descriptor (pointer+0,
+count u32+8, capacity u32+0xC). It deduplicates the groups of selected objects
+through group byte a1, then processes each queued group once.
+
+```text
+context.dword464 = 0; context.dword468 = 0     # one qword store
+queue = local array, 512 inline slots
+n = output.count                                # captured once
+for i in 0 .. n-1:
+    obj = output.ptr[i]                         # pointer and slot reread each pass
+    if obj.flags84 & 2: continue
+    group = obj.endpoint8.group10
+    if group.a0 == 0 and group.a1 == 0:
+        group.a1 = 1
+        queue.append(group)                     # grows by doubling through 18df270
+    link(group, obj)                            # 19581c0, every eligible object
+for group in queue:                             # local queue, callbacks cannot reach it
+    group.a1 = 0
+    process(context, group)                     # 18e2de0, return ignored
+    context.dword464 += 1                       # reloaded after process, u32 wrap
+if queue.capacity != 0 and queue.ptr != inline: allocator.vtable18(queue.ptr)
+```
+
+Names link/process are authored labels. Behavior worth preserving:
+
+- The flags84 test is a byte test of bit1 only. Skipped objects get neither the
+  group gate nor `19581c0`.
+- Group gate bytes are read live, after earlier `19581c0` calls. A group already
+  marked a1 (or with a0 set) is not queued but is still linked for each object.
+  If a callback clears a1, a later object can queue the same group again, and that
+  group is then processed twice. If a callback sets a0, later objects of that
+  group are not queued.
+- a1 is set before `19581c0` and stays set until that group's turn in the second
+  loop. Groups found with a nonzero a1 on entry are never cleared by this routine.
+- 0x468 is cleared but not otherwise touched. 0x464 is reread from memory after
+  every `18e2de0`, so a callback's store is incremented rather than overwritten.
+- Output count is captured at entry. The pointer and slot are reread per
+  iteration, so in-place slot changes are observed but an appended entry is not.
+  No null checks exist on endpoint8 or group10.
+- The queue holds 512 pointers inline in a 0x1048-byte frame (stack probe
+  `1c45120`). At count==capacity, `18df270(queue, 2*capacity)` grows it. External
+  storage is released at exit through the global allocator at image+0x33365b8,
+  vtable slot+0x18. The public API models the queue as a Python list.
+
+Validation: `native/snow_host/pose_body_connectivity_rebuild_validation.json`
+records512 offline comparisons spanning13998 selected slots (2219 initially
+flag-skipped), 11735 `19581c0` calls and7167 `18e2de0` calls, of which30 are
+callback-induced re-queues. Applying3625 scripted callback mutations of output
+slots, flags84, endpoint/group links, a0/a1 and the 464/468 pair, the native
+routine and the reconstruction emit the same call order and arguments. At each
+link they also see the same a0/a1, and at each process the same a1 and 464.
+Context, descriptor, output-array, object, body and group bytes also match. Eight
+cases with513..1099 distinct groups cross inline capacity (10 growths, 8 frees).
+The native routine runs unmodified. `19581c0`, `18e2de0`, `18df270`, the allocator
+free and the stack probe are supplied. Moving the a1 clear after `18e2de0` fails
+the comparison at case1. Public tests also compose this stage under the
+refresh. No live or concurrent-mutation guarantee follows.
+
+Static leads for the supplied callees:
+
+- `19581c0(group, object)` is reconstructed as group link-array removal (see
+  "Group link-array removal"). A public composition test binds it as this stage's
+  link service.
+- `18e2de0` is ordinary-group processing, already reconstructed as
+  `engine.pose_group_process.process_pose_group` (CENTRAL_IMPULSE.md, "Ordinary-group
+  processing and retirement"). That module uses a dict representation, so the
+  two are not yet composed through a shared byte model.
+- `18df270` is a generic pointer-array grow. It keeps inline storage up to
+  0x200 slots and switches to allocator slots+8/+0x10 above that. It is not
+  reconstructed here.

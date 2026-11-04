@@ -1792,3 +1792,14 @@ unresolved.
 ### Link state reset
 
 `engine.pose_link_state_reset.reset_pose_link_state(link, *, entry_arrays, release_contact, release_held)` (RVA 0x1958ba0). Mutates the raw link in place: zero +8/+0x10, clear contact span via `clear_pose_link_contacts` (services `release_contact(payload)`, `entry_arrays[pointer]` bytes), then `release_held(token)` for nonzero +0x78 followed by zeroing it. Supplied services: `release_contact` (pool at 0x19de3c8 return block) and `release_held` (pool at 0x19dded8 return block); both observe the link as already modified. No rollback on service failure.
+
+### Body connectivity rebuild
+
+`rebuild_pose_body_connectivity` follows LINK_SOLVER.md, "Body connectivity rebuild".
+It zeroes context464..46b, then captures the output count and rereads each slot.
+Objects with flags84 bit1 are skipped. Otherwise endpoint8.group10 is resolved.
+A group whose a0 and a1 bytes are both zero is marked a1=1 and queued, and
+link(group,object) runs for every eligible object. Each queued group then gets
+a1=0, process(context,group), and a u32 increment of the reloaded context464, in
+that order. Queue storage is a list. Link/process effects, count-shrinking
+callbacks, null pointers and allocation failure are not modeled.
