@@ -1951,3 +1951,36 @@ It returns the record pointer or 0; this return is authored. Leaves:
 `reserve_pose_tagged_vector` (0x18df150/0x18df1e0) and `compose_pose_shape_frame`
 (0x18c16e0 plus the inline translation). Vtable constants are image addresses kept as
 evidence anchors. A null record allocation raises an authored MemoryError.
+
+### Pair contact generation
+
+`engine.pose_pair_contact_generation.generate_pose_pair_contacts(mem, owner, first, second, link, same, services)`
+follows LINK_SOLVER.md, "Pair contact generation" (0x18dd400). `mem` is `PoseFlatMemory`.
+
+`services` supplies:
+
+- `shape_bounds(shape, frame64) -> 24 bytes`
+- `lookup_handler(dispatcher, shape_a, shape_b) -> handler`
+- `produce_contacts(handler, descriptor93, scratch, 500) -> count`
+- `update_payload(payload, pair14, scratch, count)`
+- `terrain_narrow` and `terrain_wide(owner, descriptor93, pair14, link)`
+- `refill_payloads(address, 10)`
+- `allocator`
+
+Stack blocks are passed as bytes. Leaf helpers are exported:
+
+- `compose_pose_entry_frame`
+- `lookup_pose_link_payload`
+- `insert_pose_link_payload`
+- `reserve_pose_link_entries`
+- `remove_pose_link_entry`
+- `remove_pose_link_pair`
+- `clear_pose_link_pair`
+- `acquire_pose_contact_payload`
+- `release_pose_contact_payload`
+- `reset_pose_payload`
+
+To bind it into the worker, set
+`services.generate_contacts = lambda o, a, b, l, s: generate_pose_pair_contacts(mem, o, a, b, l, s, svc)`.
+Contact production, payload update, terrain wrappers, refill and bounds internals are
+UNRESOLVED. Evidence: `native/snow_host/pose_pair_contact_generation_validation.json`.

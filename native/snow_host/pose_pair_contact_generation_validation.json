@@ -1,0 +1,88 @@
+{
+  "schema": "pose-pair-contact-generation-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "routine_rva": "0x18dd400",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "totals": {
+    "i_entries": 912,
+    "j_entries": 842,
+    "narrow": 74,
+    "wide": 99,
+    "produce": 200,
+    "refills": 46,
+    "pool_growths": 64,
+    "entry_growths": 34,
+    "inline_to_heap": 12,
+    "updates": 137,
+    "clear_calls": 365,
+    "acquired": 120,
+    "released": 58,
+    "payloads_cleared": 50,
+    "produce_zero": 63,
+    "lookup_hits": 25,
+    "null_clear_stops": 8
+  },
+  "native_routines_run": [
+    "0x18dd400",
+    "0x1958d60",
+    "0x1958a40",
+    "0x1958b70",
+    "0x19586b0",
+    "0x1958a90",
+    "0x1c6afb0 (memcpy)",
+    "0x1959000",
+    "0x19904e0",
+    "0x1958fa0",
+    "0x1986020",
+    "0x18ddee0",
+    "0x18de390",
+    "0x18def10"
+  ],
+  "supplied": [
+    "shape vtable+0x10 bounds",
+    "dispatcher (provider+0x68) vtable+8 handler lookup",
+    "handler vtable+0x18 contact production",
+    "0x198fdc0 payload update",
+    "0x18e0980 terrain wrapper (16-bit key)",
+    "0x18e08a0 terrain wrapper (32-bit key)",
+    "0x18de060 payload batch refill",
+    "allocator vtable +8/+0x10/+0x18"
+  ],
+  "initialized_globals": [
+    "0x3336890 XYZ mask {-1,-1,-1,0} (runtime-initialized; zero in the memory image)"
+  ],
+  "comparisons": [
+    "ordered supplied-service calls with every argument",
+    "composed 64-byte entry frames passed to bounds",
+    "0x93-byte geometry descriptor (two frames, two shapes, three flag bytes) at handler and terrain calls",
+    "0x14-byte pair descriptor at update and terrain calls",
+    "0x118-byte payload snapshot at update",
+    "link prefix snapshot at terrain calls",
+    "all fixture bytes: owner, provider, bodies, kind records, entries, local frames, shapes, shape data, link incl. inline entry, external entries, payloads, pool array, scratch, allocations and refilled payloads"
+  ],
+  "coverage": [
+    "0..4 entries per body; null shapes; inactive entry flags",
+    "first-entry bounds vs second kind-record bounds with NaN (unordered passes the min>max test, fails max>=min)",
+    "same/different groups; kind b52 bit 0x10; 64-bit and 32-bit mask pairs; shape-data mask pair",
+    "both-terrain skip; narrow/wide wrapper choice by kind 6",
+    "second-entry bounds when the second body has >1 entries",
+    "produce zero with and without an existing payload",
+    "pool pop, refill with and without growth, null pool pointer",
+    "inline entry storage growing to heap, heap reallocation",
+    "payload kept (bit0 refresh) or removed and released",
+    "clear of duplicate keys, detail-ignoring clear, null-payload clear stop"
+  ],
+  "failure_proof": [
+    "Clearing the pair on the both-terrain skip fails at case 69 (allocator call order).",
+    "Adding the translation row last in the frame composition fails at case 1 (bounds frame bytes).",
+    "Using entry bits 2 and 3 instead of 2 and 4 for payload bit0 fails at case 22 (payload bytes)."
+  ],
+  "limits": [
+    "Single-threaded; owner, link and payload storage are synthetic fixtures.",
+    "Bounds, handler lookup, contact production, payload update, terrain wrappers, batch refill and allocator are authored stand-ins.",
+    "Frames are finite float32 values in [-3,3]; NaN/inf frame inputs and NaN payload propagation are not exercised.",
+    "Kind values are numeric; no physical meaning is assigned.",
+    "No live validation."
+  ]
+}

@@ -9604,3 +9604,137 @@ Static leads, not implemented:
 - The u32 entries `(i | j<<16)` at record+0x48 are the shape-index pairs that
   `195c400` (the routine after 195c3e0) appears to search and remove by u16 value. It is
   unread beyond its first instructions.
+
+### Pair contact generation
+
+`18dd400(owner, first, second, link, same)` is the dynamic pair handler's contact
+stage. It is reconstructed by `engine/pose_pair_contact_generation.py`
+(`generate_pose_pair_contacts`). The module also restates its leaf helpers over flat
+memory:
+
+- lookup `1958d60` -> `1958a40`
+- insert `1958b70` -> append `19586b0` -> entry reserve `1958a90`
+- removal `1959000`
+- pair clear `19904e0`, using `1958fa0` and reset `1986020`
+- payload pool pop `18ddee0` and return `18de390`, both growing through `18def10`
+
+The entries, link and owner keep the layouts given in "Pair link worker". The payload
+free list is the owner+0x28 descriptor's vector at owner+0x38 (pointer), +0x40
+(count), +0x44 (capacity).
+
+```text
+na, nb = first.wc0, second.wc0;  multi = na > 1 or nb > 1
+for i in 0..na-1:
+    ea = first.entries_b8 + 0x48*i                  # entries pointer reread per i only
+    if !ea.shape10 or !(ea.b44 bits 2 and 3): continue        # no clear
+    geom.tail = (1, first.baa&0x40 || second.baa&0x40, 1)
+    geom.frameA = compose(first.rows40, ea.local18)  # XYZ mask 0x3336890, float32
+    kindA = shapeA.w28 & 0x7fff;  masksA = shapeA.q20 + 0x48
+    if multi:
+        boxA = shapeA.vt[0x10] (frameA)
+        kb = second.kind30 bounds (+4 min xyz, +0x10 max xyz)
+        if !(boxA.max >= kb.min, ordered) or boxA.min > kb.max (ordered):
+            for j in 0..nb-1: clear(link, i, j, owner+0x28); continue
+    for j in 0..nb-1:
+        eb = second.entries_b8 + 0x48*j
+        if !eb.shape10 or !(eb.b44 bits 2 and 3): continue    # no clear
+        wide   = (eb.q30 & ea.q28) | (ea.q30 & eb.q28)
+        narrow = (eb.d38 & ea.d3c) | (eb.d3c & ea.d38)
+        hit = !same ? wide : first.kind30.b52 & 0x10 ? narrow : (wide && narrow)
+        if !hit or !((shapeB.q20.q50 & masksA.q0) | (masksA.q8 & shapeB.q20.q48)):
+            clear(link, i, j, owner+0x28); continue
+        if kindA in (6,7) and kindB in (6,7): continue        # no clear, no call
+        geom.frameB = compose(second.rows40, eb.local18)
+        if nb > 1:
+            boxB = shapeB.vt[0x10] (frameB)
+            if !(boxA.max >= boxB.min and boxB.max >= boxA.min, all ordered): clear; continue
+        pair = (first, second, u16 i, u16 j)
+        if kindA in (6,7) or kindB in (6,7):
+            (kindA == 6 or kindB == 6 ? 18e0980 : 18e08a0)(owner, geom, pair, link); continue
+        p = lookup(link, i, j, 0)                                         # 1958d60
+        h = provider.dispatcher68.vt[8] (shapeA, shapeB)
+        n = h.vt[0x18] (geom, owner.scratch58, 500)
+        if n:
+            if !p: p = pool_pop(owner+0x28); insert(link, i, j, 0, p)      # 18ddee0, 1958b70
+            update(p, pair, owner.scratch58, n)                           # 198fdc0
+        elif p: p.count110 = 0                                            # 1986020
+        if p:
+            if p.count110 == 0: remove(link, i, j, 0); pool_push(owner+0x28, p)   # 1959000, 18de390
+            else: p.b114 bit0 = ea.b44 bits 2&4 and eb.b44 bits 2&4   # entries reread from bodies
+```
+
+`compose` computes rows 0..2 as `(A0*Lk.x + A1*Lk.y) + A2*Lk.z`. Row 3 is
+`((A0*L3.x + A3) + A1*L3.y) + A2*L3.z`. Every product and sum rounds to float32, and
+the w lanes are signed zeros. `geom` is the 0x93-byte stack block that the handler and
+the terrain wrappers receive: frameA, frameB, shapeA, shapeB and three flag bytes.
+
+Leaves:
+
+- `19904e0` repeatedly removes the last entry whose u16 fields equal the u32 arguments
+  (detail is ignored). It zeroes the payload's +0x110 and pushes it with the 18def10
+  growth rule. It stops at the first null payload removed. This matches
+  `pose_contact_cache.clear_contact_pair`.
+- `18ddee0` pops. When the pool is empty it reserves max(count+10, 2*cap), adds 10 to
+  the count, refills 10 through `18de060` (supplied), then pops.
+- `18de390` resets the payload, then pushes it (capacity 8, or doubled).
+- `1958b70` stores the link into payload+0, then appends the key. When the vector is
+  full, `1958a90` doubles its capacity. Leaving the inline one-entry storage at link+0x68
+  allocates (tag 0x2d) and copies. Capacity at or below 1 copies one entry back, releases
+  the heap buffer and returns to inline storage.
+
+Behavior worth preserving:
+
+- Inactive entries and null shapes are skipped without clearing their pairs. A failed
+  mask or bounds gate does clear the pair, moving every keyed payload to the pool.
+- The first-entry bounds test uses the second body's kind-record box, not a second
+  entry. A failure clears the whole row j = 0..nb-1, even for inactive second entries.
+- Bounds are queried only when either body has more than one entry. The second entry's
+  box is queried only when the second body has more than one entry.
+- NaN handling: an unordered `max >= min` rejects, but an unordered `min > max` passes.
+- Two terrain kinds (6/7 after masking 0x7fff) skip the pair silently. With one terrain
+  kind, the 16-bit wrapper `18e0980` is used when either kind is 6, otherwise `18e08a0`.
+  Terrain paths never touch the payload cache here.
+- The lookup is done before handler selection and production. A zero count resets an
+  existing payload, which is then removed and released.
+- After an update, the removal of a zero-count payload is decided by the payload's
+  +0x110. The supplied updater writes that field.
+- Payload bit0 needs bits 2 and 4 of both entries' +0x44 flags. Bits 2 and 3 gate
+  activity.
+
+Validation: `native/snow_host/pose_pair_contact_generation_validation.json` covers 512
+randomized Unicorn cases. Bounds, handler lookup, production, update `198fdc0`, the two
+terrain wrappers, the payload refill `18de060` and the allocator are supplied. These
+run natively: 18dd400, 1958d60/1958a40, 1958b70/19586b0/1958a90 with memcpy 1c6afb0,
+1959000, 19904e0/1958fa0, 1986020, 18ddee0, 18de390 and 18def10. The runtime XYZ mask
+0x3336890 (zero in the memory image) is initialized to {-1,-1,-1,0}.
+
+Totals: 912 first and 842 second entries; 200 productions (63 zero), 137 updates, 120
+pool acquisitions, 46 refills, 58 releases, 74 narrow and 99 wide terrain calls, and
+365 clear calls (50 payloads cleared, 8 null-payload stops). Growth: 64 pool-vector
+growths and 34 entry-vector growths, 12 of them inline-to-heap. Lookups hit 25 times.
+
+Compared: the ordered service calls with every argument (composed frames, 0x93-byte
+descriptors, 0x14-byte pair descriptors, payload snapshots at update), and every fixture
+byte, including allocations and refilled payloads. The harness was shown to fail three
+ways:
+
+- Clearing on the both-terrain skip fails at case 69.
+- Adding the translation row last fails at case 1.
+- Using bits 2 and 3 for payload bit0 fails at case 22.
+
+Limits: frames are finite values within ±3, so NaN/inf frame propagation is not
+exercised. The fixtures are synthetic and the runs are single-threaded.
+
+Public tests: `tests/test_pose_pair_contact_generation.py` (18 tests). They cover the
+gates, routing, NaN bounds, pool and entry growth, and the float32 order. They check
+flat remove/clear against `pose_link_record.remove_link_key` and
+`pose_contact_cache.clear_contact_pair`. A composition test binds the routine as
+`generate_contacts` in `process_pose_dynamic_pair`.
+
+Static leads:
+
+- The handler vtable+0x18 bodies (e.g. 19dde20 / 198a780 for terrain-box) feed the
+  same 48-byte record buffer as owner+0x58.
+- `198fdc0` has a dict-model reconstruction (`pose_link_update`) but not a flat-memory
+  binding.
+- `18de060` (payload batch refill) and the shape-bounds vtables are unreconstructed.

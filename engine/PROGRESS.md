@@ -22,3 +22,10 @@
   half the cases run through the 0x18e0a60 router. Composition tests bind it into the
   pair worker's flagged route and recycle a record retired by 0x18de510. The collider
   virtual calls remain supplied.
+- Reconstructed the pair link worker's contact generation `18dd400` as
+  `engine/pose_pair_contact_generation.py`. It includes flat-memory lookup, insert,
+  inline-entry reserve, removal, pair clear and the payload pool pop and return.
+  The 512-case Unicorn receipt runs 14 routines natively. There are 18 unit,
+  equivalence and composition tests, and the routine is bound as the dynamic pair
+  handler's `generate_contacts`. Supplied: bounds, handler lookup and production,
+  `198fdc0`, the terrain wrappers and `18de060`.
