@@ -1,0 +1,81 @@
+{
+  "schema": "pose-flagged-neighbor-update-validation-v1",
+  "cases": 512,
+  "leaf_cases": 256,
+  "passed": true,
+  "found": 467,
+  "not_found": 45,
+  "dormant": 117,
+  "dormant_armed_promoted": 38,
+  "shape_a_null": 102,
+  "nonsolid_a": 293,
+  "shape_b_null_kept": 143,
+  "nonsolid_b": 506,
+  "group_mask_reject": 352,
+  "shape_mask_reject": 164,
+  "tester_calls": 287,
+  "tester_hits": 140,
+  "appends": 134,
+  "removals": 100,
+  "entry_growths": 33,
+  "entry_allocations": 23,
+  "emptied_state4": 92,
+  "state2": 102,
+  "same_group_d_only": 197,
+  "leaf_paths": {
+    "append_cases": 128,
+    "append_growths": 79,
+    "reserve_cases": 128,
+    "reserve_noop": 35,
+    "reserve_release": 14,
+    "reserve_clamped": 28
+  },
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18dfa10",
+  "native_routines_run": [
+    "0x18e0a60",
+    "0x18dfa10",
+    "0x18c16e0",
+    "0x18dccb0",
+    "0x18df1e0"
+  ],
+  "supplied": [
+    "0x18e01e0 flagged new (sibling, recorded only)",
+    "provider+0x68 tester factory vtable[1]",
+    "tester vtable[1] overlap test",
+    "allocator vtable +8/+0x10/+0x18"
+  ],
+  "method": "Router 0x18e0a60 runs natively and tail-calls 0x18dfa10 with the found node index in r8d; 0x18dfa10, basis composition 0x18c16e0, append 0x18dccb0 and reserve 0x18df1e0 run natively. Python composes route_pose_flagged_pair_indexed with update_pose_flagged_neighbor.",
+  "comparisons": [
+    "ordered supplied calls with every argument",
+    "both 12-float world transforms passed to the tester, bit-exact",
+    "tester factory and shape pointers in the query block",
+    "all fixture bytes: provider, owner, pair, tree nodes, records, entry arrays incl. stale slots, bodies, kinds, shape entries, local transforms, shapes, masks and new allocations",
+    "append return value (leaf)"
+  ],
+  "coverage": [
+    "found/not-found key",
+    "dormant pair (both inactive) with and without state-1 promotion",
+    "active via frame id and via kind+0x53 nibble",
+    "null first/second shape, non-solid first/second shape entry",
+    "different group (q masks), same group with kind+0x52&0x10 (d masks only) and without (both)",
+    "shape mask pair reject",
+    "tester hit with new/existing entry, miss with/without entry removal",
+    "entry vector allocate and growth",
+    "emptied record to state 4",
+    "float32 specials: signed zero, subnormal inputs, products that underflow"
+  ],
+  "failure_proof": [
+    "Removing the stale entry when the second shape pointer is null fails at case 10 (entry-array bytes).",
+    "Ignoring the kind+0x52&0x10 same-group d-mask-only branch fails at case 31 (service log).",
+    "Adding the translation before the z term in the shape world translation fails at case 14 (tester world bits).",
+    "Treating either-inactive as dormant fails at case 10."
+  ],
+  "limits": [
+    "Tester factory and overlap test are authored random stand-ins; no narrow-phase geometry is reconstructed.",
+    "Services do not mutate fixture memory, so reread order around tester calls is not discriminated.",
+    "Trees are authored unbalanced BSTs (search only); records, shapes and masks are synthetic.",
+    "Same-body pairs are included occasionally; whether the native producer emits them is unknown.",
+    "No NaN or overflow-to-infinity inputs (host default-NaN sign may differ from x86); no live validation."
+  ]
+}

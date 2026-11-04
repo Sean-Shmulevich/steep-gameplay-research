@@ -8,3 +8,11 @@
   snapshot fill 0x18e0ad0 (`engine/pose_pair_external_contacts.py`, 512 Unicorn cases),
   with tests that bind each into `run_pose_pair_worker`. Predicate targets, the pool
   take 0x18dd100 and two obfuscated stubs stay supplied.
+- Reconstructed `18dfa10` (flagged-pair neighbor-record update) as
+  `engine/pose_flagged_neighbor_update.py`. It includes append `18dccb0`, reserve
+  `18df1e0` and float32 composition `18c16e0`.
+  - Found that `18e0a60` forwards the tree index in r8d. Added
+    `route_pose_flagged_pair_indexed` and bound it into `run_pose_pair_worker`'s
+    flagged route in the composition tests.
+  - 512 native cases entered through the router, plus 256 leaf cases.
+  - 17 unit and composition tests. The tester factory and the tester remain supplied.

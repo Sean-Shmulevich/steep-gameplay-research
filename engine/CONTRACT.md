@@ -1908,3 +1908,26 @@ nothing. Offsets are evidence anchors, not portable API fields.
 take_record, query)` fills the link's snapshot record at link+0x78, creating it under a
 supplied guard when absent. `query(body, mask)` is the supplied body virtual slot 1.
 The owner argument is unused, as in the native routine. Offsets are evidence anchors.
+
+### Flagged neighbor update
+
+`engine/pose_flagged_neighbor_update.py` provides these functions:
+
+- `update_pose_flagged_neighbor(mem, owner, pair, index, services)` (18dfa10).
+- `route_pose_flagged_pair_indexed(mem, owner, pair, services)` (18e0a60 with the
+  r8d index forwarded). Pass it as `run_pose_pair_worker(..., flagged=...)`.
+- `append_pose_shape_pair` (18dccb0).
+- `reserve_pose_entry_vector` (18df1e0, 4-byte elements, tag 0x2a, alignment 0x10).
+- `compose_pose_shape_transform` (18c16e0 plus translation, float32).
+
+Supplied services:
+
+- `select_tester(factory, shape_a, shape_b)`, which is provider+0x68 vtable[1].
+- `test_overlap(tester, world_a, world_b, shape_a, shape_b)`, which returns a truthy low
+  byte (tester vtable[1]). Each world transform is 12 floats.
+- `create_neighbor(owner, pair)` for 18e01e0.
+- `allocator` (vtable +8/+0x10/+0x18).
+
+Memory is a `PoseFlatMemory`-like object. Offsets are evidence anchors only. The receipt
+is `native/snow_host/pose_flagged_neighbor_update_validation.json`. It makes no claim of
+original-engine equivalence.

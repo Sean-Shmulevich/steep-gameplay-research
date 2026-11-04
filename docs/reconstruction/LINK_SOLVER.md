@@ -9351,3 +9351,135 @@ in place without guard or take, and the held release is not called.
 
 Static leads: 18dd100 (pool take, sizing 0x2b-tagged block growth), the two
 obfuscated stubs, and the body vtable slot 1.
+
+### Flagged neighbor update
+
+`18dfa10(owner, pair, index)` is reconstructed by `engine/pose_flagged_neighbor_update.py`.
+The router `18e0a60` reaches it when the pair key is found in the provider+0x38 tree.
+`index` is the node slot it found. The record is that node's value (+0x10). The routine
+refreshes the record's list of colliding shape pairs.
+
+Record fields:
+
+- +0x48: entries. Each is a u32 whose low u16 is the first body's shape index and
+  whose high u16 is the second body's shape index.
+- +0x50: count. +0x54: capacity.
+- +0x58: state. +0x5c: touched byte.
+
+Body fields:
+
+- +0x40: 3x4 transform. Rows are at +0x40, +0x50 and +0x60; translation is at +0x70.
+- +0xb8: shape-entry array, 0x48 bytes per entry.
+- +0xc0: u16 shape count.
+
+Shape-entry fields:
+
+- +0x10: shape. +0x18: local transform.
+- +0x28 and +0x30: q masks. +0x38 and +0x3c: d masks.
+- +0x44: flags. "Solid" means bits 2 and 3 are both set: `((f>>1)&f)&4`.
+
+Shape field: +0x20 points to a block whose +0x48 holds a 16-byte mask pair.
+
+```text
+A, B = pair.first, pair.second
+nA, nB = A.wc0, B.wc0                         # captured once
+gA, gB = A.kind30.q20, B.kind30.q20           # captured once
+MA, MB = copy of A/B transforms at +0x40      # captured once
+active(X) = (X.kind30.w50 & 0x8000) ? (X.kind30.b53 & 0xf) != 2
+                                    : X.kind30.d1c == owner.provider.d180
+rec = owner.provider.q38[index].value10
+rec.b5c = 1
+if not active(A) and not active(B):
+    if rec.state58 == 1: rec.state58 = 2
+    return                                    # no empty check on this path
+for i in 0..nA-1:
+    eA = A.qb8 + 0x48*i
+    if eA.shape10 == 0: continue              # entries for row i untouched
+    WA = compose(eA.local18, MA)              # 18c16e0 + inline translation
+    if not solid(eA.b44):
+        for j in 0..nB-1: swap_remove(rec, (i,j)) if present
+        continue
+    maskA = eA.shape10.q20 + 0x48
+    for j in 0..nB-1:
+        eB = B.qb8 + 0x48*j
+        k = find(rec, (i,j))                  # linear, first match, u16 count
+        if eB.shape10 == 0: continue          # stale entry kept
+        maskB = eB.shape10.q20 + 0x48
+        hit = false
+        if solid(eB.b44) and groups_ok and (maskA.hi & maskB.lo | maskB.hi & maskA.lo):
+            WB = compose(eB.local18, MB)
+            tester = provider.q68->vt[1] (shapeA, shapeB)
+            hit = tester->vt[1] ({WA, WB, shapeA, shapeB}) & 0xff
+        if hit:
+            if k == -1: append(rec, i, j)     # 18dccb0, reserve 18df1e0 tag 0x2a, 2*cap or 8
+            rec.state58 = 2
+        elif k != -1: swap_remove(rec, k)     # count -= 1; e[k] = e[count]
+if rec.count50 == 0: rec.state58 = 4
+groups_ok:
+    q = (eB.q30 & eA.q28) | (eA.q30 & eB.q28)
+    d = (eB.d38 & eA.d3c) | (eB.d3c & eA.d38)
+    gA != gB         -> q != 0
+    A.kind30.b52&0x10 -> d != 0               # first body's kind only
+    otherwise        -> q != 0 and d != 0
+```
+
+compose: `basis[i][j] = ((L[i].x*P[0][j] + L[i].y*P[1][j]) + L[i].z*P[2][j])`. The
+translation is the same dot product of the local translation, plus `P.t[j]` added last.
+Every operation is float32. This matches the 18c16e0 description earlier in this file.
+
+Quirks preserved:
+
+- A null second shape keeps any existing (i,j) entry. A non-solid second shape, a
+  rejected mask or a tester miss removes it.
+- A null first shape skips row i entirely. A non-solid first shape removes row i for
+  j < nB without calling any tester.
+- WA is composed before the solidity check, so it is wasted on non-solid rows. This is
+  invisible because the result stays on the stack.
+- Only the first body's kind+0x52 bit 0x10 selects the d-mask-only same-group test.
+- The dormant path promotes state 1 to 2 and never sets state 4. The active path sets
+  state 2 on any hit, including a hit on an existing entry, and sets 4 only when the
+  list ends empty.
+- The search compares the count as a u16. Swap-remove leaves stale bytes past the count.
+- The tester's query block leaves the fourth lane of each row unwritten.
+
+Validation: `native/snow_host/pose_flagged_neighbor_update_validation.json`. The harness
+runs 512 cases entering at `18e0a60`, with the router, 18dfa10, 18c16e0, 18dccb0 and
+18df1e0 all native.
+
+- Routing: 467 found and 45 not found (the not-found pairs go to the supplied 18e01e0).
+- Dormant: 117 pairs, 38 of them promoted from state 1.
+- Shape skips and removals: 102 null first shapes, 293 non-solid first shapes, 143 null
+  second shapes kept, 506 non-solid second shapes.
+- Mask rejects: 352 by group masks, 164 by shape masks. 197 same-group d-only evaluations.
+- Tester: 287 calls and 140 hits.
+- Entry list: 134 appends, 100 removals, 23 vector allocations, 33 growths.
+- Final states: 92 records emptied to state 4, 102 records ending in state 2.
+- Leaves: 256 direct cases for 18dccb0 and 18df1e0 (79 append growths, 14 releases,
+  28 count clamps).
+
+The harness compares the ordered service calls and all fixture bytes, including stale
+entry slots and new allocations. The 24 world-transform floats that reach the tester are
+compared bit-exactly. Inputs include signed zeros and subnormals.
+
+Four injected bugs each made the harness fail:
+
+- Removing the entry when the second shape is null: case 10.
+- Ignoring the 0x10 branch: case 31.
+- Adding the translation before the z term: case 14.
+- Treating either-inactive as dormant: case 10.
+
+Limits:
+
+- The tester factory and the tester are random stand-ins.
+- Services do not mutate memory, so the reread order around tester calls is not checked.
+- Trees are unbalanced BSTs.
+- No NaN or overflow-to-infinity inputs are used, because the default-NaN sign may differ
+  between the host and x86.
+- No live run.
+
+Static leads, not implemented:
+
+- The tester factory at provider+0x68 may be the dispatch object that LINK_SOLVER.md
+  places at owner+0x68 near `0x1927590` (vtable `0x29ca780`). That identity is not
+  verified. Its vtable slot 1 picks a narrow-phase tester by shape pair.
+- The sibling `18e01e0` (key not found) belongs to another lane.
