@@ -9252,3 +9252,102 @@ Static leads, not implemented:
 - `18de6a0(tree, &key, &value)` and `18de830` are the tree inserts (red-black; 18de6a0
   starts with a vector grow at +0x10 when full). The sort `1c8fd50` is the shared 8-byte
   element sort whose stability is unknown.
+
+### Pair link filter
+
+`18deb70(provider, link)` returns true when every present predicate accepts. It is
+reconstructed by `engine/pose_pair_link_filter.py` (`filter_pose_pair_link`). It is
+a leaf apart from up to five indirect calls, each made with the link as the only
+argument. Only the low byte of each result counts.
+
+```text
+p = provider.q188;                       if p and not p(link): return 0
+A = pred70(link.first.kind30.q20)        # null when the kind extension is null
+                                         if A and not A(link): return 0
+B = pred70(link.second.kind30.q20)       if B and B != A and not B(link): return 0
+C = link.first.qA0;                      if C and not C(link): return 0
+D = link.second.qA0;                     if D and D != C and not D(link): return 0
+return 1
+```
+
+pred70(ext) is `ext.q70 if ext else 0`.
+
+Behavior worth preserving:
+
+- `link+8` and `link+0x10` are reread before each step, so a predicate that edits
+  the link changes which body supplies the next pointer.
+- The A/B and C/D dedup compares pointer values only. B is compared with A even
+  when A is null; a nonzero B then still runs.
+- Rejection returns at the first false predicate. The dynamic handler turns that
+  into bit1 on a new link (still pushed) or a cleared bit0 on an existing one.
+- Nothing in the link or provider is written by the filter itself.
+
+Validation: `native/snow_host/pose_pair_link_filter_validation.json` runs 512
+randomized cases of the native routine in Unicorn. 344 accepted and 168 rejected;
+1,078 predicate calls; rejections at call 1/2/3/4/5 are 85/50/28/4/1; 173 cases
+have a predicate rewrite a link body pointer mid-filter. Supplied: the predicate
+bodies (hooked at five authored stub addresses; random rax with garbage in the
+upper 56 bits). Compared: boolean result, ordered (address, link) calls, all
+fixture bytes. The harness was shown to fail once: dropping the `B != A` dedup
+fails at case 0.
+
+Composition tests bind the real filter as the worker's filter service: a rejected
+new link is pushed with bit1 (and the filter saw bit1 clear and the copied pair),
+an accepted one is pushed clean, a rejected existing link loses bit0 and is not
+pushed.
+
+Static leads: the predicate targets (provider+0x188, kind extension +0x70, body
++0xA0) are not yet identified; they are the natural next routines to reconstruct.
+
+### Pair link external contacts
+
+`18e0ad0(owner, first, second, link)` (rcx, rdx, r8, r9) is reconstructed by
+`engine/pose_pair_external_contacts.py` (`external_pose_contacts`). The dynamic
+handler calls it instead of the held release when either body's byte at +0xAA is
+at least 0x80. The owner argument is never read.
+
+```text
+rec = link.q78
+if rec == 0:
+    guard_enter()            # 143f4633d, arg [143336ab0]
+    rec = pool_take()        # 18dd100, arg [143336aa8]
+    guard_leave()            # 14357414d, arg [143336ab0]
+    link.q78 = rec
+for body, blocks, extra in ((first, ((20,40),(30,50),(40,60),(50,70)), 0x00),
+                            (second, ((80,40),(90,50),(A0,60),(B0,70)), 0x60)):
+    for dest, src in blocks: rec[dest..dest+12] = body[src..src+12]     # 3 dwords
+    if query_slot1(body, 0x8002) & 0xff: rec[extra..+0x18] = body[0x1a0..0x1b8]  # 6 dwords
+    else:                                   rec[extra..+0x18] = 0                    # 3 qwords
+```
+
+Behavior worth preserving:
+
+- link+0x78 is the same slot the dynamic handler tests before the held release. The
+  record is created lazily and then refilled in place on every external call.
+- The first body's virtual query runs after the first body's blocks and before the
+  second body's blocks; a query that edits body bytes shows up in the second body only.
+- Record bytes 0x18..0x20, 0x3c..0x40, 0x5c..0x60, 0x78..0x80 and 0xbc.. are never
+  touched.
+- The record is stored to the link only after the guard is released and before any copy.
+
+Validation: `native/snow_host/pose_pair_external_contacts_validation.json` runs 512
+randomized cases of the native routine in Unicorn (259 new record, 253 reused; first
+query true 318, second 302, both false 87; 395 cases where the query changed body
+bytes mid-routine). Supplied: both obfuscated stubs, the pool take, and the body
+virtual query. Compared: ordered service calls with arguments (the lock object
+[143336ab0] and pool object [143336aa8] are confirmed as the stub and take
+arguments) and every fixture byte. The harness was shown to fail once: reading
+second.0x74 instead of 0x70 for the last block fails at case 0.
+
+Limits: the two obfuscated stubs are modelled as an enter/leave pair. Their lock
+semantics are inferred from placement around the pool take, not proven. They must
+return with `ret 8` (each is called after `push reg`), which the native epilogue
+requires; they preserve rdi and rbx. The pool record size (at least 0xbc) and the
+meaning of query mask 0x8002 are not recovered.
+
+Composition tests bind the real routine as the worker's external service: a new
+link gets a record taken under the guard, an existing link with a record is refilled
+in place without guard or take, and the held release is not called.
+
+Static leads: 18dd100 (pool take, sizing 0x2b-tagged block growth), the two
+obfuscated stubs, and the body vtable slot 1.

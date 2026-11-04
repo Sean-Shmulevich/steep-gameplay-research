@@ -1894,3 +1894,17 @@ code over 512 Unicorn cases; no claim of original-engine equivalence.
 tagged reserve wrappers for 18defa0/18df0c0. Memory object with q/d/set_q/set_d. Services
 supplied: reserve, copy, sort, attach, insert, finish (neighbor-tree walk 18dea90).
 Offsets are evidence anchors only. Receipt `native/snow_host/pose_pair_link_merge_validation.json`.
+
+### Pair link filter (18deb70)
+
+`filter_pose_pair_link(mem, provider, link, *, invoke)` returns a bool. `invoke(address, link)`
+is a supplied service that runs a predicate function pointer and returns rax. Reads
+provider+0x188, link+8/+0x10, body+0x30/+0xA0, kind-record+0x20 and extension+0x70. Writes
+nothing. Offsets are evidence anchors, not portable API fields.
+
+### Pair link external contacts (18e0ad0)
+
+`external_pose_contacts(mem, owner, first, second, link, *, guard_enter, guard_leave,
+take_record, query)` fills the link's snapshot record at link+0x78, creating it under a
+supplied guard when absent. `query(body, mask)` is the supplied body virtual slot 1.
+The owner argument is unused, as in the native routine. Offsets are evidence anchors.

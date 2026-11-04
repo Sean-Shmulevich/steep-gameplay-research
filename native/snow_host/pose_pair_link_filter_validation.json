@@ -1,0 +1,45 @@
+{
+  "schema": "pose-pair-link-filter-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "accepted": 344,
+  "rejected": 168,
+  "calls": 1078,
+  "accepted_with_five_calls": 2,
+  "accepted_with_dedup_or_null_skips": 342,
+  "link_edit_cases": 173,
+  "rejections_by_call_count": [
+    0,
+    85,
+    50,
+    28,
+    4,
+    1
+  ],
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18deb70",
+  "native_routines_run": [
+    "0x18deb70"
+  ],
+  "supplied": [
+    "up to five predicate function pointers (provider+0x188, kind-extension +0x70 x2, body +0xA0 x2), each hooked at an authored stub address"
+  ],
+  "method": "The native routine runs unmodified in Unicorn. Each predicate address is hooked and scripted from a shared seeded model (random rax with garbage in the upper 56 bits, 30 or 5 percent false by case parity; 25 percent of calls rewrite link.first or link.second). Python filter_pose_pair_link runs on a copy with the same script.",
+  "comparisons": [
+    "boolean result against native al",
+    "ordered (predicate address, link) call list",
+    "all fixture bytes: provider, link, bodies, kind records, extensions"
+  ],
+  "coverage": [
+    "null provider predicate, null extension record, null predicates",
+    "equal and unequal A/B and C/D pointers",
+    "predicate false at each of the five positions",
+    "results with nonzero upper bytes but zero al",
+    "predicate rewrites the link body pointer between steps"
+  ],
+  "limits": [
+    "Predicate bodies are authored stand-ins; the real predicate code is not run.",
+    "Fixture pointers are drawn from a small shared set of stub addresses.",
+    "No live validation."
+  ]
+}

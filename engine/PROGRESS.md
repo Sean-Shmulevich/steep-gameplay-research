@@ -3,3 +3,8 @@
 - Reconstructed `1989e60` (pair link free-list rebalance) as `engine/pose_link_free_list_rebalance.py`;
   512-case Unicorn receipt, 9 unit and composition tests, bound as the orchestration's rebalance service.
 - Reconstructed the pair-link post-dispatch merges `18df4e0` and `18df630` plus the link sort comparator `18df4a0` (`engine/pose_pair_link_merge.py`); 1,280 native comparisons, composed with retire, dispatcher and pair worker inside `18ddc40`. Static lead: `18dea90` neighbor-tree walk, tree inserts and the 8-byte sort remain supplied.
+- Pair link worker services: reconstructed the pair filter 0x18deb70
+  (`engine/pose_pair_link_filter.py`, 512 Unicorn cases) and the external-contacts
+  snapshot fill 0x18e0ad0 (`engine/pose_pair_external_contacts.py`, 512 Unicorn cases),
+  with tests that bind each into `run_pose_pair_worker`. Predicate targets, the pool
+  take 0x18dd100 and two obfuscated stubs stay supplied.

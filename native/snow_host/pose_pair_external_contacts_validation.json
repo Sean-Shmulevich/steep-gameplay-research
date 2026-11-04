@@ -1,0 +1,39 @@
+{
+  "schema": "pose-pair-external-contacts-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "new_record": 259,
+  "reused_record": 253,
+  "first_query_true": 318,
+  "second_query_true": 302,
+  "both_false": 87,
+  "mid_call_mutation_cases": 395,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18e0ad0",
+  "native_routines_run": [
+    "0x18e0ad0"
+  ],
+  "supplied": [
+    "0x143f4633d guard enter stub (obfuscated)",
+    "0x14357414d guard leave stub (obfuscated)",
+    "0x18dd100 pool record take",
+    "body vtable slot 1 (query with 0x8002), hooked at an authored stub"
+  ],
+  "method": "The native routine runs unmodified in Unicorn with the two obfuscated stubs and the pool take hooked (stubs return as ret 8, which the native epilogue requires). Python external_pose_contacts runs on a copy with the same scripted services. The query service randomly rewrites body source dwords mid-routine so copy order is observable.",
+  "comparisons": [
+    "ordered service calls with arguments (guard objects, pool object, body, mask)",
+    "all fixture bytes: link, both bodies, the reused record, the pool record, lock and pool objects"
+  ],
+  "coverage": [
+    "null versus existing link+0x78 record",
+    "each body query true and false, with garbage in the upper 56 bits of rax",
+    "source bytes changed between the first and second body copies"
+  ],
+  "limits": [
+    "The obfuscated stubs are not run; their lock semantics are inferred from placement around the pool take.",
+    "The pool record is a synthetic 0xD0-byte buffer; its real size is not recovered.",
+    "The body virtual query is an authored stand-in; its meaning of mask 0x8002 is not recovered.",
+    "The owner argument is never read by the native routine and is not compared.",
+    "No live validation."
+  ]
+}
