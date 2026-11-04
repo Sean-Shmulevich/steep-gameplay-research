@@ -9064,5 +9064,63 @@ reachable state had no selector-1 links. Their validation remains synthetic.
 Reads were sequential under a held Step job, not an atomic snapshot. The run
 evaluated the captured state; it did not observe an invocation. Controllers
 other than the one found, such as one used while riding, were not examined.
-The next step is a riding-state capture using the director fast startup
-(INPUT_TO_ACTION_ROUTE.md, "Native director startup") plus gameplay input.
+The riding-state follow-up is below.
+
+### Live snapshot check (riding state)
+
+A second read-only live check captured the player while it was riding
+([receipt](../../native/snow_host/pose_connectivity_live_ride_validation.json)).
+Both sessions used native director startup, and both reached gameplay without
+navigation keys. The rider was then moved with bounded SendInput holds of scan 17
+(forward), 1.5 s each. A private coordinator read the player chain at about 4 Hz.
+A snapshot was taken whenever a player body had a non-null controller and a
+nonzero +0x80 head, or when the operator asked for one. For each snapshot, the
+coordinator held the world Step job through the snow host, read every region
+twice and then resumed.
+
+Seven snapshots came from riding, across two sessions. Once the board moved, both
+player bodies joined the simulation. Each had a non-null controller, a non-null
+group and a nonempty +0x80 ring with one or two links. Main also had a +0x88
+head. The player's controller was the same one the closed-loop world scan finds.
+Its provider tree held 2 to 11 live nodes.
+
+Four more snapshots were taken during a crash tumble in the second session. In
+those, both player bodies were detached again: controller null, +0x80 empty. The
+world bodies under the same controller carried rings of up to 27 links, and the
+provider tree held 25 to 41 live nodes. In every snapshot, every ring was closed
+and symmetric, every provider tree passed the red-black and free-list checks,
+and the second read changed no region. The engine step counter did not move
+during any read.
+
+`analyze.py` compared native `18b8860` in Unicorn with the Python chain 63
+times. Each player body was compared in every snapshot, along with up to six
+extra roots per snapshot drawn from the bodies that carry rings. All 63
+comparisons matched exactly:
+
+- **Inputs:** 55 comparisons had selection rows; 8 took the empty-ring return
+  (the detached player bodies). Row counts ranged from 1 to 20. Three
+  comparisons had rows but selected nothing.
+- **Service calls:** in total, native made 60 group-processing calls, 41
+  pool-return calls and 2 allocator calls, with 2 heap allocations. The Python
+  chain produced the same arguments in the same order.
+- **Bytes:** native changed 5,709 bytes in total, with 0 mismatched bytes.
+- **Errors:** there were no uncaptured reads, no Python errors and no native
+  errors.
+
+The deferred controller lookup removed the earlier `KeyError`.
+
+Limits:
+
+- **Offline evaluation:** the captured state was evaluated offline. No in-game
+  call of `18b8860` by controller event 0 was observed.
+- **Atomicity:** reads were sequential under a held Step job, so the snapshots
+  are not atomic.
+- **Stubbed services:** group processing (`18e2de0`), pool return and the
+  allocator are recording stubs. Their argument sequences were compared, not
+  their effects.
+- **Coverage:** most inputs had one or two links. The largest live selections
+  had 10 and 20 rows. Retire divisors above 1 and repeated reallocation growth
+  were not exercised.
+- **No landing moment:** a combined forward-and-jump hold was rejected by the
+  input helper. No landing-contact moment was isolated, and the crash snapshots
+  came from riding into terrain.
