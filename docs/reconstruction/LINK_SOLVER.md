@@ -8892,6 +8892,9 @@ set link.50 = link, and push it to owner+8.
 
 flagged `18e0a60`: search the provider+0x38 tree (root +0x4c) for the key. If found,
 tail-call `18dfa10(owner, pair)`; otherwise tail-call `18e01e0(owner, pair)`.
+Correction: both tail calls leave r8d live. On a hit it holds the found node index,
+so the real call is `18dfa10(owner, pair, index)` (see "Flagged neighbor update").
+`route_pose_flagged_pair` drops that index; use `route_pose_flagged_pair_indexed`.
 
 ### Recycled link acquire
 
