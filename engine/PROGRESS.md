@@ -8591,3 +8591,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   Public API abstracts scratch ownership. Static inspection identifies destructive
   tree selection and deduplicated group-update work downstream; those internals
   remain explicit services, not reconstructed effects or live-safe mod operations.
+- Reconstructed the connectivity refresh's collect stage, a destructive selection
+  from an indexed red-black tree with a 64-bit key. 512 native comparisons, with the
+  original retirement, unlink and rotations running, match 3,595 selections and
+  all node, descriptor and fixture bytes. Only output growth is supplied. This
+  replaces the first supplied refresh stage. Rebuild (`18e28d0`) and retire
+  (`18de440`) remain supplied; neither is a live-safe mod operation.

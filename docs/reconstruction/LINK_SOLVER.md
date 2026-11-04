@@ -8478,11 +8478,7 @@ No live concurrent traversal guarantee follows from this test.
 
 Further static leads, not yet implemented by this module:
 
-- `18dedf0` clears output count, filters each row by its first endpoint's metadata:
-  priority50 bit15 must be set and state53 low nibble must differ from2. It searches
-  a provider tree using the row's third qword as an unsigned key. A match appends
-  the node's value pointer and removes the tree node through `19a40b0`. This is a
-  destructive selection, not a read-only neighbor query.
+- `18dedf0` is now reconstructed; see "Provider link-tree selection" below.
 - `18e28d0` zeroes context464..46b, skips selected objects with flags84 bit1, and
   follows endpoint8→body.group10. Groups with a0 and a1 both zero are marked a1=1
   and queued once; `19581c0(group,object)` runs for each eligible selected object.
@@ -8492,3 +8488,58 @@ Further static leads, not yet implemented by this module:
   `195c270(object,1)` and `1958ba0(object)` before provider queue handling. Do not
   equate the authored label retire with complete destruction until the rest of
   this routine and its callees have been reconstructed.
+
+### Provider link-tree selection
+
+The connectivity refresh's collect stage `18dedf0` is reconstructed by
+`engine/pose_provider_link_selection.py`. It is a destructive selection: each
+matched node is removed from the provider's tree as its value is reported.
+
+```text
+output.count = 0
+for row in rows:                       # 24-byte snapshots from the link ring
+    meta = row.endpoint0.metadata30
+    if not meta.priority50 & 0x8000: continue
+    if meta.state53 & 0xF == 2: continue
+    node = search(provider.tree8, key=row.qword10)   # unsigned 64-bit compare
+    if node is absent: continue
+    output.append(node.value10)        # read before removal
+    remove(provider.tree8, node.index) # 19a40b0
+```
+
+The tree descriptor at provider+8 has the layout already documented in "Body
+metadata tree removal": node pointer+0, active count+8, free count+0xC, an
+untouched dword+0x10, root index+0x14 and free-list head+0x18. Nodes are 32
+bytes with the same left/right/parent, red byte and free byte. This
+instantiation's key is the unsigned **64-bit** qword at node+0x18. Retirement
+`19a40b0` therefore copies an 8-byte predecessor key, where `1959c50` copies 4
+bytes. The two retirement routines are otherwise the same. They share the
+red-black unlink `1959d90` and the rotations `1959bb0` (left) and `18da970`
+(right). The reconstruction reuses `pose_body_tree._Tree` with `key_size=8`.
+
+Behavior worth preserving:
+
+- Eligibility reads live endpoint metadata through the copied endpoint pointer;
+  only the row bytes are snapshots.
+- A key repeated across rows is selected at most once, because the first hit
+  removes the node. A later equal key can still match a duplicate-key node.
+- For a two-child match, the predecessor's key and value move into the matched
+  slot and the predecessor slot is retired. The reported value is the original one.
+- Retiring a non-final slot pushes it onto the doubly linked free list (free byte
+  set, left=-1, right=previous head). Retiring the final slot instead trims
+  preceding free slots from the free list and leaves the slot bytes untouched.
+- Output growth doubles capacity through `18df270`. The public API abstracts it
+  as a Python list.
+
+Validation: `native/snow_host/pose_provider_link_selection_validation.json`
+records 512 offline comparisons covering 10,363 rows and 3,595 selections. The
+native selector, retirement, unlink and both rotations ran unmodified. Only output
+growth was supplied (811 growths). Provider descriptor bytes, every node byte
+(including retired slots), selected-value order and all other fixture bytes
+matched. Fixtures are valid red-black trees with 0..47 live nodes and 0..7
+pre-existing free slots, built by an authored insertion routine. Native insertion
+was not compared. A post-condition check confirms each reconstructed tree remains
+a valid red-black tree. A deliberate 4-byte-key mutation fails the comparison.
+Public tests compose this selector as the refresh's collect stage. The selected
+values are not yet joined to concrete object types. The rebuild and retire stages
+remain supplied, and no live concurrency guarantee follows.

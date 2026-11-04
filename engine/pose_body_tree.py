@@ -61,12 +61,13 @@ class _Tree:
                 self.paint(self.link(sibling,0),0);self.rotate(parent,False)
             return
 
-    def remove(self,index):
+    def remove(self,index,key_size=4):
+        """key_size4 follows retirement 1959c50; key_size8 follows 19a40b0."""
         original=index
         if self.link(index,0)!=-1 and self.link(index,4)!=-1:
             index=self.link(index,0)
             while self.link(index,4)!=-1:index=self.link(index,4)
-            self.n[original*32+24:original*32+28]=self.n[index*32+24:index*32+28]
+            self.n[original*32+24:original*32+24+key_size]=self.n[index*32+24:index*32+24+key_size]
             self.n[original*32+16:original*32+24]=self.n[index*32+16:index*32+24]
         self.unlink(index)
         active=_i(self.d,8);free=_i(self.d,12)

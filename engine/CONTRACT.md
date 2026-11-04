@@ -1768,3 +1768,14 @@ call collect(provider38,rows), rebuild(context30,output), retire(provider38,outp
 reloading controller fields between calls. Scratch allocation is abstracted; the
 output list is shared across services. Malformed-ring ValueError is an authored
 guard; callee effects and allocation failures are not reconstructed here.
+
+### Provider link-tree selection
+
+`select_pose_provider_links` follows LINK_SOLVER.md, "Provider link-tree selection".
+For each 24-byte row, the first endpoint's live metadata must have priority50 bit15
+set and state53 low nibble != 2. The row's third qword is searched as an unsigned
+64-bit key in the provider+8 indexed red-black tree. A hit appends the node value,
+then removes the node with 8-byte-key retirement (`_Tree.remove(key_size=8)`).
+The return value is the ordered selection list. Output growth and allocation
+failures are not modeled. Concurrent mutation and selected object types remain
+unresolved.
