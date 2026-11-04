@@ -34,6 +34,10 @@ class ConnectivityRefreshTests(unittest.TestCase):
         refresh_pose_body_connectivity(b,**args,links=links,collect=collect,rebuild=rebuild,retire=retire)
         self.assertEqual(events,['rebuild','retire'])
 
+    def test_empty_ring_with_null_controller_returns_like_native(self):
+        b,c,args=self.fixture();struct.pack_into('<Q',args['owners'][4],0x20,0)
+        refresh_pose_body_connectivity(b,**args,links={},collect=None,rebuild=None,retire=None)
+
     def test_nonclosing_ring_is_an_authored_guard(self):
         b,c,args=self.fixture();struct.pack_into('<Q',b,0x80,10)
         link=bytearray(0x40)

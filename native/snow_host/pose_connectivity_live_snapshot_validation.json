@@ -1,0 +1,1433 @@
+{
+  "schema": "pose-connectivity-live-snapshot-validation-v1",
+  "date": "2026-11-04",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18b8860",
+  "kind": "live read-only snapshot evaluated offline; NOT an observed in-game invocation of the refresh",
+  "overall": {
+    "sessions_attempted": 6,
+    "sessions_with_snapshots": 3,
+    "snapshots": 12,
+    "cleanup_verified_for_every_launched_session": true,
+    "nonempty_selector1_rings_observed": 0,
+    "provider_tree_live_nodes_observed": 0,
+    "nontrivial_chain_comparison_performed": false,
+    "native_empty_ring_runs": 20,
+    "native_runs_without_error_or_coverage_gap": 20,
+    "native_service_calls_total": 0,
+    "native_changed_bytes_total": 0,
+    "python_refresh_errors": [
+      "KeyError"
+    ],
+    "passed": false,
+    "verdict": "inconclusive for selection/rebuild/retire: the reachable live state contained no selector-1 links. Native 18b8860 on the player bodies takes the empty-ring early return (no calls, no writes, no uncaptured reads); the Python refresh raises KeyError because it resolves the null controller before testing the seed (strictness mismatch)."
+  },
+  "route": {
+    "player": "unique registered snow actor (registry route) -> actor+0x168 runtime (vtable 0x2918ea8, backlink +0x6f0) -> runtime+0x6e8 main / +0xb90 rider body (vtable 0x29c99a8) -> body+0x30 metadata -> +0x20 owner (shared by both bodies) -> +0x20 controller",
+    "player_controller_observed": "null in every snapshot (bodies out of the simulation world; body group +0x10 null)",
+    "controller_found_by": "bounded scan (depth 2) of the live-verified world+0xff0 physics object and physics+0x18 state; accepted only on closed loop controller->context(+0x30)->group array(+0x418/+0x428)->group(vtable 0x29caba0)->body(vtable 0x29c99a8)->metadata->owner->same controller",
+    "static_gate": "body event listener 18b868c..18b86a0 skips bodies whose metadata.owner.controller is null, so event0 cannot reach 18b8860 for these bodies"
+  },
+  "sessions": [
+    {
+      "session": "live-01",
+      "navigation": "budget_exhausted",
+      "launched": true,
+      "cleanup": {
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      },
+      "capture_ok": false,
+      "capture_error": "launcher ended before ready",
+      "controller_search": null,
+      "world_enumeration": null,
+      "snapshots": [],
+      "analyses": []
+    },
+    {
+      "session": "live-02",
+      "navigation": "entered",
+      "launched": true,
+      "cleanup": {
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      },
+      "capture_ok": true,
+      "capture_error": null,
+      "controller_search": null,
+      "world_enumeration": null,
+      "snapshots": [
+        {
+          "name": "paused_t0",
+          "second_pass_regions": 16,
+          "second_pass_changed_regions": 0,
+          "host_paused_bracket": [
+            true,
+            true
+          ],
+          "ring_sizes": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            3
+          ],
+          "ring_status": [
+            "closed",
+            "empty"
+          ]
+        },
+        {
+          "name": "after_1_step",
+          "second_pass_regions": 16,
+          "second_pass_changed_regions": 0,
+          "host_paused_bracket": [
+            true,
+            true
+          ],
+          "ring_sizes": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            3
+          ],
+          "ring_status": [
+            "closed",
+            "empty"
+          ]
+        },
+        {
+          "name": "after_10_steps",
+          "second_pass_regions": 16,
+          "second_pass_changed_regions": 0,
+          "host_paused_bracket": [
+            true,
+            true
+          ],
+          "ring_sizes": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            3
+          ],
+          "ring_status": [
+            "closed",
+            "empty"
+          ]
+        },
+        {
+          "name": "second_pause",
+          "second_pass_regions": 16,
+          "second_pass_changed_regions": 0,
+          "host_paused_bracket": [
+            true,
+            true
+          ],
+          "ring_sizes": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            3
+          ],
+          "ring_status": [
+            "closed",
+            "empty"
+          ]
+        }
+      ],
+      "analyses": [
+        {
+          "snapshot": "paused_t0",
+          "root": "main",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "3715d1147021d64925d655406c91086e0cc07bdc6dabde3e66db6394893a5a70"
+        },
+        {
+          "snapshot": "paused_t0",
+          "root": "rider",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "3715d1147021d64925d655406c91086e0cc07bdc6dabde3e66db6394893a5a70"
+        },
+        {
+          "snapshot": "second_pause",
+          "root": "main",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "025c8a79cdb3683c5fcdb973dd83dcbe1eb4038ce8ded5df377bf9efc020b5c6"
+        },
+        {
+          "snapshot": "second_pause",
+          "root": "rider",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "025c8a79cdb3683c5fcdb973dd83dcbe1eb4038ce8ded5df377bf9efc020b5c6"
+        }
+      ]
+    },
+    {
+      "session": "live-03-lock-refused",
+      "navigation": null,
+      "launched": false,
+      "cleanup": null,
+      "capture_ok": false,
+      "capture_error": null,
+      "analyses": []
+    },
+    {
+      "session": "live-04",
+      "navigation": "entered",
+      "launched": true,
+      "cleanup": {
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      },
+      "capture_ok": true,
+      "capture_error": null,
+      "controller_search": {
+        "state_backlink_ok": true,
+        "step_job_ok": true,
+        "depth": 2,
+        "closure": "controller->context->group(vt)->body(vt)->metadata->owner->controller",
+        "candidates_tested": 294
+      },
+      "world_enumeration": {
+        "groups_418": 2,
+        "groups_428": 0,
+        "groups": 4,
+        "bodies": 969,
+        "bodies_with_selector1_head": 0
+      },
+      "snapshots": [
+        {
+          "name": "paused_t0",
+          "second_pass_regions": 16,
+          "second_pass_changed_regions": 0,
+          "host_paused_bracket": [
+            true,
+            true
+          ],
+          "ring_sizes": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            3
+          ],
+          "ring_status": [
+            "closed",
+            "empty"
+          ]
+        },
+        {
+          "name": "after_1_step",
+          "second_pass_regions": 16,
+          "second_pass_changed_regions": 0,
+          "host_paused_bracket": [
+            true,
+            true
+          ],
+          "ring_sizes": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            3
+          ],
+          "ring_status": [
+            "closed",
+            "empty"
+          ]
+        },
+        {
+          "name": "after_10_steps",
+          "second_pass_regions": 16,
+          "second_pass_changed_regions": 0,
+          "host_paused_bracket": [
+            true,
+            true
+          ],
+          "ring_sizes": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            3
+          ],
+          "ring_status": [
+            "closed",
+            "empty"
+          ]
+        },
+        {
+          "name": "second_pause",
+          "second_pass_regions": 16,
+          "second_pass_changed_regions": 0,
+          "host_paused_bracket": [
+            true,
+            true
+          ],
+          "ring_sizes": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            3
+          ],
+          "ring_status": [
+            "closed",
+            "empty"
+          ]
+        }
+      ],
+      "analyses": [
+        {
+          "snapshot": "after_10_steps",
+          "root": "main",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "c0e760b3c4b9593074231096d4bbca5efba1429c72d30557b57c6bbd59bf4d37"
+        },
+        {
+          "snapshot": "after_10_steps",
+          "root": "rider",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "c0e760b3c4b9593074231096d4bbca5efba1429c72d30557b57c6bbd59bf4d37"
+        },
+        {
+          "snapshot": "after_1_step",
+          "root": "main",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "16e1650dd5ba96e4e8877d249357ea18145f27636aa69f2e24db691fc8ad4765"
+        },
+        {
+          "snapshot": "after_1_step",
+          "root": "rider",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "16e1650dd5ba96e4e8877d249357ea18145f27636aa69f2e24db691fc8ad4765"
+        },
+        {
+          "snapshot": "paused_t0",
+          "root": "main",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "e93d5383dae8a71ced1f45ab47909968b609cf2171c058be34fc3392bebc8c9b"
+        },
+        {
+          "snapshot": "paused_t0",
+          "root": "rider",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "e93d5383dae8a71ced1f45ab47909968b609cf2171c058be34fc3392bebc8c9b"
+        },
+        {
+          "snapshot": "second_pause",
+          "root": "main",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "5cd3d8504e9294fd52701ec7b2f0800b21cfad3b346579de07ab88d7c03627cd"
+        },
+        {
+          "snapshot": "second_pause",
+          "root": "rider",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "5cd3d8504e9294fd52701ec7b2f0800b21cfad3b346579de07ab88d7c03627cd"
+        }
+      ]
+    },
+    {
+      "session": "live-05",
+      "navigation": null,
+      "launched": true,
+      "cleanup": {
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      },
+      "capture_ok": false,
+      "capture_error": "launcher ended before ready",
+      "controller_search": null,
+      "world_enumeration": null,
+      "snapshots": [],
+      "analyses": []
+    },
+    {
+      "session": "live-06",
+      "navigation": "entered",
+      "launched": true,
+      "cleanup": {
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      },
+      "capture_ok": true,
+      "capture_error": null,
+      "controller_search": {
+        "state_backlink_ok": true,
+        "step_job_ok": true,
+        "depth": 2,
+        "closure": "controller->context->group(vt)->body(vt)->metadata->owner->controller",
+        "candidates_tested": 303
+      },
+      "world_enumeration": {
+        "groups_418": 2,
+        "groups_428": 0,
+        "groups": 4,
+        "bodies": 973,
+        "bodies_with_selector1_head": 0,
+        "body_vtable_histogram": {
+          "0x29c98c8": 971,
+          "0x29c99a8": 2
+        },
+        "heads_nonzero_80_88_90": [
+          0,
+          0,
+          0
+        ],
+        "tree": {
+          "active": 0,
+          "free": 0,
+          "root": -1
+        },
+        "root_candidates": 0
+      },
+      "snapshots": [
+        {
+          "name": "paused_t0",
+          "second_pass_regions": 16,
+          "second_pass_changed_regions": 0,
+          "host_paused_bracket": [
+            true,
+            true
+          ],
+          "ring_sizes": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            3
+          ],
+          "ring_status": [
+            "closed",
+            "empty"
+          ]
+        },
+        {
+          "name": "after_1_step",
+          "second_pass_regions": 16,
+          "second_pass_changed_regions": 0,
+          "host_paused_bracket": [
+            true,
+            true
+          ],
+          "ring_sizes": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            3
+          ],
+          "ring_status": [
+            "closed",
+            "empty"
+          ]
+        },
+        {
+          "name": "after_10_steps",
+          "second_pass_regions": 16,
+          "second_pass_changed_regions": 0,
+          "host_paused_bracket": [
+            true,
+            true
+          ],
+          "ring_sizes": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            3
+          ],
+          "ring_status": [
+            "closed",
+            "empty"
+          ]
+        },
+        {
+          "name": "second_pause",
+          "second_pass_regions": 16,
+          "second_pass_changed_regions": 0,
+          "host_paused_bracket": [
+            true,
+            true
+          ],
+          "ring_sizes": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            3
+          ],
+          "ring_status": [
+            "closed",
+            "empty"
+          ]
+        }
+      ],
+      "analyses": [
+        {
+          "snapshot": "after_10_steps",
+          "root": "main",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "86b440badcdf44e5e0904f337ab2318c843a2b196053ae1cefe594302968b0d4"
+        },
+        {
+          "snapshot": "after_10_steps",
+          "root": "rider",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "86b440badcdf44e5e0904f337ab2318c843a2b196053ae1cefe594302968b0d4"
+        },
+        {
+          "snapshot": "after_1_step",
+          "root": "main",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "401101398c288ef88bab65ecb4ba239adafc07504a4e6c0c67a2fe92c46b6708"
+        },
+        {
+          "snapshot": "after_1_step",
+          "root": "rider",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "401101398c288ef88bab65ecb4ba239adafc07504a4e6c0c67a2fe92c46b6708"
+        },
+        {
+          "snapshot": "paused_t0",
+          "root": "main",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "d77f9d73462570699e59ae65e6e0dd61b73ec92c4fed6ca645b68486a69ad7cf"
+        },
+        {
+          "snapshot": "paused_t0",
+          "root": "rider",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "d77f9d73462570699e59ae65e6e0dd61b73ec92c4fed6ca645b68486a69ad7cf"
+        },
+        {
+          "snapshot": "second_pause",
+          "root": "main",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "4bf1b518cb4178077233e9c3c2cb53bcf970eed691573247bda853b10aec3677"
+        },
+        {
+          "snapshot": "second_pause",
+          "root": "rider",
+          "passed": false,
+          "python_error": "KeyError",
+          "native_error": null,
+          "native_coverage_gaps": 0,
+          "image_data_reads": 0,
+          "route": {
+            "body_vtable_rva": "0x29c99a8",
+            "controller_captured": false,
+            "metadata_priority50": "0x8002",
+            "metadata_state53_low": 0,
+            "group_nonnull": false
+          },
+          "structural": {
+            "rings_checked": 1,
+            "rings_closed": 1,
+            "rings_symmetric": 1,
+            "ring_members": 0,
+            "tree": null,
+            "tree_errors": null,
+            "groups": [],
+            "ring_link_group_index": {
+              "checked": 0,
+              "consistent": 0,
+              "detached": 0
+            }
+          },
+          "selection": null,
+          "comparison": {
+            "rows": 0,
+            "rows_equal": true,
+            "selected": 0,
+            "selected_equal": true,
+            "process_calls": 0,
+            "process_equal": true,
+            "pool_calls": 0,
+            "pool_equal": true,
+            "alloc_calls": 0,
+            "alloc_equal": true,
+            "regions": 16,
+            "bytes": 1600,
+            "native_changed_bytes_in_regions": 0,
+            "mismatched_bytes": 0,
+            "bytes_equal": true,
+            "retire_divisor": null
+          },
+          "snapshot_sha256": "4bf1b518cb4178077233e9c3c2cb53bcf970eed691573247bda853b10aec3677"
+        }
+      ]
+    }
+  ],
+  "method": "explore.py-derived bounded session (copy without --stop-at map; navigation keys only, no plugins, no memory writes); snow host simulation.pause (world Step job held) with status bracket; probe readv of every region twice; offline structural checks, Python chain on a copy, native 18b8860 in Unicorn with snapshot mapped at real addresses (stack probe, allocator vtable, pool-return blocks 19587e9/1958bd1 and 18e2de0 supplied as recording stubs; every read outside captured bytes recorded as a gap).",
+  "limits": [
+    "Only the spawn/standing state after navigation was reachable without gameplay input; riding was not attempted (input beyond navigation not permitted).",
+    "No selector-1 (+0x80) ring, provider-tree node, group link slot or queue vector was exercised on live bytes; selection, rebuild and retire remain validated only on synthetic fixtures.",
+    "The world enumeration covers one controller found by scan; other controllers (e.g. the one the player joins when riding) are not excluded.",
+    "Reads are sequential while the Step job is held; jobs outside Step may run. Unchanged second-pass reads do not make the snapshot atomic.",
+    "The refresh was evaluated on captured state, not observed being invoked by controller event 0.",
+    "Heap addresses, raw bytes and snapshots are private and not published."
+  ]
+}

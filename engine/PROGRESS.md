@@ -8640,3 +8640,10 @@ cases. This is not wired into a live host API and does not pin manager or module
   queuing state-4 records onto owner+0x48. It reuses `_Tree.remove(key_size=8)`, endpoint-ring
   detach and reserve, and adds 195c360. 6 tests. 512 Unicorn comparisons with everything
   native except the allocator, and three failure proofs.
+- Connectivity refresh live check (2026-11-04). The spawn-state snapshot was
+  degenerate: the player bodies' controller and group were null and they had no
+  selector-1 links. A controller verified by a closed loop had an empty provider
+  tree and no ring heads on 973 bodies. Native `18b8860` took its empty-ring
+  return (20 of 20 runs). The Python refresh resolved the null controller too
+  early; it is now fixed to match native. Selection, rebuild and retire need a
+  riding-state capture.

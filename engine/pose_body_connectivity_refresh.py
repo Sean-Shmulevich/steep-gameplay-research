@@ -16,10 +16,14 @@ def refresh_pose_body_connectivity(body, *, body_token, metadata, owners,
     """
     meta = metadata[struct.unpack_from('<Q', body, 0x30)[0]]
     owner = owners[struct.unpack_from('<Q', meta, 0x20)[0]]
-    controller = controllers[struct.unpack_from('<Q', owner, 0x20)[0]]
+    # Native loads the controller pointer here but dereferences it only for a
+    # nonempty ring, so an empty ring with a null controller returns normally
+    # (observed in a live spawn-state snapshot).
+    controller_token = struct.unpack_from('<Q', owner, 0x20)[0]
     seed = struct.unpack_from('<Q', body, 0x80)[0]
     if not seed:
         return
+    controller = controllers[controller_token]
     rows = []
     seen = set()
     current = seed

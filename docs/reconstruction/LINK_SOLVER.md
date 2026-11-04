@@ -9031,3 +9031,38 @@ is authored synthetic data: this is composition coverage of recovered modules, n
 evidence. Observations: refresh passes divisor 1 to retire, so every link queues to the
 provider's slot-0 owner; tree, group arrays and rings are all checked for post-state
 invariants; with all links ineligible, rebuild and retire still run with an empty output.
+
+### Live snapshot check (spawn state)
+
+A read-only live check ([receipt](../../native/snow_host/pose_connectivity_live_snapshot_validation.json))
+captured the player's main and rider bodies while the world Step job was held
+through the snow host. It took 12 snapshots across three bounded sessions, with
+navigation input only and no plugins or writes. Both bodies carry the
+physical-body table `0x29c99a8` and share one metadata owner. In every snapshot
+the controller (owner+0x20) and the group (body+0x10) were null, and the +0x80
+and +0x88 heads were empty. Only +0x90 command-constraint rings were present,
+all closed and symmetric. The body-event listener (`18b868c..18b86a0`) skips
+bodies whose controller is null, so in this state event 0 cannot reach
+`18b8860`.
+
+A bounded scan of the live-verified world physics object and state found one
+controller. It was accepted only when this loop closed: controller →
+context+0x418/+0x428 groups (table `0x29caba0`) → body (table `0x29c99a8`) →
+metadata → owner → controller. Its provider tree was empty, and none of its 973
+group bodies had a ring head. Run in Unicorn over the captured bytes, native
+`18b8860` took the empty-ring return in 20 of 20 runs, with no service calls,
+no writes and no uncaptured reads.
+
+This input exposed a strictness mismatch. `refresh_pose_body_connectivity`
+resolved the controller before testing the seed and raised `KeyError` on the
+null controller. Native only loads that pointer before the test. The module now
+defers the lookup until after a nonempty seed. A public test covers that case,
+and the synthetic native comparison still passes.
+
+Selection, rebuild and retire were not exercised on live bytes, because the
+reachable state had no selector-1 links. Their validation remains synthetic.
+Reads were sequential under a held Step job, not an atomic snapshot. The run
+evaluated the captured state; it did not observe an invocation. Controllers
+other than the one found, such as one used while riding, were not examined.
+The next step is a riding-state capture using the director fast startup
+(INPUT_TO_ACTION_ROUTE.md, "Native director startup") plus gameplay input.
