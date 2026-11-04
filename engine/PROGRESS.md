@@ -8626,3 +8626,17 @@ cases. This is not wired into a live host API and does not pin manager or module
   context +0x410, body +0x30, metadata +0x52) reusing `process_pose_group`; 9 unit/composition tests
   (rebuild + `remove_pose_group_link` + adapter), 512-case Unicorn byte comparison with an injected-bug
   failure proof. Service internals remain unresolved.
+- Added `engine/pose_pair_link_worker.py`: pair-job callback 0x18df760/18ddd30 with dynamic
+  (18df770), static (18df910) and flagged (18e0a60) handlers, plus recycled-link acquire
+  18ddf60 and the tag-0x25 reserve 18df030. The retire stage's owner+0x28 vectors are link
+  free lists consumed here. 15 tests, including a retire->worker composition. 512 + 256 + 128
+  Unicorn comparisons, with two injected-bug failure proofs. Contact generation, filter,
+  neighbor handlers, pool refill, destructor and scratch arena stay supplied.
+- Added `engine/pose_pair_link_jobs.py`: 18ddc40 control flow (worker sizing, retire ->
+  neighbor retire -> rebalance -> publish -> dispatch 18b7ca0 -> merges). 4 tests,
+  including composition with the reconstructed retire, dispatcher and worker. 512 Unicorn
+  comparisons, two failure proofs. 1989e60, 18df4e0 and 18df630 remain unreconstructed leads.
+- Added `engine/pose_neighbor_retire.py`: 18de510 in-order sweep of the provider+0x38 tree,
+  queuing state-4 records onto owner+0x48. It reuses `_Tree.remove(key_size=8)`, endpoint-ring
+  detach and reserve, and adds 195c360. 6 tests. 512 Unicorn comparisons with everything
+  native except the allocator, and three failure proofs.

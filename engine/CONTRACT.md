@@ -1835,3 +1835,47 @@ internals, queue consumers and concurrency are not modeled.
   `process(context, group_token)` callable for `rebuild_pose_body_connectivity`. Service
   internals and any bytes they write remain UNRESOLVED. Evidence:
   native/snow_host/pose_group_process_bytes_validation.json.
+
+### Pair link worker
+
+`engine.pose_pair_link_worker.run_pose_pair_worker(mem, owner, services, *, claim, dynamic, static, flagged)`
+follows LINK_SOLVER.md, "Pair link worker" (0x18df760 -> 0x18ddd30).
+
+`mem` is the authored `PoseFlatMemory` (base -> bytearray). `services` supplies:
+
+- `scratch_allocate(size)` and `scratch_release(ptr)`
+- `generate_contacts(owner, a, b, link, same)`
+- `refresh_contact_flag(link)`, `release_held(link)`
+- `external_contacts(owner, a, b, link)`
+- `filter(provider, link) -> bool`
+- `update_neighbor` and `create_neighbor(owner, pair)`
+- `allocator` (allocate/reallocate/release)
+- `destroy_link(link)`, `refill_links(address, n)`, `next_serial()`
+
+The default `claim` is a serial fetch-add on provider+0x17c and is not atomic. The
+handlers are `process_pose_dynamic_pair`, `process_pose_static_pair` and
+`route_pose_flagged_pair`. `acquire_pose_link(mem, vector, *, allocator, destroy, refill,
+next_serial)` implements 0x18ddf60. `reserve_pose_new_link_vector` is 0x18df030: the
+existing reserve with tag 0x25. Vtable constants are image addresses, kept as evidence
+anchors. Contact, filter, neighbor, pool, destructor and scratch internals are not
+modeled.
+
+### Pair link job orchestration
+
+`engine.pose_pair_link_jobs.run_pose_pair_link_jobs(provider, provider_address, pairs, count, output, *, current_dispatcher, worker_capacity, retire, retire_neighbors, rebalance, dispatch, merge_links, merge_neighbors)`
+follows "Pair link job orchestration" (0x18ddc40). `pose_pair_worker_count(count,
+capacity)` gives the divisor. `dispatch(dispatcher, workers, 0x1418df760,
+provider_address+0x70)` binds to `pose_dispatch.dispatch_pose_workers` with the slot
+table as arguments, and `invoke` to `run_pose_pair_worker`. Rebalance and merges are
+unreconstructed services.
+
+### Neighbor record retire
+
+`engine.pose_neighbor_retire.retire_pose_neighbor_records(provider, divisor, *, node_arrays, records, queue_owners, queue_arrays, detach, clear=None, reserve, remove=None)`
+follows "Neighbor record retire" (0x18de510). `detach` binds to
+`detach_pose_endpoint_rings(..., selector 0)`. `remove` defaults to
+`_Tree.remove(key_size=8)`. `clear` defaults to `clear_pose_neighbor_record`. `reserve`
+binds to `reserve_pose_pointer_vector`. Divisor 0 raises ZeroDivisionError after the
+first push. Undersized queue storage raises an authored IndexError.
+
+---

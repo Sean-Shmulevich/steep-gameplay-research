@@ -8689,8 +8689,10 @@ The refresh's third stage `18de440` is reconstructed by
 `engine/pose_body_connectivity_retire.py`. The authored label "retire" overstates
 it. Nothing is destroyed or freed. Each selected link leaves its selector1
 endpoint rings, has its endpoint, contact and held state reset, and has its
-pointer appended to a pending vector. A queue owner chosen round-robin from the
-provider's slot table holds that vector.
+pointer appended to a vector held by a queue owner chosen round-robin from the
+provider's slot table. Correction: that vector is a per-worker free list of
+recycled link objects, consumed by the pair link worker (see "Recycled link
+acquire"), not pending work.
 
 ```text
 count = output.count                    # captured once
@@ -8775,9 +8777,10 @@ Static leads, not implemented:
   divisor. It then gathers `&provider.slots70[i]+0x28` for each slot and
   dispatches the slot table at provider+0x70 through `18b7ca0`, with callback
   `0x1418df760`, followed by `18df4e0` and `18df630`. The slots therefore look
-  like per-worker job contexts, and the +0x28 vectors look like per-worker
-  pending link work. Neither the worker semantics nor the job consumer is
-  reconstructed.
+  like per-worker job contexts. Superseded: `18ddc40`, the worker `18df760` and
+  `18de510` are now reconstructed (see "Pair link job orchestration", "Pair link
+  worker", "Recycled link acquire" and "Neighbor record retire"). The +0x28
+  vectors are free lists of recycled links, not pending work.
 - `18de510`, the neighbor routine, walks provider+0x38's indexed tree in order.
   For values whose dword+0x58 == 4, it removes the node through `19a40b0`, then
   calls `195c270(value,0)` (selector0, body+0x88) and `195c360(value)`. It
@@ -8786,6 +8789,231 @@ Static leads, not implemented:
 - The pool-return blocks in `1958720`/`1958ba0` push onto free lists at globals
   0x143336bb0/0x143336bb8 and 0x143336aa8/0x143336ab0, under obfuscated thunks.
   They remain supplied.
+
+### Pair link job orchestration
+
+`18ddc40(provider, pairs, count, output)` is reconstructed by
+`engine/pose_pair_link_jobs.py`. It drives the retire stages, the per-worker pair
+jobs and the merges. It reconstructs control flow only. Every callee is a service.
+
+```text
+d = [0x143336610]                               # global dispatcher
+workers = min(32, min(d.capacity10, count/10 + 1))   # u32; mul 0xcccccccd >> 35
+retire(provider, output, workers)               # 18de440
+retire_neighbors(provider, workers)             # 18de510
+ctx[i] = provider.slots70[i] + 0x28  for i < workers   # read after both retires
+rebalance(ctx, workers)                         # 1989e60
+provider.pairs170 = pairs; provider.count178 = count; provider.cursor17c = 0
+dispatch([0x143336610], workers, 0x1418df760, &provider.slots70)   # 18b7ca0; global reread
+merge_links(provider, workers)                  # 18df4e0
+merge_neighbors(provider, workers)              # 18df630 (tail jump)
+```
+
+Behavior worth preserving:
+
+- The global dispatcher pointer is read twice: once for capacity and again for the
+  dispatch call.
+- Contexts are gathered after `18de510`. The pair array, count and zero cursor are
+  stored after the rebalance and before dispatch. Garbage in those fields is never read.
+- A dispatcher capacity of 0 gives zero workers, but every stage is still called with 0.
+  The supplied 1989e60 would divide by that count, so its zero-worker behavior is not
+  asserted.
+- The argument table passed to the dispatcher is the provider's slot table itself.
+  Each dispatched callback therefore receives one slot-owner pointer.
+
+Validation: `native/snow_host/pose_pair_link_jobs_validation.json` covers 512 offline
+comparisons. Native 18ddc40 runs, and its six callees are intercepted at entry.
+Compared: call order and arguments, the gathered context array contents, slot-table
+and +0x170..0x17f snapshots at each call, final provider bytes and the global pointer.
+Pair counts range over 0..0xffffffff, including n/10 boundaries. Capacities range over
+0..0xffffffff. Resulting worker counts: 0 in 46 cases, 32 in 115, capacity-limited in
+211, count-limited in 168. In 128 mutation trials, services rewrite slots, swap the
+global dispatcher (42 dispatches went to the switched dispatcher), scribble
++0x170/+0x17c, and advance the cursor during dispatch.
+
+The harness was shown to fail twice. Gathering contexts before 18de510 fails at
+case 39. Reading the dispatcher only once fails at case 19. A public composition test
+binds retire to `retire_pose_body_connectivity`, dispatch to `dispatch_pose_workers`
+with its serial atomics, and the callback to `run_pose_pair_worker`. In it, the
+serial caller worker claims all 25 pairs, and the helped workers claim none.
+
+### Pair link worker
+
+Callback `0x1418df760` is a 5-byte `jmp 18ddd30`. It is reconstructed by
+`engine/pose_pair_link_worker.py` together with its three pair handlers and the
+recycled-link acquire. The worker context is the slot owner. Owner+0 is the provider.
+
+Owner layout, from field use:
+
+- +8: new-link vector (pointer, count +0x10, capacity +0x14).
+- +0x18: neighbor vector (count +0x20).
+- +0x28: link free list. 18de440 fills it; 18ddf60 pops from it.
+- +0x38: vector.
+- +0x48: neighbor free list, filled by 18de510.
+- +0x58/+0x60: frame scratch pointer and size.
+
+```text
+owner.count10 = 0; owner.count20 = 0
+owner.scratch58 = scratch_alloc([0x1433368d0], 0x5dc0); owner.size60 = 0x5dc0   # 18c9140
+i = lock xadd(owner.provider.cursor17c, 1)
+while i < owner.provider.count178:              # provider and count reread every pass
+    pair = owner.provider.pairs170 + 24*i       # (first body, second body, key)
+    ka, kb = first.kind30, second.kind30
+    if ka.kind50 in (1,0x8002) and kb.kind50 in (1,0x8002):
+        if first.wc0 and second.wc0:
+            if (ka.b52 | kb.b52) & 4: flagged(owner, pair)       # 18e0a60
+            else:                     dynamic(owner, pair)       # 18df770
+        # else: skipped
+    else: static(owner, pair)                                    # 18df910
+    i = lock xadd(owner.provider.cursor17c, 1)
+scratch_free([0x1433368d0], owner.scratch58); owner.scratch58 = 0; owner.size60 = 0   # 18c8f50
+```
+
+dynamic `18df770`:
+
+```text
+same = first.kind30.q20 == second.kind30.q20
+(index, link) = search(provider.tree8, pair.key)       # unsigned 64-bit, root +0x1c
+if index == -1:
+    link = acquire(owner+0x28); link.8/10/18 = pair (reread); link.f84 &= ~2; link.50 = link
+generate_contacts(owner, first, second, link, same)    # 18dd400
+refresh_contact_flag(link)                             # 18dde70
+if first.baa >= 0x80 or second.baa >= 0x80: external(owner, first, second, link)   # 18e0ad0
+elif link.held78: release_held(link)                   # 18de3e0
+ok = filter(owner.provider, link)                      # 18deb70
+if not ok: if index == -1: link.f84 |= 2  else: link.f84 &= ~1; return
+elif index != -1: return
+push(owner+8, link)                                    # reserve 18df030 (tag 0x25)
+```
+
+static `18df910`: if first.kind50 == 0x8002 and second.kind50 == 4, return. If the key is
+in provider.tree8, return. Otherwise acquire a link, copy the pair, set f84 |= 2,
+set link.50 = link, and push it to owner+8.
+
+flagged `18e0a60`: search the provider+0x38 tree (root +0x4c) for the key. If found,
+tail-call `18dfa10(owner, pair)`; otherwise tail-call `18e01e0(owner, pair)`.
+
+### Recycled link acquire
+
+`18ddf60(vector)`:
+
+```text
+if v.count:
+    v.count -= 1; link = v.ptr[v.count]
+    link.vtable[0] (link, 0)                    # destructor, no free
+    link.8,10,18 = 0; link.0 = 0x1429c9fd0; link.20..38 = 0
+    link.40 = lock xadd([0x14333683c], 1)      # global serial, prior value
+    link.0 = 0x1429c9fd8; link.50 = 0; link.58 = &link.68; link.60 = 0; link.64 = 1
+    f = link.f84 (read after the destructor); link.78 = 0; link.80 = -1; link.f84 = (f & ~2) | 1
+    return link
+need = count + 5
+if need > cap: reserve(v, max(need, 2*cap))    # 18def10, tag 0x28
+v.count += 5; refill(v.ptr + old_count*8, 5)   # 18de1e0, protected pool allocation
+v.count -= 1; return v.ptr[v.count]            # refilled object: no destructor, no constructor
+```
+
+Behavior worth preserving:
+
+- Retire does not free links. The next pair job that needs a new link reuses one in
+  LIFO order: the destructor runs, then the object is reinitialized in place. The
+  inline contact storage at +0x68 has capacity 1.
+- In a refill, only the last of the 5 pushed objects is returned unconstructed. The
+  other 4 are destroyed and reinitialized when they are popped later.
+- Flags +0x84 are read after the destructor.
+- The worker never reads the dispatcher's caller-thread flag.
+- The handlers recompute A/B from the pair, but the link triple is reread after acquire.
+- Static and dynamic handlers search provider+8 (keys of existing links). The flagged
+  handler searches provider+0x38 (the neighbor tree).
+- A new link rejected by the filter is still pushed, with bit1 set. An existing link is
+  never pushed; on rejection it loses bit0.
+- `18df030` is byte-for-byte `18def10` with tag 0x25.
+
+Validation: `native/snow_host/pose_pair_link_worker_validation.json` covers 512 worker
+cases plus 256 direct acquire cases and 128 direct 18df030 cases. The following run
+natively: thunk, worker, all three handlers, acquire, both reserves, the lock-xadd
+cursor and the global serial. Supplied: contact generation, flag refresh, held release,
+external contacts, filter, the two flagged handlers, the pool refill, the link
+destructor, scratch alloc/free and the allocator vtable.
+
+Totals: 5,164 pairs, 770 dynamic, 67/285 flagged found/new, 1,611 recycled links,
+503 refills, 2,114 new links pushed, 345 held releases, 211 external calls, 564
+tag-0x25 growths, 6 serial wraps. 128 mutation trials bump the shared cursor or change
+the count between claims. Acquire leaf paths: 84 recycle, 62 refill without reserve,
+110 refill with reserve (15 from a null pointer). Reserve leaf: 37 no-op, 25 allocate,
+52 reallocate, 14 release, 34 clamp.
+
+Compared: service call order and arguments, the 0x90-byte link at contact generation
+and destruction, flags at filter, every fixture byte including refilled and allocated
+storage, and the serial counter. The harness was shown to fail twice. Reading the
+flags before the destructor fails at case 0. Pushing a found link after rejection
+fails at case 2.
+
+A public composition test runs the real retire (with ring removal and reset) into
+owner+0x28, then the worker. The retired links come back in LIFO order with
+increasing serials.
+
+### Neighbor record retire
+
+`18de510(provider, divisor)` is reconstructed by `engine/pose_neighbor_retire.py`.
+It reuses `pose_body_tree._Tree.remove(key_size=8)` (19a40b0) and
+`detach_pose_endpoint_rings`. It adds `clear_pose_neighbor_record` (195c360).
+
+```text
+i = leftmost(provider.tree38)              # root +0x4c
+slot = 0
+while i != -1:
+    value = node[i].value10
+    next = successor(i)                    # right-subtree leftmost, else parent climb; BEFORE removal
+    if value.state58 == 4:
+        remove(tree38, i)                  # 19a40b0
+        detach_endpoint_rings(value, 0)    # 195c270, body+0x88 heads
+        owner = provider.slots70[slot]
+        value.count50 = 0 (decrement loop); value.10 = 0; value.8 = 0   # 195c360
+        push(owner+0x48, value)            # 18def10, 2*cap or 8
+        slot = (slot + 1) % divisor        # u32 div after push
+    i = next
+```
+
+Behavior worth preserving:
+
+- The successor is computed from live links before removal. A two-child removal moves
+  the already-visited predecessor's key and value into the current slot. The
+  precomputed successor stays valid.
+- 195c360 decrements +0x50 one step at a time down to 0. The result is the same as a
+  store of 0, but the cost grows with the count.
+- An empty tree never divides. Divisor 0 faults after the first queued record.
+
+Validation: `native/snow_host/pose_neighbor_retire_validation.json` covers 512 offline
+comparisons. Fixtures are valid red-black trees with 0..39 live and 0..5 free slots
+(10,126 live nodes in total). Totals: 4,888 retired, 1,686 two-child removals, 281
+trailing-slot retirements, 15 divisor-0 faults, 126/1,105 allocations/reallocations,
+286 aliased-owner cases. Selector0 rings include records that are not in the tree.
+Only the allocator vtable is supplied. The sweep, 19a40b0, 1959d90, 1959bb0, 18da970,
+195c270 with its accessors, 195c360 and 18def10 all run natively.
+
+Compared: every fixture byte (descriptor, nodes including retired slots, bodies,
+records, owners, arrays) and the allocator calls. The harness was shown to fail three
+ways. Starting at the root fails at case 1. Advancing the slot before the owner read
+fails at case 5. Computing the successor after removal makes the Python side not
+finish within 60 s. The owner read between ring removal and clear cannot be
+distinguished by this harness.
+
+Static leads, not implemented:
+
+- `1989e60(ctx[], n)` rebalances the worker free lists. It sums the counts of the
+  owner+0x28, +0x38 and +0x48 vectors and computes avg+1 for each. It then moves
+  surplus entries from over-full workers to the next worker, round-robin over 2n
+  steps, growing with tag 0x28.
+- `18df4e0` concatenates every owner+8 new-link vector into provider+0x28 (memcpy
+  1c6afb0), sorts it with 1c8fd50 (8-byte elements, comparator just before 18df4e0),
+  then calls `195c170(link,1)` for each link (selector1 ring attach) and continues.
+- `18df630` concatenates the owner+0x18 vectors into provider+0x58, then inserts each
+  entry's key into provider+0x38 through 18de830.
+- `18dd400` (contact generation), `18deb70` (filter chain: provider+0x188, kind+0x20→+0x70,
+  body+0xa0 callbacks), `18e0ad0`, `18dfa10`, `18e01e0` and `18de1e0` (pool refill)
+  remain supplied.
+
+---
 
 ### Connectivity refresh end-to-end composition
 

@@ -1,0 +1,88 @@
+{
+  "schema": "pose-pair-link-worker-validation-v1",
+  "cases": 512,
+  "acquire_leaf_cases": 256,
+  "reserve_leaf_cases": 128,
+  "passed": true,
+  "pairs_claimed": 5164,
+  "dynamic": 770,
+  "flagged_found": 67,
+  "flagged_new": 285,
+  "recycled_links": 1611,
+  "refills": 503,
+  "new_links_pushed": 2114,
+  "held_releases": 345,
+  "external": 211,
+  "new_vector_growths": 564,
+  "mutation_cases": 128,
+  "serial_wraps": 6,
+  "acquire_paths": {
+    "recycle": 84,
+    "refill_no_reserve": 62,
+    "refill_reserve": 110,
+    "refill_alloc_null": 15
+  },
+  "reserve_paths": {
+    "noop": 37,
+    "allocate": 25,
+    "reallocate": 52,
+    "release": 14,
+    "clamped": 34
+  },
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18df760",
+  "native_routines_run": [
+    "0x18df760",
+    "0x18ddd30",
+    "0x18df770",
+    "0x18df910",
+    "0x18e0a60",
+    "0x18ddf60",
+    "0x18def10",
+    "0x18df030"
+  ],
+  "supplied": [
+    "0x18c9140 scratch allocate",
+    "0x18c8f50 scratch release",
+    "0x18dd400 contact generation",
+    "0x18dde70 contact flag refresh",
+    "0x18de3e0 held release",
+    "0x18e0ad0 external contacts",
+    "0x18deb70 pair filter",
+    "0x18dfa10 flagged existing",
+    "0x18e01e0 flagged new",
+    "0x18de1e0 protected pool refill",
+    "link vtable[0] destructor",
+    "allocator vtable +8/+0x10/+0x18"
+  ],
+  "method": "Thunk 0x18df760 and pair worker 0x18ddd30 run natively with the dynamic, static and flagged pair handlers, recycled-link acquire, tree searches, both pointer-vector reserves, the native lock xadd claim cursor and the native global serial increment. Contact/filter/neighbor/pool/scratch services and the allocator are supplied; Python composes run_pose_pair_worker with the reconstructed handlers and acquire.",
+  "comparisons": [
+    "ordered supplied-service calls with every argument",
+    "0x90-byte link snapshot at contact generation and destruction",
+    "link flags at filter",
+    "all fixture bytes: provider, worker owner, pairs, both trees, bodies, kind records, existing/recycled/refilled links, vectors and new allocations",
+    "global serial counter",
+    "acquire return value (leaf)"
+  ],
+  "coverage": [
+    "dynamic, static (incl. 0x8002/4 skip), flagged-found/new and zero-c0 skip classes",
+    "found and new links, filter accept/reject for both",
+    "held release vs external-contact branch",
+    "recycled-link and refill acquire paths",
+    "new-link vector null/full/nonfull with growth",
+    "claim cursor preset beyond count",
+    "mutation trials: services bump the shared cursor or change the provider count between claims",
+    "serial counter wrap near 0xffffffff"
+  ],
+  "failure_proof": [
+    "Reading link+0x84 flags before the destructor call in acquire fails at worker case 0.",
+    "Pushing a found link after filter rejection fails at worker case 2."
+  ],
+  "limits": [
+    "Single native worker with scripted cursor interference; no concurrent threads or atomic guarantee for the Python claim adapter.",
+    "Contact generation, filter, neighbor, refill, destructor, scratch and allocator behavior are authored stand-ins.",
+    "Trees are authored unbalanced BSTs (search only); fixture links are synthetic.",
+    "Merge 0x18df4e0/0x18df630 and rebalance 0x1989e60 are not reconstructed here.",
+    "No live validation."
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "pose-pair-link-jobs-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "workers_hist": {
+    "0": 46,
+    "1": 114,
+    "2": 88,
+    "3": 42,
+    "5": 2,
+    "7": 32,
+    "8": 28,
+    "10": 11,
+    "11": 1,
+    "31": 33,
+    "32": 115
+  },
+  "zero_worker_cases": 46,
+  "capped_at_32": 115,
+  "capacity_limited": 211,
+  "count_limited": 168,
+  "mutation_cases": 128,
+  "dispatcher_switches": 42,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18ddc40",
+  "callback": "0x1418df760",
+  "supplied": [
+    "0x18de440 retire",
+    "0x18de510 neighbor retire",
+    "0x1989e60 free-list rebalance",
+    "0x18b7ca0 dispatcher",
+    "0x18df4e0 link merge",
+    "0x18df630 neighbor merge (tail call)"
+  ],
+  "method": "Original 0x18ddc40 runs natively; the six callees are intercepted at entry and recorded with arguments, the gathered context array contents and provider snapshots. Python composes run_pose_pair_link_jobs with the same authored services.",
+  "comparisons": [
+    "ordered callee calls with every argument",
+    "gathered context-array contents (slot owner + 0x28)",
+    "provider slot-table and +0x170..0x17f snapshots at each call",
+    "final provider bytes",
+    "global dispatcher pointer"
+  ],
+  "coverage": [
+    "pair counts 0..0xffffffff including n/10 boundaries and 32-bit high values",
+    "dispatcher capacities 0..0xffffffff (zero-worker, capacity-limited, count-limited, 32 cap)",
+    "mutation trials: services rewrite slot-table entries, swap the global dispatcher, scribble +0x170/+0x17c before publication and advance the cursor during dispatch"
+  ],
+  "failure_proof": [
+    "Gathering contexts before 18de510 instead of after fails at case 39.",
+    "Reading the global dispatcher only once fails at case 19."
+  ],
+  "limits": [
+    "All callees are supplied; their behavior is reconstructed elsewhere (retire, dispatcher, pair worker) or not at all (neighbor retire is separate; rebalance and merges are not reconstructed).",
+    "Zero-worker behavior of the supplied rebalance/dispatcher is not asserted.",
+    "No live validation or concurrency guarantee."
+  ]
+}

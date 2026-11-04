@@ -1,0 +1,55 @@
+{
+  "schema": "pose-neighbor-retire-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "live_nodes": 10126,
+  "retired": 4888,
+  "two_child_removals": 1686,
+  "divisor_faults": 15,
+  "allocations": 126,
+  "reallocations": 1105,
+  "aliased_owner_cases": 286,
+  "max_divisor": 5,
+  "trailing_slot_retires": 281,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18de510",
+  "native_callees_run": [
+    "0x19a40b0",
+    "0x1959d90",
+    "0x1959bb0",
+    "0x18da970",
+    "0x195c270",
+    "0x18baba0",
+    "0x18bb430",
+    "0x195c360",
+    "0x18def10"
+  ],
+  "method": "Original in-order sweep, tree slot retirement with red-black unlink and rotations, selector0 endpoint-ring removal, endpoint clear and pointer-vector reserve run natively; only the allocator vtable entries are supplied. Python composes the sweep with pose_body_tree._Tree.remove(key_size=8), detach_pose_endpoint_rings and reserve_pose_pointer_vector.",
+  "comparisons": [
+    "ordered allocator calls with every argument",
+    "all fixture bytes: provider descriptor and slot table, every node byte including retired slots, bodies, records (in and out of the tree), owners, old and new queue arrays",
+    "divide-fault occurrence and partial state for divisor 0"
+  ],
+  "coverage": [
+    "valid red-black trees with 0..39 live nodes and 0..5 free slots",
+    "dense duplicate-prone and sparse keys",
+    "state 4 and other states (incl. 0x104)",
+    "records sharing selector0 rings with out-of-tree records",
+    "divisors 0..5 with aliased owners",
+    "queue vectors null/nonnull, capacities 0..8, full and nonfull"
+  ],
+  "failure_proof": [
+    "Starting the sweep at the root instead of the leftmost node fails at case 1.",
+    "Advancing the round-robin slot before choosing the owner fails at case 5.",
+    "Computing the successor after removal (for nodes with fewer than two children) makes the Python sweep follow retired-slot links and not finish within 60 s; it never passes."
+  ],
+  "untested_orderings": [
+    "The owner read between ring removal and endpoint clear is not distinguishable here: neither callee touches the provider."
+  ],
+  "limits": [
+    "Ring fixtures are built by the reconstructed attach, not native attach.",
+    "Allocator internals are supplied stand-ins.",
+    "Consumers of the owner+0x48 vectors (1989e60 rebalance and any worker-side reuse) are not reconstructed.",
+    "No live validation or concurrency guarantee."
+  ]
+}
