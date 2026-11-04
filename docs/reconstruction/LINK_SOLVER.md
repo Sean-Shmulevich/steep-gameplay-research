@@ -9738,3 +9738,91 @@ Static leads:
 - `198fdc0` has a dict-model reconstruction (`pose_link_update`) but not a flat-memory
   binding.
 - `18de060` (payload batch refill) and the shape-bounds vtables are unreconstructed.
+
+### Pair link worker callees: contact flag, held release and pool refill
+
+Three small callees of the pair link worker, reconstructed as separate modules. Each one is an
+injected unit in `engine/pose_pair_link_worker.py`, which still takes them as services. The
+worker is unchanged.
+
+Contact-flag refresh, `refresh_contact_flag(link)` at 0x18dde70 (`engine/pose_link_contact_flag.py`):
+
+```text
+container = link + 0x48
+n = contact_count(container)              # accessor 0x14144b420: u32 at container+0x18
+found = False
+for i in 0 .. n-1:                        # stops at the first flagged payload
+    payload = contact_payload(container, i)   # accessor 0x141958840: qword at [container+0x10] + 16*i + 8
+    if payload.+0x114 & 1: found = True; break
+if found: link.+0x84 |= 1
+else:     link.+0x84 &= ~1                # other bits of +0x84 untouched
+```
+
+Held-token release, `release_held(link)` at 0x18de3e0 (`engine/pose_link_held_release.py`):
+
+```text
+token = link.+0x78                        # read before any service call
+enter_guard(guard)                        # protected thunk 0x143d0ad5d; guard = global 0x143336ab0
+if token == 0: fault                      # native store to token+0 faults
+token.+0 = pool.+0x30                     # pool = pointer at global 0x143336aa8, read after enter
+pool.+0x28 -= 1                           # 32-bit, wraps at 0
+pool.+0x30 = token                        # LIFO free-list push
+leave_guard(guard, pool)                  # protected thunk 0x143d1de3a, rdx = pool
+link.+0x78 = 0
+```
+
+Pool refill, `refill(elements, count)` at 0x18de1e0 (`engine/pose_link_pool_refill.py`), the
+empty-vector branch of recycled-link acquire:
+
+```text
+prepare(guard, count)                     # protected thunk 0x143f3608c; guard = global 0x143336ac0
+for i in 0 .. count-1:
+    obj = take(pool)                      # 0x1418b5d10; pool = global 0x143336ab8
+    if obj:
+        construct(obj, next_serial())     # same field writes as the worker's in-place constructor
+    elements[i] = obj or 0
+leave_guard(guard)                        # epilogue 0x143f76da2, reached on both count-0 and loop-exit paths
+```
+
+Preserved quirks:
+
+- The guard global 0x143336ab0 is the same one held release enters and leaves. Refill prepares and
+  leaves guard 0x143336ac0, which is a different global.
+- Held release faults on a zero token only after `enter`, and the pool and link are unchanged. The
+  dynamic handler's `link.held78` check is the only guard against it.
+- Refill constructs all `count` objects, not only the last one. Acquire then pops the last pointer
+  without a destructor or reinitialization. The earlier LINK_SOLVER phrase "returned unconstructed"
+  describes that pop, not the refill. It should read "returned without destructor and reinit."
+- A contact entry is 16 bytes: key at +0, payload at +8. The count and base of the span are
+  container+0x18 and container+0x10, which are link+0x60 and link+0x58.
+- The return site of the prepare thunk, 0x18de1fb, holds one junk byte 0x62 before `test edi,edi`.
+  The thunk resumes after it, so the native body is not directly executable from its start.
+
+Validation. `native/snow_host/pose_link_contact_flag_validation.json` (512 cases): 279 set, 213 cleared,
+138 already set, 61 empty spans, 1,066 payload reads, 214 early exits, 20 null-payload faults (the
+scan reached a zero pointer), and 7 trials where a null entry was skipped after an earlier flagged
+payload. `native/snow_host/pose_link_held_release_validation.json` (512 cases): 448 releases, 64
+null-token faults, 84 count wraps, 143 null heads, 305 linked heads. `native/snow_host/pose_link_pool_refill_validation.json`
+(512 cases): 1,287 constructed objects, 571 null takes, 48 zero counts, 1,858 slots checked, 1,287
+serial draws. Each native run compares service call order and arguments, final bytes, and the
+serial or pool globals. Contact flag also compares rbx, rbp and rsi. Unit tests:
+`tests/test_pose_link_contact_flag.py` (7), `tests/test_pose_link_held_release.py` (4),
+`tests/test_pose_link_pool_refill.py` (5, including composition with `acquire_pose_link`).
+Fault injection, each followed by restore and a regenerated receipt: refill flag write dropped
+(fails at trial 0), held release count direction flipped (fails at trial 1), contact-flag clear path
+made a no-op (fails at trial 0). The full pose suite passes: 907 tests.
+
+Supplied, not reconstructed: the protected guard thunks 0x143d0ad5d and 0x143d1de3a, the protected
+prepare thunk 0x143f3608c, the epilogue thunk 0x143f76da2 (modeled as pop rsi plus ret), the pool take
+0x1418b5d10 including its slow path at 0x18b5d35, and the contact count and element accessors. The
+serial lock xadd on 0x14333683c is native code, mirrored by a Python counter.
+
+Static leads, not implemented:
+
+- The pool take slow path 0x18b5d35 (empty free list) is the main unreconstructed pool
+  behavior, and it determines whether a null take is possible in practice.
+- The guard thunks (0x143d0ad5d, 0x143d1de3a, 0x143f76da2, 0x143f3608c) are obfuscated. The
+  lock they implement is unknown, so the enter and leave pairing is evidence of ordering only.
+- LINK_SOLVER's state-reset section lists the pool-return free lists of 0x1958720 and 0x1958ba0 at
+  globals 0x143336bb0/0x143336bb8 and 0x143336aa8/0x143336ab0. The held pool here is 0x143336aa8 and
+  the guard is 0x143336ab0, so the two paths may share one pool. Confirm before merging.

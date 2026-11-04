@@ -29,3 +29,4 @@
   equivalence and composition tests, and the routine is bound as the dynamic pair
   handler's `generate_contacts`. Supplied: bounds, handler lookup and production,
   `198fdc0`, the terrain wrappers and `18de060`.
+- Pair link worker callees reconstructed as three modules: `pose_link_contact_flag` (0x18dde70), `pose_link_held_release` (0x18de3e0) and `pose_link_pool_refill` (0x18de1e0). 512-case Unicorn harnesses each, with receipts in `native/snow_host/`. Protected guard, prepare, epilogue and pool-take thunks are supplied. The pool take slow path and the guard lock semantics are open.

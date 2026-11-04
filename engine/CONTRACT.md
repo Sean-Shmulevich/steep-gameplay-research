@@ -1984,3 +1984,11 @@ To bind it into the worker, set
 `services.generate_contacts = lambda o, a, b, l, s: generate_pose_pair_contacts(mem, o, a, b, l, s, svc)`.
 Contact production, payload update, terrain wrappers, refill and bounds internals are
 UNRESOLVED. Evidence: `native/snow_host/pose_pair_contact_generation_validation.json`.
+
+### Pair link worker callees (laneG)
+
+- `engine.pose_link_contact_flag.refresh_pose_link_contact_flag(mem, link, *, contact_count, contact_payload) -> bool` (0x18dde70). Sets or clears link+0x84 bit0 from the payloads at link+0x48. Services: `contact_count(container)` (0x14144b420), `contact_payload(container, index)` (0x141958840).
+- `engine.pose_link_held_release.release_pose_link_held(mem, link, *, enter_guard, leave_guard, guard, pool) -> token` (0x18de3e0). Pushes link+0x78 onto the pool free list, then clears it. Raises ValueError for a zero token after `enter_guard`. Services: `enter_guard(guard)` (0x143d0ad5d) and `leave_guard(guard, pool)` (0x143d1de3a).
+- `engine.pose_link_pool_refill.refill_pose_link_objects(mem, elements, count, *, prepare, take, leave_guard, next_serial, guard, pool) -> int` (0x18de1e0). Fills `count` pointer slots with constructed link objects, or null, and returns the number constructed. Services: `prepare(guard, count)` (0x143f3608c), `take(pool)` (0x1418b5d10), `leave_guard(guard)` (0x143f76da2), `next_serial()` (native lock xadd on 0x14333683c). `constructed` objects use the worker's vtables, `LINK_BASE_VTABLE` and `LINK_VTABLE`.
+
+Supplied: all of the above services, plus the link vtable destructor. Image addresses are evidence anchors only.

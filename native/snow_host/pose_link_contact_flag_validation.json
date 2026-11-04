@@ -1,0 +1,41 @@
+{
+  "schema": "pose-link-contact-flag-validation-v1",
+  "passed": true,
+  "cases": 512,
+  "flag_set": 279,
+  "flag_cleared": 213,
+  "flag_already_set": 138,
+  "empty_span": 61,
+  "null_payload_faults": 20,
+  "null_reached_after_clear": 7,
+  "payload_reads": 1066,
+  "early_exit": 214,
+  "max_count": 8,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18dde70",
+  "native_routines_run": [
+    "0x18dde70 contact-flag refresh (container count loop, payload flag test, link flag set or clear)"
+  ],
+  "supplied": [
+    "0x14144b420 contact container count accessor (reads container+0x18)",
+    "0x141958840 contact element accessor (reads [container+0x10] + 16*i + 8)"
+  ],
+  "method": "Refresh 0x18dde70 run natively with the two accessors hooked as recording services that perform the same container reads through unicorn memory. The Python reference refresh_pose_link_contact_flag reads the same fixture through PoseFlatMemory with its own accessors. Callee-saved rbx, rbp and rsi are checked after each native run.",
+  "comparisons": [
+    "accessor call order with arguments (container address, index)",
+    "final 0x100-byte link bytes including bit0 of +0x84 and every other flag bit",
+    "every payload object byte range (0x200 each)",
+    "callee-saved registers rbx, rbp and rsi"
+  ],
+  "coverage": [
+    "contact count 0, 1, 2, 3, 4, 5, 8",
+    "payload flag bit0 set in about 25 percent of entries; other bits of the +0x114 byte are random, so bit1 alone and other bits are present but do not affect the result",
+    "link flag +0x84 random before refresh, set and clear paths both exercised",
+    "zero payload pointer at a random index in 1 of 16 trials (native and reference both fault)"
+  ],
+  "limits": [
+    "The two accessors are small leaf reads supplied as services; the harness models them with the container layout read from the nested-object fields, not with their native code.",
+    "Payload objects are fixtures of 0x200 bytes; only the +0x114 byte is semantically used.",
+    "No live validation, no concurrent flag writers, and no check that the entries at +0x58 belong to a real contact span."
+  ]
+}

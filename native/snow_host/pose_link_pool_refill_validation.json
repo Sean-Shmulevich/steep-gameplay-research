@@ -1,0 +1,40 @@
+{
+  "schema": "pose-link-pool-refill-validation-v1",
+  "passed": true,
+  "cases": 512,
+  "constructed": 1287,
+  "null_takes": 571,
+  "zero_count": 48,
+  "max_count": 8,
+  "slots_checked": 1858,
+  "serial_draws": 1287,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18de1e0",
+  "native_routines_run": [
+    "0x18de1e0 refill body (prologue, loop, in-place constructor, serial lock xadd, epilogue)"
+  ],
+  "supplied": [
+    "0x143f3608c protected pool prepare (guard, count); resumes at 0x18de1fc after the junk byte at 0x18de1fb",
+    "0x1418b5d10 pool take (slow path not reconstructed)",
+    "0x143f76da2 protected epilogue (guard leave, pop rsi, return); modeled as pop rsi plus ret"
+  ],
+  "method": "Refill body 0x18de1e0 run natively with prepare and take hooked as recording services that return a scripted take sequence (30 percent null). The Python reference refill_pose_link_objects runs on copies of the same bytes with the same script; the native lock xadd on 0x14333683c is executed natively and compared against the reference counter.",
+  "comparisons": [
+    "prepare, take and leave call order with arguments (guard value, count, pool value)",
+    "every element slot byte, including null slots and slots beyond the count",
+    "every constructed object byte range 0x100 including unused slack",
+    "final serial global value against the reference counter"
+  ],
+  "coverage": [
+    "count 0, 1, 2, 3, 4, 5, 8 (the acquire refill uses 5)",
+    "null take at random positions, all null, none null",
+    "stale object bytes including flag byte +0x84 and endpoint fields"
+  ],
+  "limits": [
+    "Protected prepare thunk and the pool take are supplied services; their memory effects are not modeled and not validated.",
+    "The pool take slow path (0x18b5d35) is not reconstructed, so the pool free-list state is not validated beyond the script.",
+    "The native pool global is read once per pass in the model; the native code re-reads it. No service in the harness writes it.",
+    "The native take result is not checked for lifetime; the harness assumes the taken object is writable for 0x100 bytes.",
+    "No live validation, no concurrent refill, no pool exhaustion behavior beyond null takes."
+  ]
+}

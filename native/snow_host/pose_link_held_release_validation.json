@@ -1,0 +1,37 @@
+{
+  "schema": "pose-link-held-release-validation-v1",
+  "passed": true,
+  "released": 448,
+  "null_token_faults": 64,
+  "count_wraps": 84,
+  "null_head": 143,
+  "head_linked": 305,
+  "nonzero_pool_count": 364,
+  "cases": 512,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18de3e0",
+  "native_routines_run": [
+    "0x18de3e0 held release body (token load, free-list push, count decrement, held clear)"
+  ],
+  "supplied": [
+    "0x143d0ad5d protected guard enter (rcx = guard)",
+    "0x143d1de3a protected guard leave (rcx = guard, rdx = pool)"
+  ],
+  "method": "Held release 0x18de3e0 run natively with the two guard thunks hooked as recording services that return to the native caller. The Python reference release_pose_link_held runs on copies of the same bytes. A null token is run natively too: the store to address 0 faults, which must match the Python ValueError at the same point after enter.",
+  "comparisons": [
+    "enter and leave call order with arguments (guard value, pool pointer)",
+    "final 0x90-byte link bytes, 0x40-byte pool bytes and every token object",
+    "fault versus no-fault for the null token, with the pool and link unchanged"
+  ],
+  "coverage": [
+    "held token 0 in 1 of 8 trials (null fault path)",
+    "pool free-list head null in about 30 percent of trials, nonnull otherwise",
+    "live count 0 (wraps to 0xffffffff), 1, 2, 7, 0xffffffff and random values"
+  ],
+  "limits": [
+    "Both guard thunks are protected obfuscated code and are supplied; their lock behavior and any memory they touch are not modeled.",
+    "The pool global values are fixtures; the native code reads the guard global before enter and the pool global after enter, and the model takes both as arguments.",
+    "Pool free-list heads point to fixture token objects only; no real pool layout beyond +0x28 and +0x30 is modeled.",
+    "No live validation, no concurrent release, no evidence about how the caller guarantees a nonzero token beyond the dynamic handler check."
+  ]
+}
