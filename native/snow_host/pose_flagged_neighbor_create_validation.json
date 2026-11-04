@@ -1,0 +1,79 @@
+{
+  "schema": "pose-flagged-neighbor-create-validation-v1",
+  "cases": 512,
+  "leaf_cases": 256,
+  "passed": true,
+  "direct_cases": 256,
+  "router_cases": 256,
+  "router_found": 77,
+  "mutation_cases": 128,
+  "overlap_tests": 960,
+  "overlaps": 564,
+  "records_recycled": 85,
+  "records_allocated": 158,
+  "records_pushed": 243,
+  "shape_pair_growths": 226,
+  "owner_vector_growths": 149,
+  "zero_count_a": 19,
+  "same_group_cases": 289,
+  "serial_wraps": 20,
+  "leaf_paths": {
+    "acquire_pop": 29,
+    "acquire_alloc": 35,
+    "push": 64,
+    "push_grow": 31,
+    "reserve8": 64,
+    "reserve4": 64,
+    "reserve_release": 11,
+    "reserve_clamp": 28
+  },
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18e01e0",
+  "native_routines_run": [
+    "0x18e01e0",
+    "0x18e0a60 (router cases)",
+    "0x18c16e0",
+    "0x18de2e0",
+    "0x195c3e0",
+    "0x18dccb0",
+    "0x18df150",
+    "0x18df1e0"
+  ],
+  "supplied": [
+    "collider selector: provider+0x68 object vtable slot 1 (object, shape A, shape B)",
+    "overlap test: selected object vtable slot 1 (object, &query)",
+    "0x18dfa10 flagged existing (router cases only; logged with its r8d node index)",
+    "allocator vtable +8/+0x10/+0x18"
+  ],
+  "method": "0x18e01e0 runs natively (half the cases enter through router 0x18e0a60) with basis composition, neighbor record acquire/construct, pair copy, shape-pair push and both tagged reserves, plus the native lock xadd on the global serial. Only the two virtual calls, 0x18dfa10 and the allocator are hooked. Python runs create_pose_flagged_neighbor (or route_pose_flagged_pair bound to it) over the same fixture with a mirrored deterministic service script.",
+  "comparisons": [
+    "ordered service calls with every argument",
+    "all 24 float32 lanes of both world frames in the 0x90-byte query (bit exact) and both shape pointers",
+    "every fixture byte: bodies, kinds, shape arrays (incl. alternates), shapes, filters, locals, pair, provider, tree, owner, free-list records, contact arrays, allocations",
+    "global serial counter",
+    "leaf return values"
+  ],
+  "coverage": [
+    "zero shape counts, null shapes, disabled entries (bits 2 and 3 of +0x44)",
+    "cross-group wide masks, same-group narrow-only (kind+0x52 bit 0x10) and both-masks branches",
+    "shape filter masks (+0x48/+0x50)",
+    "overlap accept/reject with lazy single record",
+    "recycled records keeping their old +0x48 storage, fresh 0x60-byte allocations",
+    "owner+0x18 and record+0x48 growth from null/full vectors",
+    "mutation trials: services swap shape arrays, toggle kind+0x52, rewrite group words, frames, dispatcher, pair key, entry flags and masks",
+    "serial wrap at 0xffffffff"
+  ],
+  "failure_proof": [
+    "Reading the B shape array (+0xb8) once per outer step instead of per inner step fails at case 131.",
+    "Omitting the record +0x5c = 1 store fails at case 0.",
+    "Caching A kind+0x52 at entry instead of rereading it per shape pair fails at case 187."
+  ],
+  "limits": [
+    "18e01e0 never reads r8 before writing it (first use 0x1418e0369 mov r8d,edx); direct cases enter with a random r8 to show independence. On the router miss path r8d is -1.",
+    "Collider selection and overlap results are authored stand-ins; no real collision geometry.",
+    "Fixture frames are finite synthetic float32 values; NaN payloads and overflow to infinity were not exercised.",
+    "Null record allocation (native fault) is not exercised; Python raises MemoryError.",
+    "Fourth lanes of the query frame are uninitialized native stack and are not compared.",
+    "Trees are authored unbalanced BSTs (search only). No live validation."
+  ]
+}

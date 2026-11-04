@@ -16,3 +16,9 @@
     flagged route in the composition tests.
   - 512 native cases entered through the router, plus 256 leaf cases.
   - 17 unit and composition tests. The tester factory and the tester remain supplied.
+- Flagged neighbor create (0x18e01e0) is reconstructed in `engine/pose_flagged_neighbor_create.py`
+  with its record acquire, shape-pair push, tagged reserves and float32 frame
+  composition. The 512-case receipt is `native/snow_host/pose_flagged_neighbor_create_validation.json`;
+  half the cases run through the 0x18e0a60 router. Composition tests bind it into the
+  pair worker's flagged route and recycle a record retired by 0x18de510. The collider
+  virtual calls remain supplied.

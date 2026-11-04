@@ -9486,3 +9486,121 @@ Static leads, not implemented:
   places at owner+0x68 near `0x1927590` (vtable `0x29ca780`). That identity is not
   verified. Its vtable slot 1 picks a narrow-phase tester by shape pair.
 - The sibling `18e01e0` (key not found) belongs to another lane.
+
+### Flagged neighbor create
+
+The flagged route `18e0a60` tail-calls `18e01e0(owner, pair)` when the pair key is not in
+the provider+0x38 neighbor tree. It is reconstructed by
+`engine/pose_flagged_neighbor_create.py`. The routine tests every enabled shape pair of
+the two bodies and collects the overlapping ones in one neighbor record, which it creates
+lazily.
+
+Body fields: +0x30 kind (+0x20 group word, +0x52 flags), +0x40..+0x7c a 3x4 frame (basis
+rows at +0x40/+0x50/+0x60, translation at +0x70), +0xb8 shape array, +0xc0 u16 shape
+count. Shape entries are 72 bytes: +0x10 shape, +0x18 local frame, +0x28/+0x30 qword
+masks, +0x38/+0x3c dword masks, +0x44 flags. Shape+0x20 is a filter record with qword
+masks at +0x48/+0x50.
+
+```text
+A, B = pair.first, pair.second
+countA = A.c0; groupA = A.kind30.q20; groupB = B.kind30.q20   # cached
+frameA, frameB = A.frame40, B.frame40; countB = B.c0           # cached (stack copies)
+record = 0
+if countA == 0: return
+for i in 0..countA-1 (u16):
+    ea = A.shapes_b8 + 72*i                     # array reread per i
+    if !ea.shape10 or ((ea.f44 >> 1) & ea.f44 & 4) == 0: continue    # bits 2 and 3
+    worldA = compose(frameA, ea.local18)        # 18c16e0 basis + inline translation
+    fa = ea.shape10.filter20                    # cached for the inner loop
+    for j in 0..countB-1 (u16):
+        eb = B.shapes_b8 + 72*j                 # array reread per j
+        if !eb.shape10 or bits 2/3 of eb.f44 not both set: continue
+        wide   = (eb.q30 & ea.q28) | (ea.q30 & eb.q28)
+        narrow = (eb.d38 & ea.d3c) | (eb.d3c & ea.d38)
+        if groupA != groupB:        ok = wide
+        elif A.kind30.b52 & 0x10:   ok = narrow        # kind reread per pair
+        else:                       ok = wide and narrow
+        if !ok: continue
+        if ((fa.q50 & fb.q48) | (fb.q50 & fa.q48)) == 0: continue
+        worldB = compose(frameB, eb.local18)
+        obj = owner.provider.q68                       # reread per pair
+        collider = obj.vtable[1] (obj, ea.shape10, eb.shape10)
+        query = {worldA basis/translation, worldB basis/translation, shapeA, shapeB}   # 0x90 bytes, 4th lanes unwritten
+        if !collider.vtable[1] (collider, &query): continue
+        if !record:
+            record = 18de2e0(owner+0x28)               # pop owner+0x48 or allocate 0x60 (align 0x10, tag 0x29)
+            195c3e0(record, pair)                      # record+8/+0x10/+0x18 = pair triple (reread)
+            record.b5c = 1; record.d58 = 1
+        18dccb0(record, i, j)                          # u32 (i | j<<16) onto record+0x48; 18df1e0 growth (4-byte, tag 0x2a)
+if record: push(owner+0x18, record)                    # 18df150 growth (2*cap or 8, tag 0x27)
+```
+
+`18de2e0` pops from the owner+0x48 free list without a destructor or reinitialization.
+On an empty list it allocates 0x60 bytes and constructs in place: +8/+0x10/+0x18 = 0,
+vtable `0x1429c9fd0`, +0x20..+0x38 = 0, +0x40 = prior value of the global serial
+`[0x14333683c]` (shared with links), vtable `0x1429ca778`, +0x48 and +0x50 qwords = 0,
++0x58 = -1, byte +0x5c = 0. `18c16e0` uses the float32 order of the transform helper
+section: `basis[i][j] = ((L[i].x*P[0][j] + L[i].y*P[1][j]) + L[i].z*P[2][j])`. The
+translation is computed inline in the same order and then adds `p[j]`.
+
+Behavior worth preserving:
+
+- A recycled record keeps its serial and its old +0x48 shape-pair storage and capacity.
+  `195c360` cleared only the count and the endpoints at retire.
+- The record is created on the first accepted shape pair and pushed to owner+0x18 once.
+  If nothing overlaps, there is no record and no push. The state is set to 1 (retire
+  takes state 4).
+- The group words, shape counts and body frames are cached at entry. The shape arrays,
+  entry masks and flags, A's kind+0x52, the provider dispatcher and the pair triple
+  are reread.
+- Cross-group pairs ignore the dword masks. Same-group pairs whose A kind has bit 0x10
+  ignore the qword masks. Only A's kind is consulted for bit 0x10.
+- A null allocation makes the following copy fault natively.
+- The signature is two arguments. 18e01e0 never reads r8 before it writes it; the first use
+  is `mov r8d, edx` at 0x1418e0369. On the router's miss path, r8d is -1 (the search ran
+  off the tree). Only the found path hands a live index to 18dfa10.
+- The fourth lanes of the 0x90-byte query frame are uninitialized stack bytes.
+
+Validation: `native/snow_host/pose_flagged_neighbor_create_validation.json` covers 512
+cases plus 256 leaf cases. Of the 512, 256 enter at 18e01e0 and 256 enter through router
+18e0a60, of which 77 took the found branch to supplied 18dfa10. The 18dfa10 hook logs its r8d node index, so the router hand-off is compared too. Direct cases enter with a random r8. The following run
+natively: 18e01e0, 18e0a60, 18c16e0, 18de2e0, 195c3e0, 18dccb0, 18df150, 18df1e0 and the
+lock xadd on the global serial. Supplied: the two virtual calls, 18dfa10 and the
+allocator vtable.
+
+Totals: 960 overlap tests, 564 shape pairs pushed, 243 records (85 recycled, 158
+allocated), 226 shape-pair vector growths, 149 owner+0x18 growths, 19 zero-count-A
+cases, 289 same-group cases, 20 serial wraps. In 128 mutation trials, services swap
+shape arrays, toggle kind+0x52 bit 0x10, rewrite group words, frames, the dispatcher,
+the pair key, and entry flags and masks. Leaf paths: 29 pop, 35 allocate, 64 pushes (31
+grew), 64 reserves for each tag (11 releases, 28 clamps).
+
+Compared: ordered service calls with every argument, all 24 float32 lanes of the query
+bit for bit, every fixture byte including allocations, the serial, and leaf return
+values. The harness was shown to fail three times. Reading B's shape array once per
+outer step fails at case 131. Omitting the +0x5c store fails at case 0. Caching A
+kind+0x52 at entry fails at case 187.
+
+Three public composition tests bind `create_pose_flagged_neighbor` into
+`run_pose_pair_worker` through `route_pose_flagged_pair`. In the first, the worker builds
+a record with all four shape pairs, and a key present in the tree goes to update
+instead. In the second, laneB's `route_pose_flagged_pair_indexed` sends a miss to create.
+In the third, `retire_pose_neighbor_records` queues a state-4 record on
+owner+0x48. The worker's flagged route then pops it with its serial (555) and old
+storage intact, recopies the pair, sets state 1 and pushes it to owner+0x18. No 0x29
+allocation happens.
+
+Limits: collider selection and overlap results are authored stand-ins. Frames are finite
+synthetic float32 values, so NaN payloads and overflow were not exercised. A null
+allocation is not exercised; Python raises MemoryError. There is no live validation.
+
+Static leads, not implemented:
+
+- The provider+0x68 object's vtable slot 1 selects a pair collider from two shapes. The
+  collider's slot 1 is the overlap predicate over the two world frames. Neither the
+  classes nor their implementations are identified.
+- `18df630` (merge owner+0x18 into provider+0x58 and insert keys into provider+0x38)
+  consumes these records. It is not reconstructed.
+- The u32 entries `(i | j<<16)` at record+0x48 are the shape-index pairs that
+  `195c400` (the routine after 195c3e0) appears to search and remove by u16 value. It is
+  unread beyond its first instructions.

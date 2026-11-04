@@ -1931,3 +1931,23 @@ Supplied services:
 Memory is a `PoseFlatMemory`-like object. Offsets are evidence anchors only. The receipt
 is `native/snow_host/pose_flagged_neighbor_update_validation.json`. It makes no claim of
 original-engine equivalence.
+
+### Flagged neighbor create
+
+`engine.pose_flagged_neighbor_create.create_pose_flagged_neighbor(mem, owner, pair, services)`
+follows LINK_SOLVER.md, "Flagged neighbor create" (0x18e01e0). It binds to the worker
+as `services.create_neighbor = lambda owner, pair: create_pose_flagged_neighbor(mem,
+owner, pair, services)`, which `route_pose_flagged_pair` calls. `mem` is
+`PoseFlatMemory`. `services` supplies:
+
+- `select_collider(dispatcher, shape_a, shape_b) -> object`
+- `test_overlap(object, query) -> bool`, where `query = (frame_a, frame_b, shape_a, shape_b)`
+  and `frame = (basis rows, translation)` in float32 values
+- `allocator` (allocate/reallocate/release)
+- `next_serial()`
+
+It returns the record pointer or 0; this return is authored. Leaves:
+`acquire_pose_neighbor_record` (0x18de2e0), `push_pose_shape_pair` (0x18dccb0),
+`reserve_pose_tagged_vector` (0x18df150/0x18df1e0) and `compose_pose_shape_frame`
+(0x18c16e0 plus the inline translation). Vtable constants are image addresses kept as
+evidence anchors. A null record allocation raises an authored MemoryError.
