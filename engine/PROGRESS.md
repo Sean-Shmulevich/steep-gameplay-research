@@ -8606,3 +8606,15 @@ cases. This is not wired into a live host API and does not pin manager or module
   byte also matches, and 8 cases cross the 512-slot inline queue. A deliberate
   a1-clear reorder fails the comparison. `19581c0` and `18e2de0` remain supplied;
   this is not a live-safe mod operation.
+- Reconstructed the connectivity refresh's retire stage `18de440`
+  (`engine/pose_body_connectivity_retire.py`) and its pointer-vector reserve
+  `18def10`. Retire does not destroy anything. It removes each link from its
+  selector1 rings, resets it, and appends it round-robin to the provider+0x70
+  slot owners' +0x28 pending vectors. 512 native comparisons, with ring removal,
+  link reset, contact clearing and reserve running natively, match 2,901 queued
+  links, 1,024 vector growths, every supplied call and every fixture byte. A
+  256-case reserve leaf comparison covers the release and clamp paths. Two
+  injected bugs fail the harness. Only the pool-return blocks and the allocator
+  are supplied. Collect and retire stages of the refresh now compose with
+  reconstructed code. Rebuild `18e28d0` and the per-worker queue consumer
+  (`18ddc40` → `18b7ca0`) remain open.

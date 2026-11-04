@@ -8479,17 +8479,16 @@ No live concurrent traversal guarantee follows from this test.
 Further static leads, not yet implemented by this module:
 
 - `18dedf0` is now reconstructed; see "Provider link-tree selection" below.
-- `18e28d0` zeroes context464..46b, skips selected objects with flags84 bit1, and
+- `18e28d0` is now reconstructed; see "Body connectivity rebuild". Original lead:
+  `18e28d0` zeroes context464..46b, skips selected objects with flags84 bit1, and
   follows endpoint8→body.group10. Groups with a0 and a1 both zero are marked a1=1
   and queued once; `19581c0(group,object)` runs for each eligible selected object.
   Correction: `19581c0` removes the object from the group's link array; see
   "Group link-array removal".
   The subsequent group loop clears a1 before calling `18e2de0` and increments
   context464. Those callee effects and full group rebuild remain unresolved.
-- `18de440` consumes that same selected-object array. Its opening calls include
-  `195c270(object,1)` and `1958ba0(object)` before provider queue handling. Do not
-  equate the authored label retire with complete destruction until the rest of
-  this routine and its callees have been reconstructed.
+- `18de440` is now reconstructed; see "Body connectivity retire" below. It
+  does not destroy links; it unlinks, resets and queues them.
 
 ### Provider link-tree selection
 
@@ -8681,3 +8680,107 @@ Static leads for the supplied callees:
 - `18df270` is a generic pointer-array grow. It keeps inline storage up to
   0x200 slots and switches to allocator slots+8/+0x10 above that. It is not
   reconstructed here.
+
+### Body connectivity retire
+
+The refresh's third stage `18de440` is reconstructed by
+`engine/pose_body_connectivity_retire.py`. The authored label "retire" overstates
+it. Nothing is destroyed or freed. Each selected link leaves its selector1
+endpoint rings, has its endpoint, contact and held state reset, and has its
+pointer appended to a pending vector. A queue owner chosen round-robin from the
+provider's slot table holds that vector.
+
+```text
+count = output.count                    # captured once
+slot = 0
+for i in 0 .. count-1:
+    link = output.pointer[i]            # pointer reread each iteration
+    detach_endpoint_rings(link, 1)      # 195c270, body+0x80 heads
+    owner = provider.slots70[slot]      # read before reset
+    reset_link_state(link)              # 1958ba0
+    v = owner + 0x28                    # pointer+0, count u32+8, capacity u32+0xC
+    if v.count == v.capacity:
+        reserve(v, v.capacity ? 2*v.capacity : 8)   # 18def10, 32-bit doubling
+    v.pointer[v.count] = link           # pointer and count reread after reserve
+    v.count += 1
+    slot = (slot + 1) % divisor         # 32-bit unsigned div
+```
+
+Pointer-vector reserve `18def10` is reconstructed in the same module as
+`reserve_pose_pointer_vector`. An equal capacity returns immediately. Otherwise
+the routine calls one of three allocator methods through the global
+`0x1433365b8` allocator:
+
+- a null pointer is allocated with `vt+8(size, 0x10, 0x28)`;
+- a nonnull pointer with nonzero capacity is reallocated with
+  `vt+0x10(pointer, size, 0x10, 0x28)`, the tag passed on the stack;
+- a nonnull pointer with zero capacity is released with `vt+0x18(pointer)` and
+  then nulled.
+
+The byte size is the 32-bit `capacity*8`. The new capacity is then stored, and a
+larger count is clamped to it. The retire loop only ever grows, but the release
+and clamp paths belong to the shared helper. Five other call sites use the same
+helper: 18ddf22, 18de029, 18de3c0, 18de62d and 1958783.
+
+Behavior worth preserving:
+
+- Order per link is ring removal, slot read, state reset, then the capacity
+  check. Ring removal must come first, because reset zeroes endpoints +8/+0x10
+  and removal needs them. The queue owner is captured before reset. Count and
+  capacity are read after it.
+- The divisor is a 32-bit unsigned divide applied after each push. A zero
+  divisor with nonempty output takes a divide fault after the first link has
+  been fully queued. An empty output never divides. The refresh always passes 1,
+  so every link lands in slot0's vector.
+- Doubling uses 32-bit `lea edx,[rax+rax]`. A capacity of 0x80000000 would wrap
+  to 0, and reserve would then release the storage before the store. Count above
+  capacity is never grown or checked. Neither case is reachable from valid
+  state; both are recorded rather than guarded.
+- Output count is captured once. Output elements are reread every iteration.
+
+Validation: `native/snow_host/pose_body_connectivity_retire_validation.json`
+records 512 offline comparisons covering 2,901 queued links, 88 vector
+allocations and 936 reallocations. The comparisons also cover 2,804 contact and
+2,003 held pool-return calls and 15 divisor-0 faults. All of the following run
+natively: the retire loop, endpoint-ring removal `195c270` with its accessors
+`18baba0`/`18bb430`, link reset `1958ba0`, contact clearing `1958720`, and
+reserve `18def10`. Only the two protected pool-return blocks (0x19587e9,
+0x1958bd1) and the allocator vtable entries are supplied. The Python side
+composes `retire_pose_body_connectivity` with `detach_pose_endpoint_rings`,
+`reset_pose_link_state` and `reserve_pose_pointer_vector`. It matches every
+supplied call and its arguments, a 0x90-byte link snapshot at each pool-return,
+and every fixture byte. The fixture bytes cover provider, owners, old and new
+queue arrays, bodies, links, contact arrays and output.
+
+Fixtures attach 0..24 links to selector1 rings over four bodies, using the
+validated reconstructed attach rather than native attach. They select a random
+subset in random order. Divisors are 0..5 with aliased slot owners (216 cases).
+Owner vectors are null or nonnull with capacities 0..8. In 128 mutation trials,
+the pool-return services redirect the current provider slot and fill an owner
+vector during reset. A separate 256-case leaf comparison of `18def10` covers its
+no-op, allocate, reallocate, release and count-clamp paths, plus 32-bit size
+truncation. The harness was shown to fail twice. Reading the provider slot after
+reset fails at retire case 81. A shifted count clamp fails at reserve case 46.
+Public tests compose retire as the refresh's third stage, with real ring removal
+and link reset. Pool internals, locks and the allocator remain supplied. The
+queue's consumer is unreconstructed, and no live or concurrency guarantee
+follows.
+
+Static leads, not implemented:
+
+- The other caller is `18ddc40`. It calls retire with a divisor of
+  `min(32, min(dword [[0x143336610]+0x10], n/10+1))`, then `18de510` with the same
+  divisor. It then gathers `&provider.slots70[i]+0x28` for each slot and
+  dispatches the slot table at provider+0x70 through `18b7ca0`, with callback
+  `0x1418df760`, followed by `18df4e0` and `18df630`. The slots therefore look
+  like per-worker job contexts, and the +0x28 vectors look like per-worker
+  pending link work. Neither the worker semantics nor the job consumer is
+  reconstructed.
+- `18de510`, the neighbor routine, walks provider+0x38's indexed tree in order.
+  For values whose dword+0x58 == 4, it removes the node through `19a40b0`, then
+  calls `195c270(value,0)` (selector0, body+0x88) and `195c360(value)`. It
+  appends the value to the slot owner's vector at +0x48, using the same
+  round-robin and reserve.
+- The pool-return blocks in `1958720`/`1958ba0` push onto free lists at globals
+  0x143336bb0/0x143336bb8 and 0x143336aa8/0x143336ab0, under obfuscated thunks.
+  They remain supplied.

@@ -1803,3 +1803,22 @@ link(group,object) runs for every eligible object. Each queued group then gets
 a1=0, process(context,group), and a u32 increment of the reloaded context464, in
 that order. Queue storage is a list. Link/process effects, count-shrinking
 callbacks, null pointers and allocation failure are not modeled.
+
+### Body connectivity retire
+
+`engine.pose_body_connectivity_retire.retire_pose_body_connectivity(provider, output, divisor, *, queue_owners, queue_arrays, detach, reset, reserve)`
+follows LINK_SOLVER.md, "Body connectivity retire" (RVA 0x18de440). For each
+output link, captured length and live elements, the call order is:
+
+1. `detach(link,1)`, which binds to `detach_pose_endpoint_rings`;
+2. the provider slot read at 0x70+8*slot;
+3. `reset(link)`, which binds to `reset_pose_link_state`.
+
+The routine then appends the link to the owner+0x28 pointer vector. A full
+vector first calls `reserve(view, 2*cap or 8)`, which binds to
+`reserve_pose_pointer_vector(descriptor, capacity, *, allocator)` (RVA
+0x18def10, using the allocator's allocate/reallocate/release). The slot then
+advances 32-bit modulo the divisor. A zero divisor raises ZeroDivisionError after
+the first push, where native takes a divide fault. Nothing is freed. The
+IndexError for undersized queue storage is an authored guard. Allocator and pool
+internals, queue consumers and concurrency are not modeled.

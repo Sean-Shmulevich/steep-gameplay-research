@@ -1,0 +1,58 @@
+{
+  "schema": "pose-body-connectivity-retire-validation-v1",
+  "cases": 512,
+  "reserve_leaf_cases": 256,
+  "passed": true,
+  "links": 2901,
+  "growths": 1024,
+  "allocations": 88,
+  "reallocations": 936,
+  "divisor_faults": 15,
+  "aliased_owner_cases": 216,
+  "mutation_cases": 128,
+  "contact_releases": 2804,
+  "held_releases": 2003,
+  "max_divisor": 5,
+  "reserve_paths": {
+    "noop": 55,
+    "allocate": 56,
+    "reallocate": 100,
+    "release": 45,
+    "clamped": 100
+  },
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18de440",
+  "native_callees_run": [
+    "0x195c270",
+    "0x18baba0",
+    "0x18bb430",
+    "0x1958ba0",
+    "0x1958720",
+    "0x18def10"
+  ],
+  "method": "Original retire loop, endpoint-ring removal, link state reset, contact clearing and pointer-vector reserve run natively; only the two protected pool-return blocks (0x19587e9, 0x1958bd1) and the allocator vtable entries (+8/+0x10/+0x18) are supplied. Python side composes retire with the existing ring-removal, link-reset and reserve reconstructions.",
+  "comparisons": [
+    "ordered pool-return and allocator calls with every argument",
+    "0x90-byte link snapshot at each pool-return call",
+    "all fixture bytes: provider, queue owners, initial and newly allocated queue arrays, bodies, links, contact arrays, output descriptor and array",
+    "divide-fault occurrence and partial state for divisor 0"
+  ],
+  "coverage": [
+    "divisors 0..5 including aliased slot owners",
+    "0..24 links attached to selector1 rings over four bodies; random subset selected in random order",
+    "queue owners with null/nonnull storage, capacities 0..8, full and nonfull counts",
+    "mutation trials redirecting the provider slot and filling an owner vector during reset",
+    "direct reserve leaf: no-op, allocate, reallocate, release, count clamp and 32-bit size truncation"
+  ],
+  "failure_proof": [
+    "Reading the provider slot after reset instead of before fails at retire case 81 (owner bytes differ).",
+    "Clamping count only above capacity+1 fails at reserve leaf case 46."
+  ],
+  "limits": [
+    "Ring fixtures are built by the reconstructed attach (itself natively validated), not by native attach in this harness.",
+    "Protected pool-return blocks, locks and allocator internals are supplied stand-ins; the authored allocator mirror is not engine behavior.",
+    "Consumers of the provider+0x70 queue vectors are not reconstructed.",
+    "Divisor-0 divide fault is compared only as fault occurrence plus memory state.",
+    "No live validation or concurrent mutation guarantee."
+  ]
+}
