@@ -9176,3 +9176,11 @@ sum wrap, live behavior. The allocator stays supplied.
 
 Static leads: the only 32-bit hazards are the sum wrap and `2n` pass count wrap; both need
 implausible counts.
+
+### Pair link merges
+
+`18df4e0(provider, workers)` and `18df630(provider, workers)` are the two merges that
+`18ddc40` calls after dispatch. Both are reconstructed in `engine/pose_pair_link_merge.py`,
+together with the sort comparator `18df4a0`. Every other callee is a supplied service.
+
+```text

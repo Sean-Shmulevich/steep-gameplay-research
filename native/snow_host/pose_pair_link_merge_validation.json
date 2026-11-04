@@ -1,0 +1,50 @@
+{
+  "schema": "pose-pair-link-merge-validation-v1",
+  "cases": 1280,
+  "passed": true,
+  "merge_links_cases": 512,
+  "merge_neighbor_cases": 512,
+  "comparator_cases": 256,
+  "reserve_calls": 518,
+  "no_reserve": 506,
+  "zero_worker": 108,
+  "total_entries": 26118,
+  "max_entries": 146,
+  "mutation_cases": 256,
+  "mutations_changed_walk": 158,
+  "odd_worker_counts": 510,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routines": [
+    "0x18df4e0 new-link merge",
+    "0x18df4a0 link comparator",
+    "0x18df630 neighbor-record merge (tail jump to 0x18dea90)"
+  ],
+  "comparator_image_address": "0x1418df4a0",
+  "supplied": [
+    "0x18defa0 and 0x18df0c0 vector reserve (tags 0x22/0x24; the common body is reconstructed as reserve_pose_pointer_vector but not run here)",
+    "0x1c6afb0 copy",
+    "0x1c8fd50 sort",
+    "0x195c170 ring attach",
+    "0x18de6a0 and 0x18de830 tree inserts",
+    "0x18dea90 neighbor-tree walk"
+  ],
+  "method": "Original merges run natively in Unicorn over the memory image; supplied callees are intercepted at entry and executed by one shared authored model (bump reserve, byte copy, reverse sort, logging). The Python modules run the same model over a PoseFlatMemory copy of the 0xb0000-byte fixture. The comparator runs natively and is compared to its signed 32-bit result.",
+  "comparisons": [
+    "ordered service calls with every argument",
+    "provider vector descriptor snapshots at reserve, sort and finish, and provider count/pointer at every attach",
+    "all 0xb0000 fixture bytes after each run (provider, 32 owners, worker vectors, link pool, merged arrays, reserve allocations)",
+    "comparator signed 32-bit result"
+  ],
+  "coverage": [
+    "worker counts 0..32 including odd, zero and one",
+    "capacity below, at, above and zero relative to the total, including null or valid provider pointers",
+    "mutation trials: attach/insert services shrink the provider count or swap its array pointer mid-walk (both reread every pass)",
+    "comparator kinds including 0x7fffffff/0x80000000/0xffffffff difference wrap"
+  ],
+  "limits": [
+    "Fixture totals reach at most 146 entries (32 workers x 20 slots allowed); the native capacity-doubling loop never terminates when the capacity wraps to 0, and the Python module raises OverflowError there instead (not exercised natively).",
+    "Link records are never null: the native key read of a null entry would fault at address 0x10, the Python helper mirrors the read.",
+    "The sort is supplied (a reversal stands in); sort stability and algorithm are not asserted.",
+    "No live validation or concurrency guarantee."
+  ]
+}

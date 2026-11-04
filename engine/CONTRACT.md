@@ -1886,3 +1886,11 @@ first push. Undersized queue storage raises an authored IndexError.
 Levels three pointer vectors per context across n contexts using fixed limits of mean + 1 and 2n
 one-hop ring passes. Allocator is supplied. Offsets are evidence anchors. Validated against native
 code over 512 Unicorn cases; no claim of original-engine equivalence.
+
+### Pair link merges
+
+`engine/pose_pair_link_merge.py`: `merge_pose_new_links` (18df4e0),
+`merge_pose_neighbor_records` (18df630), `compare_pose_link_order` (18df4a0) and the
+tagged reserve wrappers for 18defa0/18df0c0. Memory object with q/d/set_q/set_d. Services
+supplied: reserve, copy, sort, attach, insert, finish (neighbor-tree walk 18dea90).
+Offsets are evidence anchors only. Receipt `native/snow_host/pose_pair_link_merge_validation.json`.
