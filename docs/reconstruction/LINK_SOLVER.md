@@ -8482,6 +8482,8 @@ Further static leads, not yet implemented by this module:
 - `18e28d0` zeroes context464..46b, skips selected objects with flags84 bit1, and
   follows endpoint8→body.group10. Groups with a0 and a1 both zero are marked a1=1
   and queued once; `19581c0(group,object)` runs for each eligible selected object.
+  Correction: `19581c0` removes the object from the group's link array; see
+  "Group link-array removal".
   The subsequent group loop clears a1 before calling `18e2de0` and increments
   context464. Those callee effects and full group rebuild remain unresolved.
 - `18de440` consumes that same selected-object array. Its opening calls include
@@ -8543,3 +8545,64 @@ a valid red-black tree. A deliberate 4-byte-key mutation fails the comparison.
 Public tests compose this selector as the refresh's collect stage. The selected
 values are not yet joined to concrete object types. The rebuild and retire stages
 remain supplied, and no live concurrency guarantee follows.
+
+### Group link-array removal
+
+`engine/pose_group_link_remove.py` reconstructs RVA `0x19581c0`, a 15-instruction
+leaf (0x19581c0..0x141958201, no unwind entry) called by `18e28d0` at `0x1418e29b4`
+as `(group, object)` for each eligible selected link object. It is not an append:
+it removes the object from the group's link/constraint array. The group layout
+(+0x40 slot array, +0x48 uint32 count, link index at +0x80, 0xffffffff detached) is
+the one already documented for `remove_body_constraints` in CENTRAL_IMPULSE.md
+(Body removal and attached constraint pruning), whose inline copy of this exact
+sequence is reused; no new layout was introduced.
+
+```text
+index = object.index80                 # trusted, membership not searched
+group.count48 -= 1
+slots = group.slots40
+slots[index] = slots[group.count48]    # last active pointer (may be itself)
+object.index80 = 0xffffffff
+if index < group.count48:              # a different member moved into the slot
+    slots[index].index80 = index
+```
+
+Quirks: the removed pointer is overwritten, not zeroed, and the old last slot keeps
+its pointer (inactive tail retained). When the removed object is last (index ==
+new count) the copy is a self-write and no index repair happens. Native does no
+bounds check: index >= old count, the 0xffffffff detached value (zero-extended into
+a 0x7fffffff8-byte offset) or count 0 (wraps to 0xffffffff) read/write out of the
+array. The Python raises ValueError for those cases rather than inventing behavior.
+In `18e28d0` this runs after the group a1 queue marking, so the queued group's link
+array is shrunk before `18e2de0` runs on it; that downstream effect is unresolved.
+
+Validation: `native/snow_host/pose_group_link_remove_validation.json` records 512
+native Unicorn comparisons (11999 members total, groups of 1..199, 170 swap-with-
+repair, 136 last-member, 206 single-member cases) of the original run as a leaf with
+no callees or supplied services. Group header (0x100 bytes), the whole slot array
+including inactive tail, and every member object (0x100 bytes each, random
+garbage elsewhere) are compared byte for byte. A deliberate `index < count - 1`
+bug failed the harness at trial 4; it was restored and the receipt regenerated.
+Only valid active indices are exercised; layouts come from caller context, not a
+native constructor; no live or concurrent guarantee.
+
+### Link state reset before provider queue handling
+
+`engine/pose_link_state_reset.py` reconstructs RVA `0x1958ba0`, called by the connectivity retire stage `18de440` immediately after `195c270(object,1)` (endpoint ring removal). It is a single contiguous routine (unwind entry `0x1958ba0..0x1958c13`, no external chunks).
+
+```
+reset_pose_link_state(link):
+    link[+8]  = 0                      # endpoint body 1
+    link[+0x10] = 0                    # endpoint body 2
+    0x1958720(link+0x48, null)         # contact span: array +0x58, count +0x60
+        # = clear_pose_link_contacts: release each nonnull entry payload (+8 of 16-byte entry)
+        #   then count(+0x60) = 0
+    held = link[+0x78]
+    if held:
+        pool_return(held)              # protected block 0x1958bd1..0x1958bff
+        link[+0x78] = 0
+```
+
+Quirks: endpoints are cleared first, so the rings (+0x20..+0x3f) are left exactly as `195c270` left them and the record can no longer be traced to its bodies. The contact span is the same one cleared by `clear_pose_link_contacts` (wrapper `0x1958b90` is equivalent but not called here); only the count is reset, entry bytes and capacity persist. The held payload at +0x78 is returned to a different pool global than the contact payloads (`[rip+0x19dded8]` versus `[rip+0x19de3c8]`); the visible publication writes the old free-list head into the payload, decrements the pool count at +0x28 and installs the payload as head at +0x30, bracketed by obfuscated protected calls. +0x78 is cleared only after the return, and a null +0x78 is skipped. Routine does not free the link itself; its role as retirement of link state (not destruction) is an authored label.
+
+Validation. `analysis/command-executor-audit/check_pose_link_state_reset.py` runs the original routine in Unicorn for 512 randomized cases (341 with a held payload, 171 null; 0..16 contact entries, 1624 contact releases, 681 null contact payloads, 129 empty spans), supplying both protected pool-return blocks (`0x19587e9`, `0x1958bd1`) as recording services. It compares service order and arguments, the full 0x90-byte link snapshot at every service call, final link bytes, the contact entry array including slack past the active extent, and return address/stack pointer. All 512 pass; a deliberately injected bug (skipping the +0x78 clear) fails at trial 1 and was reverted. Limits: pool locks and free-list publication are not run or validated, payloads are opaque tokens, malformed counts and live concurrency are excluded. Receipt: `native/snow_host/pose_link_state_reset_validation.json`.

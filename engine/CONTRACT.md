@@ -1779,3 +1779,16 @@ then removes the node with 8-byte-key retirement (`_Tree.remove(key_size=8)`).
 The return value is the ordered selection list. Output growth and allocation
 failures are not modeled. Concurrent mutation and selected object types remain
 unresolved.
+
+### Group link-array removal
+
+`engine.pose_group_link_remove.remove_pose_group_link(group, link, *, objects, slot_arrays)`:
+  recovered RVA 0x19581c0 swap-last removal of one link from a body group's link
+  array (group +0x40 slots, +0x48 count; link +0x80 index, 0xffffffff when removed).
+  Operates in place on raw bytes-like group/link plus pointer-keyed slot arrays and
+  member objects. No services needed. Index out of range or zero count raises
+  ValueError (authored guard; native is unchecked). Evidence: native/snow_host/pose_group_link_remove_validation.json.
+
+### Link state reset
+
+`engine.pose_link_state_reset.reset_pose_link_state(link, *, entry_arrays, release_contact, release_held)` (RVA 0x1958ba0). Mutates the raw link in place: zero +8/+0x10, clear contact span via `clear_pose_link_contacts` (services `release_contact(payload)`, `entry_arrays[pointer]` bytes), then `release_held(token)` for nonzero +0x78 followed by zeroing it. Supplied services: `release_contact` (pool at 0x19de3c8 return block) and `release_held` (pool at 0x19dded8 return block); both observe the link as already modified. No rollback on service failure.

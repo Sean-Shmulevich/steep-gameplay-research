@@ -8597,3 +8597,5 @@ cases. This is not wired into a live host API and does not pin manager or module
   all node, descriptor and fixture bytes. Only output growth is supplied. This
   replaces the first supplied refresh stage. Rebuild (`18e28d0`) and retire
   (`18de440`) remain supplied; neither is a live-safe mod operation.
+- Reconstructed `19581c0` (`engine/pose_group_link_remove.py`): group link-array swap-last removal with index repair; 5 unit tests, 512-case native leaf comparison of all fixture bytes. Closes the `19581c0` lead in the `18e28d0` notes (corrects the assumption that it appends).
+- `1958ba0` reconstructed (`engine/pose_link_state_reset.py`): link endpoint clear, contact-span retirement and held-payload (+0x78) return; 512-case native comparison with both pool-return blocks supplied, harness failure proven by injected bug, 4 unit tests. Binds as the post-`195c270` service in `18de440`.
