@@ -11678,3 +11678,59 @@ statically (the census saw it only through `18e0980`).
 Static leads: the kind-6 constructor and vtable; `19974c0` with `1996280` / `1995fa0`;
 `19507f0` traversal order (FIFO, two nodes at a time), which sets triangle order and so
 truncation order.
+
+### Live terrain filter settings
+
+A live observation, not a reconstruction check: the shape fields and geom flags the
+testers actually received while riding. Receipt:
+`native/snow_host/terrain_flags_live_observation.json`.
+
+**Capture.** Same private plugin hooks and identity checks as "Live narrow-phase tester
+census"; the only writes are vtable-pointer compare-exchanges to private copies,
+restored and verified, and no obfuscated thunks were traced. Added reads only, inside
+the tester slot `+0x18` detour before forwarding: the geom shape pointers `+0x80` (A) and
+`+0x88` (B) and flag bytes `+0x90/+0x91/+0x92`; per distinct shape pointer, on first
+sight, a copy of the shape header (0xc0 bytes) and, for kind 6, the mesh header and a
+statistic over at most 4096 group keys; once at arm time, the player main and rider body
+resource arrays (body+0xb8, u16 count +0xc0, 72-byte entries, resource +0x10). Each
+header was re-read after restore. Session tf-01: 240 s, 27,760 steps, 33 single-key
+actions, about 980 m descended, no KO; 32/32 testers restored and read back as original;
+0 cell mismatches; 177 shapes. The receipt holds field values, counts and hashes only.
+
+**Geom flags.** All 977,454 tester calls ((4,7) 462,089, (2,7) 416,230, (4,6) 57,752,
+(2,6) 23,334, (4,4) 17,538, (2,4) 511) had `+0x90 = 1`, `+0x91 = 0`, `+0x92 = 1`. `+0x80`
+held the cell's A kind and `+0x88` its B kind in every call.
+
+**Kind 7 (52 tiles, 878,319 calls).** Every tile had vtable `29ca138` and `+0x40 = 2`, so
+the `1996e50` filter in `19e0430` runs on every live (x,7) call. Every tile also had
+diagonal byte `+0x58 = 1`, samples `+0x68/+0x6a` = 129 x 129, cells `+0x9c/+0x9e` = 128 x
+128 and spacing `+0x70/+0x74` = 0.4882816 (about 62.5/128). XY extent 62.50004 = 128 x
+spacing; Z extent 64–191, equal to `+0x98 - +0x94`. Profile default `+0x20`, table `+0xa0`
+and map `+0xb0` were all non-null.
+
+**Kind 6 (34 meshes, 81,086 calls).** Every mesh had vtable `29ca638` (a lead for the
+unfound kind-6 class) and mode `+0x40 = 2`, so `19974c0` runs, and the key pass runs
+because `+0x90 = 1`. The mode-2 tables are on the mesh (`19974c0` reads
+`[shape+0x48]+0xa8`) and were non-null on all 34. Scale is uniform per shape, 0.703 to
+1.185, never negative. `+0x68` is not a boolean: 0 on 32 meshes, equal to the triangle
+count on two (174, 870), which are the two with `+0x50`/`+0x60` tables; the core tests
+it for nonzero. Triangle counts 10 to 4550. Group keys `mesh+0x70` are mostly one per
+triangle and rarely equal the index; some meshes share keys (180 → 89 in pairs, 870 →
+569, 174 → 114, 30 → 26, 22 → 13/17).
+
+**Rider shapes.** Main body: 4 capsules, (h, r) = (0.175, 0.16), 2 x (0.5625, 0.034375)
+and (0.6101562, 0.05546877). Rider body: 15 capsules, h 0.0055–0.177, r 0.046–0.154; the
+same parameter sets reappeared on new pointers about 13 s and 42 s after install (cause
+not established). Spheres (vtable `29c9be8`): 33 pointers with only three radii, 0.005,
+0.010 and 0.012, in neither player array; owner unidentified. Capsule vtable `29c9b58`.
+Five long capsules with unidentified owners appeared only in (2,4) and (4,4).
+
+**Tester counts.** (4,7) max n 5 (once), (2,7) 3, (4,6) 7 (once), (2,6) 0 in every call,
+(4,4) 2, (2,4) 1. (4,7) n = 5 and (4,4) n = 2 exceed the census maxima of 4 and 1; both
+remain within the static bounds (terrain counts go to `198f910`; (4,4) is at most 2).
+
+Limits: one session, one spawn and one descent line. Fields read once per pointer; at
+the end re-read, 7/52 grid and 13/34 mesh pointers still held the same kind, vtable and
+fields, the rest had been freed or reused. Ownership checked only against arrays read at
+arm time. Observations under Wine on macOS for this build, not settings for other maps
+or the original engine.

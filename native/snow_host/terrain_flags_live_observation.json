@@ -1,0 +1,4279 @@
+{
+ "schema": "terrain-flags-live-observation-v1",
+ "date": "2026-11-05",
+ "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+ "kind": "live read-only observation (not a reconstruction check): terrain filter settings and rider shape parameters actually passed to the narrow-phase testers while riding",
+ "capture": {
+  "mechanism": "private bounded snow-host plugin derived from the narrow-phase tester census (same hooks A/B/T: vtable-pointer compare-exchanges to private copies, restored and verified; no code bytes, page protections or shared .rdata changed; no obfuscated thunks traced or emulated). Added reads only: inside the tester slot +0x18 detour, before forwarding, the geom block shape pointers +0x80 (A) / +0x88 (B) and flag bytes +0x90/+0x91/+0x92; per distinct shape pointer, on first sight, a ReadProcessMemory copy of the shape header (0xc0 bytes) and for kind 6 of the mesh header plus a statistic over at most 4096 u16 group keys; per shape call counts, n, flag combinations and kind pairs. At arm time the player main/rider body resource arrays (body+0xb8 pointer, +0xc0 u16 count, 72-byte entries, resource at +0x10) were read once for ownership. After restore each recorded shape header was re-read and the listed fields compared.",
+  "privacy": "raw header copies stay in the private session directory; this receipt holds only decoded field values, booleans for pointer presence, counts and hashes (no pointers, no sample data, no absolute positions)",
+  "identity_checks": "all census identity checks (image base, 18b8fa0/getter fingerprints, broad-phase/controller/factory vtables and slots, selector fingerprint and call sites, tester call sites, all 64 dispatcher cells with vtables, slots, prefix words and entry fingerprints); per tester call the geom +0x80/+0x88 shape kinds were compared with the tester cell; kind-7 shape vtable compared with image 0x29ca138",
+  "restore": "testers, factory, broad-phase compare-exchanged back after re-checking owners; drained; original vptrs re-read",
+  "plugin_source_sha256": "79b05ff3d3b9c447224750f16abee10e9e10d14a3e60b679f1de7ce40023efd4",
+  "coordinator_source_sha256": "56b6f8ccbe86821d7d843ed4994364b4b9598328e09cbb4a850c2a542a3f595c",
+  "driving": "director startup; one pre-arm forward hold; then single-key holds <=1500 ms via the input helper: forward 17, steer 30/32 1500 ms, jump 57 700/400 ms",
+  "field_sources": "LINK_SOLVER.md: \"Kind-7 grid resource bounds\", \"Grid cell vertices and triangle identities\", \"Grid triangle candidate enumeration\", \"Narrow-phase capsule-grid tester\", \"Narrow-phase capsule-terrain (kind 6) tester\"; mesh +0xa8/+0xb8 owner confirmed statically from 19974c0 (mov rax,[rcx+0x48]; cmp qword [rax+0xa8],0)"
+ },
+ "attempts": [
+  {
+   "name": "tf-01",
+   "launcher_ok": true,
+   "ended_by": "stop",
+   "coordinator_error": null,
+   "plugin_done": true,
+   "testers_installed": 32
+  }
+ ],
+ "sessions": [
+  {
+   "name": "tf-01",
+   "launcher_result": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+   },
+   "coordinator": {
+    "ok": true,
+    "error": null,
+    "navigation": "scheduler_ready",
+    "image_base_matches": true
+   },
+   "ko": false,
+   "plugin_done": {
+    "verified": 1,
+    "installed": 1,
+    "why": "",
+    "restored": 1,
+    "vptr_after_original": 1,
+    "drained": 1,
+    "factory_verified": 1,
+    "factory_installed": 1,
+    "factory_why": "",
+    "factory_restored": 1,
+    "factory_vptr_after_original": 1,
+    "factory_drained": 1,
+    "testers_verified": 1,
+    "testers_cells_ok": 32,
+    "testers_empty_cells_ok": 32,
+    "testers_distinct": 1,
+    "testers_installed": 32,
+    "testers_restored": 32,
+    "testers_vptr_after_original": 32,
+    "testers_drained": 1,
+    "testers_why": "",
+    "tls_ok": 1,
+    "window_ms": 240000,
+    "window_actual_ms": 240023,
+    "calls60": 27760,
+    "foreign60": 0,
+    "steps": 27760,
+    "selector_calls": 1123286,
+    "selector_foreign_self": 0,
+    "selector_bit15": 1123286,
+    "selector_ret_ours": 1123286,
+    "selector_ret_other": 0,
+    "tester_calls": 977454,
+    "tester_unknown_self": 0,
+    "tester_link_cell_mismatch": 0,
+    "n_gt4_total": 2,
+    "init_tid": 408,
+    "run_tid": 460,
+    "player_roots_given": 2
+   },
+   "actions": {
+    "count": 33,
+    "by_label": {
+     "forward": 18,
+     "jump": 7,
+     "pre_arm_forward": 1,
+     "steer_left": 4,
+     "steer_right": 3
+    }
+   },
+   "data": {
+    "selector_histogram_pair_x_site": {
+     "(2,4)": {
+      "18dd400 direct (sel ret 18dda2c)": 511
+     },
+     "(2,6)": {
+      "terrain wrapper 18e0980 (sel ret 18e09de)": 23334
+     },
+     "(2,7)": {
+      "terrain wrapper 18e08a0 (sel ret 18e08fe)": 416230
+     },
+     "(4,3)": {
+      "flagged-neighbor body 18dfa10 chunk (sel ret 18dffd4)": 145782,
+      "flagged-neighbor body 18e01e0 chunk (sel ret 18e064b)": 50
+     },
+     "(4,4)": {
+      "18dd400 direct (sel ret 18dda2c)": 17538
+     },
+     "(4,6)": {
+      "terrain wrapper 18e0980 (sel ret 18e09de)": 57752
+     },
+     "(4,7)": {
+      "terrain wrapper 18e08a0 (sel ret 18e08fe)": 462089
+     }
+    },
+    "selector_null_tester_by_pair": {},
+    "tester_census": [
+     {
+      "pair": "(4,7)",
+      "kinds": "capsule x terrain grid",
+      "tester_return_site": "terrain wrapper 18e08a0 (tester ret 18e0922)",
+      "calls": 462089,
+      "max_n": 5,
+      "n_histogram": {
+       "0": 425450,
+       "1": 28879,
+       "2": 6574,
+       "3": 132,
+       "4": 1053,
+       "5": 1
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "terrain wrapper 18e08a0 (sel ret 18e08fe)": 462089
+      },
+      "calls_n_gt4": 1
+     },
+     {
+      "pair": "(2,7)",
+      "kinds": "sphere x terrain grid",
+      "tester_return_site": "terrain wrapper 18e08a0 (tester ret 18e0922)",
+      "calls": 416230,
+      "max_n": 3,
+      "n_histogram": {
+       "0": 236522,
+       "1": 177520,
+       "2": 1622,
+       "3": 566
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "terrain wrapper 18e08a0 (sel ret 18e08fe)": 416230
+      },
+      "calls_n_gt4": 0
+     },
+     {
+      "pair": "(4,6)",
+      "kinds": "capsule x terrain",
+      "tester_return_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "calls": 57752,
+      "max_n": 7,
+      "n_histogram": {
+       "0": 56551,
+       "1": 771,
+       "2": 424,
+       "3": 4,
+       "4": 1,
+       "7": 1
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "terrain wrapper 18e0980 (sel ret 18e09de)": 57752
+      },
+      "calls_n_gt4": 1
+     },
+     {
+      "pair": "(2,6)",
+      "kinds": "sphere x terrain",
+      "tester_return_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "calls": 23334,
+      "max_n": 0,
+      "n_histogram": {
+       "0": 23334
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "terrain wrapper 18e0980 (sel ret 18e09de)": 23334
+      },
+      "calls_n_gt4": 0
+     },
+     {
+      "pair": "(4,4)",
+      "kinds": "capsule x capsule",
+      "tester_return_site": "18dd400 direct (tester ret 18dda4b)",
+      "calls": 17538,
+      "max_n": 2,
+      "n_histogram": {
+       "0": 16460,
+       "1": 1074,
+       "2": 4
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "18dd400 direct (sel ret 18dda2c)": 17538
+      },
+      "calls_n_gt4": 0
+     },
+     {
+      "pair": "(2,4)",
+      "kinds": "sphere x capsule",
+      "tester_return_site": "18dd400 direct (tester ret 18dda4b)",
+      "calls": 511,
+      "max_n": 1,
+      "n_histogram": {
+       "0": 480,
+       "1": 31
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "18dd400 direct (sel ret 18dda2c)": 511
+      },
+      "calls_n_gt4": 0
+     }
+    ],
+    "max_n_per_pair_and_caller": {
+     "(4,7)": {
+      "terrain wrapper 18e08a0 (tester ret 18e0922)": {
+       "calls": 462089,
+       "max_n": 5,
+       "calls_n_gt4": 1
+      }
+     },
+     "(2,7)": {
+      "terrain wrapper 18e08a0 (tester ret 18e0922)": {
+       "calls": 416230,
+       "max_n": 3,
+       "calls_n_gt4": 0
+      }
+     },
+     "(4,6)": {
+      "terrain wrapper 18e0980 (tester ret 18e0a02)": {
+       "calls": 57752,
+       "max_n": 7,
+       "calls_n_gt4": 1
+      }
+     },
+     "(2,6)": {
+      "terrain wrapper 18e0980 (tester ret 18e0a02)": {
+       "calls": 23334,
+       "max_n": 0,
+       "calls_n_gt4": 0
+      }
+     },
+     "(4,4)": {
+      "18dd400 direct (tester ret 18dda4b)": {
+       "calls": 17538,
+       "max_n": 2,
+       "calls_n_gt4": 0
+      }
+     },
+     "(2,4)": {
+      "18dd400 direct (tester ret 18dda4b)": {
+       "calls": 511,
+       "max_n": 1,
+       "calls_n_gt4": 0
+      }
+     }
+    },
+    "n_gt4_events_logged": 2,
+    "n_gt4_events_total": 2,
+    "n_gt4_events_sample": [
+     {
+      "pair": "(4,6)",
+      "tester_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "selector_site": "terrain wrapper 18e0980 (sel ret 18e09de)",
+      "n": 7,
+      "capacity": 500,
+      "ms_after_install": 52509
+     },
+     {
+      "pair": "(4,7)",
+      "tester_site": "terrain wrapper 18e08a0 (tester ret 18e0922)",
+      "selector_site": "terrain wrapper 18e08a0 (sel ret 18e08fe)",
+      "n": 5,
+      "capacity": 500,
+      "ms_after_install": 208208
+     }
+    ],
+    "action_windows": {
+     "pre_arm_forward": {
+      "actions": 1,
+      "tester_calls": 1485,
+      "nmax": 2,
+      "calls_n_ge2": 2,
+      "calls_n_gt4": 0
+     },
+     "forward": {
+      "actions": 18,
+      "tester_calls": 614109,
+      "nmax": 7,
+      "calls_n_ge2": 7873,
+      "calls_n_gt4": 2
+     },
+     "steer_left": {
+      "actions": 4,
+      "tester_calls": 126442,
+      "nmax": 2,
+      "calls_n_ge2": 704,
+      "calls_n_gt4": 0
+     },
+     "jump": {
+      "actions": 7,
+      "tester_calls": 245224,
+      "nmax": 4,
+      "calls_n_ge2": 1856,
+      "calls_n_gt4": 0
+     },
+     "steer_right": {
+      "actions": 3,
+      "tester_calls": 92359,
+      "nmax": 4,
+      "calls_n_ge2": 1143,
+      "calls_n_gt4": 0
+     }
+    },
+    "last_10s_before_host_disconnect": null,
+    "bins_500ms": {
+     "count": 481,
+     "tester_calls_total": 977454,
+     "max_nmax": 7,
+     "bins_with_n_ge2": 343,
+     "bins_with_n_gt4": 2
+    }
+   },
+   "shapes": {
+    "capsule (kind 4)": {
+     "distinct_shapes": 58,
+     "distinct_value_sets": 28,
+     "value_sets": [
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.005503118,
+        "radius_+0x44": 0.1262945
+       },
+       "shapes": 3,
+       "tester_calls": 37362,
+       "calls_n_pos": 1505,
+       "records_sum": 2009,
+       "max_n": 3,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2,
+        "player rider body": 1
+       },
+       "end_reread": {
+        "fields changed": 2,
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 37362
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.1137547,
+        "radius_+0x44": 0.08999121
+       },
+       "shapes": 3,
+       "tester_calls": 33901,
+       "calls_n_pos": 1308,
+       "records_sum": 1424,
+       "max_n": 7,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2,
+        "player rider body": 1
+       },
+       "end_reread": {
+        "fields changed": 2,
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 33901
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.1765795,
+        "radius_+0x44": 0.08191557
+       },
+       "shapes": 3,
+       "tester_calls": 33528,
+       "calls_n_pos": 1061,
+       "records_sum": 1202,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "player rider body": 1,
+        "not in player main/rider resource arrays": 2
+       },
+       "end_reread": {
+        "kind/vtable changed": 1,
+        "fields changed": 2
+       },
+       "calls_with_+0x92": 33528
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.03022015,
+        "radius_+0x44": 0.06760593
+       },
+       "shapes": 3,
+       "tester_calls": 33501,
+       "calls_n_pos": 493,
+       "records_sum": 732,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2,
+        "player rider body": 1
+       },
+       "end_reread": {
+        "fields changed": 2,
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 33501
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.09999882,
+        "radius_+0x44": 0.06351112
+       },
+       "shapes": 3,
+       "tester_calls": 33160,
+       "calls_n_pos": 900,
+       "records_sum": 995,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2,
+        "player rider body": 1
+       },
+       "end_reread": {
+        "fields changed": 1,
+        "fields unchanged": 1,
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 33160
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.1010931,
+        "radius_+0x44": 0.0624169
+       },
+       "shapes": 3,
+       "tester_calls": 32818,
+       "calls_n_pos": 714,
+       "records_sum": 788,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2,
+        "player rider body": 1
+       },
+       "end_reread": {
+        "fields changed": 2,
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 32818
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.1029749,
+        "radius_+0x44": 0.06070517
+       },
+       "shapes": 3,
+       "tester_calls": 32713,
+       "calls_n_pos": 1845,
+       "records_sum": 1934,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2,
+        "player rider body": 1
+       },
+       "end_reread": {
+        "fields changed": 2,
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 32713
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.1028606,
+        "radius_+0x44": 0.06081936
+       },
+       "shapes": 3,
+       "tester_calls": 32506,
+       "calls_n_pos": 862,
+       "records_sum": 943,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "player rider body": 1,
+        "not in player main/rider resource arrays": 2
+       },
+       "end_reread": {
+        "kind/vtable changed": 1,
+        "fields changed": 1,
+        "fields unchanged": 1
+       },
+       "calls_with_+0x92": 32506
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.1768286,
+        "radius_+0x44": 0.08166866
+       },
+       "shapes": 3,
+       "tester_calls": 32446,
+       "calls_n_pos": 1002,
+       "records_sum": 1061,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2,
+        "player rider body": 1
+       },
+       "end_reread": {
+        "fields changed": 2,
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 32446
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.03635889,
+        "radius_+0x44": 0.06559113
+       },
+       "shapes": 2,
+       "tester_calls": 32397,
+       "calls_n_pos": 388,
+       "records_sum": 481,
+       "max_n": 3,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2
+       },
+       "end_reread": {
+        "fields changed": 2
+       },
+       "calls_with_+0x92": 32397
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.08121245,
+        "radius_+0x44": 0.08301187
+       },
+       "shapes": 2,
+       "tester_calls": 31287,
+       "calls_n_pos": 1173,
+       "records_sum": 1258,
+       "max_n": 3,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2
+       },
+       "end_reread": {
+        "fields changed": 2
+       },
+       "calls_with_+0x92": 31287
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.04516247,
+        "radius_+0x44": 0.0459375
+       },
+       "shapes": 2,
+       "tester_calls": 31002,
+       "calls_n_pos": 1098,
+       "records_sum": 1184,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2
+       },
+       "end_reread": {
+        "fields changed": 2
+       },
+       "calls_with_+0x92": 31002
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.04527014,
+        "radius_+0x44": 0.04582982
+       },
+       "shapes": 2,
+       "tester_calls": 30652,
+       "calls_n_pos": 717,
+       "records_sum": 775,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2
+       },
+       "end_reread": {
+        "fields changed": 2
+       },
+       "calls_with_+0x92": 30652
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.08089947,
+        "radius_+0x44": 0.08332805
+       },
+       "shapes": 2,
+       "tester_calls": 30390,
+       "calls_n_pos": 1731,
+       "records_sum": 1942,
+       "max_n": 3,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2
+       },
+       "end_reread": {
+        "fields changed": 2
+       },
+       "calls_with_+0x92": 30390
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.175,
+        "radius_+0x44": 0.16
+       },
+       "shapes": 1,
+       "tester_calls": 29195,
+       "calls_n_pos": 20501,
+       "records_sum": 27890,
+       "max_n": 5,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "player main body": 1
+       },
+       "end_reread": {
+        "fields unchanged": 1
+       },
+       "calls_with_+0x92": 29195
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.03830141,
+        "radius_+0x44": 0.1542451
+       },
+       "shapes": 2,
+       "tester_calls": 10421,
+       "calls_n_pos": 591,
+       "records_sum": 843,
+       "max_n": 4,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "player rider body": 1,
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1,
+        "fields changed": 1
+       },
+       "calls_with_+0x92": 10421
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.03633715,
+        "radius_+0x44": 0.1412962
+       },
+       "shapes": 2,
+       "tester_calls": 10295,
+       "calls_n_pos": 529,
+       "records_sum": 700,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "player rider body": 1,
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1,
+        "fields changed": 1
+       },
+       "calls_with_+0x92": 10295
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.5625,
+        "radius_+0x44": 0.034375
+       },
+       "shapes": 2,
+       "tester_calls": 8977,
+       "calls_n_pos": 345,
+       "records_sum": 371,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)"
+       ],
+       "owner": {
+        "player main body": 2
+       },
+       "end_reread": {
+        "fields unchanged": 2
+       },
+       "calls_with_+0x92": 8977
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.1140962,
+        "radius_+0x44": 0.08965366
+       },
+       "shapes": 3,
+       "tester_calls": 8925,
+       "calls_n_pos": 480,
+       "records_sum": 523,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2,
+        "player rider body": 1
+       },
+       "end_reread": {
+        "fields changed": 2,
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 8925
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.06988005,
+        "radius_+0x44": 0.1465779
+       },
+       "shapes": 2,
+       "tester_calls": 8478,
+       "calls_n_pos": 1059,
+       "records_sum": 1339,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "player rider body": 1,
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1,
+        "fields changed": 1
+       },
+       "calls_with_+0x92": 8478
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.04613976,
+        "radius_+0x44": 0.1408012
+       },
+       "shapes": 2,
+       "tester_calls": 8158,
+       "calls_n_pos": 661,
+       "records_sum": 963,
+       "max_n": 3,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1,
+        "player rider body": 1
+       },
+       "end_reread": {
+        "fields changed": 1,
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 8158
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.03635043,
+        "radius_+0x44": 0.06559956
+       },
+       "shapes": 1,
+       "tester_calls": 7016,
+       "calls_n_pos": 564,
+       "records_sum": 600,
+       "max_n": 3,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "fields changed": 1
+       },
+       "calls_with_+0x92": 7016
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.6101562,
+        "radius_+0x44": 0.05546877
+       },
+       "shapes": 1,
+       "tester_calls": 4588,
+       "calls_n_pos": 201,
+       "records_sum": 221,
+       "max_n": 3,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)",
+        "(4,6)"
+       ],
+       "owner": {
+        "player main body": 1
+       },
+       "end_reread": {
+        "fields unchanged": 1
+       },
+       "calls_with_+0x92": 4588
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 4.766795,
+        "radius_+0x44": 0.0927993
+       },
+       "shapes": 1,
+       "tester_calls": 796,
+       "calls_n_pos": 140,
+       "records_sum": 140,
+       "max_n": 1,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,4)",
+        "(4,4)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 796
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 1.621982,
+        "radius_+0x44": 0.1912991
+       },
+       "shapes": 1,
+       "tester_calls": 434,
+       "calls_n_pos": 91,
+       "records_sum": 91,
+       "max_n": 1,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,4)",
+        "(4,4)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 434
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 2.049729,
+        "radius_+0x44": 0.2417483
+       },
+       "shapes": 1,
+       "tester_calls": 264,
+       "calls_n_pos": 18,
+       "records_sum": 18,
+       "max_n": 1,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,4)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "fields changed": 1
+       },
+       "calls_with_+0x92": 264
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 6.023888,
+        "radius_+0x44": 0.1172722
+       },
+       "shapes": 1,
+       "tester_calls": 162,
+       "calls_n_pos": 7,
+       "records_sum": 7,
+       "max_n": 1,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,4)",
+        "(4,4)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "fields changed": 1
+       },
+       "calls_with_+0x92": 162
+      },
+      {
+       "values": {
+        "kind": 4,
+        "bit15": true,
+        "vtable_rva": "0x29c9b58",
+        "half_height_+0x40": 0.35,
+        "radius_+0x44": 0.4
+       },
+       "shapes": 1,
+       "tester_calls": 56,
+       "calls_n_pos": 43,
+       "records_sum": 43,
+       "max_n": 1,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,4)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "fields unchanged": 1
+       },
+       "calls_with_+0x92": 56
+      }
+     ]
+    },
+    "terrain (kind 6)": {
+     "distinct_shapes": 34,
+     "distinct_value_sets": 28,
+     "value_sets": [
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.9999998,
+         0.9999998,
+         0.9999999
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 180,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 4,
+       "tester_calls": 23938,
+       "calls_n_pos": 583,
+       "records_sum": 921,
+       "max_n": 7,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,6)",
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 4
+       },
+       "end_reread": {
+        "kind/vtable changed": 4
+       },
+       "calls_with_+0x92": 23938,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 180,
+         "distinct_keys": 89,
+         "keys_equal_to_triangle_index": 2,
+         "runs_of_equal_adjacent_keys": 89,
+         "max_key": 90,
+         "fnv1a64": "f8d758bac708d2cf"
+        },
+        {
+         "triangles_sampled": 180,
+         "distinct_keys": 89,
+         "keys_equal_to_triangle_index": 2,
+         "runs_of_equal_adjacent_keys": 89,
+         "max_key": 90,
+         "fnv1a64": "f8d758bac708d2cf"
+        },
+        {
+         "triangles_sampled": 180,
+         "distinct_keys": 89,
+         "keys_equal_to_triangle_index": 2,
+         "runs_of_equal_adjacent_keys": 89,
+         "max_key": 90,
+         "fnv1a64": "f8d758bac708d2cf"
+        },
+        {
+         "triangles_sampled": 180,
+         "distinct_keys": 89,
+         "keys_equal_to_triangle_index": 2,
+         "runs_of_equal_adjacent_keys": 89,
+         "max_key": 90,
+         "fnv1a64": "f8d758bac708d2cf"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         1.104366,
+         1.104366,
+         1.104366
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 1750,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 13984,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,6)",
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 13984,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 1750,
+         "distinct_keys": 1748,
+         "keys_equal_to_triangle_index": 498,
+         "runs_of_equal_adjacent_keys": 1749,
+         "max_key": 1749,
+         "fnv1a64": "6734ebab5062cd2a"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         1.00581,
+         1.00581,
+         1.00581
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 1750,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 9799,
+       "calls_n_pos": 20,
+       "records_sum": 21,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,6)",
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 9799,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 1750,
+         "distinct_keys": 1748,
+         "keys_equal_to_triangle_index": 498,
+         "runs_of_equal_adjacent_keys": 1749,
+         "max_key": 1749,
+         "fnv1a64": "6734ebab5062cd2a"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         1.113609,
+         1.113609,
+         1.113609
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 4550,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 7046,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,6)",
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 7046,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 4096,
+         "distinct_keys": 4096,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 4096,
+         "max_key": 4097,
+         "fnv1a64": "5bd25de9e75d0b45"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.8740077,
+         0.8740076,
+         0.8740074
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 1750,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 3824,
+       "calls_n_pos": 29,
+       "records_sum": 57,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "fields unchanged": 1
+       },
+       "calls_with_+0x92": 3824,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 1750,
+         "distinct_keys": 1749,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 1749,
+         "max_key": 1750,
+         "fnv1a64": "d1daa8429e62ecd3"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         1.141539,
+         1.141539,
+         1.141538
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 1750,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 3808,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 3808,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 1750,
+         "distinct_keys": 1749,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 1749,
+         "max_key": 1750,
+         "fnv1a64": "d1daa8429e62ecd3"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 870,
+        "scale_+0x70/74/78": [
+         1.0,
+         1.0,
+         1.0
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": true,
+        "filter_bytes_+0x60_nonzero": true,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 870,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 3015,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,6)",
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "fields unchanged": 1
+       },
+       "calls_with_+0x92": 3015,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 870,
+         "distinct_keys": 569,
+         "keys_equal_to_triangle_index": 4,
+         "runs_of_equal_adjacent_keys": 589,
+         "max_key": 570,
+         "fnv1a64": "cd049285f5c93567"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 174,
+        "scale_+0x70/74/78": [
+         1.0,
+         1.0,
+         1.0
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": true,
+        "filter_bytes_+0x60_nonzero": true,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 174,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 2335,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,6)",
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "fields unchanged": 1
+       },
+       "calls_with_+0x92": 2335,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 174,
+         "distinct_keys": 114,
+         "keys_equal_to_triangle_index": 4,
+         "runs_of_equal_adjacent_keys": 114,
+         "max_key": 115,
+         "fnv1a64": "3e3b91c078ef1b4b"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         1.019664,
+         1.019664,
+         1.019664
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 1750,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 2121,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "fields unchanged": 1
+       },
+       "calls_with_+0x92": 2121,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 1750,
+         "distinct_keys": 1749,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 1749,
+         "max_key": 1750,
+         "fnv1a64": "d1daa8429e62ecd3"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.9396761,
+         0.9396761,
+         0.9396764
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 10,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 2,
+       "tester_calls": 1958,
+       "calls_n_pos": 222,
+       "records_sum": 250,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2
+       },
+       "end_reread": {
+        "kind/vtable changed": 2
+       },
+       "calls_with_+0x92": 1958,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 10,
+         "distinct_keys": 10,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 10,
+         "max_key": 11,
+         "fnv1a64": "458ee6e5cc7f53ac"
+        },
+        {
+         "triangles_sampled": 10,
+         "distinct_keys": 10,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 10,
+         "max_key": 11,
+         "fnv1a64": "458ee6e5cc7f53ac"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.807112,
+         0.8071117,
+         0.8071118
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 1750,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 1360,
+       "calls_n_pos": 24,
+       "records_sum": 24,
+       "max_n": 1,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 1360,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 1750,
+         "distinct_keys": 1749,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 1749,
+         "max_key": 1750,
+         "fnv1a64": "d1daa8429e62ecd3"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.8106135,
+         0.8106134,
+         0.8106135
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 4550,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 1206,
+       "calls_n_pos": 6,
+       "records_sum": 12,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "fields changed": 1
+       },
+       "calls_with_+0x92": 1206,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 4096,
+         "distinct_keys": 4096,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 4096,
+         "max_key": 4097,
+         "fnv1a64": "5bd25de9e75d0b45"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         1.184722,
+         1.184722,
+         1.184722
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 1750,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 1083,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "fields changed": 1
+       },
+       "calls_with_+0x92": 1083,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 1750,
+         "distinct_keys": 1749,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 1749,
+         "max_key": 1750,
+         "fnv1a64": "d1daa8429e62ecd3"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.9143717,
+         0.9143717,
+         0.9143717
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 10,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 2,
+       "tester_calls": 1044,
+       "calls_n_pos": 106,
+       "records_sum": 120,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2
+       },
+       "end_reread": {
+        "fields unchanged": 2
+       },
+       "calls_with_+0x92": 1044,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 10,
+         "distinct_keys": 10,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 10,
+         "max_key": 11,
+         "fnv1a64": "458ee6e5cc7f53ac"
+        },
+        {
+         "triangles_sampled": 10,
+         "distinct_keys": 10,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 10,
+         "max_key": 11,
+         "fnv1a64": "458ee6e5cc7f53ac"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.9999997,
+         0.9999998,
+         0.9999999
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 180,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 1024,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 1024,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 180,
+         "distinct_keys": 89,
+         "keys_equal_to_triangle_index": 2,
+         "runs_of_equal_adjacent_keys": 89,
+         "max_key": 90,
+         "fnv1a64": "f8d758bac708d2cf"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.9423661,
+         0.9423661,
+         0.9423661
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 30,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 794,
+       "calls_n_pos": 69,
+       "records_sum": 77,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "fields unchanged": 1
+       },
+       "calls_with_+0x92": 794,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 30,
+         "distinct_keys": 30,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 30,
+         "max_key": 31,
+         "fnv1a64": "6da415cb27bdd0bc"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.9143824,
+         0.9143824,
+         0.9143826
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 30,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 603,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "fields unchanged": 1
+       },
+       "calls_with_+0x92": 603,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 30,
+         "distinct_keys": 30,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 30,
+         "max_key": 31,
+         "fnv1a64": "6da415cb27bdd0bc"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.9397413,
+         0.9397414,
+         0.9397416
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 30,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 2,
+       "tester_calls": 492,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2
+       },
+       "end_reread": {
+        "fields unchanged": 2
+       },
+       "calls_with_+0x92": 492,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 30,
+         "distinct_keys": 30,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 30,
+         "max_key": 31,
+         "fnv1a64": "6da415cb27bdd0bc"
+        },
+        {
+         "triangles_sampled": 30,
+         "distinct_keys": 30,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 30,
+         "max_key": 31,
+         "fnv1a64": "6da415cb27bdd0bc"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.9523488,
+         0.9523488,
+         0.952349
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 20,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 406,
+       "calls_n_pos": 55,
+       "records_sum": 62,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "fields unchanged": 1
+       },
+       "calls_with_+0x92": 406,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 20,
+         "distinct_keys": 20,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 20,
+         "max_key": 21,
+         "fnv1a64": "1ad1109730d0c9a5"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.7166418,
+         0.7166418,
+         0.7166418
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 10,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 318,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "fields unchanged": 1
+       },
+       "calls_with_+0x92": 318,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 10,
+         "distinct_keys": 10,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 10,
+         "max_key": 11,
+         "fnv1a64": "458ee6e5cc7f53ac"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.9698228,
+         0.9698228,
+         0.9698229
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 22,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 249,
+       "calls_n_pos": 47,
+       "records_sum": 48,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 249,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 22,
+         "distinct_keys": 13,
+         "keys_equal_to_triangle_index": 2,
+         "runs_of_equal_adjacent_keys": 13,
+         "max_key": 14,
+         "fnv1a64": "2228b41ff6691d6a"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.9755499,
+         0.9755498,
+         0.9755499
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 30,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 184,
+       "calls_n_pos": 12,
+       "records_sum": 12,
+       "max_n": 1,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 184,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 30,
+         "distinct_keys": 26,
+         "keys_equal_to_triangle_index": 16,
+         "runs_of_equal_adjacent_keys": 26,
+         "max_key": 27,
+         "fnv1a64": "5d62c5b6d3c24b8a"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.7344367,
+         0.7344367,
+         0.7344368
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 20,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 136,
+       "calls_n_pos": 28,
+       "records_sum": 38,
+       "max_n": 3,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 136,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 20,
+         "distinct_keys": 20,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 20,
+         "max_key": 21,
+         "fnv1a64": "1ad1109730d0c9a5"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.941792,
+         0.941792,
+         0.941792
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 22,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 89,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 89,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 22,
+         "distinct_keys": 17,
+         "keys_equal_to_triangle_index": 2,
+         "runs_of_equal_adjacent_keys": 17,
+         "max_key": 18,
+         "fnv1a64": "c918e3b40c921648"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.7337323,
+         0.7337323,
+         0.7337328
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 30,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 80,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 80,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 30,
+         "distinct_keys": 26,
+         "keys_equal_to_triangle_index": 16,
+         "runs_of_equal_adjacent_keys": 26,
+         "max_key": 27,
+         "fnv1a64": "5d62c5b6d3c24b8a"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.7214589,
+         0.7214589,
+         0.7214589
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 30,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 76,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "fields unchanged": 1
+       },
+       "calls_with_+0x92": 76,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 30,
+         "distinct_keys": 30,
+         "keys_equal_to_triangle_index": 0,
+         "runs_of_equal_adjacent_keys": 30,
+         "max_key": 31,
+         "fnv1a64": "6da415cb27bdd0bc"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.7028979,
+         0.7028979,
+         0.702898
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 30,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 60,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 60,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 30,
+         "distinct_keys": 26,
+         "keys_equal_to_triangle_index": 16,
+         "runs_of_equal_adjacent_keys": 26,
+         "max_key": 27,
+         "fnv1a64": "5d62c5b6d3c24b8a"
+        }
+       ]
+      },
+      {
+       "values": {
+        "kind": 6,
+        "bit15": false,
+        "vtable_rva": "0x29ca638",
+        "edge_filter_mode_+0x40": 2,
+        "filter_enable_+0x68": 0,
+        "scale_+0x70/74/78": [
+         0.9272317,
+         0.9272318,
+         0.927232
+        ],
+        "default_filter_+0x20_nonzero": true,
+        "filter_table_+0x50_nonzero": false,
+        "filter_bytes_+0x60_nonzero": false,
+        "mesh_read": true,
+        "mesh_triangle_count_+0x48": 30,
+        "mesh_vertices_+0x30_nonzero": true,
+        "mesh_indices_+0x40_nonzero": true,
+        "mesh_group_keys_+0x70_nonzero": true,
+        "mesh_mode2_edge_pairs_+0xa8_nonzero": true,
+        "mesh_mode2_edge_ids_+0xb8_nonzero": true
+       },
+       "shapes": 1,
+       "tester_calls": 54,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,6)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 54,
+       "group_key_samples": [
+        {
+         "triangles_sampled": 30,
+         "distinct_keys": 26,
+         "keys_equal_to_triangle_index": 16,
+         "runs_of_equal_adjacent_keys": 26,
+         "max_key": 27,
+         "fnv1a64": "5d62c5b6d3c24b8a"
+        }
+       ]
+      }
+     ]
+    },
+    "sphere (kind 2)": {
+     "distinct_shapes": 33,
+     "distinct_value_sets": 3,
+     "value_sets": [
+      {
+       "values": {
+        "kind": 2,
+        "bit15": true,
+        "vtable_rva": "0x29c9be8",
+        "radius_+0x40": 0.005
+       },
+       "shapes": 19,
+       "tester_calls": 241749,
+       "calls_n_pos": 94705,
+       "records_sum": 95339,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,4)",
+        "(2,6)",
+        "(2,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 19
+       },
+       "end_reread": {
+        "kind/vtable changed": 19
+       },
+       "calls_with_+0x92": 241749
+      },
+      {
+       "values": {
+        "kind": 2,
+        "bit15": true,
+        "vtable_rva": "0x29c9be8",
+        "radius_+0x40": 0.012
+       },
+       "shapes": 8,
+       "tester_calls": 118206,
+       "calls_n_pos": 51575,
+       "records_sum": 51803,
+       "max_n": 3,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,4)",
+        "(2,6)",
+        "(2,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 8
+       },
+       "end_reread": {
+        "kind/vtable changed": 8
+       },
+       "calls_with_+0x92": 118206
+      },
+      {
+       "values": {
+        "kind": 2,
+        "bit15": true,
+        "vtable_rva": "0x29c9be8",
+        "radius_+0x40": 0.01
+       },
+       "shapes": 6,
+       "tester_calls": 80120,
+       "calls_n_pos": 33459,
+       "records_sum": 35351,
+       "max_n": 3,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,4)",
+        "(2,6)",
+        "(2,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 6
+       },
+       "end_reread": {
+        "kind/vtable changed": 6
+       },
+       "calls_with_+0x92": 80120
+      }
+     ]
+    },
+    "terrain grid (kind 7)": {
+     "distinct_shapes": 52,
+     "distinct_value_sets": 28,
+     "value_sets": [
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         69.67139
+        ],
+        "height_pair_diff_+0x98-+0x94": 69.67139,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 1,
+       "tester_calls": 204082,
+       "calls_n_pos": 14538,
+       "records_sum": 21776,
+       "max_n": 5,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "fields unchanged": 1
+       },
+       "calls_with_+0x92": 204082
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         69.69104
+        ],
+        "height_pair_diff_+0x98-+0x94": 69.69104,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 2,
+       "tester_calls": 86202,
+       "calls_n_pos": 40756,
+       "records_sum": 42584,
+       "max_n": 3,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2
+       },
+       "end_reread": {
+        "fields unchanged": 2
+       },
+       "calls_with_+0x92": 86202
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         160.0227
+        ],
+        "height_pair_diff_+0x98-+0x94": 160.0227,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 2,
+       "tester_calls": 59959,
+       "calls_n_pos": 21457,
+       "records_sum": 22618,
+       "max_n": 3,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,7)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2
+       },
+       "end_reread": {
+        "kind/vtable changed": 2
+       },
+       "calls_with_+0x92": 59959
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         105.113
+        ],
+        "height_pair_diff_+0x98-+0x94": 105.113,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 3,
+       "tester_calls": 56239,
+       "calls_n_pos": 16885,
+       "records_sum": 16981,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,7)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 3
+       },
+       "end_reread": {
+        "kind/vtable changed": 3
+       },
+       "calls_with_+0x92": 56239
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         68.90527
+        ],
+        "height_pair_diff_+0x98-+0x94": 68.90527,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 3,
+       "tester_calls": 52385,
+       "calls_n_pos": 15020,
+       "records_sum": 15043,
+       "max_n": 3,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,7)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 3
+       },
+       "end_reread": {
+        "kind/vtable changed": 3
+       },
+       "calls_with_+0x92": 52385
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         69.60669
+        ],
+        "height_pair_diff_+0x98-+0x94": 69.60669,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 3,
+       "tester_calls": 49746,
+       "calls_n_pos": 22460,
+       "records_sum": 22521,
+       "max_n": 3,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,7)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 3
+       },
+       "end_reread": {
+        "fields unchanged": 3
+       },
+       "calls_with_+0x92": 49746
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         64.19568
+        ],
+        "height_pair_diff_+0x98-+0x94": 64.19568,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 3,
+       "tester_calls": 47822,
+       "calls_n_pos": 15954,
+       "records_sum": 16060,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,7)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 3
+       },
+       "end_reread": {
+        "kind/vtable changed": 3
+       },
+       "calls_with_+0x92": 47822
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         111.5347
+        ],
+        "height_pair_diff_+0x98-+0x94": 111.5347,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 3,
+       "tester_calls": 42278,
+       "calls_n_pos": 19141,
+       "records_sum": 19627,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,7)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 3
+       },
+       "end_reread": {
+        "kind/vtable changed": 3
+       },
+       "calls_with_+0x92": 42278
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         184.1689
+        ],
+        "height_pair_diff_+0x98-+0x94": 184.1689,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 2,
+       "tester_calls": 42092,
+       "calls_n_pos": 12605,
+       "records_sum": 13512,
+       "max_n": 3,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,7)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2
+       },
+       "end_reread": {
+        "kind/vtable changed": 2
+       },
+       "calls_with_+0x92": 42092
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         133.8409
+        ],
+        "height_pair_diff_+0x98-+0x94": 133.8409,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 3,
+       "tester_calls": 36036,
+       "calls_n_pos": 8848,
+       "records_sum": 8890,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,7)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 3
+       },
+       "end_reread": {
+        "kind/vtable changed": 3
+       },
+       "calls_with_+0x92": 36036
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         160.1129
+        ],
+        "height_pair_diff_+0x98-+0x94": 160.1129,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 1,
+       "tester_calls": 35324,
+       "calls_n_pos": 2589,
+       "records_sum": 2879,
+       "max_n": 3,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 35324
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         112.7092
+        ],
+        "height_pair_diff_+0x98-+0x94": 112.7092,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 3,
+       "tester_calls": 33583,
+       "calls_n_pos": 6587,
+       "records_sum": 6619,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,7)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 3
+       },
+       "end_reread": {
+        "kind/vtable changed": 3
+       },
+       "calls_with_+0x92": 33583
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         186.5847
+        ],
+        "height_pair_diff_+0x98-+0x94": 186.5847,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 2,
+       "tester_calls": 30581,
+       "calls_n_pos": 3332,
+       "records_sum": 3525,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,7)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2
+       },
+       "end_reread": {
+        "kind/vtable changed": 2
+       },
+       "calls_with_+0x92": 30581
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         136.6652
+        ],
+        "height_pair_diff_+0x98-+0x94": 136.6652,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 2,
+       "tester_calls": 15560,
+       "calls_n_pos": 7008,
+       "records_sum": 7070,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2
+       },
+       "end_reread": {
+        "kind/vtable changed": 2
+       },
+       "calls_with_+0x92": 15560
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         184.4553
+        ],
+        "height_pair_diff_+0x98-+0x94": 184.4553,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 1,
+       "tester_calls": 14982,
+       "calls_n_pos": 915,
+       "records_sum": 1067,
+       "max_n": 3,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 14982
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         68.23145
+        ],
+        "height_pair_diff_+0x98-+0x94": 68.23145,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 1,
+       "tester_calls": 12600,
+       "calls_n_pos": 530,
+       "records_sum": 536,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "fields unchanged": 1
+       },
+       "calls_with_+0x92": 12600
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         186.4945
+        ],
+        "height_pair_diff_+0x98-+0x94": 186.4945,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 1,
+       "tester_calls": 11151,
+       "calls_n_pos": 278,
+       "records_sum": 313,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 11151
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         160.282
+        ],
+        "height_pair_diff_+0x98-+0x94": 160.282,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 3,
+       "tester_calls": 10714,
+       "calls_n_pos": 2678,
+       "records_sum": 2690,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,7)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 3
+       },
+       "end_reread": {
+        "kind/vtable changed": 3
+       },
+       "calls_with_+0x92": 10714
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         73.6084
+        ],
+        "height_pair_diff_+0x98-+0x94": 73.6084,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 1,
+       "tester_calls": 6057,
+       "calls_n_pos": 169,
+       "records_sum": 170,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 6057
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         136.9515
+        ],
+        "height_pair_diff_+0x98-+0x94": 136.9515,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 1,
+       "tester_calls": 5761,
+       "calls_n_pos": 180,
+       "records_sum": 182,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 5761
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         67.94727
+        ],
+        "height_pair_diff_+0x98-+0x94": 67.94727,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 3,
+       "tester_calls": 4952,
+       "calls_n_pos": 1947,
+       "records_sum": 1950,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,7)",
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 3
+       },
+       "end_reread": {
+        "kind/vtable changed": 3
+       },
+       "calls_with_+0x92": 4952
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         160.699
+        ],
+        "height_pair_diff_+0x98-+0x94": 160.699,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 1,
+       "tester_calls": 4749,
+       "calls_n_pos": 154,
+       "records_sum": 154,
+       "max_n": 1,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 4749
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         191.2264
+        ],
+        "height_pair_diff_+0x98-+0x94": 191.2264,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 1,
+       "tester_calls": 3835,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 3835
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         78.64758
+        ],
+        "height_pair_diff_+0x98-+0x94": 78.64758,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 1,
+       "tester_calls": 3652,
+       "calls_n_pos": 223,
+       "records_sum": 226,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 3652
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         66.81274
+        ],
+        "height_pair_diff_+0x98-+0x94": 66.81274,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 2,
+       "tester_calls": 2556,
+       "calls_n_pos": 1922,
+       "records_sum": 1938,
+       "max_n": 2,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(2,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 2
+       },
+       "end_reread": {
+        "kind/vtable changed": 2
+       },
+       "calls_with_+0x92": 2556
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         190.9401
+        ],
+        "height_pair_diff_+0x98-+0x94": 190.9401,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 1,
+       "tester_calls": 2153,
+       "calls_n_pos": 0,
+       "records_sum": 0,
+       "max_n": 0,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 2153
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         113.4011
+        ],
+        "height_pair_diff_+0x98-+0x94": 113.4011,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 1,
+       "tester_calls": 2001,
+       "calls_n_pos": 128,
+       "records_sum": 128,
+       "max_n": 1,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 2001
+      },
+      {
+       "values": {
+        "kind": 7,
+        "bit15": false,
+        "vtable_rva": "0x29ca138",
+        "filter_mode_+0x40": 2,
+        "samples_ptr_+0x48_nonzero": true,
+        "diagonal_byte_+0x58": 1,
+        "sample_width_+0x68": 129,
+        "sample_height_+0x6a": 129,
+        "spacing_+0x70": 0.4882816,
+        "spacing_+0x74": 0.4882816,
+        "cell_width_+0x9c": 128,
+        "cell_height_+0x9e": 128,
+        "extent_xyz_(+0x88..)-(+0x7c..)": [
+         62.50004,
+         62.50004,
+         188.5482
+        ],
+        "height_pair_diff_+0x98-+0x94": 188.5482,
+        "default_profile_+0x20_nonzero": true,
+        "profile_table_+0xa0_nonzero": true,
+        "profile_map_+0xb0_nonzero": true,
+        "vtable_is_29ca138": true,
+        "check_cell_width_times_spacing_equals_extent_x": true,
+        "check_cell_height_times_spacing_equals_extent_y": true,
+        "sample_width_minus_cell_width": 1,
+        "sample_height_minus_cell_height": 1
+       },
+       "shapes": 1,
+       "tester_calls": 1267,
+       "calls_n_pos": 43,
+       "records_sum": 43,
+       "max_n": 1,
+       "geom_flag_combinations": [
+        "+0x90=1 +0x91=0 +0x92=1"
+       ],
+       "cells": [
+        "(4,7)"
+       ],
+       "owner": {
+        "not in player main/rider resource arrays": 1
+       },
+       "end_reread": {
+        "kind/vtable changed": 1
+       },
+       "calls_with_+0x92": 1267
+      }
+     ]
+    }
+   },
+   "geom_flags": {
+    "per_pair": [
+     {
+      "pair": "(2,4)",
+      "kinds": "sphere x capsule",
+      "geom_+0x80/+0x88_kind_check": {
+       "match_(A,B)": 511,
+       "swapped": 0,
+       "other": 0
+      },
+      "flag_combinations": {
+       "+0x90=1 +0x91=0 +0x92=1": 511
+      }
+     },
+     {
+      "pair": "(2,6)",
+      "kinds": "sphere x terrain",
+      "geom_+0x80/+0x88_kind_check": {
+       "match_(A,B)": 23334,
+       "swapped": 0,
+       "other": 0
+      },
+      "flag_combinations": {
+       "+0x90=1 +0x91=0 +0x92=1": 23334
+      }
+     },
+     {
+      "pair": "(2,7)",
+      "kinds": "sphere x terrain grid",
+      "geom_+0x80/+0x88_kind_check": {
+       "match_(A,B)": 416230,
+       "swapped": 0,
+       "other": 0
+      },
+      "flag_combinations": {
+       "+0x90=1 +0x91=0 +0x92=1": 416230
+      }
+     },
+     {
+      "pair": "(4,4)",
+      "kinds": "capsule x capsule",
+      "geom_+0x80/+0x88_kind_check": {
+       "match_(A,B)": 17538,
+       "swapped": 0,
+       "other": 0
+      },
+      "flag_combinations": {
+       "+0x90=1 +0x91=0 +0x92=1": 17538
+      }
+     },
+     {
+      "pair": "(4,6)",
+      "kinds": "capsule x terrain",
+      "geom_+0x80/+0x88_kind_check": {
+       "match_(A,B)": 57752,
+       "swapped": 0,
+       "other": 0
+      },
+      "flag_combinations": {
+       "+0x90=1 +0x91=0 +0x92=1": 57752
+      }
+     },
+     {
+      "pair": "(4,7)",
+      "kinds": "capsule x terrain grid",
+      "geom_+0x80/+0x88_kind_check": {
+       "match_(A,B)": 462089,
+       "swapped": 0,
+       "other": 0
+      },
+      "flag_combinations": {
+       "+0x90=1 +0x91=0 +0x92=1": 462089
+      }
+     }
+    ],
+    "shape_table": {
+     "kind": "shapetab",
+     "inserted": 177,
+     "overflow": 0,
+     "flag_nonbool": 0
+    }
+   },
+   "ownership": {
+    "bodies": [
+     {
+      "body": "player main",
+      "pointer_given": true,
+      "array_read": true,
+      "resource_count_+0xc0": 4
+     },
+     {
+      "body": "player rider",
+      "pointer_given": true,
+      "array_read": true,
+      "resource_count_+0xc0": 15
+     }
+    ],
+    "resources_by_body_and_kind": {
+     "main kind 4": 4,
+     "rider kind 4": 15
+    }
+   }
+  }
+ ],
+ "findings": [
+  "Geom flags: every tester call of every observed pair ((2,4) 511, (4,4) 17,538, (2,6) 23,334, (4,6) 57,752, (2,7) 416,230, (4,7) 462,089; 977,454 calls) had +0x90 = 1, +0x91 = 0, +0x92 = 1. No other combination and no byte other than 0/1 occurred. Geom +0x80 held the cell's A kind and +0x88 the B kind in every call (0 swapped, 0 other).",
+  "Kind 7 (52 distinct shape pointers, 878,319 tester calls): all had vtable 0x29ca138 and +0x40 = 2. With +0x92 = 1 on every call, the 1996e50 grid record filter gate in 19e0430 is satisfied on every live (x,7) call observed. All 52 also had +0x58 diagonal byte 1, sample dims +0x68/+0x6a = 129 x 129, cell dims +0x9c/+0x9e = 128 x 128 (sample dims = cell dims + 1), spacing +0x70/+0x74 = 0.4882816 (float32 nearest 62.5/128 within print precision), XY extent 62.50004 = 128 x spacing; Z extent 64.2-191.2 per tile and equal to the +0x98 - +0x94 pair difference; default profile +0x20, profile table +0xa0 and profile map +0xb0 all non-null.",
+  "Kind 6 (34 distinct shape pointers, 81,086 tester calls): all had vtable 0x29ca638 (a new lead for the unfound kind-6 class) and edge-filter mode +0x40 = 2, so with +0x92 = 1 the mode-2 neighbourhood filter 19974c0 is selected; mesh +0xa8 and +0xb8 (mode-2 tables, owner confirmed statically from 19974c0) were non-null on all 34. +0x90 = 1 means the group-key pass also ran. Scale +0x70/74/78 was uniform per shape (three components equal within 1e-5 relative) and ranged 0.703-1.185 across shapes; none negative. Triangle counts: 10 (5 shapes), 20 (2), 22 (2), 30 (9), 174, 180 (5), 870, 1750 (7), 4550 (2).",
+  "Kind 6 +0x68 is not a 0/1 flag: 32 shapes had 0 (with +0x50 and +0x60 null) and 2 had 174 and 870, each equal to its mesh triangle count, with +0x50 filter table and +0x60 per-triangle byte table non-null. The core tests it for nonzero, so the per-triangle profile gate ran only on those two meshes.",
+  "Kind 6 group keys (mesh +0x70, full sample for all meshes except two 4550-triangle meshes, first 4096): most meshes give each triangle its own key (distinct = triangles, or one fewer); some share keys between adjacent triangles: 180 triangles -> 89 keys in 89 runs (5 shapes, consistent with pairs), 870 -> 569, 174 -> 114, 30 -> 26 (4 shapes), 22 -> 13 and 17. Keys are generally not the triangle index (0-498 of a sample equal it). So the key pass mostly acts per triangle, with some groups of two or more triangles.",
+  "Rider shapes: the player main body array held 4 capsules (h, r) = (0.175, 0.16), 2 x (0.5625, 0.034375) and (0.6101562, 0.05546877); the rider body array held 15 capsules (h 0.0055-0.1768, r 0.0459-0.1543; values in the receipt). The rider capsule parameter sets reappeared on new shape pointers first seen about 13 s and 42 s after install, not in the arrays read at arm time; the recreation cause is not established. Spheres: 33 pointers, only three radii 0.005 (19), 0.010 (6) and 0.012 (8), vtable 0x29c9be8, in neither player array, all first seen within 16 s and all gone or reused by the end-of-window re-read. Capsule vtable 0x29c9b58. Five capsules not in the player arrays had (h, r) (4.767, 0.093), (1.622, 0.191), (2.050, 0.242), (6.024, 0.117) [(2,4)/(4,4) only] and (0.35, 0.40) [(4,4) only]; their owners are not identified.",
+  "Tester counts (n, capacity 500): (4,7) max 5 (one call; 0:425,450 1:28,879 2:6,574 3:132 4:1,053 5:1), (2,7) max 3, (4,6) max 7 (one call), (2,6) all 0 in 23,334 calls, (4,4) max 2, (2,4) max 1. (4,7) n = 5 exceeds the census maximum of 4; (4,4) n = 2 exceeds the census maximum of 1. The direct path (18dd400) max n stayed below 4.",
+  "Restore: 32/32 testers, the dispatcher and the broad-phase object were restored and read back as original; all hooks drained; 0 foreign objects, 0 unknown tester self, 0 tester calls disagreeing with the preceding selector cell. Shape table: 177 distinct pointers, 0 overflow."
+ ],
+ "limits": [
+  "One 240 s session, one spawn and one descent line, sparse maneuvers; terrain coverage is 52 grid tiles and 34 mesh shapes near that line.",
+  "Shape fields were read once per pointer at first sight; an end-of-window re-read found the listed fields unchanged on 7 of 52 grid and 13 of 34 mesh pointers still holding the same kind and vtable (2 mesh pointers had changed fields with the same kind/vtable, which suggests reuse); the rest had been freed or reused. Values in between were not sampled.",
+  "Ownership was checked only against the player main and rider body resource arrays read once at arm time; sphere owners and later rider-shape instances are not attributed.",
+  "Group-key statistics cover at most the first 4096 triangles of a mesh; mesh +0x70 was taken as a u16 array pointer from the static model.",
+  "Z extents are per-tile values and depend on the terrain covered; absolute positions were not recorded.",
+  "Observations under Wine on macOS for one build; they do not establish settings for other maps, other modes or the original engine in general."
+ ],
+ "driving_notes": {
+  "tf-01": "one pre-arm forward hold, then cycle forward,forward,steer_left 1500,forward,jump 700,forward,steer_right 1500,forward,jump 400 (same as census np-03). 33 actions in 240 s (7-11 s per action). Polled speed 0-47 m/s, 26% of polls below 2 m/s; about 980 m of altitude descended. No host disconnect or KO. No new shape pointer of any kind was first seen after 121 s."
+ }
+}
