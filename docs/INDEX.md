@@ -228,3 +228,4 @@ See [map decoding update](reconstruction/MAP_DECODING_UPDATE.md) for the pinned 
 
 - [Link row construction and numerical solving](reconstruction/LINK_SOLVER.md): profile resolution, complete supported builder, primary/tangent equations, body buffers and feedback.
 - [Anvil cross-title check](reconstruction/ANVIL_CROSS_TITLE.md): third-party Ghost Recon Wildlands AnvilNext 2.0 facts tested against Steep. Covers reflection class names for authored labels and archive codec corrections.
+- [Physics lock map](reconstruction/PHYSICS_LOCK_MAP.md): per-guard table of which physics functions call each protected guard, call order and A/R pairing hypothesis, memory touched between, existing engine or receipt coverage, lock-order edges (none nested) and explicit unknowns.
