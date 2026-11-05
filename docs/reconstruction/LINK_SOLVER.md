@@ -10527,6 +10527,10 @@ Static leads:
 - `0x1c94b94` (the job-pool thread entry).
 - The CS block around the 11 guard objects, and the code that initializes it.
 
+Correction: thread start RVA `0x1c94b94` is the CRT `_beginthreadex` trampoline, so
+every CRT-created thread shares it. "Job-pool threads" above means engine threads
+that ran the physics step, not a specific pool (see PHYSICS_ATOMICS_AND_THREADS.md).
+
 ### Body velocity and pose setters (host set_velocity / set_pose entry path)
 
 Evidence anchors: RVA `0x18aa520` (linear velocity), `0x18aa360` (angular velocity), `0x18a8c20` (pose). Module `engine/pose_body_state_setters.py`. These are the outer layers of the path set_velocity / set_pose -> setter -> `0x18b8380` (controller group-transition wrapper, `engine/pose_body_controller_transition.py`) -> `0x18e14f0` (`engine/pose_body_group_transition.py`).
