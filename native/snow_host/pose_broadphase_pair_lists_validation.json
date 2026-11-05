@@ -1,0 +1,32 @@
+{
+  "schema": "pose-broadphase-pair-lists-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "slot_runs": 2048,
+  "nonempty_added": 325,
+  "nonempty_removed": 334,
+  "inline_header": 256,
+  "heap_header": 256,
+  "high_count": 8,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x1940410,0x1940400,0x19403f0,0x19403e0",
+  "vtable_rva": "0x29ca8a0",
+  "method": "Each of the four getters executed natively in Unicorn on the memory image with random object bytes; vtable slots 0x40/0x48/0x60/0x68 of 0x29ca8a0 statically checked to point at them; rax, rsp, rip and all fixture bytes compared to the Python accessors",
+  "comparisons": [
+    "rax result of each getter",
+    "object, header, added-row and removed-row bytes unchanged after each call",
+    "return address and stack pointer",
+    "row decode against the bytes written to the fixture"
+  ],
+  "coverage": [
+    "added header inline in the object (+0xd8/+0xe8) and on the heap",
+    "0..33 added rows and 0..32 removed rows",
+    "removed counts with the high bit set (u32 zero-extended)",
+    "random bytes in all other object fields"
+  ],
+  "limits": [
+    "Leaf getters only; the producers that fill the lists (0x199b590 and the broadphase update) are not executed.",
+    "Row meaning (body, body, key) comes from consumer reads, decode is authored.",
+    "No live validation; the vtable identification is static."
+  ]
+}

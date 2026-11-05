@@ -117,3 +117,88 @@ steps:
 
 - Find other callers of `18dedf0`, `18e28d0` and `18de440`.
 - Capture around priority-set bodies whose quiet nibble becomes 2.
+
+### Broadphase pair lists
+
+The object at controller+0x28 is the "Dynamic tree multi-threaded broad phase"
+instance (string at image 0x29c9ce0), built by `193f450` (vtable `0x29ca8a0`,
+allocation size 0xb10, base constructor `199a760`).
+
+**Why this vtable is the installed one.** The controller constructor `18b8150`
+stores its second argument at controller+0x28 (`18b8172`). It has two callers,
+the factories `18ae130` and `18b64f4`. Both allocate 0xb10 bytes and construct
+the object with `193f450` before passing it in. `193f450` has exactly these two
+callers, so there is no sibling or derived broadphase class. Slots 0x40, 0x48,
+0x60 and 0x68 of `0x29ca8a0` hold the four getters below (checked in the
+harness).
+
+**Accessors (all leaf, no side effects).**
+
+    slot 0x40  1940410  count = u32 [ [obj+0xf8] + 8 ]
+    slot 0x48  1940400  data  = ptr  [ [obj+0xf8] + 0 ]
+    slot 0x60  19403f0  count = u32 [obj+0x120]
+    slot 0x68  19403e0  data  = ptr [obj+0x118]
+
+Siblings not used by the controller: slot 0x50 (`140e5df50`) returns u32
+[obj+0x110] and slot 0x58 (`1419403d0`) returns ptr [obj+0x108], a third list
+with the same inline layout (capacity u32 at +0x114).
+
+**Storage.** `[obj+0xf8]` points at one of two vector headers `{data, count u32,
+cap u32}` stored at obj+0xd8 and obj+0xe8 (base constructor `199a760`, stores
+at `199a930` and `199a93e`). The per-step routine `199c880` swaps `[obj+0xf8]`
+and `[obj+0x100]` (and copies the result to +0xd0), so the "current" header
+alternates between steps. The append helper `199b590` pushes onto the current
+header's vector, growing through `1940990`. The list at +0x118 is not a header:
+data at +0x118, count at +0x120, capacity at +0x124 (initial capacity 0x20
+rows, allocation 0x300 bytes).
+
+**Pair row, 24 bytes (0x18).** Evidence from consumers and the append helper:
+
+    +0x00  first body pointer   (consumers read body+0x30 -> shared state)
+    +0x08  second body pointer
+    +0x10  64-bit pair key      (0x18dedf0 reads it; 0x18ddd30 passes rows on)
+
+`18ddd30` indexes rows as index*3*8 and reads +0/+8; `18dedf0` steps by 0x18 and
+reads +0 and +0x10; `199b590` writes 16 bytes then 8 bytes per row.
+
+**Controller use (`18b8fa0`, for orientation only).** Slots 0x60/0x68 (list at
++0x118) feed `18dedf0(provider, rows, count, buffer)` and then `18e28d0`. Slots
+0x40/0x48 (current header) feed pair-link jobs `18ddc40(provider, rows, count,
+buffer)`. The role names "removed" and "added" are inferred from that order
+and from `18dedf0` locating existing links by key; they are not proven by a
+producer trace.
+
+Validation. `engine/pose_broadphase_pair_lists.py` has the four accessors plus
+an authored row decoder. `check_pose_broadphase_pair_lists.py` ran 512
+randomized cases in Unicorn over the memory image (2048 native getter runs).
+Each compares rax to the Python accessor and requires object, header, row and
+removed-array bytes to be unchanged, with return address and stack pointer
+checked. Half the cases use an inline header (obj+0xd8/+0xe8), half a heap
+header. 325 cases have added rows and 334 removed rows; 8 use a count with the
+high bit set. The vtable slots were statically compared to the getter
+addresses. Injecting the wrong count offset (+0x124 for +0x120) failed the
+harness on case 0; restored and regenerated. Pose tests green (910).
+Receipt: `native/snow_host/pose_broadphase_pair_lists_validation.json`.
+
+Limits: only leaf getters run natively. The producers that fill the lists
+(`199b590` callers, the broadphase update virtuals 0xc8/0xd0/0xa0) are not
+reconstructed, and the row field meaning is from consumer reads.
+
+Static leads: reconstruct slot 0x98 (`199b590`, append) and slot 0xa0
+(`14199ed90`), the step `199c880`, and the dynamic-tree update behind virtuals
+0xc8/0xd0; find which one writes the +0x118 list.
+
+### CONTRACT.md entry: Broadphase pair lists
+
+`engine/pose_broadphase_pair_lists.py`: `added_pair_count`, `added_pair_array`,
+`removed_pair_count`, `removed_pair_array` (vtable `0x29ca8a0` slots 0x40, 0x48,
+0x60, 0x68; RVAs `1940410`, `1940400`, `19403f0`, `19403e0`) over a flat object
+view plus a `read(address, size)` callback, and `decode_pair_rows` for 24-byte
+rows. The row decoder and callback are authored; offsets are evidence anchors.
+Harness: `analysis/command-executor-audit/check_pose_broadphase_pair_lists.py`.
+
+### PROGRESS.md bullet
+
+- Broadphase pair lists: controller+0x28 object identified as the dynamic-tree
+  broadphase (vtable `0x29ca8a0`, only class built by `193f450`); four count and
+  array getters reconstructed and run natively, 512 cases, 24-byte pair rows.
