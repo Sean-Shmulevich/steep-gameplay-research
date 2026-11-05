@@ -8716,3 +8716,4 @@ cases. This is not wired into a live host API and does not pin manager or module
     to 83 new pairs; there were no multi-worker steps.
   - 11 of the 12 guard globals point to Wine CRITICAL_SECTIONs, free at every
     S0/S1/S2/worker/async sample; `0x14333c5e8` holds all-ones, not a pointer.
+- Reconstructed the host set_velocity / set_pose entry routines `0x18aa520`, `0x18aa360`, `0x18a8c20` (`engine/pose_body_state_setters.py`, 512 native comparisons, composition test through the existing controller wrapper and body group transition) and documented which pool guards (`0x143336bb8` via `0x1958720`, `0x143336aa0` via `0x18e19c0`) are reachable only when the setter force/controller gates, `0x18b8380` gates and a group-selection change all pass.

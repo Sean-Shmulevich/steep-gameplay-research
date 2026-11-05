@@ -1,0 +1,35 @@
+{
+  "schema": "pose-body-state-setters-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "lin": 171,
+  "ang": 171,
+  "pose": 170,
+  "stores": 287,
+  "notifies": 303,
+  "skipped_kind2": 55,
+  "reload_cases": 48,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18aa520",
+    "0x18aa360",
+    "0x18a8c20"
+  ],
+  "method": "Original setter entry routines executed natively in Unicorn; the call into the controller wrapper 0x18b8380 and the dynamic virtual 0xa0 pose store are replaced by recording services (the pose service also mutates the controller slot in some cases).",
+  "comparisons": [
+    "service calls and register arguments (controller, body; body and 4x12-byte pose rows)",
+    "every byte of body (0x200), metadata (0x60) and holder (0x40) fixtures after return",
+    "return address and stack pointer"
+  ],
+  "coverage": [
+    "kind nibble 2 and non-2, force byte 0/nonzero including high-bit and bits above r8b",
+    "null and nonnull controller",
+    "controller slot changed by the pose virtual (reload after call)",
+    "random bytes in all unrelated body/metadata fields"
+  ],
+  "limits": [
+    "Wrapper 0x18b8380 and everything beneath it are not executed here; composition with the other modules is covered only by unit tests.",
+    "Pose rows compare 12 of every 16 bytes: native padding words are uninitialised stack.",
+    "Synthetic offline fixtures, no live validation, no lock behaviour."
+  ]
+}

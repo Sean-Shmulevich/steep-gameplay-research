@@ -10526,3 +10526,48 @@ Static leads:
   count.
 - `0x1c94b94` (the job-pool thread entry).
 - The CS block around the 11 guard objects, and the code that initializes it.
+
+### Body velocity and pose setters (host set_velocity / set_pose entry path)
+
+Evidence anchors: RVA `0x18aa520` (linear velocity), `0x18aa360` (angular velocity), `0x18a8c20` (pose). Module `engine/pose_body_state_setters.py`. These are the outer layers of the path set_velocity / set_pose -> setter -> `0x18b8380` (controller group-transition wrapper, `engine/pose_body_controller_transition.py`) -> `0x18e14f0` (`engine/pose_body_group_transition.py`).
+
+Body layout used: `body+0x30` metadata, `metadata+0x20` holder, `holder+0x20` controller token (all three are plain loads, no locks); metadata `+0x53` low nibble is the body kind; `body+0x1a0..0x1a8` linear velocity; `body+0x1ac..0x1b4` angular velocity.
+
+```text
+set_linear_velocity(body, vec, force_r8b):      # 0x18aa520
+    if kind(body) != 2 or force_r8b != 0:        # low byte of r8 only
+        body[0x1a0..0x1ac] = vec[0..12]          # raw 3 x dword copy
+    ctrl = body.meta.holder.controller
+    if ctrl != 0 and force_r8b != 0:
+        0x18b8380(ctrl, body)
+
+set_angular_velocity(body, vec, force_r8b):     # 0x18aa360, identical, store at +0x1ac
+
+set_pose(body, matrix12):                        # 0x18a8c20
+    repack 12 floats into a 16-byte-stride stack buffer (padding words not written)
+    body.vtable[+0xa0] (body, buffer)             # dynamic virtual, supplied
+    ctrl = body.meta.holder.controller           # reloaded after the virtual
+    if ctrl != 0:
+        0x18b8380(ctrl, body)                    # no force flag
+```
+
+Preserved quirks: a kind-2 body with force 0 skips the store AND the notify; a kind-2 body with force nonzero stores and notifies; a non-kind-2 body with force 0 stores but never notifies (so a host velocity set with notify flag 0 mutates velocity with no group transition, and therefore no pool guard). The pose setter has no force flag: it notifies whenever the controller is non-null. Only the low byte of r8 is tested. Pose-buffer padding words are uninitialised stack. Not reconstructed: sibling entries `0x18aa580` (calls `0x18bf4f0` then notify unconditionally on non-null controller), `0x18aa3c0` (vector at `+0x128`, `0x18bf450`, then notify) and `0x18a8cf0` (notify with no null check); all use the same `0x18b8380` tail.
+
+#### Pool guards reached beneath the setters (static, direct calls only; feeds the safe-point contract)
+
+Gate chain, all of which must pass for any pool guard to be reachable:
+
+1. setter gate above (`force != 0` for velocity setters; non-null controller for pose; `0x18b8380` rcx = controller, rdx = body);
+2. `0x18b8380` returns early if metadata `+0x52` bit 0 is set or `body+0x10` (group) is null. Otherwise it enters the protected controller synchronization at `controller+0x50` (a protected stub call, NOT one of the 11 pool guards; supplied), then calls `0x18e14f0(controller+0x30, body)`, then dynamic virtual `+0x28` of the body (quiet-state reset), then the paired leave;
+3. `0x18e14f0` does nothing but the final `0x18e11b0(context, body.group)` unless metadata `+0x52` bit 3 is set AND `predicate(0x18e1dd0)` result differs from `(group == context+0x410)`.
+
+When the selection changes (gate 3 passes):
+
+| Guard | Reached via | Extra conditions |
+|---|---|---|
+| `0x143336bb8` contact payload pool (return) | `0x18e23c0` (always called on selection change) -> `0x1957fc0` -> `0x1958030` -> `0x1958b90` -> `0x1958720` (also `0x18e23c0` -> pruning in the groups at `context+0x418/+0x428` when old group == `context+0x408`) | `0x1958720` takes the guard only for contact entries with a non-null payload in a link that has the body as an endpoint; no matching link or an empty/null contact span reaches no guard from this branch |
+| `0x143336aa0` pose group storage pool | `0x18e19c0` (obtain group) | only on the third arm: body virtual `+8(1)` returns nonzero AND metadata `+0x50` bit 15 set AND NOT (`+0x52` bit 3 and predicate true). Bit 15 clear selects `context+0x408` and bit 15 set with predicate true selects `context+0x410`; neither obtains a group. Also reachable from `0x18e23c0` -> `0x18e2de0` (ordinary-group processing, when the old group is neither `context+0x408` nor `+0x410`), which calls `0x18e19c0` itself in one branch |
+
+Not reached directly by this path (no guard-taking chunk in `0x18e14f0`, `0x18e11b0`, `0x19573c0`, `0x1957fc0`, `0x1958030`, `0x1958b90`): `0x143336ab0` (`0x1958ba0` is not a callee of `0x1958b90`, which jumps to `0x1958720` with a null second argument), and the body-record pools `0x143336800/7f0/810`. Open leads, NOT traced: callees of `0x18e11b0` (`0x18e2b80`, `0x1957340`, `0x18e2a60`, `0x18e17e0`), of `0x18e2de0` (`0x18e2660`, `0x1957720`, `0x18e1b10`, `0x18e2d00`) and of `0x19573c0`; virtual `+0x28` and `+0xa0` targets; `0x19572c0` (guard `0x143336aa0` return) has no direct callers. In particular, with no selection change (the usual steady case: body flags without bit 3, or predicate unchanged) no pool guard is reached at all; only the protected controller-sync enter/leave and `0x18e11b0` run.
+
+Validation: 512 randomized native cases in Unicorn over the memory image (171 linear, 171 angular, 170 pose) execute the original setter entry routines with the call to `0x18b8380` and the pose virtual replaced by recording services; service calls and register arguments plus every byte of the body (0x200), metadata (0x60) and holder (0x40) fixtures and the return/stack match (287 velocity stores, 303 notifies, 55 kind-2 no-force skips, 48 cases where the virtual rewrites the controller slot to test the reload). A deliberately injected bug (notify without force) failed at case 10 and was restored. Composition unit tests chain velocity set -> controller wrapper -> body group transition using the existing modules (force 0, metadata bit 0, no-flag, bit-15-clear, special-group and obtain-group arms). Receipt: `native/snow_host/pose_body_state_setters_validation.json`. Limits: the wrapper and everything beneath it are not executed in this harness; no lock behaviour, no live validation, no claim of original-engine equivalence.

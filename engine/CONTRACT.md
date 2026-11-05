@@ -2035,3 +2035,7 @@ unattributed bytes).
 Sequential behavior is natively validated; interleavings are authored exploration only.
 Push raises `RingStalled` (authored guard) where the native routine spins; slot >= 32 is
 rejected. Layout offsets are evidence anchors, not portable API fields.
+
+### Body state setters (`0x18aa520`, `0x18aa360`, `0x18a8c20`)
+
+`engine.pose_body_state_setters`: `set_pose_body_linear_velocity`, `set_pose_body_angular_velocity`, `set_pose_body_pose`. Inputs are retained body/metadata/holder byte buffers and injected `notify` (the `0x18b8380` wrapper) and, for pose, `store_pose` (virtual `+0xa0`) services. Velocity setters store 12 raw bytes unless the body is kind 2 and force is zero, and notify only when force is nonzero and the controller is non-null; the pose setter notifies on any non-null controller. Only the low byte of the force argument counts. The group transition, synchronization and every pool guard beneath the wrapper stay supplied and are not validated here. Evidence anchors only; no original-engine equivalence is claimed.
