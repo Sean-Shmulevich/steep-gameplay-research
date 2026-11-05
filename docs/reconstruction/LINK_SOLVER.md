@@ -10575,3 +10575,48 @@ When the selection changes (gate 3 passes):
 Not reached directly by this path (no guard-taking chunk in `0x18e14f0`, `0x18e11b0`, `0x19573c0`, `0x1957fc0`, `0x1958030`, `0x1958b90`): `0x143336ab0` (`0x1958ba0` is not a callee of `0x1958b90`, which jumps to `0x1958720` with a null second argument), and the body-record pools `0x143336800/7f0/810`. Open leads, NOT traced: callees of `0x18e11b0` (`0x18e2b80`, `0x1957340`, `0x18e2a60`, `0x18e17e0`), of `0x18e2de0` (`0x18e2660`, `0x1957720`, `0x18e1b10`, `0x18e2d00`) and of `0x19573c0`; virtual `+0x28` and `+0xa0` targets; `0x19572c0` (guard `0x143336aa0` return) has no direct callers. In particular, with no selection change (the usual steady case: body flags without bit 3, or predicate unchanged) no pool guard is reached at all; only the protected controller-sync enter/leave and `0x18e11b0` run.
 
 Validation: 512 randomized native cases in Unicorn over the memory image (171 linear, 171 angular, 170 pose) execute the original setter entry routines with the call to `0x18b8380` and the pose virtual replaced by recording services; service calls and register arguments plus every byte of the body (0x200), metadata (0x60) and holder (0x40) fixtures and the return/stack match (287 velocity stores, 303 notifies, 55 kind-2 no-force skips, 48 cases where the virtual rewrites the controller slot to test the reload). A deliberately injected bug (notify without force) failed at case 10 and was restored. Composition unit tests chain velocity set -> controller wrapper -> body group transition using the existing modules (force 0, metadata bit 0, no-flag, bit-15-clear, special-group and obtain-group arms). Receipt: `native/snow_host/pose_body_state_setters_validation.json`. Limits: the wrapper and everything beneath it are not executed in this harness; no lock behaviour, no live validation, no claim of original-engine equivalence.
+
+### Physics pool mutators outside the step
+
+Static, read-only pass over the analysed image. It asks which systems reach the guard-taking physics routines that the step's own call closure does not. It makes no claim about what the protected stubs do, and it does not establish that any path runs in a given game state. Offsets are evidence anchors for this build, not portable API fields. Nothing here claims original-engine equivalence.
+
+Method: the reverse direct-call graph (rel32 call and jump, cold chunks folded into their primary function) was walked upward from each routine to its roots. Roots were then named from two sources: an 8-byte data-pointer scan of the non-code sections, and the reflected-class vtable map (`vtable_map.json`) for slot ownership. Physics-region vtables carry no reflected names, so those were identified only by the constructors that store them. Indirect calls are not edges. "Reachable" therefore means a direct-call path exists, not that the path executes.
+
+Classes used below: (a) runs inside the simulation half that the Step hold freezes, (b) runs on a loading, idle, async or world-construction path that the hold does not freeze, (c) unknown.
+
+**Reference points.**
+
+- The physics-state constructor `0x136a550` stores these job delegates: `0x1389a50` (PhysicsWorldStep, batch `Physic::PhysicsUpdate`), `0x13c8bc0` (PhysicsTerrainUpdate), `0x13c9950` (PhysicsPropsUpdate), `0x1371bd8` (AfterPhysicSimulationUpdate), `0x13c0b40` (AfterPhysicSimulationUpdateCharacterWrapup). The direct-call closure of each contains none of the routines below. That agrees with the earlier probe, which found only the pair-worker and refresh routines under the step.
+- Physic::BeforeSimulation receivers run before PhysicsWorldStep inside the Step frame (701 of 701 live requests). Membership is verified for two classes: PlayerSnowboardComponent slot `0x270` (`0x564ee0`) and BipedComponent slot `0x270` (`0x13c1e80`, same table slot shared by QuadrupedComponent and PhysicsActivityZone). For other classes the slot number alone is the evidence.
+- Held mode freezes Step and the world chain; BeginFrame, the graphics chain, UpdateWhileEngineIsPaused and EndFrame keep running; the loading thread, idle task workers and async services are off-graph and keep running. The closures of the frame-graph delegates `0x6a3790`, `0x6569e0`, `0x656c20` and `0x675c70` contain none of the routines below by direct calls.
+
+**Classification.**
+
+| Entry (guard) | Roots found | Class |
+|---|---|---|
+| Body record setters `0x18a98d0`, `0x18a9e90` (guard `0x1433367f0`) through `0x18aa340`, `0x18aa4f0` | `0x564ee0` > `0x5654c0` > `0x565100` > `0x556330` > `0x13806f0` > `0x13885b0` > `0x18aa340` or `0x18aa4f0`; Biped/Quadruped slot `0x270` > `0x13c9b10` > `0x1385470` > `0x1401190`; Bending, Inert and PlayerRagdoll slot `0x270` chains; component lifecycle slots; vtable slot `0x18a93e0` | a, with c secondary |
+| Body record setters `0x18a9b00`, `0x18a9c30`, `0x18a9d60` (guard `0x143336800`) through `0x18aa5b0`..`0x18aa5d0`, `0x140d520`/`0x140d560`/`0x140d5a0`, `0x1383f20`, `0x13af9b0` | PlayerRagdollComponent slot `0x270` (`0x13c2d00`, inferred) and lifecycle slots; not reached from the player snowboard receiver | c, with a secondary |
+| `0x1401190` body create (guards `0x143336728`, `0x1433367f0`, `0x1433367d0`, `0x143336810`, and `0x143336858` via `0x13e1690`) | 12 direct callers; roots are `0x270` receivers (a), lifecycle slots such as the `0x218` enable body `0x1372e00` and `0x1d0` activate slots, SpaceComponent, AmbianceZone, TriggerComponent, ShadowRigidBody, RagdollBoneInstance, game-logic virtuals | c, with a secondary |
+| `0x18a7910` (guard `0x143336728`) | the `0x1401190` roots, plus MotionClothBody constructor `0x986700`, Cloth and SoftBody LOD instance slots, cloth body build `0x99f4d0`..`0x9a0040`, world create `0x13d1bd0` | c, with a and b secondary |
+| Destructors `0x18be6b0` (via `0x18a8fd0`), `0x18a7bc0` | data pointers only: body vtable `0x1429c99a8` slot 0, base vtable `0x1429c9800` slot 1, vtables `0x1429ca1d0` and `0x1429ca6b0` slot 0; the body class is built by `0x18a8e70` from `0x18aa5e0` (called by `0x1401190` and cloth `0x9a0040`) | c |
+| Pool init `0x18e0ca0` (guard `0x143336aa0`) | `0x18ae130` controller factory < `0x13d1bd0` < PhysicsWorldComponent slot `0x90` (`0x13a1460`) and SpaceWorldComponent slot `0x98` (`0x8ecfc0`) | b (world construction) |
+| Pool init `0x18b5e70` (guard `0x143336aa0`) | slot 7 of vtable `0x1429c9f80`; its constructors are `0x18b5480` (< `0x18a7510` < `0x98c390` < `0x6489d0`) and `0x18b5850` (< `0x18b5ba0`); slot caller not found | c |
+| `0x18aae40` (guard `0x143336858`) | `0x1401190` > `0x13e1690` > `0x18ac050` (a-reachable); physics-region vtable slots; cloth `0x9a0040` > `0x18abcb0` | c, with a secondary |
+| `0x18d9040`, `0x18d9150` (guard `0x143336bc8`) | solver vtable slots (`0x1429ca1d0`, `0x1429cafb0`, `0x1429cb000`, `0x1429ca2e0`); cloth and softbody LOD slot `+0x88` > `0x9db0f0` > `0x9c0a10` > `0x18ad8f0`/`0x18ad910` > `0x18cb8e0`/`0x18cb980` | c |
+
+**What the hold covers.** Paths rooted at BeforeSimulation receivers are inside the frozen half. The four routines that the player snowboard receiver reaches by direct calls (`0x18aa340`, `0x18aa4f0` and the two setters under them) are the verified case. Everything else stays class c, because the component lifecycle slots (`0x1d0`, `0x1d8`, `0x218`, `0x220`) are entity add, remove and enable transitions whose drivers were not traced. A transition driven by streaming, a loading publication callback, or the host adapter would not be frozen. No static link was found from the loading thread's destruction batch to a body destructor. That batch virtually destroys queued objects, so it stays a candidate and is not claimed.
+
+**Preserved quirks and limits.**
+
+- Class a is reachability, not execution. The chains cross branches (for example the `0x13885b0` per-component update) whose conditions were not examined.
+- The cloth and softbody user of the `0x143336bc8` group and of the body allocator has no identified scheduler job. The LOD instance slot callers are indirect.
+- World construction (class b) happens at session or map setup. Whether a map or sport change during a hold re-enters it is untested, per the stop-mode boundaries.
+
+**Guards at risk while Step is held.**
+
+- Static evidence of an unfrozen path: `0x143336aa0` (pose group pool, via `0x18e19c0`) and `0x143336bb8` (contact payload pool, via `0x1958720`). Both sit beneath the host adapter's velocity and pose setters through the `0x18b8380` group-transition notification, and the adapter thread is a host executor, not a frozen job. `0x143336aa0` is also taken by world-construction pool init.
+- Conditional on a lifecycle, spawn or streaming transition while held: `0x1433367f0`, `0x143336800`, `0x143336728`, `0x1433367d0`, `0x143336810`, `0x1433367e0`, `0x143336858`, `0x143336868`, `0x143336878`, `0x143336888`.
+- Unattributable statically: `0x143336bc8` (solver and cloth side).
+- Live observation remains the way to settle any of these; this pass says only where to look.
+
+Evidence file: `analysis/thread-census/t2mutators.json` (private workspace, not published).
