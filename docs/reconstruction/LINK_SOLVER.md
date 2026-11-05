@@ -10768,3 +10768,93 @@ Reconstruction: `engine/pose_provider_tree_insert.py` (`insert_pose_link_tree`, 
 Validation: `analysis/command-executor-audit/check_pose_provider_tree_insert.py` runs the original 18de6a0/18de830, the grow helpers, 19a3d40 and both rotations in Unicorn without interception (only the allocator vtable alloc/realloc/free is an authored deterministic stub). 512 trials, 35,640 insert calls (30,211 inserted, 5,429 duplicates rejected, 1,884 allocator calls), with 11,738 interleaved removals (pose_body_tree `_Tree.remove` with key_size 8, mirrored into native memory) to create real free lists. Trial starts: null pointer and capacity 0 to 6; keys ascending, descending, random 64-bit, high-bit boundary values and small domains; routines alternate. After every call the harness compares the return value, the allocator call sequence, and all 0x9f000 fixture bytes (descriptor, node arrays, junk-filled uninitialized slots), and checks red-black validity (unsigned order, parent links, black root, no red-red, equal black height, live count, free-list partition of used slots). All 17 targeted native branches were hit. A deliberate bug in the uncle test failed trial 0, and the restore regenerated the receipt `native/snow_host/pose_provider_tree_insert_validation.json`. Unit and composition tests: `tests/test_pose_provider_tree_insert.py` (7 tests, including both pair link merges feeding real trees and checking validity and key order).
 
 Limits: the allocator is an authored stub, fixtures are synthetic, no live or concurrency evidence. Byte-level stage B in the safe-point contract (O7) is now reproducible offline up to the supplied allocator and the already-supplied attach, sort and neighbor-walk services.
+
+### Contact payload update (flat binding)
+
+`198fdc0` is the `update(p, pair, owner.scratch58, n)` call in "Pair contact
+generation" (call site `18dda92`). `engine/pose_contact_payload_update.py` restates it
+over flat memory. CENTRAL_IMPULSE.md "Paired-frame payload update" already has the dict
+model (`pose_link_update`) for its other caller `198f910`. The routine is a leaf with no
+calls, `198fdc0..1990032` (0x273 bytes including `ret`). The whole body is
+reconstructed. Nothing inside it is supplied.
+
+Arguments: rcx = payload, rdx = the 0x14-byte pair descriptor (first body q, second body
+q, u16 i, u16 j) on the caller stack, r8 = 48-byte records, r9d = count (upper half
+ignored). M is the 16-byte XYZ mask at `0x3336890`, reloaded every iteration. Its runtime
+value is {-1,-1,-1,0}.
+
+```text
+old = p.d110
+w[k]  = old >u k ? p.d(0x40 + 0x40k) : 0        k = 0..3   (cmov: all four always loaded)
+id[k] = p.d(0x2c + 0x40k)                                   (snapshot before any store)
+A = first.rows40..70 & M;  B = second.rows40..70 & M        (b0, b1, b2, t; movaps)
+for i in 0..n-1:                                            # no bound at 4
+    r = records + 0x30 i;  row = p + 0x10 + 0x40 i
+    f = r.d1c
+    d = (r.v10 & M) - A.t;  la_k = (Ak.x*d.x + Ak.y*d.y) + (Ak.z*d.z + Ak.w*d.w)
+    e = (r.v20 & M) - B.t;  lb_k = same with B
+    row[0:0x30] = r[0:0x30]                                 # three movups, in order
+    row.10/.14/.18 = (la & M).xyz;  row.20/.24/.28 = (lb & M).xyz
+    row.w38 = pair.w10;  row.w3a = pair.w12;  row.d34 = 0
+    v = 0; if f == id3: v = w3; if f == id2: v = w2; if f == id1: v = w1; if f == id0: v = w0
+    row.d30 = v
+p.d110 = n                                                  # last store
+```
+
+Float32 order: subps (point - t), then mulps (row times d, with the row as the first
+operand), then `haddps` twice. Each product and each sum rounds once to float32. The
+dot product is the pair tree `(p0+p1)+(p2+p3)`, and lower lanes are the first operand in
+each add. The third component is computed twice by `haddps xmm2,xmm2`, and the result is
+masked again before the scalar stores.
+
+Behavior worth preserving:
+
+- Feature matching compares the record's +0x1c word with the old row IDs from the entry
+  snapshot. The record copy overwrites row +0x1c, but the snapshot is used. Tests run
+  k = 3, 2, 1, 0 and later tests override, so the lowest matching old row wins. A cached
+  word carries only from old rows below the old count (unsigned compare). Otherwise
+  the row gets 0. The routine never interprets that word.
+- Row +0x3c..+0x3f and rows at index n or above are untouched. Row +0x1c and +0x2c keep
+  the record's words, because the scalar stores cover only xyz.
+- The routine has no bound at four. Row 4 starts at payload+0x110, so it overwrites the
+  count field and the bytes after it, then the final store writes n. The `198f910`
+  caller reduces each group to four first. On the `18dd400` path, n is the handler's
+  return value (capacity 500), and this lane does not establish that it stays at 4 or
+  below.
+- With the standard mask, every w lane is a signed zero. So the pair tree and a
+  sequential sum differ only when the mask is not the standard one.
+- The routine writes the caller's home space: payload+0xac at entry rsp+8, payload+0xec
+  at rsp+0x20, and r15 at rsp+0x10 when n != 0. Those are legal callee slots, and the
+  model leaves them out.
+
+NaN caveat: the model's `nan_rule='sse'` default takes the first NaN operand, quieted,
+following the Intel manual. The harness compares with `nan_rule='x87'`. That is the
+QEMU softfloat `pick_nan` rule that Unicorn applies to SSE lanes: SNaN loses to QNaN,
+then the larger fraction wins. It differs from the default in 180 of 512 cases. The two-NaN
+behavior of real hardware is not observed. A single NaN operand is returned quieted,
+an invalid operation gives the default NaN 0xffc00000, and there is no FTZ/DAZ.
+
+Validation: `native/snow_host/pose_contact_payload_update_validation.json` has 512 of 512
+randomized Unicorn cases over the memory image. No routine is hooked. A code hook shows
+that execution never leaves the routine, and the stack balances. Every byte of the
+payload (0x210 bytes, rows 0..6), the records, the pair, both bodies and the mask is
+compared. Lane mix: 512 NaN, 69 inf and 1300 subnormal record lanes, and frame lanes from
+the same generators. 1282 rows were written, 62 of them past row four. There were 227
+cache hits, 208 old counts above 4 and 32 random-mask cases. Injected bugs: the
+highest-match-wins order fails at case 0. A sequential sum fails at case 144, the first
+random-mask case. Limits: the harness MXCSR is 0x1f80, and the live MXCSR is not
+established. There is no aliasing between regions. Fixtures are synthetic. Home-space
+stores are not compared.
+
+Tests: `tests/test_pose_contact_payload_update.py` has 11 tests. They cover row fields,
+the w mask, zero count, no bound at 4, snapshot matching, the unsigned old-count gate,
+agreement with `pose_link_update` on finite inputs, the hadd tree, both NaN rules, and
+composition as `update_payload` in `generate_pose_pair_contacts`, including cached-word
+carry across passes.
+
+Static leads:
+
+- What bounds the handler `vt[0x18]` count on the `18dd400` path. A count above 4 would
+  overwrite the payload past +0x110.
+- What writes the row +0x30 cached word between passes (the downstream solver), and the
+  live MXCSR of the physics job thread.

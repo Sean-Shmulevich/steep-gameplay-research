@@ -2043,3 +2043,18 @@ rejected. Layout offsets are evidence anchors, not portable API fields.
 ### Provider tree inserts 0x18de6a0 / 0x18de830
 
 Recovered local behavior: unsigned 64-bit key descent, duplicate key returns false with no write and no growth, otherwise doubling grow (4 from empty) through the allocator, free-list slot reuse before append, and the standard red-black insert fixup with the existing rotations. Supplied: the allocator vtable only. Authored: none beyond the test allocator. No claim of original-engine equivalence outside the validated fixtures.
+
+### Contact payload update (flat binding)
+
+`engine.pose_contact_payload_update.update_pose_contact_payload(mem, payload, pair14, records, count, *, mask=XYZ_MASK, nan_rule='sse')`
+follows LINK_SOLVER.md "Contact payload update (flat binding)" (0x198fdc0). `mem` is
+`PoseFlatMemory`. `pair14` is the 0x14-byte descriptor as bytes. `count` is masked to 32
+bits and has no bound at 4. `nan_rule` is `'sse'` (the manual rule) or `'x87'` (the
+emulator rule, used by the harness). `transform_pose_contact_point(rows, point, nan_rule)`
+exposes the lane arithmetic.
+`bind_pose_contact_payload_update(mem, ...)` returns
+`update_payload(payload, pair, scratch, count)` for `pose_pair_contact_generation`
+services. Authored choices: the pair descriptor is passed as bytes, alignment is not
+checked, aliasing is not modeled and home-space stores are omitted. UNRESOLVED: the
+hardware two-NaN rule, the live MXCSR, and the caller-side count bound on the `18dd400`
+path. Evidence: `native/snow_host/pose_contact_payload_update_validation.json`.

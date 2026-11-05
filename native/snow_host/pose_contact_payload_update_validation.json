@@ -1,0 +1,38 @@
+{
+  "schema": "pose-contact-payload-update-validation-v1",
+  "routine_rva": "0x198fdc0",
+  "caller": "0x18dd400 (call site 0x18dda92)",
+  "cases": 512,
+  "passed": 512,
+  "method": "offline Unicorn run of the original leaf over the memory image; no calls exist, so nothing is hooked; a code hook proves execution never leaves 0x198fdc0..0x1990032",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "stats": {
+    "nan_lanes": 512,
+    "inf_lanes": 69,
+    "subnormal_lanes": 1300,
+    "rows_written": 1282,
+    "rows_past_four": 62,
+    "cache_hits": 227,
+    "oldcount_wrap": 208,
+    "nonstandard_mask": 32,
+    "cases_where_sse_rule_differs": 180
+  },
+  "comparisons": [
+    "all 528 payload bytes (rows 0..6, count field, tail)",
+    "all record, pair-descriptor and body bytes (unchanged)",
+    "mask bytes (unchanged)",
+    "bit-exact float32 lanes including NaN payload propagation, default NaN, inf, subnormals",
+    "r9 upper half ignored (random), stack balance"
+  ],
+  "bug_injections": [
+    "matching k = 0,1,2,3 (highest matching old row wins) fails at case 0",
+    "sequential ((p0+p1)+p2)+p3 instead of the haddps pair tree fails at case 144, the first random-mask case: under the standard mask p3 is a signed zero, so the two orders agree on every standard-mask case"
+  ],
+  "limits": [
+    "Two-NaN lanes are compared under the emulator rule (nan_rule x87: QEMU softfloat pick_nan); the model default nan_rule sse follows the Intel manual and differs in the counted cases. Hardware two-NaN behaviour is not observed.",
+    "MXCSR is the Unicorn default 0x1f80 (no FTZ/DAZ); the live game thread MXCSR is not established.",
+    "One case in 16 uses a random mask; the others use the recovered initializer value {-1,-1,-1,0}.",
+    "Records, payload, pair and bodies do not overlap; aliasing is not exercised.",
+    "Synthetic fixtures; no live payloads or bodies. The meaning of the cached word (warm start) is not established by this routine."
+  ]
+}

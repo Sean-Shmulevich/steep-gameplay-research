@@ -8725,3 +8725,10 @@ cases. This is not wired into a live host API and does not pin manager or module
   - 48 host `set_velocity`/`set_position` calls inside holds took no pool guard and changed no pool. In 36 group-read windows (including setters at 24–45 units/s), the body group never changed (P2b), and post-release motion was plausible.
   - Verdict: adopt Step-hold as the safe point, with the `controller+0x50` sync and loading/idle paths left as open limits.
 - Reconstructed the provider tree inserts `18de6a0` and `18de830` (grow `18df350` / `18df3f0`, fixup `19a3d40`) in `engine/pose_provider_tree_insert.py`; Unicorn harness `check_pose_provider_tree_insert.py` passes 512 trials / 35,640 inserts byte for byte, composed with the pair link merges in `tests/test_pose_provider_tree_insert.py`.
+- Bound the contact payload updater `198fdc0` to flat memory as
+  `engine/pose_contact_payload_update.py`. It is the whole leaf, with no callees. The
+  512-case Unicorn receipt compares every fixture byte, float32 lanes bit for bit, and
+  NaN, inf and subnormal lanes under the emulator NaN rule. Two injected bugs fail.
+  There are 11 tests, and the routine is composed as the `update_payload` service of
+  `generate_pose_pair_contacts`. Open: the hardware two-NaN rule, the live MXCSR, and
+  the handler count bound at `18dd400`.
