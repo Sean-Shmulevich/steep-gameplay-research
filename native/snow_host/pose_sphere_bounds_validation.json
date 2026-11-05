@@ -1,0 +1,20 @@
+{
+  "schema": "pose-sphere-bounds-validation-v1",
+  "cases": 4096,
+  "passed": 4096,
+  "method": "Original leaf 0x18c75a0 called directly in Unicorn (rcx resource, rdx output, r8 frame); no interception; all six output float bits compared with engine.pose_island_step.sphere_resource_bounds and the make_resource_bounds vtable dispatch",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "entry_rva": "0x18c75a0",
+  "table": "0x29c9be8 slot 0x10 (checked in the image)",
+  "formula": "low_j = t_j - r (subss), high_j = r + t_j (addss r, [t]); r = resource+0x40, t = frame+0x30",
+  "coverage": [
+    "signed zeros, subnormal and wide-exponent finite radii and translations",
+    "586 cases with exact cancellation t_j == r",
+    "rotation rows and fourth lanes randomised (must not affect the result)",
+    "no write past the six output floats"
+  ],
+  "limits": [
+    "Finite results only: the engine f32 helper rejects overflow/non-finite values, the native routine would produce inf/NaN",
+    "Synthetic inputs; not a live capture"
+  ]
+}

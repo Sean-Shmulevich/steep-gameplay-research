@@ -21,6 +21,9 @@ IMAGE_BASE = 0x140000000
 BODY_VTABLE = IMAGE_BASE + 0x29C99A8      # constructor-selected body class
 BOX_RESOURCE_VTABLE = IMAGE_BASE + 0x29C9AC8
 CAPSULE_RESOURCE_VTABLE = IMAGE_BASE + 0x29C9B58
+# Live reads (Phase 3, LINK_SOLVER.md "Composed island step on live substeps"):
+SPHERE_RESOURCE_VTABLE = IMAGE_BASE + 0x29C9BE8  # rider spheres; slot 0x10 = 0x18c75a0
+STATIC_BODY_VTABLE = IMAGE_BASE + 0x29C98C8      # static link endpoints (body layout)
 BROADPHASE_TABLE = IMAGE_BASE + 0x29CA8A0        # dynamic-tree broadphase
 SETTINGS_VTABLE = IMAGE_BASE + 0x29CA978         # live read: object at world+0x08
 CALLBACK_OWNER_GLOBAL = IMAGE_BASE + 0x33365E0   # [global]+0x38 body-list callback

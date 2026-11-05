@@ -26,8 +26,16 @@ receivers). The C4 finish 0x195c040 has no reconstruction and is supplied, as a
 ``replay_effects`` service built from recorded native memory effects; any stage can
 be run that way instead. The body-list callback is an external interface and is
 always supplied. Nothing runs implicitly.
+
+Live layout (LINK_SOLVER.md "Composed island step on live substeps"): IslandState
+binds the inline small-buffer arrays (INLINE_SMALL_BUFFERS) as views into their
+containing record and exposes damping (+0x1b8) and quiet-override (+0x1c0) records;
+make_composed_batch_stage passes both through (damping_response stays supplied);
+make_resource_bounds covers box, capsule and sphere (0x18c75a0). The integrated body
+paths accept body class 0x29c99a8 only; static link endpoints (0x29c98c8) are rejected.
 """
 import struct
+from collections.abc import Mapping, Sequence
 from .pose_update_stage import run_pose_update_stage, prepare_pose_constraint_collections
 from .pose_batch_runtime import run_retained_pose_batch_pass
 from .pose_context_init import bind_pose_jobs
@@ -39,6 +47,7 @@ from .pose_body_integration import integrate_pose_body
 from .pose_scalar_trig import scalar_sin_cos
 from .pose_box_resource_bounds import box_resource_bounds
 from .pose_island_step_fixtures import (BOX_RESOURCE_VTABLE, CAPSULE_RESOURCE_VTABLE,
+                                        SPHERE_RESOURCE_VTABLE, BODY_VTABLE, STATIC_BODY_VTABLE,
                                         CALLBACK_OWNER_GLOBAL, DISPATCHER_GLOBAL,
                                         ACTION_CALLBACK)
 from reference.central_impulse import f32
@@ -65,13 +74,27 @@ class RetainedRegions:
 
     Each region is a bytearray or a list of uint64 pointer slots. Reads/writes
     may span adjacent regions; any byte outside every region is rejected.
+    Regions may not overlap: storage that lives inside another record (inline
+    small-buffer arrays) is a view into that record, see container().
     """
     def __init__(self):
         self.items = []
 
     def add(self, name, address, store):
+        top = address + self.size(store)
+        for base, other, held in self.items:
+            if base < top and address < base + self.size(held):
+                raise ValueError('Retained region %s overlaps %s; use a view for inline storage'
+                                 % (name, other))
         self.items.append((address, name, store))
         self.items.sort(key=lambda item: item[0])
+
+    def container(self, address, size):
+        """(name, base, store) of the byte region wholly holding address+size, else None."""
+        for base, name, store in self.items:
+            if base <= address and address + size <= base + self.size(store):
+                return None if isinstance(store, list) else (name, base, store)
+        return None
 
     @staticmethod
     def size(store):
@@ -227,8 +250,18 @@ def capsule_resource_bounds(half, radius, frame):
     return [f32(f32(frame[3][j]) - ext[j]) for j in range(3)] + [f32(ext[j] + f32(frame[3][j])) for j in range(3)]
 
 
+def sphere_resource_bounds(radius, frame):
+    """0x18c75a0 (sphere table 0x29c9be8 slot 0x10): r = resource+0x40.
+
+    low_j = t_j - r (subss t, r); high_j = r + t_j (addss r, t); float32 each.
+    """
+    r = f32(radius)
+    t = [f32(frame[3][j]) for j in range(3)]
+    return [f32(t[j] - r) for j in range(3)] + [f32(r + t[j]) for j in range(3)]
+
+
 def make_resource_bounds(raw_resources):
-    """Dispatch resource bounds by the retained resource vtable (box or capsule).
+    """Dispatch resource bounds by the retained resource vtable (box, capsule, sphere).
 
     Other resource classes are rejected rather than guessed.
     """
@@ -239,18 +272,99 @@ def make_resource_bounds(raw_resources):
             return box_resource_bounds(struct.unpack_from('<3f', raw, 0x40), frame)
         if vt == CAPSULE_RESOURCE_VTABLE:
             return capsule_resource_bounds(*struct.unpack_from('<2f', raw, 0x40), frame)
+        if vt == SPHERE_RESOURCE_VTABLE:
+            return sphere_resource_bounds(struct.unpack_from('<f', raw, 0x40)[0], frame)
         raise ValueError('No reconstructed bounds for resource class %#x' % vt)
     return bounds
 
 
+class InlinePointerArray(Sequence):
+    """uint64 slots stored inside a containing retained record (authored view).
+
+    Reads and writes go to the containing bytearray, so record snapshots and
+    RegionMemory see the same bytes. Length is the fixed inline capacity.
+    """
+    def __init__(self, record, offset, capacity):
+        if offset < 0 or offset + 8 * capacity > len(record):
+            raise ValueError('Inline array outside its containing record')
+        self.record, self.offset, self.capacity = record, offset, capacity
+
+    def __len__(self):
+        return self.capacity
+
+    def _index(self, index):
+        if index < 0:
+            index += self.capacity
+        if not 0 <= index < self.capacity:
+            raise IndexError(index)
+        return self.offset + 8 * index
+
+    def __getitem__(self, index):
+        if isinstance(index, slice):
+            return [self[i] for i in range(*index.indices(self.capacity))]
+        return struct.unpack_from('<Q', self.record, self._index(index))[0]
+
+    def __setitem__(self, index, value):
+        if isinstance(index, slice):
+            positions = range(*index.indices(self.capacity))
+            values = list(value)
+            if len(values) != len(positions):
+                raise ValueError('Inline array slice assignment cannot resize')
+            for i, v in zip(positions, values):
+                self[i] = v
+            return
+        struct.pack_into('<Q', self.record, self._index(index), value)
+
+
+class FloatRecords(Mapping):
+    """address -> list of float32 decoded from retained byte records (authored view)."""
+    def __init__(self, records, count):
+        self.records, self.count = records, count
+
+    def __getitem__(self, token):
+        return list(struct.unpack_from('<%df' % self.count, self.records[token], 0))
+
+    def __iter__(self):
+        return iter(self.records)
+
+    def __len__(self):
+        return len(self.records)
+
+
+# Inline small-buffer storage seen on live records (LINK_SOLVER.md "Composed island
+# step on live substeps"): (record map, pointer field, count field and width,
+# inline offset, inline capacity, element size, target). When the pointer field
+# holds record+inline offset, the storage is a view into that record.
+INLINE_SMALL_BUFFERS = (
+    ('group', 0x10, (0x18, '<I'), 0x20, 4, 8, 'array'),         # group bodies
+    ('group', 0x40, (0x48, '<I'), 0x50, 8, 8, 'array'),         # group links
+    ('link', 0x58, (0x60, '<I'), 0x68, 1, 16, 'link_entries'),  # link contact entries
+    ('body', 0xb8, (0xc0, '<H'), 0xc8, 1, 72, 'body_entries'),  # single body entry
+)
+
+# Live allocation spacing (Phase 3 dumps): adjacent link records 0x88 apart,
+# resources 0x48, bodies 0x1d0. A dump builder must not read past these.
+LIVE_RECORD_SPACING = dict(link=0x88, resource=0x48, body=0x1d0)
+
+
 class IslandState:
-    """Retained island-step records keyed by address token (authored container)."""
-    def __init__(self, regions, *, resources, profiles, tokens, modes=None, globals_=None):
+    """Retained island-step records keyed by address token (authored container).
+
+    Region categories 'damping' (16-byte records named by body+0x1b8) and
+    'quiet_override' (12-byte records named by body+0x1c0) are exposed as
+    damping_records / quiet_overrides (float lists). Inline small-buffer arrays
+    (INLINE_SMALL_BUFFERS) are bound as views into their containing record when
+    inline_buffers is true; add_inline_array/add_inline_entries bind others.
+    Views are bound once: a pointer that later migrates is not followed.
+    """
+    def __init__(self, regions, *, resources, profiles, tokens, modes=None, globals_=None,
+                 inline_buffers=True):
         self.regions = RetainedRegions()
         self.addresses = {}
         self.maps = {k: {} for k in ('body', 'metadata', 'group', 'link', 'payload', 'link_entries',
                                      'body_entries', 'transform', 'resource', 'pose', 'array',
-                                     'batch', 'arena', 'profile', 'command')}
+                                     'batch', 'arena', 'profile', 'command', 'damping',
+                                     'quiet_override')}
         self.named = {}
         for region in regions:
             data = list(region.data) if region.kind == 'u64' else bytearray(region.data)
@@ -276,6 +390,51 @@ class IslandState:
         self.jobs = binding['jobs']
         self.arrays[binding['table_token']] = binding['arguments']
         self.entry_arrays = {**self.maps['link_entries'], **self.maps['body_entries']}
+        self.damping_records = FloatRecords(self.maps['damping'], 4)
+        self.quiet_overrides = FloatRecords(self.maps['quiet_override'], 3)
+        self.inline = []
+        if inline_buffers:
+            self.bind_inline_buffers()
+
+    def add_inline_array(self, address, capacity):
+        """Bind capacity u64 slots at address, inside one byte region, as an array view."""
+        held = self.regions.container(address, 8 * capacity)
+        if held is None:
+            raise KeyError('No byte region holds inline array %#x+%#x' % (address, 8 * capacity))
+        name, base, store = held
+        view = InlinePointerArray(store, address - base, capacity)
+        self.maps['array'][address] = view
+        self.arrays[address] = view
+        self.inline.append(('array', address, name))
+        return view
+
+    def add_inline_entries(self, address, size):
+        """Bind size bytes at address, inside one byte region, as an entry-array view."""
+        held = self.regions.container(address, size)
+        if held is None:
+            raise KeyError('No byte region holds inline entries %#x+%#x' % (address, size))
+        name, base, store = held
+        view = memoryview(store)[address - base:address - base + size]
+        self.entry_arrays[address] = view
+        self.inline.append(('entries', address, name))
+        return view
+
+    def bind_inline_buffers(self):
+        """Bind every INLINE_SMALL_BUFFERS layout whose pointer names its own record."""
+        for category, field, (count_at, count_fmt), offset, capacity, size, target in INLINE_SMALL_BUFFERS:
+            for token, record in self.maps[category].items():
+                if isinstance(record, list) or len(record) < field + 8:
+                    continue
+                if _ptr(record, field) != token + offset:
+                    continue
+                count = struct.unpack_from(count_fmt, record, count_at)[0]
+                if count > capacity:
+                    raise ValueError('%s %#x: %d inline entries exceed capacity %d'
+                                     % (category, token, count, capacity))
+                if target == 'array':
+                    self.add_inline_array(token + offset, capacity)
+                else:
+                    self.add_inline_entries(token + offset, capacity * size)
 
 
 def model_command_prepare(state, prepare_constraint=None):
@@ -350,24 +509,61 @@ def model_body_lists(state, callback):
     return stage
 
 
+def _require_body_class(body, token):
+    """The composed poststep/update bind body class 0x29c99a8 only.
+
+    Static link endpoints use 0x29c98c8, whose slots 0x10..0x28 are `ret 0`; any
+    other class reaching the integrated paths is rejected rather than guessed.
+    """
+    vt = _ptr(body, 0)
+    if vt != BODY_VTABLE:
+        kind = ' (static link-endpoint class, slots 0x10..0x28 are ret)' if vt == STATIC_BODY_VTABLE else ''
+        raise ValueError('Body %#x class %#x%s reached the integrated body path; only %#x is bound'
+                         % (token, vt, kind, BODY_VTABLE))
+
+
 def make_composed_batch_stage(state, *, atan2, allocate, release_buffer, release_payload,
                               get_kind, half_angle_trig=scalar_sin_cos, poststep_wrapper=None,
-                              settings_override=None, observe=None, sort_prefix=None):
+                              settings_override=None, observe=None, sort_prefix=None,
+                              damping_records=None, damping_response=None, quiet_overrides=None,
+                              resource_bounds=None):
     """C7..D10: batches 0x18e2fb0 through the recovered retained modules.
 
     Composes run_retained_pose_batch_pass (order, batches, dispatcher, worker
     thunk, transfer) with the retained numerical worker, integrated poststep,
-    contact retirement, constructor-selected body integration and box/capsule
-    bounds. allocate/release_buffer/release_payload/atan2 are supplied services.
+    contact retirement, constructor-selected body integration and box/capsule/
+    sphere bounds. allocate/release_buffer/release_payload/atan2 are supplied
+    services.
+
+    damping_records (token -> 4 floats, body+0x1b8) and quiet_overrides (token ->
+    3 floats, body+0x1c0) default to the state's 'damping'/'quiet_override'
+    regions when it has any; otherwise None (reaching them then raises).
+    damping_response(base, s) -> 4 multipliers is the damping library 0x1c453d0,
+    always a supplied service. resource_bounds defaults to make_resource_bounds.
     """
     raw_resources = state.maps['resource']
     bodies, metadata, links = state.maps['body'], state.maps['metadata'], state.maps['link']
+    if damping_records is None and state.maps['damping']:
+        damping_records = state.damping_records
+    if quiet_overrides is None and state.maps['quiet_override']:
+        quiet_overrides = state.quiet_overrides
     def clear_link(token):
         clear_pose_link_contacts(links[token], entry_arrays=state.entry_arrays, release=release_payload)
     poststep = make_integrated_pose_poststep(groups=state.maps['group'], arrays=state.arrays,
         bodies=bodies, metadata=metadata, links=links, clear_link=clear_link,
         entry_arrays=state.entry_arrays, transforms=state.maps['transform'],
-        resource_bounds=make_resource_bounds(raw_resources), half_angle_trig=half_angle_trig)
+        resource_bounds=resource_bounds or make_resource_bounds(raw_resources),
+        half_angle_trig=half_angle_trig, quiet_overrides=quiet_overrides)
+    checked = poststep
+    def poststep(group_token, *args):
+        raw_group = state.maps['group'][group_token]
+        start, count = struct.unpack_from('<QI', raw_group, 0x10)
+        for token in (state.arrays[start][:count] if count else []):
+            _require_body_class(bodies[token], token)
+        return checked(group_token, *args)
+    def update_body(token, body, s):
+        _require_body_class(body, token)
+        return integrate_pose_body(body, s, half_angle_trig=half_angle_trig)
     if poststep_wrapper is not None:
         poststep = poststep_wrapper(poststep)
     if observe is not None:
@@ -392,7 +588,8 @@ def make_composed_batch_stage(state, *, atan2, allocate, release_buffer, release
             payloads=state.maps['payload'], resources=state.resources, profiles=state.profiles,
             modes=state.modes, buffers=state.maps['arena'], allocate=allocate, release=release_buffer,
             claim=lambda _: claim_pose_batch_serial(state.island), poststep=poststep, atan2=atan2,
-            update_body=lambda token, body, s: integrate_pose_body(body, s, half_angle_trig=half_angle_trig))
+            damping_records=damping_records, damping_response=damping_response,
+            update_body=update_body)
         run_retained_pose_batch_pass(context_token, dispatcher=record, scalar=scalar,
             settings_token=settings_token, worker_callback_token=0x1418e3340, jobs=state.jobs,
             worker_services=worker_services,

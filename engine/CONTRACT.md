@@ -2290,7 +2290,17 @@ C5 and C6/C9 (broadphase table 0x29ca8a0); any other callee it reaches must be s
 it raises. `make_composed_batch_stage(state, atan2, allocate, release_buffer,
 release_payload, get_kind, ...)` covers C7–D10. `replay_effects(regions, effects)` serves a
 stage from recorded native effects (currently the C4 finish `0x195c040`). Helpers:
-`RetainedRegions`, `RegionMemory`, `native_crt_sort_prefix`, `capsule_resource_bounds`.
+`RetainedRegions`, `RegionMemory`, `native_crt_sort_prefix`, `capsule_resource_bounds`. `make_composed_batch_stage`
+also takes `damping_records`, `damping_response`, `quiet_overrides` and `resource_bounds`; records
+default to the state's `damping`/`quiet_override` regions and `damping_response(base, s)` (library
+`0x1c453d0`) is always supplied. `make_resource_bounds` covers box, capsule and sphere
+(`sphere_resource_bounds`, `0x18c75a0`). `IslandState(..., inline_buffers=True)` binds
+`INLINE_SMALL_BUFFERS` (group+0x20 cap 4, +0x50 cap 8, link+0x68 cap 1, body+0xc8 single entry) as
+`InlinePointerArray`/memoryview views into the containing record; `add_inline_array`/
+`add_inline_entries` bind others; views are bound once. `RetainedRegions` rejects overlapping
+regions. The integrated poststep and body update accept body class `0x29c99a8` only (static
+`0x29c98c8` is rejected). Evidence: `native/snow_host/pose_sphere_bounds_validation.json`
+(4096/4096) and the Phase 3 engine-only rerun (18/18).
 Fixtures: `engine.pose_island_step_fixtures.build_island_fixture(case)` (synthetic,
 authored). Follows LINK_SOLVER.md "Composed island step". Evidence:
 `native/snow_host/pose_island_step_validation.json` (1024/1024, both modes). No claim of

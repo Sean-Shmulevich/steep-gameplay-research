@@ -12317,12 +12317,20 @@ Live layout facts needed to run it, which the Phase 2 fixture did not exercise:
 - Live link records are 0x88 apart, resources 0x48, bodies 0x1d0. Static link endpoints use body
   class `0x29c98c8`.
 - Every live body has a damping record (+0x1b8, 16 bytes) and most have quiet overrides (+0x1c0,
-  3 floats). `make_composed_batch_stage` does not pass these through, so the live run used a
-  harness-side copy that does (engine gap).
-- The rider's sphere shapes use resource class `0x29c9be8`, bounds `0x18c75a0`: low = t − r,
-  high = r + t. `make_resource_bounds` covers only box and capsule (engine gap).
-- `IslandState`/`RetainedRegions` cannot represent the inline small-buffer arrays; the live run
-  exposed them as views into the containing record (engine gap).
+  3 floats). `make_composed_batch_stage` passes both through: `damping_records`/`quiet_overrides`
+  default to the state's `damping`/`quiet_override` regions, and `damping_response` (the damping
+  library `1c453d0`) stays a supplied service.
+- The rider's sphere shapes use resource class `0x29c9be8`, bounds `0x18c75a0` (slot 0x10): low =
+  t − r (`subss t, r`), high = r + t (`addss r, t`), r = resource+0x40. `sphere_resource_bounds`
+  restates it and `make_resource_bounds` dispatches box, capsule and sphere;
+  [4096 direct native comparisons](../../native/snow_host/pose_sphere_bounds_validation.json).
+- `IslandState` binds the inline small-buffer arrays (`INLINE_SMALL_BUFFERS`: group+0x20/+0x50,
+  link+0x68, body+0xc8) as views into the containing record when the pointer names that record;
+  regions may not overlap. Static link endpoints (body class `0x29c98c8`, slots 0x10–0x28 `ret`)
+  are rejected by the integrated body paths, which bind `0x29c99a8` only.
+- With these engine changes and no harness-side composition, the composed model again matched the
+  native run byte for byte in 18 of 18 substeps (11,803 regions including damping and override
+  records), 72 of 72 injected faults caught (`sr_replay_engine.py`, private).
 - C4 begin also scans the world+0x50 sets (count +0x58; each set holds constraints at +0x58 with
   count +0x60); about 466 sets live, handled by `begin_swept_stage`.
 - The world+0x90 tree has 24-byte nodes whose value is a body.

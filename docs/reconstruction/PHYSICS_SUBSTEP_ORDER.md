@@ -368,9 +368,10 @@ body (up to 4.7 m/s velocity, 0.057 translation), attributed (inference) to the 
 **Model-on-live.** An `IslandState` built from the same BEFORE pages ran in bound mode, with only
 the C4 finish replayed (a no-op here). It matched the native run byte for byte at the C7–D10
 boundary in 18 of 18 substeps (11,481 regions). Injected faults were caught in 72 of 72 runs
-(iterations swapped, gravity zero, damping ignored, dt +1 ulp). The live run needed harness-side
-additions not yet in the engine module (damping and quiet-override pass-through, sphere bounds,
-inline arrays; see LINK_SOLVER.md "Composed island step on live substeps"). An independent rerun
+(iterations swapped, gravity zero, damping ignored, dt +1 ulp). The live-layout additions (damping and
+quiet-override pass-through, sphere bounds, inline arrays) are now in the engine; a rerun on
+engine code alone gave the same 18 of 18 (see LINK_SOLVER.md "Composed island step on live
+substeps"). An independent rerun
 of the sr-05 replay (8 substeps) reproduced the result.
 
 **Coverage.** Wine on macOS, dispatcher capacity 1. Spawn-line riding in the first ~20 s (every
