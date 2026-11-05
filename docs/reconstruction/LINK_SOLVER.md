@@ -187,18 +187,3 @@ reconstructed, and the row field meaning is from consumer reads.
 Static leads: reconstruct slot 0x98 (`199b590`, append) and slot 0xa0
 (`14199ed90`), the step `199c880`, and the dynamic-tree update behind virtuals
 0xc8/0xd0; find which one writes the +0x118 list.
-
-### CONTRACT.md entry: Broadphase pair lists
-
-`engine/pose_broadphase_pair_lists.py`: `added_pair_count`, `added_pair_array`,
-`removed_pair_count`, `removed_pair_array` (vtable `0x29ca8a0` slots 0x40, 0x48,
-0x60, 0x68; RVAs `1940410`, `1940400`, `19403f0`, `19403e0`) over a flat object
-view plus a `read(address, size)` callback, and `decode_pair_rows` for 24-byte
-rows. The row decoder and callback are authored; offsets are evidence anchors.
-Harness: `analysis/command-executor-audit/check_pose_broadphase_pair_lists.py`.
-
-### PROGRESS.md bullet
-
-- Broadphase pair lists: controller+0x28 object identified as the dynamic-tree
-  broadphase (vtable `0x29ca8a0`, only class built by `193f450`); four count and
-  array getters reconstructed and run natively, 512 cases, 24-byte pair rows.
