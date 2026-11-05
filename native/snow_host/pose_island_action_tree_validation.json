@@ -1,0 +1,60 @@
+{
+  "schema": "pose-island-action-tree-validation-v1",
+  "cases": 320,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x1959a70",
+    "0x18b8c90",
+    "0x1959c50",
+    "0x1959d90",
+    "0x1959bb0",
+    "0x18da970",
+    "0x18be770"
+  ],
+  "method": "Original walk, wake callback, node retirement/rebalancing and body slot0x28 execute in Unicorn; entry update/destructor, group transition 0x18e14f0 and the two protected synchronization call sites are authored deterministic services applied identically to native memory and to engine.pose_island_action_tree on PoseFlatMemory",
+  "statistics": {
+    "cases": 320,
+    "updates": 4753,
+    "callbacks_admitted": 2175,
+    "transitions": 2175,
+    "retired": 1926,
+    "empty_trees": 19,
+    "max_nodes": 63
+  },
+  "injected_bugs": {
+    "finished_state_1": {
+      "detected": true,
+      "first_failing_case": 1
+    },
+    "walk_stops_after_first_node": {
+      "detected": true,
+      "first_failing_case": 1
+    },
+    "missing_slot28_quiet_reset": {
+      "detected": true,
+      "first_failing_case": 1
+    },
+    "stale_body_pointer_after_update": {
+      "detected": true,
+      "first_failing_case": 1
+    }
+  },
+  "comparisons": [
+    "ordered service calls with arguments (entry, dt float32 bits, context, body, sync address, destroy flag)",
+    "every byte of tree descriptor, node array, entries, bodies (0x200), metadata, holders and controllers"
+  ],
+  "coverage": [
+    "empty tree and 1..63-node trees with randomized prior removals (red nodes, free slots)",
+    "update setting state 0/1/2/3 and replacing the entry body pointer",
+    "metadata bit0 and null-group gates",
+    "transition clearing the group or rewriting metadata+0x53 before slot0x28",
+    "dt values including signed zero and denormal-range float32"
+  ],
+  "limits": [
+    "Entry classes are synthetic: no class implementing the update virtual was found in unprotected code, so effects of real updates are not covered.",
+    "Group transition 0x18e14f0 supplied (reconstructed separately in pose_group_update).",
+    "Protected synchronization skipped; no lock semantics or concurrency.",
+    "No live capture; tree insertion site not found."
+  ]
+}

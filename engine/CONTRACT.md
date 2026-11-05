@@ -2253,3 +2253,26 @@ UNRESOLVED: terrain slot-1 bodies; slot +0x10/+0x20 filter semantics on terrain;
 hardware two-NaN rule; live MXCSR; real hull tables. Evidence:
 `native/snow_host/pose_narrowphase_slot8_validation.json`. No claim of original-engine
 equivalence outside the validated fixtures.
+
+### Island action tree, swept-contact stage and link attachment
+
+`engine.pose_island_action_tree`: `walk_pose_action_tree` walks provider+0xd0 in key order,
+takes the successor before any call, reloads the entry body after update, and retires
+state-2 nodes (pose_body_tree code) before the deleting destructor; `wake_action_body` is
+`0x18b8c90` (controller from body metadata holder, metadata bit0 and null-group gates,
+enter, transition, slot 0x28 quiet reset, leave). Entry update, group transition and
+synchronization are supplied services. `engine.pose_island_ccd_stage`:
+`begin_swept_stage` (kind-6 collection from the general list then container children,
+cross- or same-holder removal, slot reload before destroy, count clear),
+`reserve_stage_list` (tag 0x11, initial 8), `store_stage_dt`; the finish is a service
+sequence and its numerics are not reconstructed. `engine.pose_island_attach`:
+`attach_changed_links`, `merge_island_groups` (larger absorbs, ties keep the first),
+`absorb_island_group` (native growth rules; the zero-capacity hang raises),
+`bind_island_attach` (binds the reconstructed finalize/append/removal modules; body
+removal, growth, allocator and destructor stay supplied), and `append_broadphase_pair` /
+`mark_broadphase_active` for broadphase slots +0x98/+0xa8. Follows LINK_SOLVER.md "Island
+action tree walk", "Island swept-contact stage", "Changed-link attachment" and
+"Pending-link publication receivers". No velocity or transform writes in these stages.
+UNRESOLVED: the action-entry class and insertion, the swept-stage finish numerics, the C2
+gameplay callback. No claim of original-engine equivalence outside the validated
+fixtures.

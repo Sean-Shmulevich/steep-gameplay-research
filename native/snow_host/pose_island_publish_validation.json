@@ -1,0 +1,48 @@
+{
+  "schema": "pose-island-publish-validation-v1",
+  "cases": 320,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18b9710",
+    "0x199b590",
+    "0x1940990",
+    "0x193fa10"
+  ],
+  "method": "Original outer stage with all subsystem calls except the interface supplied as no-ops; interface uses the original dynamic-tree broadphase table 0x29ca8a0 so slot +0x98 (pair-record append and growth) and slot +0xa8 execute natively; allocator global slots authored. Model: publish_pending_links + append_broadphase_pair + reserve_pair_records + mark_broadphase_active on PoseFlatMemory",
+  "statistics": {
+    "cases": 320,
+    "published": 1760,
+    "grows": 459,
+    "notify": 165
+  },
+  "injected_bugs": {
+    "pair_record_tag_0x11": {
+      "detected": true,
+      "first_failing_case": 1
+    },
+    "notify_sets_bit1": {
+      "detected": true,
+      "first_failing_case": 1
+    },
+    "record_from_link_not_link_plus8": {
+      "detected": true,
+      "first_failing_case": 0
+    }
+  },
+  "comparisons": [
+    "allocator events with sizes/alignment/tags",
+    "every byte of owner (phase), context, pending span, links, broadphase object, new-pair vector header and record storage"
+  ],
+  "coverage": [
+    "0..11 pending links (nonnull)",
+    "vector capacity 0/1/2/4/16 with growth from zero (8) and doubling via realloc",
+    "active count zero and nonzero (+0x49 flag)",
+    "dt signs"
+  ],
+  "limits": [
+    "Null pending entries are excluded: the stage passes null and 0x199b590 would dereference it.",
+    "Other subsystem calls are no-ops here (validated separately).",
+    "Synthetic data; no live capture."
+  ]
+}

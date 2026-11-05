@@ -308,6 +308,24 @@ Read budgets at the in-step points stay within the safe-point contract's
 policy. A full fixture read at S2 is larger than earlier captures, so measure its cost first
 and record one substep at a time.
 
+## 6a. Phase 2 update: island stages C2–C6
+
+These rows supersede the C2–C6 (and amend C9) rows of the stage table above.
+
+| # | Stage | RVA(s) | Evidence | Module | Receipt | Status |
+|---|---|---|---|---|---|---|
+| C2 | Command constraint preparation (unchanged) | `18b9830`, `19445c0`, `19440c0` | N | `engine/pose_update_stage.py`, `engine/pose_command_prepare.py`, `engine/pose_command_registry.py` | [collections](../../native/snow_host/pose_collection_prepare_validation.json), [command](../../native/snow_host/pose_command_prepare_validation.json), [registry](../../native/snow_host/pose_command_registry_validation.json) | reconstructed; the gameplay callback stays supplied |
+| C3 | Action tree walk on provider+0xd0: entry slot +8 (dt), then wake callback `18b8c90`, state-2 entries retired and destroyed | `11fd350`, `1959a70`, `18b8c90`, `1959c50`, `18be770` | S, N | `engine/pose_island_action_tree.py` | [action tree](../../native/snow_host/pose_island_action_tree_validation.json) | reconstructed (walk and callback); entry update supplied (class and insertion site not found); no velocity/transform writes |
+| C4 | Swept-contact stage at controller+0x40: begin collects and destroys kind-6 constraints; `ed2ea0` dt; finish scans moving bodies, sweeps and creates kind-6 constraints from a velocity/transform snapshot | `195b190`, `195af30`, `ed2ea0`, `195c040`, `195b250`, `195a0f0`, `1985920` | S, N (begin, dt) | `engine/pose_island_ccd_stage.py` | [swept stage](../../native/snow_host/pose_island_ccd_stage_validation.json) | begin and dt reconstructed; finish static only |
+| C5 | Attach changed links: clear pending, skip flag bit1, finalize both groups, bit15-gated special move or merge (larger absorbs), append link | `18e2200`, `18e21a0`, `1957d80`, `1957430` | S, N | `engine/pose_island_attach.py` | [attach](../../native/snow_host/pose_island_attach_validation.json) | reconstructed as one composition; body removal `1957fc0` supplied |
+| C6 | Publish pending links to broadphase slot +0x98 = `199b590` (24-byte record into the +0xf8 new-pair vector; a null entry would fault) | `18b9710`, `199b590`, `1940990` | S, N | `engine/pose_update_stage.py`, `engine/pose_island_attach.py` | [stage](../../native/snow_host/pose_update_stage_validation.json), [publish](../../native/snow_host/pose_island_publish_validation.json) | reconstructed including the receiver |
+| C9 | (amend) slot +0xa8 = `193fa10`: byte +0x49 \|= 1 | `193fa10` | N | `engine/pose_island_attach.py` | [publish](../../native/snow_host/pose_island_publish_validation.json) | reconstructed |
+
+Answer to open question 1: no velocity or transform write was found in C2–C6 (closure scan
+for stores to body +0x1a0..+0x1b7 and calls to the known setters; 1957590 and 13ac220 are
+flagged by the same scan as positive controls). Two dynamic gaps remain: the C3 entry
+update virtual and the C2 gameplay callback.
+
 ## 7. Open questions (ranked)
 
 1. **C3 action tree** (`1959a70` on `world+0xd0`): which objects, and whether they write body

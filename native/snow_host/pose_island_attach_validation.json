@@ -1,0 +1,65 @@
+{
+  "schema": "pose-island-attach-validation-v1",
+  "cases": 320,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18e2200",
+    "0x18e21a0",
+    "0x1957d80",
+    "0x1957430",
+    "0x18e11b0",
+    "0x1957340",
+    "0x18e17e0",
+    "0x18be770",
+    "0x19573c0",
+    "0x18e2660",
+    "0x1c6afb0"
+  ],
+  "method": "Original attach composition executes in Unicorn including finalize, body append, group removal, merge, absorb and link append; body removal 0x1957fc0, growth 0x19582a0/0x1958380, allocator global 0x1433365b8 slots and the group destructor are authored deterministic services. The model is engine.pose_island_attach.bind_island_attach on PoseFlatMemory with finalize/append/removal delegated to the existing reconstructed modules. The C6 publish loop is then run on both resulting pending spans.",
+  "statistics": {
+    "cases": 320,
+    "changed_links": 856,
+    "merges": 173,
+    "special_moves": 70,
+    "grows": 401,
+    "pose_alloc_calls": 68,
+    "published": 251,
+    "destroyed": 173
+  },
+  "injected_bugs": {
+    "merge_tie_prefers_second": {
+      "detected": true,
+      "first_failing_case": 18
+    },
+    "pending_count_not_cleared": {
+      "detected": true,
+      "first_failing_case": 1
+    },
+    "link_index_after_append": {
+      "detected": true,
+      "first_failing_case": 0
+    },
+    "source_link_count_kept": {
+      "detected": true,
+      "first_failing_case": 2
+    }
+  },
+  "comparisons": [
+    "ordered service events (body removal, growth, allocator, destroy, publication) with arguments",
+    "every byte of context, lists, groups, bodies, metadata, links, poses, arrays and service-allocated storage"
+  ],
+  "coverage": [
+    "0..6 changed links with flag bit1 skips",
+    "ordinary groups in both context lists (flag 0/1), special 0x408/0x410 groups",
+    "metadata bit15 gates, special-group body moves, merges with ties and swaps",
+    "finalize pending-link queueing by first-endpoint kind nibble 2 after the entry clear",
+    "growth of body/link vectors and pose arrays through alloc, realloc and zero-capacity paths",
+    "null pose arrays"
+  ],
+  "limits": [
+    "Body removal 0x1957fc0 (constraint pruning, link clear, payload pool) supplied by an authored swap-remove.",
+    "Growth and allocator are authored; native allocation/failure not covered.",
+    "Synthetic topology; no live capture; no lock or concurrency semantics."
+  ]
+}

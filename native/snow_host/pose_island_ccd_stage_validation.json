@@ -1,0 +1,60 @@
+{
+  "schema": "pose-island-ccd-stage-validation-v1",
+  "cases": 320,
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x195b190",
+    "0x195af30",
+    "0x0c966e0",
+    "0x18d0290",
+    "0x1cc6180",
+    "0x18d02b0",
+    "0x18d1420",
+    "0x0ed2ea0"
+  ],
+  "method": "Original stage begin (collection of kind-6 constraints, removal dispatch, destruction, list clear) and the dt store execute in Unicorn; kind virtual, destructor, 0x18b9210, 0x18ba1c0 and the allocator global 0x1433365b8 slots are authored deterministic services; model engine.pose_island_ccd_stage on PoseFlatMemory",
+  "statistics": {
+    "cases": 320,
+    "collected": 1219,
+    "cross": 804,
+    "local": 635,
+    "destroyed": 1224,
+    "grow_events": 373,
+    "kind_queries": 2854
+  },
+  "injected_bugs": {
+    "kind_7_collected": {
+      "detected": true,
+      "first_failing_case": 0
+    },
+    "count_not_cleared": {
+      "detected": true,
+      "first_failing_case": 0
+    },
+    "container_children_skipped": {
+      "detected": true,
+      "first_failing_case": 1
+    },
+    "list_tag_0x37": {
+      "detected": true,
+      "first_failing_case": 0
+    }
+  },
+  "comparisons": [
+    "ordered service events (kind queries, removals, destruction, allocator) with arguments",
+    "every byte of stage (0x1040), controller, provider, containers, child arrays, constraints, bodies, metadata, holders and allocated lists"
+  ],
+  "coverage": [
+    "0..11 general constraints and 0..3 containers with 0..5 children, kinds 1/2/4/6/7",
+    "null, partially filled and full existing lists (growth from 0 to 8, doubling, realloc)",
+    "equal and differing endpoint holders",
+    "removal services nulling a slot (destroy skipped) or shrinking the count (count reread)",
+    "dt store with signed zero, max finite and denormal float32"
+  ],
+  "limits": [
+    "0x18b9210 (provider unregister 0x18d0e30 and group removal 0x18e2510) and 0x18ba1c0 (holder list removal with global hook and 0x195c270 notify) are supplied.",
+    "The finish half (0x195b250 sweep scan, job dispatch, 0x195a0f0 hit processing) is static only.",
+    "Synthetic fixtures; no live capture; no lock semantics."
+  ]
+}

@@ -12091,3 +12091,142 @@ Limits: one session and one descent line; tables copied once per mesh; after res
 of 19 meshes had been freed or reused, so stability over a mesh's lifetime is not shown.
 Sequential reads, not an atomic snapshot (the internal consistency is the coherence
 evidence). The readers were not executed live. Wine on macOS, one build.
+
+### Island action tree walk
+
+`engine/pose_island_action_tree.py` reconstructs stage C3 of `0x18b9710` (see
+PHYSICS_SUBSTEP_ORDER.md). Getter `0x11fd350` is a COMDAT-folded `lea rax,[rcx+0xd0]`,
+so its four vtable references are not ownership evidence; it returns provider+0xd0
+(provider = controller+0x20). This is the same indexed red-black tree as in "Body
+metadata tree removal": 32-byte nodes, value +0x10, key +0x18 (= body metadata+0x54).
+
+```text
+1959a70(tree, dt, callback):
+  i = leftmost(root)
+  while i != -1:
+      entry = nodes[i].value; next = successor(i)     # captured before any call; node array reloaded each step
+      entry.update(dt)                 # slot +8, dynamic, supplied
+      callback(entry.body)             # entry+8, reloaded after the update
+      if entry.state == 2: retire(i); entry.destroy(1)   # state dword +0x10 reloaded; 1959c50
+      i = next
+```
+
+The callback is `0x18b8c90`, the body-only variant of the controller wrapper
+`0x18b8380`. It derives the controller as body.metadata(+0x30).holder(+0x20).
+controller(+0x20) (loads before the gates); returns if metadata+0x52 bit0 is set or
+body+0x10 is null; otherwise runs protected enter at controller+0x50,
+`0x18e14f0(controller+0x30 reloaded, body)` (see "Body-event group transition"), body
+slot 0x28 (`0x18be770` for table `0x29c99a8`: clear metadata+0x53 low nibble, zero
+body+0x28), protected leave. Neither routine writes velocity or transforms.
+
+Entries are removed from this tree by key in `0x18b9610`, `0x18b86aa` and `0x18d1142`,
+always for bodies with metadata+0x52 bit3 set. No insertion site and no class
+implementing the update virtual was found in unprotected code, so the entry contents
+are unresolved; a P0 node-count read would settle whether the tree is ever populated.
+
+Validation: [action tree](../../native/snow_host/pose_island_action_tree_validation.json),
+320 native comparisons. Native: the walk, callback, retirement and rebalancing
+(`1959c50`/`1959d90`/`1959bb0`/`18da970`) and `18be770`. Supplied: the entry update and
+destructor, `0x18e14f0`, the two protected sites. Fixtures: empty and 1–63-node trees
+with prior removals; updates that change state and the body pointer; transitions that
+clear the group or rewrite +0x53. 4 injected bugs detected.
+
+### Island swept-contact stage
+
+`engine/pose_island_ccd_stage.py` reconstructs the begin half of the stage object at
+controller+0x40 (built by `0x1959fc0`). "Swept-contact" is our design name (inference:
+continuous collision).
+
+Begin `0x195b190` collects every constraint whose kind virtual (+0x10) returns 6, first
+from the provider's general list (count +0x68 via `0xc966e0`, array +0x60 via
+`0x18d0290`), then from each container's children (containers +0x50/+0x58; children
++0x58/+0x60). Counts and the provider pointer are reread before every getter. Collected
+constraints go into list +0x1030/+0x1038/+0x103c (reserve `0x18d1420` or its inlined
+copy: tag 0x11, alignment 0x10, initial 8, then doubling). Then for each entry (count
+reread per step): if the endpoints' holders (metadata+0x20) differ,
+`0x18b9210(stage.controller, c)` (provider unregister `0x18d0e30` plus group removal
+`0x18e2510` when c+0x60 is set); otherwise `0x18ba1c0(holder, c)` (holder-list swap
+removal, an optional global hook `[0x143336738]` called with (…, c, 3, 1) and `0x195c270(c, 2)`); then
+the slot is reloaded and a nonnull value destroyed (slot 0, argument 1). The count is
+cleared at the end. `0x0ed2ea0` stores dt at +0x10.
+
+Finish `0x195c040` (static only): scan `0x195b250` walks the provider+0x90 body set
+(24-byte body-keyed nodes, filled by `0x18d02f0`). For bodies with |v|² >= 1e-4, travel =
+|v|·dt; for each resource with flag bits +0x44 and shape kinds 2/3/4, the extent along
+v/|v| is compared with travel × 1.1111, and if smaller the shape is swept
+(`0x195bec0`/`0x195b9f0`/`0x195bcc0`), recording 32-byte hits at +0x20/+0x28. If any hits:
+dispatch through global `0x143336900` (`0x1935890`, `0x192bdb0`), then `0x195a0f0`, which
+builds constraints with `0x1985920` and registers them (`0x18b8470` across holders,
+`0x18b9ce0` within), copying both bodies' velocity (+0x1a0..+0x1b4) and transform rows
+(+0x40..+0x78) into the constraint at +0xc0..+0x178, or taking `0x18dcd10` when metadata
+bit2 is set. So a kind-6 constraint lives from one substep's C4 finish (inference) to
+the next substep's C4 begin. The finish reads body state and does not write it.
+
+Quirk in `18ba1c0`: if the constraint is not in the holder list, the index becomes
+0xffffffff and the swap store writes about 32 GiB past the array (native behaviour; the
+routine is a supplied service, so the model does not reproduce it).
+
+Validation: [swept stage](../../native/snow_host/pose_island_ccd_stage_validation.json),
+320 native comparisons of begin plus the dt store. Supplied: the kind virtual,
+destructor, both removal routines and the allocator. Covers nulled slots, shrunk counts,
+growth from 0, doubling and realloc. 4 injected bugs detected.
+
+### Changed-link attachment
+
+`engine/pose_island_attach.py` reconstructs `0x18e2200` with merge `0x18e21a0`, absorb
+`0x1957d80` and group link append `0x1957430`. Bound services: finalize `0x18e11b0` →
+`pose_group_finalize`, body append `0x19573c0` → `pose_body_membership.append_pose_body`,
+group removal `0x18e2660` → `pose_group_removal`.
+
+```text
+context.pending_count(+0x498) = 0
+for link in span[0:count]:                     # count captured
+    if link.flags84 & 2: continue
+    g1, g2 = link.first.group, link.second.group
+    finalize(g1); finalize(g2)
+    if g1 != g2:                               # captured groups
+        reload groups; require both metadata+0x50 bit15
+        if g1 == ctx+0x410: remove_body(g1,b1); append_body(g2,b1)
+        elif g2 == ctx+0x410: remove_body(g2,b2); append_body(g1,b2)
+        else: merge(g1,g2)
+    append_link(link.first.group reloaded, link)
+```
+
+Merge: the group with strictly more bodies absorbs the other (tie: the first absorbs);
+context+0x468 += 1; `0x18e2660` removes the source, which is then destroyed (slot 0,
+argument 1). Absorb: bodies appended with +0x1c and +0x10 renumbered (growth
+`0x19582a0`, doubling, never from zero, so a zero-capacity destination hangs natively);
+links appended with +0x80 renumbered (growth `0x1958380`); poses appended with +0x68 and
++0x60 renumbered (inline growth through allocator `0x1433365b8`, tag 0x37: from zero
+exactly the needed count, otherwise doubling). Copies use `0x1c6afb0`; source counts are
+zeroed last. Link append: link+0x80 = count before growth; growth (capacity × 2) only when
+count == capacity.
+
+Finalize queues links whose first endpoint has state nibble 2 into the pending span
+after the entry clear, and only `0x18b9710` reads that span (static scan of
+18a0000–19a0000). So links queued earlier in the same substep (for example by C3's wake
+through `0x18e14f0` → `0x18e11b0`) are discarded unpublished (static; the consequence is
+inference, to confirm with a P4 capture).
+
+Validation: [attach](../../native/snow_host/pose_island_attach_validation.json), 320
+native comparisons of the whole composition (attach, merge, absorb, link append, finalize
+with `1957340`/`18e17e0`/`18be770`, `19573c0`, `18e2660`, `1c6afb0`). Supplied: body
+removal `0x1957fc0`, growth, allocator and destructor. Covers special-group moves, merges
+with ties, null pose arrays, every growth path and C6 publication. 4 injected bugs
+detected. The existing finalize, append and removal modules matched native bytes in this
+composition.
+
+### Pending-link publication receivers
+
+Broadphase table `0x29ca8a0`. Slot +0x98 = `0x199b590` appends the 24 bytes at link+8
+(both endpoints and the following qword) to the new-pair vector at broadphase+0xf8, the
+vector the next pair update reads through slots +0x40/+0x48, so published links re-enter
+as new pairs; growth through `0x1940990` (24-byte records, tag 0x1c, initial 8, then
+doubling). `0x18b9710` passes null for a null slot and `0x199b590` would dereference it,
+so a null pending entry faults with this broadphase (the `pose_update_stage` tests treat
+null publication as normal at the interface level). Slot +0xa8 = `0x193fa10`: byte +0x49
+|= 1 + (low byte of the argument != 0); C9 passes null, so it sets bit0.
+
+Validation: [publish](../../native/snow_host/pose_island_publish_validation.json), 320 runs
+of the original `0x18b9710` with other subsystems as no-ops and both receivers native. 3
+injected bugs detected.
