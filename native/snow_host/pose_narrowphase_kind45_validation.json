@@ -1,0 +1,128 @@
+{
+  "schema": "pose-narrowphase-kind45-validation-v1",
+  "entries": {
+    "(4,4)": "0x19dcd40 -> 0x19dbbc0",
+    "(4,5)": "0x19ddbc0 -> 0x19dd130",
+    "(5,5)": "0x19dde00 -> 0x19ddc60"
+  },
+  "method": "offline Unicorn runs of the original slot-3 entries over the memory image with synthetic geom blocks, shapes and guarded output buffers; return value and every output byte compared with engine.pose_narrowphase_kind45; executed addresses are recorded and must stay inside the named routines ((4,4)) or the contact-code region, the stack probe and the CRT trig helpers ((4,5), (5,5)); the (4,5) growth allocator 0x193d8f0 must not run",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "capsule_capsule": {
+    "cases": 1024,
+    "records": {
+      "0": 542,
+      "1": 246,
+      "2": 236
+    },
+    "nonfinite_cases": 78,
+    "paths": {
+      "near_parallel_branch": 338,
+      "clip_kept_two_points": 248,
+      "clip_fallback_to_general": 90,
+      "clip_both_offsets_tiny_perpendicular": 45,
+      "clip_first_offset_only": 4,
+      "clip_second_offset_only": 38,
+      "general_tiny_determinant": 104,
+      "general_s_clamped_low": 195,
+      "general_s_clamped_high": 168,
+      "general_t_low": 207,
+      "general_t_high": 200,
+      "general_record": 246,
+      "general_coincident_cross_axis": 33,
+      "general_cross_tiny_perpendicular": 5
+    },
+    "capacity_below_count": 188,
+    "native": "0x19dcd40, 0x19dbbc0, 0x19dcfc0, 0x19dce10: all native, no hooks",
+    "nan_rule": "x87 (emulator two-NaN rule)",
+    "capacity_values": "0, 1, 500, random u32"
+  },
+  "capsule_hull": {
+    "cases": 1024,
+    "paths": {
+      "face": 256,
+      "deep_face": 200,
+      "deep_edge": 283,
+      "separated": 209,
+      "single": 76
+    },
+    "counts": {
+      "2": 425,
+      "1": 390,
+      "0": 209
+    },
+    "marks": {
+      "deep_face_query": 483,
+      "deep_edge_query": 483,
+      "deep_edge_contact": 283,
+      "deep_face_contact": 200
+    },
+    "desc_vertex_split": 146,
+    "max_count": 2,
+    "capacity_below_count": 303,
+    "native": "entry, core, 0x18f3710 (distance query) and every callee run natively",
+    "supplied_to_model": [
+      "the 0x30-byte result block of 0x18f3710 at core rbp+0x60, read at its return 0x19dd22f (native execution is not interrupted); its two input points (core rsp+0x40/+0x50) must equal the model axis points"
+    ],
+    "model_reuses": [
+      "0x18e3450 side planes through engine.pose_contact_side_planes (float model) on the penetrating face path"
+    ],
+    "capacity_values": "0, 1, 500, random u32"
+  },
+  "hull_hull": {
+    "cases": 1024,
+    "counts": {
+      "0": 455,
+      "2": 110,
+      "4": 127,
+      "1": 215,
+      "5": 9,
+      "3": 103,
+      "8": 1,
+      "6": 3,
+      "7": 1
+    },
+    "kinds": {
+      "3": 360,
+      "0": 247,
+      "1": 286,
+      "2": 131
+    },
+    "records": 1330,
+    "capacity_truncated": 201,
+    "reduce_off_over_four": 28,
+    "max_count_reduce_on": 4,
+    "max_count_reduce_off": 8,
+    "max_count_reduce_on_capacity_500": 4,
+    "native": "thunk, core, selector 0x190f700, queries, face emitter 0x18e4060, edge emitter 0x18e3aa0 and all helpers run natively; the model composes the existing engine modules",
+    "capacity_values": "0,1,2,3,4,5,8,500"
+  },
+  "bug_injections": [
+    "(4,4) clip tags swapped (0x80000000/0x81000000) fails at case 1",
+    "(4,4) honouring the capacity argument fails at case 1",
+    "(4,4) near-parallel threshold 0.99 instead of 0.997 fails at case 74",
+    "(4,5) face-clip threshold 0.9 instead of 0.997 fails at case 12",
+    "(4,5) second-point tag 0x80000000 like the first fails at case 0",
+    "(4,5) edge preference without the 0.98 face-score scale fails at case 255",
+    "(4,5) penetrating contacts read shape+0x40 vertices instead of descriptor +0 fails at case 10",
+    "(4,5) penetrating edge contact unflipped fails at case 4",
+    "(4,5) penetrating face records carry the clip tag at +0x1c fails at case 3",
+    "(5,5) face reduction forced on fails at case 11"
+  ],
+  "supplied_state": [
+    "runtime XYZ mask 0x3336890 = {-1,-1,-1,0} (zero in the image)",
+    "TLS: gs:[0x58] slot array, index 0x333c630 = 0, thread epoch 0x7fffffff at +0x4eec, so guarded static initializers are skipped",
+    "guarded static 0x3336a30 = 1e-7 x4, the value its initializer copies from 0x29ca870",
+    "gs:[0x10] stack limit for the stack probe",
+    "comparison vector 0x33368c0 zero (image)",
+    "scalar trig dispatch 0x333e29c zero (image)"
+  ],
+  "limits": [
+    "Synthetic fixtures: random capsules and authored convex prisms (3..8 sides), not game assets.",
+    "Kind-5 fixtures set shape+0x40 to the descriptor vertex array (except (4,5) desc_vertex_split cases, where descriptor +0 is a separate copy scaled by 1.004 or 0.996), shape+0x48 to its count and shape+0xc0 to 0 (no support lookup table); real assets may differ.",
+    "Fixture hull edges run counter-clockwise around plane0 (direction parallel to n0 x n1), the orientation 0x18e3640 needs for outward side planes.",
+    "0x18f3710 (capsule-hull distance query) is not restated: its native result is supplied.",
+    "The penetrating (4,5) face path uses the float model of 0x18e3450, so NaN propagation there is not lane-exact; fixtures are finite.",
+    "(4,5) and (5,5) fixtures are finite; NaN/inf lanes are exercised only for (4,4).",
+    "MXCSR is the Unicorn default 0x1f80; hardware two-NaN choice is not observed."
+  ]
+}

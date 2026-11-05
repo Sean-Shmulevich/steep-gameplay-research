@@ -2112,3 +2112,24 @@ paths, ignored by the box-box edge path and never read by box-capsule. UNRESOLVE
 leaves, the hardware two-NaN rule, live MXCSR, the (0, -1, -1) selection under NaN lanes.
 Evidence: `native/snow_host/pose_narrowphase_kind3_validation.json`. No claim of
 original-engine equivalence outside the validated fixtures.
+
+### Narrow-phase capsule and convex hull testers
+
+`engine.pose_narrowphase_kind45`: `capsule_capsule_tester(mem, geom, out, capacity=500, *, nan_rule='sse')`,
+`capsule_hull_tester(mem, geom, out, capacity=500, *, gjk, nan_rule='sse') -> (count, path)`
+and `hull_hull_tester(mem, geom, out, capacity=500)` (`19dcd40`, `19ddbc0`, `19dde00`).
+Lane-level pieces: `capsule_capsule_core`, `capsule_hull_core`, `capsule_hull_deep`,
+`hull_face_query` (`19db470`), `hull_edge_query` (`19db150`), `hull_deep_face_contact`
+(`19daa60`), `hull_deep_edge_contact` (`19da4e0`), `clip_segment`, `pick_hull_face`
+(`19dda40`), `hull_face_side_planes` (`18e3640`), `read_hull_descriptor`,
+`read_capsule_hull_inputs`. Follows LINK_SOLVER.md "Narrow-phase capsule and convex hull
+testers". (4,4) and (4,5) never read capacity and write at most 2; (5,5) honours
+capacity and writes at most 4 with geom+0x90 set. Supplied: `gjk(p0, p1) -> (dist,
+on_hull, on_axis)` stands for `18f3710` (not restated). Reused float models:
+`pose_contact_side_planes`, `pose_contact_axis_selection`, `pose_contact_face_emit`,
+`pose_contact_edge_emit` (exact for finite inputs only). Authored: the service
+signature, path labels, the (5,5) scratch buffer; a null shape or empty plane list
+raises where native faults or indexes -1. UNRESOLVED: `18f3710`, the hardware two-NaN
+rule, live MXCSR, the +0xc0 support path, shape+0x40 vs descriptor +0 on real assets.
+Evidence: `native/snow_host/pose_narrowphase_kind45_validation.json`. No claim of
+original-engine equivalence outside the validated fixtures.

@@ -11135,3 +11135,111 @@ are not run here.
 Static leads: the leaves above; whether degenerate clipping can exceed 8 points in
 `19d6900` with the reduce flag clear; whether live hulls can reach the (0, -1, -1)
 selection.
+
+### Narrow-phase capsule and convex hull testers
+
+`engine/pose_narrowphase_kind45.py` restates three cells of the tester table (see
+"Narrow-phase tester table and sphere-sphere tester"):
+
+- (4,4) entry `19dcd40` → core `19dbbc0`, callees `19dcfc0` (relative basis) and
+  `19dce10` (perpendicular).
+- (4,5) entry `19ddbc0` → core `19dd130`, callees `18f3710` (distance query, supplied),
+  `19dda40` (face pick), `18e3640` (side planes through shape+0x40), and on the
+  penetrating path `19db470`, `19db150`, `19da4e0`, `19daa60` plus `18e3450`.
+- (5,5) thunk `19dde00` → `19ddc60(geom, out, cap)`, callees `190f700`, `18e4060`,
+  `18e3aa0`.
+
+The swapped cell (5,4) wraps (4,5) through `1994f60`. "Capsule" and "convex hull" are
+our labels from field use.
+
+```text
+19dbbc0(&hA,rA, FA, &hB,rB, FB, out, cap):        # cap never read
+  work in B space: A axis start/dir from 19dcfc0, B axis (0,-hB,0)+(0,2hB,0)
+  if |dirB.dirA| / (2hB*2hA) > 0.997 (29cc100):    # near-parallel
+     clip A's two axis points (tags 0x80000000 / 0x81000000) to B's slab (2 planes)
+     if 2 points remain: per point e: c = closest on B; off = c-e; L = |off|
+        n = off/L if L > 1e-5 (else the other point's n, else perp(dirA) normalised)
+        if L <= rA+rB: record(n, L-(rA+rB), e+n*rA, tag, c-n*rB)      -> 0..2
+        return
+  general: segment-segment clamp (tiny det: |det| <= a*1e-5); if d2 > (rA+rB)^2: 0
+     axis = cB-cA; if |d| <= (rA+rB)*5e-6: axis = dirA x dirB, or perp(dirA) if all |.| <= 1e-5
+     record(n, d-(rA+rB), cA+n*rA, 0, cB-n*rB)                         -> 1
+19dd130(shapeA, FA, shapeB, FB, out, cap):         # cap never read
+  p0,p1 = FA*(0,-h,0), FA*(0,+h,0); (dist, Ph, Pa) = 18f3710(...)   # supplied
+  if r < dist: 0
+  if dist > 2^-23 (shallow):
+     n = norm(Ph-Pa); face = 19dda40(-n)
+     if |nface.n| > 0.997: clip (p0,p1) by 18e3640 planes (shape+0x40 vertices)
+        if 2 points: per point with s <= r: record 0 normal -nface, record 1 normal n,
+           depth s-r, pA = e+normal*r, tag (face&0xfff)|0x80000000/0x81000000   -> 0..2
+     else (or clip != 2): record(n, dist-r, Pa+n*r, 0, Ph)                    -> 1
+  else (penetrating):
+     (fs, fi) = 19db470: per world plane s = minps(n.p0-d, n.p1-d); first s>0 returns,
+                         else strictly greatest from -FLT_MAX
+     if fs > 0: 19daa60 face
+     (es, ei, 0) = 19db150: hull-local; edge candidate if (n1.u)(n0.u) < -1e-6;
+        axis = (q0-q1)x(v0-v1) (|.| < 1e-3 -> -FLT_MAX), oriented away from n0+n1;
+        sep = axis.q0 - axis.v0; first >0 returns, else strictly greatest
+     if es > 0 or es > fs*0.98 + 0.01 (mulss/addss, ordered): 19da4e0 edge else 19daa60 face
+19daa60 (flip=1): clip axis by 18e3450 side planes (descriptor +0 vertices); empty pass -> 0;
+     each point with s = n.p - d' <= 0: normal -n, depth s-r, pA = p-r n, pB = p-s n, +0x1c = 0  -> 0..2
+19da4e0 (flip=1): segment(p0,d1) vs edge(W0,d2) clamp (|det| <= e*1e-5 parallel);
+     N = norm(d2 x d1), negated if (n1w+n0w).N < [33368c0]=0;
+     depth = -(|Q-P|^2 + r)  (squared distance, no sqrt); normal -N, pA = P - r N, pB = Q   -> 1
+19ddc60(geom, out, cap): sel = 190f700(FA, descA, FB, descB, edge=geom+0x91)
+  0: 18e4060(out, cap, A ref, flip 0, reduce=geom+0x90)  1: same with B ref, flip 1
+  2: 18e3aa0(out, cap, ...) (0 if cap==0 else 1)          3: 0
+```
+
+Behaviour worth preserving:
+
+- Counts: (4,4) never reads capacity and writes at most 2 (2 only from the near-parallel
+  clip). (4,5) never reads capacity and writes at most 2 on every path; the penetrating
+  edge path always writes exactly 1. (5,5) honours capacity; with geom+0x90 set it writes
+  at most 4, with it clear up to the clip-driver cap 0x80. `18dd400` sets +0x90 = 1 and
+  passes 500, so no cell here exceeds 4 at `198fdc0`. Capacity 0 still yields up to 2
+  records for (4,4) and (4,5).
+- Clip tags: the two-point clip never yields more than two points; a crossing point
+  inherits the tag of the point on the positive side. Shallow (4,5) face records keep the
+  tags; penetrating face records write 0.
+- Two vertex arrays: the shallow face clip (`18e3640`) and the support scan read
+  shape+0x40; the penetrating path reads the descriptor's +0 array.
+- Quirks: shallow (4,5) face path gives record 0 the negated face normal and record 1 the
+  query normal; the penetrating edge depth uses the squared distance; (4,4) uses `<=`
+  for the radius test (exact touch gives depth 0).
+
+Validation: `native/snow_host/pose_narrowphase_kind45_validation.json`, from
+`analysis/command-executor-audit/check_pose_narrowphase_kind45.py`. Every run compares
+the return value and the whole 8-record output buffer under the emulator two-NaN rule.
+
+- (4,4): 1024/1024, all native, no hooks. Counts 0: 542, 1: 246, 2: 236. 78 runs with
+  non-finite lanes; 188 with capacity below the count written.
+- (4,5): 1024/1024; only the `18f3710` result block (read at `19dd22f`) is supplied, and
+  its input points equal the model's axis points. Paths: shallow face 256, single 76,
+  separated 209, penetrating face 200, penetrating edge 283. Max count 2. 146 runs use a
+  separate descriptor vertex array; 303 have capacity below the count written.
+- (5,5): 1024/1024, all native; the model composes the existing `190f700` / `18e4060` /
+  `18e3aa0` modules. Selection 0: 247, 1: 286, 2: 131, 3: 360. Max count 4 with reduce
+  set, 8 with it clear; 201 runs truncated by capacity.
+- 9 injected bugs, each caught (swapped clip tags, honouring capacity, parallel
+  threshold 0.99, face threshold 0.9, duplicated tag, missing 0.98 edge scale, wrong
+  vertex array, unflipped edge contact, clip tag at +0x1c on penetrating face records,
+  reduction forced on).
+- Supplied state: XYZ mask `3336890`, TLS epoch, `3336a30` = 1e-7 (from `29ca870`),
+  gs:[0x10] stack limit, `33368c0` = 0 (as in the image).
+
+Tests: `tests/test_pose_narrowphase_kind45.py`, 24 tests.
+
+Limits: `18f3710` is not restated. `18e3450`, `190f700`, `18e4060` and `18e3aa0` enter
+through float models, so (5,5) and the penetrating (4,5) face path are exact only for
+finite inputs; NaN/inf lanes are exercised only for (4,4). Synthetic prisms (3..8 sides)
+with no +0xc0 support table. MXCSR 0x1f80; hardware two-NaN behaviour not observed.
+
+Static leads: `18f3710` itself; `19daf90` (box-capsule deep path) also calls `19db470`
+and `19db150`, now restated here; whether real hull assets always have shape+0x40 equal
+to descriptor +0.
+
+Count bound summary for the `18dd400` direct path: with the sphere, box and these
+sections, every non-terrain cell returns at most 4 records there (sphere pairs 1,
+kind-3 cells 4, (4,4)/(4,5)/(5,4) 2, (5,5) 4), so `198fdc0` never writes past its fourth
+row on that path. Terrain cells reach `198f910`, which reduces each group to four.
