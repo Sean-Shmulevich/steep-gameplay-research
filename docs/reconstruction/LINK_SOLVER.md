@@ -11418,8 +11418,9 @@ Tester slot `+8` (flagged-neighbor path) was not hooked; its arity is unestablis
 Timing alignment uses 500 ms bins (about 0.25 s uncertainty). Observations under Wine
 on macOS, not a bound for the original engine.
 
-Static leads: the terrain testers (4,6) `19cc160` and (4,7) `19e0430`, the hot paths for
-the rider; tester slot `+8` (`19d4df0` etc.) and its use by `18dfa10`/`18e01e0`.
+Static leads: the terrain testers for (4,6) (entry `198af50`, swap over the (6,4) core
+`19cc160`) and (4,7) (entry `198a910`, swap over the (7,4) core `19e0430`), the hot paths
+for the rider (both since reconstructed, see the sections below); tester slot `+8` (`19d4df0` etc.) and its use by `18dfa10`/`18e01e0`.
 
 ### Narrow-phase capsule-grid tester
 
@@ -11549,3 +11550,131 @@ resource. A separate scratch run (not in the receipt) of 400 scenes with the liv
 Static leads: the live value of grid+0x40; whether the pierce-normal sign quirk is
 reached live; the other `1996e50` callers `19e0e20`, `19e2600`, `19e3460`; tester slot
 `+8` for kind 7.
+
+### Narrow-phase capsule-terrain (kind 6) tester
+
+`engine/pose_narrowphase_capsule_terrain6.py` restates the (4,6) cell of the tester table
+(see "Narrow-phase tester table and sphere-sphere tester"). The slot-3 entry `198af50`
+(vtable `29cb508`) is a swap wrapper like `198b400/198b590/198b720`. It builds a geom
+block with the frames and shapes exchanged (lane 3 of the rows is stale stack, masked by
+the core) and a temporary tester with the (6,4) vtable `29cb170`, calls the (6,4) core
+`19cc160` with the same out pointer and capacity, then `1994f60` over the returned
+records. So the core works with A = terrain and B = capsule.
+
+Kind 6, from field use (our labels):
+
+- Shape: +0x20 default filter object, +0x40 u32 edge-filter mode, +0x48 mesh, +0x50
+  filter-object table, +0x60 per-triangle byte index into it (or 0), +0x68 u32 filter
+  enable, +0x70/74/78 per-axis vertex scale.
+- Mesh: +0x30 float3 vertices (12-byte stride), +0x40 u16 indices (3 per triangle),
+  +0x48 u32 triangle count, +0x70 u16 group key per triangle, +0x80 bounding tree.
+- Tree: +0 extent, +0xc minimum, +0x18 nodes of 12 bytes: bytes 0..2 quantized min,
+  byte 3 flags, bytes 4..6 quantized max-from-top, u16 child0 at +8, u16 child1 at +0xa.
+  Flag bit 0/1: child 0/1 is a leaf (the u16 is then a triangle id). Bits 2..4: per axis,
+  child0 takes the decoded min and child1 the parent min; bits 5..7 the same for max.
+  Decode `min = (q*(1/255))*ext + pmin`, `max = (ext+pmin) - (q*(1/255))*ext`. The query
+  keeps a FIFO of 256 nodes on the stack and grows it through `1952f20`.
+- Mode 2 only: +0xa8 u16 triangle pair per edge (0xffff = none), +0xb8 u32 edge id per
+  triangle edge (edge j = vertex j to vertex j+1).
+
+Unlike kind 7 (a float height grid that makes triangles per cell, see "Kind-7 grid
+resource bounds"), kind 6 stores triangles explicitly with 16-bit identities throughout.
+The constructor that writes kind 6 at +0x28 was not found.
+
+Runtime statics read by the query (zero in the image): `3336cb0` = {4,8,16,0}
+(initializer `c8010`), `3336cc0` = {0x20,0x40,0x80,0} (`c7ff0`), `3336cd0` = 1/255 x4
+(`c8030`).
+
+```text
+19cc160(tester, g, out, cap):                 # g: A = terrain, B = capsule; rows masked
+  I = 19c9530(A rows)                          # cofactor inverse, lane 3 = 0
+  R = I*B rows; t = I*(B.t) + I*(-A.t)         # capsule frame in terrain space
+  P0 = R*(0,-h,0)+t; D = R*(0,2h,0); P1 = D+P0
+  box = 18c64a0: ext_k = |h*R1_k| + r; [t-ext, ext+t]; q = box * (1/scale) per axis
+  n = query(mesh+0x80, q, min(count, 0x80))    # 1952b20, u16 ids into an alloca buffer
+  if n == 0x80: n = query(same q, count) into 18c9140(2*count) (freed by 18c8f50)
+  for tri in ids while written < cap:
+    if shape+0x68 and ((f50&c48)|(c50&f48)) == 0: skip    # f: table[bytes[tri]] or +0x20
+    V_k = scale * vertex; e = V1-V0, V2-V1, V0-V2; nrm = unit(cross(e0, e1))
+    dP0, dP1 = nrm.(P0-V0), nrm.(P1-V0); feature = (tri << 16) | group[tri]
+    if 0 <= dP1*dP0: k = 1910760(..., cap - written, feature)     # same side, 0..2
+    else:            k = 19101e0(..., feature)                    # crossing, 0..1
+    if g+0x92: mode 1 -> k = 1996d00 (drop dot(n_local, raw face normal) < 0)
+               mode 2 -> k = 19974c0 (vertex/edge neighbourhood test)
+    records -> world (n by rows only; points by rows + A.t; xyz only); written += k
+  if g+0x90: key pass (below)
+  return written
+1910760: ends inside the triangle prism (3 side planes cross(n, e_k), tolerance 1e-5):
+  per inside end p (in order, while < cap): proj = p - (n.(p-V0)) n;
+    depth = |proj-p| - r; if <= 0: n_o = n flipped toward the capsule (dP0+dP1 < 0);
+    reach = r | r/sqrt(1-c^2) | sqrt(r^2-4h^2+(2hc)^2)-2hc
+            (c = -(unit axis toward the other end).n_o, limit 2h/sqrt(4h^2+r^2));
+    record(n_o, depth, proj, 0, p - reach*n_o)
+  then, for each of the 1 or 2 outside ends, the 1 or 2 nearest edges by clamped
+  segment-edge squared distance (strict <, ties to the later edge; the choice ignores
+  which end is outside), while < cap:
+    n = unit(C_s - C_t) (triangle normal if |C_s-C_t| <= 1e-6);
+    depth = |C_t-C_s| - r; if <= 0: record(n, depth, C_t, 0, C_s - r n)
+19101e0: if 1935ca0 (segment pierces the triangle): end nearer the plane (strict <):
+           record(unit(proj-P) or n, -dist - r, proj, 0, P - r n)
+         else nearest of 3 edges: same tail as above -> 0 or 1 (capacity not an argument)
+key pass: per u16 key (first-appearance order): best = first record of least depth
+  (comiss/jae: a NaN depth is taken); remove (swap with last, re-examine) every record of
+  that key with any |n_k - best_k| > 0.001 (unordered: kept)
+```
+
+Behaviour worth preserving:
+
+- Count: at most 2 records per triangle. The loop gate `written < cap` and the remaining
+  capacity passed to `1910760` keep the result <= `cap`; capacity 0 returns 0 and leaves
+  `out` untouched. The count is bounded only by `cap`, not by 4, so counts above 4 at
+  `18e0980` (capacity 500) are expected; they go to `198f910`, which groups on the low 16
+  bits of +0x2c, the group key.
+- +0x2c = (triangle << 16) | group key; +0x1c = 0.
+- The `0x80`-entry stack buffer is not a truncation: an exact `0x80` return triggers a
+  second query of capacity `count` into a frame allocation.
+- Segment-edge clamp: when parallel (`|ac - b^2| <= a*1e-5`), s = 0/c. `1910760` and
+  `19101e0` use different operand orders, which matters only under the two-NaN rule.
+- Mode 1 computes the face normal from unscaled vertices (`1997fd0`), so it can disagree
+  with the scaled triangle when a scale component is negative; a negative scale also
+  inverts the query box.
+- The key pass only removes records whose normal differs by more than 0.001 from the
+  deepest record of the same group key; coplanar groups survive intact.
+- Likely source of the live n = 12: a capsule lying roughly along the surface over 6 or
+  more triangles (up to 2 records each). That it was a landing is not established.
+
+Validation: `native/snow_host/pose_narrowphase_capsule_terrain6_validation.json`, from
+`analysis/command-executor-audit/check_pose_narrowphase_capsule_terrain6.py`. Unicorn
+runs the real entry `198af50` over the memory image with `19cc160` and all its callees
+native, including the tree query, mode 2, `193d810`, `1952f20`, `__chkstk` and memcpy.
+Fixtures are allocation only: the global allocator object at `1433365b8`, and `18c9140`
+/ `18c8f50`, replaced by `ret` stubs in the emulator copy (they reach obfuscated thunks,
+which were not traced). Supplied to the model: the `1952b20` results (its AABB words and
+capacity must equal the model's) and the `19974c0` results (the records it reads must
+equal the model's).
+
+- 640/640 cases, comparing the return value and all 520 output records (plus a guard)
+  bit for bit; inputs unchanged. Counts 0..370 (92 above 4; n = 12 three times); 128
+  special-lane cases (51 non-finite); modes 0/1/2/3: 94/265/176/105; 57 took the `0x80`
+  re-query; up to 782 triangles from one query.
+- Paths: same-side 309, crossing 331, inside record 117, edge record 223, crossing hit
+  130, crossing edge record 268, mode-1 removal 70, key removal 183, key-array growth 3,
+  tree-queue growth 2, filter rejection 76.
+- Capacity sweep: 48 geometries at caps 0..n+1, 1605/1605.
+- 10 injected bugs, each caught (key tolerance 0.01, capacity ignored, +0x2c halves
+  swapped, key pass skipped, reach = r, farthest edges, mode 1 skipped, hit test false,
+  no flip, first query cap 0x40).
+
+Tests: `tests/test_pose_narrowphase_capsule_terrain6.py`, 18 tests with an authored query
+stub.
+
+Limits: `1952b20` (tree query) and `19974c0` (mode 2) are not restated. Synthetic meshes
+and conservative trees, not game assets. Live modes, group-key assignment and scale on
+real terrain are unknown. Emulator two-NaN rule only; MXCSR 0x1f80; special lanes only
+outside mode 2. Earlier docs say the 16-bit/32-bit wrapper choice depends on
+caller-local bytes, so "kind 6 always means the 16-bit wrapper" is not proven
+statically (the census saw it only through `18e0980`).
+
+Static leads: the kind-6 constructor and vtable; `19974c0` with `1996280` / `1995fa0`;
+`19507f0` traversal order (FIFO, two nodes at a time), which sets triangle order and so
+truncation order.

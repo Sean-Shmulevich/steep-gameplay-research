@@ -2172,3 +2172,23 @@ native stack block and `18c9140` are not emulated); the flat-memory bindings rea
 profiles by pointer and size the output view as min(capacity, 4*cw*ch) records.
 Evidence: `native/snow_host/pose_narrowphase_capsule_grid_validation.json`. No claim of
 original-engine equivalence outside the validated fixtures.
+
+### Narrow-phase capsule-terrain (kind 6) tester
+
+`engine.pose_narrowphase_capsule_terrain6`: `capsule_terrain_tester(mem, geom, out,
+capacity=500, *, query, edge_filter=None, nan_rule='sse', trace=None)` (`198af50`, swap)
+and `terrain_capsule_core(...)` (`19cc160`). Lane-level pieces: `inverse3` (`19c9530`),
+`relative_capsule`, `capsule_bounds` (`18c64a0`), `query_bounds`, `triangle_block`,
+`same_side_contacts` (`1910760`), `inside_reach`, `nearest_edges`, `segment_edge`,
+`segment_hits_triangle` (`1935ca0`), `crossing_contact` (`19101e0`), `raw_face_normal`
+(`1997fd0`), `backface_filter` (`1996d00`), `triangle_admitted`, `transform_records`,
+`key_pass`, `read_terrain_shape`. Follows LINK_SOLVER.md "Narrow-phase capsule-terrain
+(kind 6) tester". At most 2 records per triangle; the total never exceeds `capacity`
+(0 gives 0). +0x2c = (triangle << 16) | group key. Supplied: `query(tree_address,
+aabb_words, capacity) -> ids` stands for `1952b20`; `edge_filter(mem, shape, triangle,
+records, count) -> count` stands for `19974c0` (mode 2). Allocation is not modelled.
+Authored: names, service signatures, the trace hook. UNRESOLVED: `1952b20`, `19974c0`,
+the kind-6 constructor, real terrain data (modes, group keys, scale), the hardware
+two-NaN rule, live MXCSR. Evidence:
+`native/snow_host/pose_narrowphase_capsule_terrain6_validation.json`. No claim of
+original-engine equivalence outside the validated fixtures.

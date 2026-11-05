@@ -1,0 +1,183 @@
+{
+  "schema": "pose-narrowphase-capsule-terrain6-validation-v1",
+  "entry": "(4,6) slot 3 0x198af50 -> (6,4) core 0x19cc160 -> flip 0x1994f60",
+  "method": "offline Unicorn runs of the original (4,6) slot-3 entry over the memory image with synthetic geom blocks, capsule shapes and kind-6 triangle-mesh shapes (authored grids, steps, flat planes and triangle soups with a conservative 8-bit quantized tree, u16 indices and group keys, edge adjacency, collision-filter objects); return value and all 520 output records (plus a guard) compared byte for byte with engine.pose_narrowphase_capsule_terrain6; input regions must be unchanged; executed blocks must stay in the contact-code region, the stack probe and memcpy",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "native": [
+    "0x198af50",
+    "0x19cc160",
+    "0x19c9530",
+    "0x18c64a0",
+    "0x1952b20/0x19507f0 (tree query)",
+    "0x1910760",
+    "0x19101e0",
+    "0x1935ca0",
+    "0x1996d00",
+    "0x1997fd0",
+    "0x19974c0 with 0x1996280/0x1995fa0 (mode 2)",
+    "0x1994f60",
+    "0x193d810 (key-array growth)",
+    "0x1952f20 (tree queue growth)",
+    "__chkstk 0x1c45120",
+    "memcpy 0x1c6afb0"
+  ],
+  "supplied_to_model": [
+    "0x1952b20 result: triangle ids captured after each call (0x19cc614, 0x19cc6e1); its AABB argument words and capacity must equal the model query arguments",
+    "0x19974c0 result: records and count captured at 0x19cca71/0x19cca76; the records it reads must equal the model records"
+  ],
+  "fixtures": [
+    "0x18c9140 / 0x18c8f50 (frame allocator, reaches obfuscated thunks) replaced by ret stubs returning a bump allocation; not traced",
+    "global allocator object at 0x1433365b8 with alloc/realloc/free stubs",
+    "runtime statics: XYZ mask 0x3336890, 0x3336cb0 {4,8,16,0}, 0x3336cc0 {0x20,0x40,0x80,0}, 0x3336cd0 1/255 x4 (values copied from their initializer sources 0x29cbb90, 0x2900610, 0x29cbba0)",
+    "gs:[0x10] stack limit, TLS slot array (as other narrow-phase harnesses)",
+    "0x33368c0 zero (image)"
+  ],
+  "nan_rule": "x87 (emulator two-NaN rule)",
+  "results": {
+    "cases": 640,
+    "passed": 640,
+    "counts": {
+      "0": 244,
+      "1": 161,
+      "2": 80,
+      "3": 37,
+      "4": 26,
+      "5": 20,
+      "6": 9,
+      "7": 7,
+      "8": 15,
+      "9": 4,
+      "10": 2,
+      "11": 2,
+      "12": 3,
+      "13": 2,
+      "15": 3,
+      "19": 1,
+      "21": 1,
+      "22": 1,
+      "24": 2,
+      "27": 1,
+      "29": 1,
+      "30": 1,
+      "37": 1,
+      "42": 1,
+      "50": 1,
+      "51": 1,
+      "52": 1,
+      "59": 1,
+      "63": 1,
+      "64": 1,
+      "67": 1,
+      "80": 1,
+      "109": 1,
+      "151": 1,
+      "160": 1,
+      "161": 1,
+      "237": 1,
+      "358": 1,
+      "370": 1
+    },
+    "max_count": 370,
+    "above_four": 92,
+    "capacity_limited": 154,
+    "special_cases": 128,
+    "nonfinite_cases": 51,
+    "modes": {
+      "0": 94,
+      "1": 265,
+      "3": 105,
+      "2": 176
+    },
+    "kinds": {
+      "fine": 122,
+      "flat": 132,
+      "grid": 154,
+      "many": 40,
+      "step": 88,
+      "soup": 84,
+      "huge": 20
+    },
+    "paths": {
+      "core_same_side": 309,
+      "core_crossing": 331,
+      "query_overflow_retry": 57,
+      "filter_skip": 76,
+      "mode1_filter": 169,
+      "mode2_filter": 107,
+      "mode1_removed": 70,
+      "key_pass": 540,
+      "key_removed": 183,
+      "key_array_grow": 3,
+      "inside_phase": 149,
+      "inside_record": 117,
+      "reach_general": 28,
+      "reach_cosine": 51,
+      "edge_phase": 305,
+      "edge_parallel": 5,
+      "edge_record": 223,
+      "crossing_hit": 130,
+      "crossing_edges": 314,
+      "crossing_edge_record": 268,
+      "hit_test_det_zero": 1,
+      "tree_queue_grow": 2
+    },
+    "queries_returning_0x80": 57,
+    "triangles_from_query_max": 782,
+    "filter_calls_mode2": 3156,
+    "failures": [],
+    "capacity_sweep": {
+      "geometries": 48,
+      "runs": 1605,
+      "passed": 1605,
+      "truncated": 1563
+    },
+    "bug_injections": [
+      {
+        "bug": "key-pass normal tolerance 0.01 instead of 0.001",
+        "caught_at_case": 51
+      },
+      {
+        "bug": "same-side contacts ignore the remaining capacity",
+        "caught_at_case": 2
+      },
+      {
+        "bug": "record +0x2c as (group << 16) | triangle",
+        "caught_at_case": 0
+      },
+      {
+        "bug": "key pass skipped",
+        "caught_at_case": 8
+      },
+      {
+        "bug": "inside-end point B offset always the radius",
+        "caught_at_case": 34
+      },
+      {
+        "bug": "farthest edges instead of nearest",
+        "caught_at_case": 1
+      },
+      {
+        "bug": "mode-1 back-face filter skipped",
+        "caught_at_case": 0
+      },
+      {
+        "bug": "segment-triangle hit test always false",
+        "caught_at_case": 7
+      },
+      {
+        "bug": "no flip after the (6,4) core",
+        "caught_at_case": 0
+      },
+      {
+        "bug": "first query capacity 0x40",
+        "caught_at_case": 0
+      }
+    ]
+  },
+  "limits": [
+    "Synthetic meshes and trees, not game assets; real kind-6 resources (layout of +0x80 trees, group keys, scale, filter tables) may differ.",
+    "The tree query 0x1952b20 and mode-2 filter 0x19974c0 are not restated; their native results are supplied.",
+    "MXCSR is the Unicorn default 0x1f80; hardware two-NaN choice not observed.",
+    "Special lanes only in modes 0/1/3 (mode 2 cases are finite)."
+  ]
+}
