@@ -187,3 +187,129 @@ reconstructed, and the row field meaning is from consumer reads.
 Static leads: reconstruct slot 0x98 (`199b590`, append) and slot 0xa0
 (`14199ed90`), the step `199c880`, and the dynamic-tree update behind virtuals
 0xc8/0xd0; find which one writes the +0x118 list.
+
+### Pair update step
+
+`18b8fa0(controller)` (unwind `0x18b8fa0..0x18b90b2`) is the per-substep driver of the
+select / rebuild / retire chain. The live capture showed that the body-event refresh
+`18b8860` never runs with a nonempty ring, so this routine is the real driver. Module:
+`engine/pose_pair_update_step.py`.
+
+The controller is the 0x78-byte object built by `18b8150`. Its fields:
+
+- `+0x28`: the broadphase.
+- `+0x30`: the island context (the "Multi threaded island manager", 0x4a0 bytes, built by `18e0ca0`).
+- `+0x38`: the provider (the "Narrow Phase", 0x190 bytes, built by `18dc300`).
+- `+0x48`: the phase word. The constructor sets it to 0.
+- `+0x4c`: the frame counter. The constructor sets it to 1.
+
+The factory `18ae130` builds all four objects.
+
+```
+controller+0x48 = 1
+19598b0(controller+0x28)            ; = bp->vfunc[0x90] () (update); returns 1, ignored
+output = {ptr = inline[0x200], count 0, cap 0x200}   ; 0x1000-byte stack buffer
+bp = controller+0x28
+n = (u32) bp->vfunc[0x60] ()         ; removed-pair count, called before the array
+a = bp->vfunc[0x68] ()               ; removed-pair array
+18dedf0(controller+0x38, a, n, &output)    ; select (resets output count itself)
+18e28d0(controller+0x30, &output)          ; rebuild
+bp = controller+0x28
+n = (u32) bp->vfunc[0x40] ()         ; new-pair count
+a = bp->vfunc[0x48] ()               ; new-pair array
+18ddc40(controller+0x38, a, n, &output)    ; pair jobs; their retire 18de440 consumes output
+if output.cap != 0 and output.ptr != inline: allocator[0x1433365b8]->vfunc[0x18] (ptr)
+(controller+0x28)->vfunc[0x88] ()    ; `ret 0` stub 0x75e600 in the observed class
+controller+0x4c += 1
+u32 (controller+0x28)+8 = controller+0x4c
+18df490(controller+0x38, controller+0x4c)  ; provider u32 +0x180 = frame
+controller+0x48 = 2
+return 1
+```
+
+`19598b0` is `bp->vfunc[0x90] (); return 1`. `18df490` is `mov [rcx+0x180], edx; ret`. Both are reconstructed inline.
+
+Preserved quirks:
+
+- **One shared output vector.** The same output vector feeds select, rebuild and the
+  pair jobs. The links selected from removed pairs are retired inside `18ddc40` (its
+  `18de440` call), using the worker-count divisor rather than the refresh's divisor of 1.
+  The vector is never cleared between stages.
+- **Field reloads.** Every controller field is reloaded at each use. The broadphase
+  pointer is read 5 times: the update, the removed lists, the new lists, `+0x88` and the
+  `+8` store. The provider is read 3 times, and `+0x4c` is reloaded after the increment.
+- **Count truncation.** Only `eax` is used from the count getters (u32).
+- **Release check.** The output buffer is released only when its capacity is nonzero
+  and its pointer is not the inline buffer. An external pointer with zero capacity is
+  kept.
+- **Return value.** The routine always returns `al = 1`. The thunk `18ae2b0` discards it.
+
+Pair row format: both broadphase arrays hold 24-byte rows {bodyA, bodyB, u64 key}, the
+same rows that the refresh `18b8860` builds. Two pieces of evidence confirm this: the
+`add r14, 0x18` stride in `18dedf0`, and `index*24` in the pair worker `18ddd30`. The
+broadphase lane's `engine/pose_broadphase_pair_lists.py` decodes them. The getters of the
+observed class (vtable RVA `0x29ca8a0`) are:
+
+- `+0x40`: `[[obj+0xf8]+8]`
+- `+0x48`: `[[obj+0xf8]]`
+- `+0x60`: `[obj+0x120]`
+- `+0x68`: `[obj+0x118]`
+
+These getters are also exposed as `pose_dynamic_tree_broadphase_vcall`. Its update
+`199c880` swaps `+0xf8`/`+0x100` and stays supplied.
+
+**Validation.** `check_pose_pair_update_step.py` ran 512 Unicorn cases of native `18b8fa0`
+over the memory image (receipt `native/snow_host/pose_pair_update_step_validation.json`).
+`19598b0` and `18df490` ran natively.
+
+- **Vtable modes.** 256 cases used the real vtable `0x1429ca8a0`, so the four getters
+  and the `+0x88` stub ran natively and only `199c880` was supplied. The other 256 used
+  a fixture vtable that routes all six slots to supplied stubs, with garbage in the
+  upper 32 bits of the counts.
+- **Mutation.** 256 cases mutated controller `+0x28/+0x30/+0x38/+0x4c` and the broadphase
+  lists from inside the services.
+- **Comparisons.** The harness compared:
+  - 3,398 service calls, with their arguments;
+  - 16,452 24-byte rows;
+  - the output descriptor state (count, capacity, inline or external, items) at each stage;
+  - all fixture bytes.
+- **Output storage.** 101 outputs grew past 0x200 entries. 70 were released and 31 were
+  kept, being external with zero capacity.
+- **Injected bug.** Releasing without the capacity check was caught, and the receipt was
+  regenerated after the restore.
+
+Composition test (`tests/test_pose_pair_update_step.py`): the full-chain scenario,
+driven through the broadphase lane's getters, select, rebuild, the pair jobs and the retire
+stage, reaches the same end state as the refresh chain: 3 tree keys removed, queue (10,
+60, 30), groups GA and GB processed. It also shows the added row published at provider
+`+0x170` for dispatch. Limits:
+
+- Select, rebuild, the jobs, the broadphase update and the allocator are supplied (each
+  has its own receipt).
+- The select hook emulates output growth; `18df270` does not run.
+- The harness is single-threaded, and this routine has no live validation.
+
+Static leads:
+
+- **Caller.** `18ae2b0` (`call 18b8fa0; ret`) is entered only by a tail jump from
+  `0x140b1a0` (`mov rcx,[rcx+8]; jmp 18ae2b0`). That stub's only caller is `0x1389afd`,
+  inside `1389a50`.
+- **`1389a50`.** This is the broadphase job body. When profiling global `0x143075a88`
+  equals 2, it opens a profiler scope named `"Physic::UpdateBroadphase"` (string RVA
+  `0x2913250`). It then loops over substeps (count at `this+0x1390`, dt at `+0x1394`):
+  `13c30c0`, then `140b1a0` (this step), then `140efa0(dt)`, `140b3d0` and `13c08f0(dt)`.
+  So the pair update runs once per physics substep, with the controller at `[[this]]+8`.
+- **Scheduling.** Nothing calls `1389a50` directly. Setup `136a550` stores it as a delegate
+  at record `+0x2c0` (lea at `0x136aacf`), just before it names the job
+  `"PhysicsWorldStep"` in batch `"Physic::PhysicsUpdate"` (`0x136ab7e`/`0x136ab8e`). That
+  is probably the PhysicsWorldStep job's broadphase delegate, but the delegate-to-job
+  binding has not been verified.
+- **Controller factory.** `18ae130` (called from `13d1c8e`) allocates 0xb10 bytes for
+  the broadphase (`193f450`, string "Dynamic tree multi-threaded broad phase"), 0x190 for
+  the narrow phase, 0x4a0 for the island manager, and 0x78 for the controller (`18b8150`).
+  The controller's vtable is at `0x1429ca0e0`.
+- **Other callers.** The live gap is closed by capturing this routine rather than
+  `18b8860`. A rel32 scan finds that `18dedf0` and `18e28d0` are called only from the
+  refresh (chunk `18b88e1`) and from this step. `18de440` is called only from the
+  refresh and from `18ddc40`, and `18ddc40` only from this step. So in gameplay, every
+  select, rebuild and retire runs inside `18b8fa0`.
