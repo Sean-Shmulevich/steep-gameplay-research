@@ -2150,3 +2150,25 @@ the exception. UNRESOLVED: the hardware two-NaN rule, live MXCSR, real hull data
 lookup tables, the deserialisation path. Evidence:
 `native/snow_host/pose_convex_point_query_validation.json`. No claim of original-engine
 equivalence outside the validated fixtures.
+
+### Narrow-phase capsule-grid tester
+
+`engine.pose_narrowphase_capsule_grid`: `capsule_grid_tester(mem, geom, out, capacity=500, *,
+nan_rule='sse', trace=None)` ((4,7), `198a910`), `grid_capsule_tester(mem, geom, out,
+capacity=500, *, nan_rule='sse', trace=None, swapped=None)` ((7,4), `19e0430`) and
+`emit_grid_capsule_contacts(output, capacity, resource, samples, terrain_rows, capsule_rows,
+half, radius, terrain_profiles, capsule_profile, *, profiles, preliminary=False,
+filter_enabled=False, nan_rule='sse', trace=None)`. Lane-exact pieces:
+`relative_capsule_frame`, `capsule_axis`, `capsule_local_bounds` (`18c64a0`),
+`triangle_block`, `endpoint_inside`, `same_side_contacts` (`19e0000`),
+`segment_pierces_triangle` (`1935ca0`), `crossing_contacts` (`19101e0`),
+`triangle_contacts`. Follows LINK_SOLVER.md "Narrow-phase capsule-grid tester". Returns
+the native value: at most capacity, except that the preliminary branch returns 1 at
+capacity 0. At most 2 records per triangle; +0x1c = 0, +0x2c = triangle id. Reused float
+models (finite inputs only): `pose_grid_candidates`, `pose_grid_cell`,
+`pose_grid_height_contact`, `pose_grid_profile_gate`, `pose_grid_contact_filter`;
+`pose_contact_reverse` for the flip. Authored: Python owns the candidate buffer (the
+native stack block and `18c9140` are not emulated); the flat-memory bindings read
+profiles by pointer and size the output view as min(capacity, 4*cw*ch) records.
+Evidence: `native/snow_host/pose_narrowphase_capsule_grid_validation.json`. No claim of
+original-engine equivalence outside the validated fixtures.

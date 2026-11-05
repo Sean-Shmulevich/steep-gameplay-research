@@ -11420,3 +11420,132 @@ on macOS, not a bound for the original engine.
 
 Static leads: the terrain testers (4,6) `19cc160` and (4,7) `19e0430`, the hot paths for
 the rider; tester slot `+8` (`19d4df0` etc.) and its use by `18dfa10`/`18e01e0`.
+
+### Narrow-phase capsule-grid tester
+
+`engine/pose_narrowphase_capsule_grid.py` restates the (4,7) and (7,4) cells of the tester
+table (see "Narrow-phase tester table and sphere-sphere tester"), the hottest cells in
+"Live narrow-phase tester census".
+
+- (4,7): entry `198a910` (vtable `29cb530`) is a swap wrapper like `198b400` and `198a780`.
+  It builds a stack geom with frames A and B exchanged and the shape pointers +0x80/+0x88
+  exchanged, copies flags +0x90..+0x92, uses temporary tester vtable `29cb378`, calls
+  `19e0430` with the original capacity, then `1994f60` over `[out, out+0x30 n)`.
+- (7,4): entry `19e0430` (vtable `29cb378`), grid first. It calls `18c64a0` (capsule
+  bounds), `19969e0` (preliminary height contact), `18c4cc0` (candidates; 128 retry
+  through `18c9140`/`18c8f50`), `18c2c70` (triangle vertices), `19e0000` and `19101e0`
+  (per-triangle cores), `1935ca0` (segment-triangle pierce test) and `1996e50` (record
+  filter).
+
+Unlike the box caller `19dde20`, everything happens in terrain-local coordinates.
+
+```text
+19e0430(tester, geom, out, cap):                       # all 8 geom rows masked with M
+  I = full inverse of terrain rows (cofactors * 1/det, transposed); R = capsule frame in terrain space
+  P0 = 0*R2 + ((0*R0 + Rt) + (-h)*R1);  D = 0*R2 + (2h*R1 + 0*R0);  P1 = D + P0
+  bounds = 18c64a0: ext_j = |h*R1_j| + r (scalar); lo = Rt - ext; hi = ext + Rt
+  if geom+0x90: c = (hi + lo)*0.5; if 19969e0(grid, terrain rows, c, r, cap ? out : 0): return 1
+  ids = 18c4cc0(bounds) (min(2*cw*ch,128); exactly 128 -> full-grid allocation and rerun)
+  for id in ids while count < cap (unsigned, tested before every candidate):
+    profile gate (map +0xb0 / table +0xa0 / default +0x20 vs capsule+0x20; +0x48/+0x50 masks)
+    A,B,C = 18c2c70(grid, id)              # local, NOT transformed to world
+    AB=B-A, BC=C-B, CA=A-C; n = norm(cross(AB,BC)); thr = 1e-5 (1e252b0)
+    d0 = n.(P0-A), d1 = n.(P1-A)
+    k = (0 <= d1*d0, 4 lanes) ? 19e0000(..., cap - count, id) : 19101e0(..., id)   # no cap arg
+    if geom+0x92 and grid+0x40 == 2: k = 1996e50(grid, identity frame, id, batch, k)
+    kept records: normal (b1*y+b0*x)+b2*z, +0x10/+0x20 ((b0*x+t)+b1*y)+b2*z by the terrain
+      frame, XYZ words only; count += k
+  return count
+
+19e0000 (same side; at most 2; honours its capacity):
+  inside(E) = for (V,e) in (A,AB),(B,BC),(C,CA): -thr <= (E-V).cross(n,e)    # unnormalised
+  none inside -> 0
+  N = (d1+d0 < 0) ? -n : n;  L = 2h;  cmax = L/sqrt(L*L + r*r)
+  for E in (P0,P1), O = other, while written < cap:
+    if !inside(E): continue
+    Q = E - (n.(E-A))*n;  c = -(norm(O-E).N)
+    push = c<=0 ? r : c<=cmax ? r/sqrt(1-c*c) : sqrt((r*r - L*L) + (cL)^2) + cL
+    depth = |Q-E| - r;  if depth <= 0: rec(N, depth, Q, 0, E - push*N, id)
+
+19101e0 (plane crossed; at most 1; never reads a capacity):
+  if 1935ca0 (Moller-Trumbore on normalised D; det == 0 (4 lanes) rejects; u,v >= -thr, u <= 1+thr,
+     u+v <= 1+thr; 0 <= t and t*t <= |D|^2):
+     E = endpoint with strictly smaller d^2 (start FLT_MAX); Pr = E - d*n
+     nn = |Pr-E| <= 1e-6 (1e93b80, 4 lanes) ? n : norm(Pr-E)
+     rec(nn, -|Pr-E| - r, Pr, 0, E - r*nn, id)                     # always written
+  else: closest pair segment(P0,D) vs edges (A,AB),(B,BC),(C,CA), strictly smaller wins
+     (|e*a - b*b| <= a*1e-5 parallel; s/t clamps with the second-chance s from -c/a or (b-c)/a)
+     nn = |Ps-Qe| <= 1e-6 ? n : norm(Ps-Qe); depth = |Qe-Ps| - r
+     if depth <= 0: rec(nn, depth, Qe, 0, Ps - r*nn, id)
+```
+
+Behaviour worth preserving:
+
+- Capacity: the caller checks `count < cap` before every candidate; `19e0000` stops at
+  its remaining capacity; `19101e0` writes at most one record and only runs with a free
+  slot. So n <= capacity, except that the preliminary branch returns 1 even at capacity 0
+  (null output), after which the (4,7) wrapper flips stored record 0. With capacity 500
+  from `18e08a0` that cannot happen live.
+- Counts: at most 2 per triangle (same side) or 1 (crossing); otherwise bounded only by
+  admitted candidates (17 seen with filtering off). No reduction to 4 inside the tester;
+  `18e08a0` passes n to `198f910`.
+- Words: +0x1c = 0 and +0x2c = triangle id (`2*(row*cw+col)+half`) on every triangle
+  record; the preliminary record carries the height-query id. 0xffff0000 is never written.
+- No mid-axis contact on the same-side path: only axis endpoints inside a triangle's
+  prism report. A triangle under the middle of a lying capsule gives nothing unless the
+  axis crosses its plane.
+- Two-sided triangles: N follows the sign of d0+d1 and depth uses |d|, so a capsule just
+  under a triangle's plane gets contacts pushing it further down.
+- Pierce record: uses the endpoint nearer the plane, depth -(|d| + r); its normal points
+  from that endpoint toward the plane. The capsule-side point is E - r*n, not the push
+  point.
+- Same-side capsule point: E - push*N is where the ray from E along -N leaves the capsule
+  (hemisphere, cylinder or far cap); this reading is derived. The depth itself uses r.
+- Filter: `1996e50` runs on terrain-local records with an identity frame (rows
+  `1e25250`/`1e25270`/`1df4060`, zero translation) before the world transform, removing
+  vertex/edge records by the rule in "Complete grid record filter". Order is not kept;
+  removed records stay in the tail in local coordinates.
+- Geom flags: `18dd400` hands the same geom block (rbp-0x60) to `18e08a0`, with +0x90 = 1
+  (`18dd516`) and +0x92 = 1 (`18dd51a`) on the inspected path, so the preliminary branch
+  is armed live; filtering depends on resource+0x40 == 2, not yet observed live.
+
+Validation: `native/snow_host/pose_narrowphase_capsule_grid_validation.json`, from
+`analysis/command-executor-audit/check_pose_narrowphase_capsule_grid.py`. Unicorn runs
+the real entries over the memory image; every byte of the poisoned output and its tail
+and the return value are compared under the emulator two-NaN rule; execution must stay
+in the contact region and `__chkstk`.
+
+- Entry cases 640/640 (560 through `198a910`, 80 through `19e0430`). Grids of 1..14 cells:
+  flat, sloped, rough, sloped+rough, both diagonals, non-unit spacing, rotated terrain
+  frames (10% scaled); default, rejecting and per-cell mapped profiles. Capsule poses
+  lying, standing, tilted, crossing, endpoint on a vertex or edge, long; gaps -1.5r to
+  +2.5r. Capacities 0..6, 500, 0xffffffff. Counts 0:423 1:146 2:37 3:12 4:8 5:3 6:3 7:2
+  8:2 and single cases of 12, 13, 14, 17. Preliminary returns 53 (3 at capacity 0).
+  Native path hits: retry 9; same-side 320 calls / 112 records; crossing 97; pierce 34;
+  edge records 59; filter calls 183. Push branches r 203, secant 100, cap 15.
+- Capacity sweep 432 runs (48 geometries x caps {0..6, 500, 0xffffffff}): every n <= cap
+  and <= the uncapped n; n at cap 500 = min(full, 500); 62 truncated; uncapped max 10;
+  the prefix rule held 48/48 (a capped run's records are the first records of the
+  uncapped run).
+- Direct cores 1024/1024 (512 `19e0000`, 512 `19101e0`; 256 with NaN, inf or subnormal
+  lanes). Edge-parallel 38, degenerate-normal fallback 65 (edge) / 97 (pierce), cap
+  branch 20.
+- 10 injected bugs, each caught (edge threshold 0, same-side core ignoring capacity, no
+  world transform, wrapper without flip, pierce test disabled, crossing core dropped,
+  fallback -n, closest-pair search starting at 0, preliminary centre x1, unoriented N).
+- Supplied: retry allocator `18c9140` and free `18c8f50` (size and pointer checked; 10
+  allocations, 10 frees), XYZ mask `3336890`, TEB StackLimit, TLS epoch, statics
+  `3336a30/50/70` = 1e-7 with guards = 1 (not read here).
+
+Tests: `tests/test_pose_narrowphase_capsule_grid.py`, 18 tests.
+
+Limits: the grid helpers (enumeration, height query, vertices, filter, profile gate) are
+float models, so entry cases keep frames, samples and sizes finite; special lanes are
+exercised in the direct core runs and the masked fourth lanes of the geom rows.
+Synthetic fixtures, MXCSR 0x1f80, hardware two-NaN behaviour not observed, no live grid
+resource. A separate scratch run (not in the receipt) of 400 scenes with the live flags
+(+0x90 = 1, +0x92 = 1, resource+0x40 = 2) matched native with n at most 6.
+
+Static leads: the live value of grid+0x40; whether the pierce-normal sign quirk is
+reached live; the other `1996e50` callers `19e0e20`, `19e2600`, `19e3460`; tester slot
+`+8` for kind 7.

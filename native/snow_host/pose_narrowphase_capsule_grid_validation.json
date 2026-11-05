@@ -1,0 +1,153 @@
+{
+  "schema": "pose-narrowphase-capsule-grid-validation-v1",
+  "entries": {
+    "(4,7)": "0x198a910 (vtable 0x29cb530 slot 3) -> 0x19e0430 -> 0x1994f60",
+    "(7,4)": "0x19e0430 (vtable 0x29cb378 slot 3)"
+  },
+  "method": "offline Unicorn runs of the original slot-3 entries over the memory image with synthetic grid resources, capsules, profiles and poisoned output buffers; return value and every output byte (including untouched tail) compared with engine.pose_narrowphase_capsule_grid under the emulator two-NaN rule; executed addresses must stay inside the contact-code region and the stack probe",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "entry_cases": {
+    "cases": 640,
+    "counts": {
+      "0": 423,
+      "1": 146,
+      "5": 3,
+      "2": 37,
+      "3": 12,
+      "12": 1,
+      "4": 8,
+      "7": 2,
+      "8": 2,
+      "17": 1,
+      "6": 3,
+      "13": 1,
+      "14": 1
+    },
+    "poses": {
+      "lying": 172,
+      "standing": 40,
+      "tilted": 160,
+      "vertex": 80,
+      "edge": 80,
+      "crossing": 48,
+      "standing+special_shape": 40,
+      "lying_long": 20
+    },
+    "terrains": {
+      "flat": 160,
+      "sloped": 160,
+      "rough": 160,
+      "sloped_rough": 160
+    },
+    "paths": {
+      "same_side_call": 320,
+      "crossing_call": 97,
+      "filter_call": 183,
+      "preliminary_success": 53,
+      "candidate_retry": 9,
+      "same_side_record": 112,
+      "push_r": 203,
+      "push_secant": 100,
+      "push_cap": 15,
+      "pierce": 34,
+      "edge_path": 95,
+      "edge_record": 59,
+      "edge_parallel": 0,
+      "edge_s_low": 62,
+      "edge_s_high": 55,
+      "edge_t_low": 74,
+      "edge_t_high": 71,
+      "edge_plane_normal": 0,
+      "pierce_plane_normal": 0
+    },
+    "model_paths": {
+      "same_side": 1705,
+      "profile_rejected": 2392,
+      "preliminary": 53,
+      "edge": 162,
+      "edge_separated": 297,
+      "pierce": 35,
+      "filtered_out": 28,
+      "candidate_retry": 9
+    },
+    "max_n": 17,
+    "preliminary_returns": 53,
+    "capacity_values": {
+      "4": 58,
+      "u32max": 50,
+      "500": 222,
+      "2": 57,
+      "6": 59,
+      "3": 66,
+      "0": 71,
+      "1": 57
+    },
+    "n_at_capacity": 100,
+    "swap_entry": 560,
+    "direct_74_entry": 80,
+    "preliminary_at_capacity_0": 3
+  },
+  "capacity_sweep": {
+    "geometries": 48,
+    "runs": 432,
+    "truncated": 62,
+    "max_uncapped": 10,
+    "prefix_property_held": 48
+  },
+  "direct_cores": {
+    "cases": 1024,
+    "same_side": 512,
+    "crossing": 512,
+    "counts": {
+      "1": 354,
+      "0": 596,
+      "2": 74
+    },
+    "special_cases": 256,
+    "paths": {
+      "same_side_record": 200,
+      "push_r": 168,
+      "push_secant": 151,
+      "edge_path": 411,
+      "edge_record": 127,
+      "edge_s_low": 197,
+      "edge_s_high": 154,
+      "edge_t_low": 229,
+      "edge_t_high": 247,
+      "edge_plane_normal": 65,
+      "edge_parallel": 38,
+      "pierce": 101,
+      "pierce_plane_normal": 97,
+      "push_cap": 20
+    }
+  },
+  "allocator_calls": {
+    "allocations": 10,
+    "frees": 10
+  },
+  "bug_injections": [
+    "edge-plane threshold 0 instead of 1e-5 fails at case 4",
+    "same-side core ignores its capacity argument fails at case 32",
+    "no world transform of kept records fails at case 2",
+    "(4,7) wrapper without 0x1994f60 flip fails at case 2",
+    "pierce test always false (edge path only) fails at case 7",
+    "crossing core never called fails at case 6",
+    "degenerate-normal fallback uses -n instead of the plane normal fails at case 11",
+    "closest-pair search starts at 0 instead of FLT_MAX fails at case 1",
+    "preliminary centre scaled by 1 instead of 0.5 fails at case 5",
+    "same-side normal not oriented by d0 + d1 fails at case 20"
+  ],
+  "supplied": [
+    "0x18c9140 allocation (returns a scratch buffer; requested size checked) and 0x18c8f50 free (pointer checked) on the candidate-retry path only"
+  ],
+  "supplied_state": [
+    "runtime XYZ mask 0x3336890 = {-1,-1,-1,0} (zero in the image)",
+    "TEB StackLimit at gs:[0x10] for __chkstk; TLS slot array, index 0x333c630 = 0, epoch 0x7fffffff (no guarded static is read on these paths)",
+    "statics 0x3336a30/50/70 = 1e-7 x4 with guards = 1 (not read on these paths)"
+  ],
+  "limits": [
+    "synthetic grids (1..14 cells per side), uneven/sloped/flat samples, synthetic profiles",
+    "grid helpers (enumeration, height query, vertices, filter, profile gate) are float models; entry cases keep frames, samples and capsule sizes finite; NaN/inf/subnormal lanes are exercised in the direct core cases and in the masked fourth lanes of the geom rows",
+    "MXCSR 0x1f80; hardware two-NaN behaviour not observed; no live game, no original-engine equivalence"
+  ]
+}
