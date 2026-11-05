@@ -1,0 +1,398 @@
+{
+ "schema": "physics-thread-lock-live-observation-v1",
+ "date": "2026-11-04",
+ "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+ "kind": "live observation (not a reconstruction check): which threads execute the per-step pair update 18b8fa0 and the pair-link worker path, the job dispatcher capacity, and the in-memory shape and state of the objects named by 12 guard globals",
+ "capture": {
+  "mechanism": "private bounded plugin, data writes only: (A) the broad-phase object at controller+0x28 had its vtable pointer compare-exchanged to a private copy of the 34-slot table (image RVA 0x29ca8a0) with +0x60/+0x40/+0x88 forwarding detours (S0/S1/S2 inside 18b8fa0); (B) the provider+0x68 pair-collider factory (vtable image RVA 0x29ca780, 4 slots) had its vtable pointer swapped the same way with slot +8 (18de680, a table lookup by the two shape kinds) replaced by a forwarding detour that records the calling thread and return site. No code bytes, page protections or shared .rdata were changed.",
+  "identity_checks": "image base; 274-byte fingerprint of 18b8fa0 and 64-byte getter fingerprint; all 34 broad-phase slots; controller vtable 0x29ca0e0 from the player body chain; factory vtable pointer equal to image 0x29ca780, its 4 slots and the word before them, a 32-byte fingerprint of 18de680, and the three call-site encodings at 18dda28 / 18e09db / 18e08fb; detours act only for the target object (and, for A, the 18b8fa0 return sites)",
+  "lock_reads": "at S0, S1 and S2 of up to 48 spaced steps, once inside the worker path of those steps, and every 5 s from the plugin thread: the qword in each guard global and 0x40 bytes at that pointer, via ReadProcessMemory; nothing written",
+  "restore": "factory then broad-phase vtable pointer compare-exchanged back after re-checking provider+0x68 / controller+0x28; in-flight detours drained; module pinned",
+  "plugin_source_sha256": "9f787aaead3556722f8a2217ff56df68e80b9085231bb3df98189f7eabc823a0"
+ },
+ "reference_shapes_under_wine": "a fixture in the same prefix: InitializeCriticalSection gives DebugInfo all-ones, LockCount -1; when held LockCount 0, RecursionCount 1, OwningThread = thread id; SRWLOCK free 0, exclusive 0x10001, shared 0x10000",
+ "attempts": [
+  {
+   "session": "census-01",
+   "outcome": "complete; analysed below",
+   "steering": false
+  },
+  {
+   "session": "census-02",
+   "outcome": "startup navigation stalled on the title screen (budget exhausted) before the plugin was armed; no hook installed; cleanup verified (bottle stopped, saves and settings restored, original DLL verified)"
+  },
+  {
+   "session": "census-03",
+   "outcome": "armed and installed (both hooks), with steering holds; about 3.6 min later the launcher watchdog stopped the bottle for host memory pressure (system free memory 19 percent; game RSS about 1.1 GiB), so the process ended with the hooks installed and the in-memory step records were lost; cleanup verified (bottle stopped, saves and settings restored, original DLL verified). Only the install-time thread census survived; it is not analysed."
+  }
+ ],
+ "sessions": [
+  {
+   "session": "census-01",
+   "cleanup": {
+    "plugin_verified": 1,
+    "broadphase_restored": 1,
+    "broadphase_vptr_original_after": 1,
+    "broadphase_drained": 1,
+    "factory_verified": 1,
+    "factory_installed": 1,
+    "factory_restored": 1,
+    "factory_vptr_original_after": 1,
+    "factory_drained": 1,
+    "foreign_detour_calls": 0,
+    "launcher": {
+     "ok": true,
+     "ended_by": "stop",
+     "bottle_stopped": true,
+     "saves_restored": true,
+     "settings_restored": true,
+     "original_dll_verified": true
+    },
+    "coordinator_ok": true,
+    "host_disconnect": false
+   },
+   "input": {
+    "holds": 11,
+    "steering": false
+   },
+   "steps": {
+    "seen_by_hook": 25382,
+    "recorded": 12000,
+    "recorded_seconds": 115.3,
+    "s1_s2_complete": 12000
+   },
+   "step_thread": {
+    "distinct_threads": 10,
+    "same_thread_every_step": false,
+    "thread_switches_between_consecutive_steps": 4542,
+    "share_of_most_used_thread": 0.158,
+    "all_step_threads_share_one_start_address": true,
+    "start_address": "game image RVA 0x1c94b94",
+    "threads_in_process_with_that_start": 24,
+    "host_plugin_thread_ran_step": false,
+    "census_thread_ran_step": false
+   },
+   "worker_path": {
+    "steps_with_factory_calls": 11999,
+    "calls_by_caller": {
+     "18dd400 (dynamic contact generation)": 1921,
+     "18e0980 (terrain wrapper, kind 6)": 26035,
+     "18e08a0 (terrain wrapper)": 153127,
+     "other return sites": 32586
+    },
+    "return_site_rvas": {
+     "0x18dffd4": 45946,
+     "0x18e08fe": 153127,
+     "0x18e09de": 26035,
+     "0x18e064b": 22,
+     "0x18dda2c": 1921
+    },
+    "return_site_owners": {
+     "0x18dda2c": "18dd400",
+     "0x18e09de": "18e0980",
+     "0x18e08fe": "18e08a0",
+     "0x18dffd4": "unwind chunk 18dfc50..18e01b4 (flagged neighbor update 18dfa10 body)",
+     "0x18e064b": "unwind chunk 18e036c..18e084b (flagged neighbor create 18e01e0 body)"
+    },
+    "distinct_threads_per_step": {
+     "1": 11999
+    },
+    "steps_where_worker_path_ran_on_step_thread": 11999,
+    "steps_with_worker_path_off_step_thread": 0,
+    "calls_after_step_buffer_full_unattributed": 13382
+   },
+   "dispatch": {
+    "dispatcher_capacity_values": {
+     "1": 12000
+    },
+    "formula_worker_values": {
+     "1": 12000
+    },
+    "workers_from_claim_cursor": {
+     "1": 12000
+    },
+    "formula_mismatches": 0,
+    "steps_with_ge10_new_pairs": 2009,
+    "max_new_pairs": 83,
+    "multi_worker_steps": 0,
+    "dispatcher_object_stable": true
+   },
+   "lock_dumps": {
+    "total": 208,
+    "by_phase": {
+     "S0": 48,
+     "S1": 48,
+     "worker": 48,
+     "S2": 48,
+     "async": 16
+    },
+    "pointees_distinct": 11,
+    "pointees_within_one_span_bytes": 560,
+    "globals": {
+     "0x3336ab0": {
+      "dumps": 208,
+      "pointee_readable": 208,
+      "pointer_stable": true,
+      "critical_section_shape": 208,
+      "free": 208,
+      "held": 0,
+      "held_by_dumping_thread": 0,
+      "distinct_lock_word_states": 1,
+      "srw_shape": "rejected (first qword is all ones, not an SRW word)",
+      "dumps_by_phase": {
+       "S0": 48,
+       "S1": 48,
+       "worker": 48,
+       "S2": 48,
+       "async": 16
+      },
+      "verdict": "CRITICAL_SECTION shape (Wine): DebugInfo all-ones, LockCount -1, RecursionCount 0, OwningThread 0, LockSemaphore 0, SpinCount 0; free in every dump"
+     },
+     "0x3336ac0": {
+      "dumps": 208,
+      "pointee_readable": 208,
+      "pointer_stable": true,
+      "critical_section_shape": 208,
+      "free": 208,
+      "held": 0,
+      "held_by_dumping_thread": 0,
+      "distinct_lock_word_states": 1,
+      "srw_shape": "rejected (first qword is all ones, not an SRW word)",
+      "dumps_by_phase": {
+       "S0": 48,
+       "S1": 48,
+       "worker": 48,
+       "S2": 48,
+       "async": 16
+      },
+      "verdict": "CRITICAL_SECTION shape (Wine): DebugInfo all-ones, LockCount -1, RecursionCount 0, OwningThread 0, LockSemaphore 0, SpinCount 0; free in every dump"
+     },
+     "0x3336aa0": {
+      "dumps": 208,
+      "pointee_readable": 208,
+      "pointer_stable": true,
+      "critical_section_shape": 208,
+      "free": 208,
+      "held": 0,
+      "held_by_dumping_thread": 0,
+      "distinct_lock_word_states": 1,
+      "srw_shape": "rejected (first qword is all ones, not an SRW word)",
+      "dumps_by_phase": {
+       "S0": 48,
+       "S1": 48,
+       "worker": 48,
+       "S2": 48,
+       "async": 16
+      },
+      "verdict": "CRITICAL_SECTION shape (Wine): DebugInfo all-ones, LockCount -1, RecursionCount 0, OwningThread 0, LockSemaphore 0, SpinCount 0; free in every dump"
+     },
+     "0x3336bb8": {
+      "dumps": 208,
+      "pointee_readable": 208,
+      "pointer_stable": true,
+      "critical_section_shape": 208,
+      "free": 208,
+      "held": 0,
+      "held_by_dumping_thread": 0,
+      "distinct_lock_word_states": 1,
+      "srw_shape": "rejected (first qword is all ones, not an SRW word)",
+      "dumps_by_phase": {
+       "S0": 48,
+       "S1": 48,
+       "worker": 48,
+       "S2": 48,
+       "async": 16
+      },
+      "verdict": "CRITICAL_SECTION shape (Wine): DebugInfo all-ones, LockCount -1, RecursionCount 0, OwningThread 0, LockSemaphore 0, SpinCount 0; free in every dump"
+     },
+     "0x3336800": {
+      "dumps": 208,
+      "pointee_readable": 208,
+      "pointer_stable": true,
+      "critical_section_shape": 208,
+      "free": 208,
+      "held": 0,
+      "held_by_dumping_thread": 0,
+      "distinct_lock_word_states": 1,
+      "srw_shape": "rejected (first qword is all ones, not an SRW word)",
+      "dumps_by_phase": {
+       "S0": 48,
+       "S1": 48,
+       "worker": 48,
+       "S2": 48,
+       "async": 16
+      },
+      "verdict": "CRITICAL_SECTION shape (Wine): DebugInfo all-ones, LockCount -1, RecursionCount 0, OwningThread 0, LockSemaphore 0, SpinCount 0; free in every dump"
+     },
+     "0x33367f0": {
+      "dumps": 208,
+      "pointee_readable": 208,
+      "pointer_stable": true,
+      "critical_section_shape": 208,
+      "free": 208,
+      "held": 0,
+      "held_by_dumping_thread": 0,
+      "distinct_lock_word_states": 1,
+      "srw_shape": "rejected (first qword is all ones, not an SRW word)",
+      "dumps_by_phase": {
+       "S0": 48,
+       "S1": 48,
+       "worker": 48,
+       "S2": 48,
+       "async": 16
+      },
+      "verdict": "CRITICAL_SECTION shape (Wine): DebugInfo all-ones, LockCount -1, RecursionCount 0, OwningThread 0, LockSemaphore 0, SpinCount 0; free in every dump"
+     },
+     "0x33367d0": {
+      "dumps": 208,
+      "pointee_readable": 208,
+      "pointer_stable": true,
+      "critical_section_shape": 208,
+      "free": 208,
+      "held": 0,
+      "held_by_dumping_thread": 0,
+      "distinct_lock_word_states": 1,
+      "srw_shape": "rejected (first qword is all ones, not an SRW word)",
+      "dumps_by_phase": {
+       "S0": 48,
+       "S1": 48,
+       "worker": 48,
+       "S2": 48,
+       "async": 16
+      },
+      "verdict": "CRITICAL_SECTION shape (Wine): DebugInfo all-ones, LockCount -1, RecursionCount 0, OwningThread 0, LockSemaphore 0, SpinCount 0; free in every dump"
+     },
+     "0x3336810": {
+      "dumps": 208,
+      "pointee_readable": 208,
+      "pointer_stable": true,
+      "critical_section_shape": 208,
+      "free": 208,
+      "held": 0,
+      "held_by_dumping_thread": 0,
+      "distinct_lock_word_states": 1,
+      "srw_shape": "rejected (first qword is all ones, not an SRW word)",
+      "dumps_by_phase": {
+       "S0": 48,
+       "S1": 48,
+       "worker": 48,
+       "S2": 48,
+       "async": 16
+      },
+      "verdict": "CRITICAL_SECTION shape (Wine): DebugInfo all-ones, LockCount -1, RecursionCount 0, OwningThread 0, LockSemaphore 0, SpinCount 0; free in every dump"
+     },
+     "0x3336868": {
+      "dumps": 208,
+      "pointee_readable": 208,
+      "pointer_stable": true,
+      "critical_section_shape": 208,
+      "free": 208,
+      "held": 0,
+      "held_by_dumping_thread": 0,
+      "distinct_lock_word_states": 1,
+      "srw_shape": "rejected (first qword is all ones, not an SRW word)",
+      "dumps_by_phase": {
+       "S0": 48,
+       "S1": 48,
+       "worker": 48,
+       "S2": 48,
+       "async": 16
+      },
+      "verdict": "CRITICAL_SECTION shape (Wine): DebugInfo all-ones, LockCount -1, RecursionCount 0, OwningThread 0, LockSemaphore 0, SpinCount 0; free in every dump"
+     },
+     "0x3336878": {
+      "dumps": 208,
+      "pointee_readable": 208,
+      "pointer_stable": true,
+      "critical_section_shape": 208,
+      "free": 208,
+      "held": 0,
+      "held_by_dumping_thread": 0,
+      "distinct_lock_word_states": 1,
+      "srw_shape": "rejected (first qword is all ones, not an SRW word)",
+      "dumps_by_phase": {
+       "S0": 48,
+       "S1": 48,
+       "worker": 48,
+       "S2": 48,
+       "async": 16
+      },
+      "verdict": "CRITICAL_SECTION shape (Wine): DebugInfo all-ones, LockCount -1, RecursionCount 0, OwningThread 0, LockSemaphore 0, SpinCount 0; free in every dump"
+     },
+     "0x3336888": {
+      "dumps": 208,
+      "pointee_readable": 208,
+      "pointer_stable": true,
+      "critical_section_shape": 208,
+      "free": 208,
+      "held": 0,
+      "held_by_dumping_thread": 0,
+      "distinct_lock_word_states": 1,
+      "srw_shape": "rejected (first qword is all ones, not an SRW word)",
+      "dumps_by_phase": {
+       "S0": 48,
+       "S1": 48,
+       "worker": 48,
+       "S2": 48,
+       "async": 16
+      },
+      "verdict": "CRITICAL_SECTION shape (Wine): DebugInfo all-ones, LockCount -1, RecursionCount 0, OwningThread 0, LockSemaphore 0, SpinCount 0; free in every dump"
+     },
+     "0x333c5e8": {
+      "dumps": 208,
+      "pointee_readable": 0,
+      "pointer_stable": true,
+      "critical_section_shape": 0,
+      "free": 0,
+      "held": 0,
+      "held_by_dumping_thread": 0,
+      "distinct_lock_word_states": 0,
+      "srw_shape": "n/a",
+      "dumps_by_phase": {
+       "S0": 48,
+       "S1": 48,
+       "worker": 48,
+       "S2": 48,
+       "async": 16
+      },
+      "verdict": "global holds a non-pointer value (all ones) in every dump; not a lock-object pointer (consistent with a magic-static/epoch word)"
+     }
+    }
+   },
+   "thread_census_at_finish": {
+    "census_hook.dll": 1,
+    "combase.dll": 1,
+    "dinput8.dll": 1,
+    "dxgi.dll": 1,
+    "game image, other start 0x1601860": 1,
+    "game image, other start 0x1614f20": 1,
+    "game image, other start 0x16582e0": 1,
+    "game image, other start 0x4f488dc": 1,
+    "game image, pool start 0x1c94b94": 24,
+    "mmdevapi.dll": 3,
+    "msvcr110.dll": 6,
+    "rpcrt4.dll": 1,
+    "sechost.dll": 1,
+    "snow_host.dll": 4,
+    "xaudio2_7.dll": 1,
+    "xaudio2_8.dll": 1
+   }
+  }
+ ],
+ "conclusions": {
+  "pair_update_thread": "not fixed: 18b8fa0 ran on several job-pool threads (one shared start address in the game image) and switched threads between consecutive steps; never on the host plugin thread or the census thread",
+  "worker_thread": "in every recorded step the worker path ran on exactly one thread, the same thread that ran that step",
+  "dispatcher_capacity": "always 1, so the pair-job worker count was 1 even with up to 83 new pairs",
+  "multi_worker_steps": 0,
+  "guard_objects": "11 of 12 globals point to Wine CRITICAL_SECTION-shaped objects, all free at every sample (never held, owner never set); global RVA 0x333c5e8 holds an all-ones value, not a pointer",
+  "recorded_steps_total": 12000
+ },
+ "limits": [
+  "Wine (Highball, snow-research bottle) on macOS; thread placement and dispatcher capacity may differ on Windows or with another CPU count.",
+  "The dispatcher capacity was 1 in every recorded step, so 18b7ca0 took its single-worker path; multi-worker pair jobs could not be produced by gameplay and no concurrent worker execution was observed.",
+  "Lock state was sampled at discrete points (S0/S1/S2, first worker-path factory call, periodic); a lock taken and released between samples is not visible.",
+  "Worker-path identity comes from the factory slot +8 call inside 18dd400, the two terrain wrappers and the flagged-neighbor paths; a worker pass that reaches none of these is not attributed.",
+  "Thread labels are per session; thread ids, heap addresses and raw bytes are kept private.",
+  "Step records are bounded per session (12000 in census-01, about 115 s of 240 s); later steps were counted but not attributed. Records were held in memory until restore, so a session ended externally loses them (census-03)."
+ ]
+}

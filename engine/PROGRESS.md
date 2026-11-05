@@ -8705,3 +8705,14 @@ cases. This is not wired into a live host API and does not pin manager or module
   controls fail as expected. Receipt `pose_pair_update_live_validation.json`.
 - Physics lock map: static guard map for the 18 guard globals in the physics range (141 census sites plus 7 attached by look-back, 66 unwind chunks). Every guard has a sibling pool pointer at guard minus 8 (count +0x28, free-list head +0x30); all but one (0x143336858, flag-conditional) pair cleanly by position, two pairs are split across unwind chunks (0x18de060 to 0x18de1bb for guard 0x143336bb8, 0x18de1e0 to 0x18de2c2 for guard 0x143336ac0), and no nested acquisition or direct-call lock-order edge exists. New `docs/reconstruction/PHYSICS_LOCK_MAP.md`; private data in `analysis/thread-census/guard_map.json`. Lock type left open (protected guard N wording). Static only.
 - Job ring queue (0x18b7710 push, pop and tag handling in 0x18b7f80, exit-record push in 0x18b797e): 512 native cases, authored interleaving model with no property violations, composes with `engine.pose_dispatch`.
+.md bullet
+
+- Live thread/lock observation (`native/snow_host/physics_thread_lock_live_observation.json`):
+  - `18b8fa0` ran on 10 job-pool threads that share start RVA `0x1c94b94`, switching
+    4,542 times over 12,000 steps; it never ran on the host plugin thread.
+  - The pair-link worker path ran on the step's own thread in all 11,999 steps with
+    factory-selector calls.
+  - Dispatcher capacity was 1 in every step, so there was always 1 worker, even with up
+    to 83 new pairs; there were no multi-worker steps.
+  - 11 of the 12 guard globals point to Wine CRITICAL_SECTIONs, free at every
+    S0/S1/S2/worker/async sample; `0x14333c5e8` holds all-ones, not a pointer.

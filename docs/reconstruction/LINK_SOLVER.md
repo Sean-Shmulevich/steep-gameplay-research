@@ -10398,3 +10398,131 @@ only as a prefix, so one stalled writer blocks every later publication and all c
 Static leads: the opaque routine 0x143e20621 reached from an empty pop while any
 unclaimed counter is nonzero; the stub 0x143f45b93 calling convention; the remainder of
 0x18b7940 after 0x18b7a6a.
+
+### Live thread and lock observation
+
+This is a live observation, not a reconstruction check. It records which threads run
+the per-step pair update `18b8fa0` and the pair-link worker path, the job dispatcher's
+capacity, and the in-memory state of the objects named by the 12 guard globals. The
+receipt is `native/snow_host/physics_thread_lock_live_observation.json`.
+
+**Capture.** A private bounded plugin installed two hooks. Both are data writes only:
+no code bytes, page protections or shared `.rdata` were changed.
+
+- **A.** The same broad-phase vtable-pointer swap as "Live pair update capture"
+  (slots +0x60, +0x40 and +0x88; S0, S1 and S2 inside `18b8fa0`). Every step was
+  recorded until the buffer filled, not only spaced captures.
+- **B.** The pair-collider factory at provider+0x68 (provider = controller+0x38). Its
+  vtable is image `0x29ca780`, with 4 slots: deleting destructor `18dc780`, selector
+  `18de680`, `198f8b0` and `18e1150`. Its vtable pointer was compare-exchanged to a
+  private copy in which slot +8 (`18de680`) is a forwarding detour. That detour records
+  the calling thread and return site.
+  - Slot +8 is a pure table lookup, `[this + 8*(kindA*8 + kindB) + 8]`, keyed by the
+    two shapes' +0x28 kinds masked with 0x7fff.
+  - It is reached from inside the worker path: `18dd400` (return `18dda2c`), the two
+    terrain wrappers `18e0980` / `18e08a0` (returns `18e09de` / `18e08fe`), and the
+    flagged-neighbor bodies (returns `18dffd4` in the `18dfa10` chunk and `18e064b` in
+    the `18e01e0` chunk).
+
+Identity checks before installing hook B:
+
+- the factory's vtable pointer, its 4 slots and the word before them;
+- a 32-byte fingerprint of `18de680`;
+- the three call-site encodings.
+
+On restore, the plugin compare-exchanged the factory first and then B, re-checking each
+owner field first, and drained in-flight detours.
+
+Lock reads used ReadProcessMemory and wrote nothing. For each guard global, the plugin
+read the qword stored there and 0x40 bytes at that pointer. Reads were taken at S0, S1
+and S2 of 48 steps spaced 300 ms apart, at the first worker-path factory call in those
+steps, and every 5 s from the plugin thread.
+
+A Wine fixture in the same prefix gives the reference layouts:
+
+- **CRITICAL_SECTION, free:** DebugInfo all-ones, LockCount -1, RecursionCount 0,
+  OwningThread 0.
+- **CRITICAL_SECTION, held:** LockCount 0, RecursionCount 1, OwningThread = the thread
+  id.
+- **SRWLOCK:** 0 when free, 0x10001 exclusive, 0x10000 shared.
+
+**Results.** Session census-01 used director startup and forward holds. The hook saw
+25,382 steps in 240 s and fully recorded the first 12,000 (115 s, about 104 steps/s).
+All 12,000 reached both S1 and S2.
+
+Pair update thread:
+
+- **`18b8fa0` does not run on a fixed thread.** It ran on 10 different threads,
+  switching 4,542 times between consecutive steps. The most-used thread ran 15.8% of
+  steps.
+- All 10 are job-pool threads with one shared start address, game image RVA
+  `0x1c94b94`. The process has 24 threads with that start address.
+- It never ran on the snow host plugin thread or the plugin's own thread.
+
+Worker path:
+
+- 11,999 steps had factory calls.
+- In every one, the calls came from exactly one thread: the thread running that step.
+- The calls split by return site as follows (the first three are inside the
+  steps; the last two include later steps after the buffer filled):
+
+  | Return site | Caller | Calls |
+  |---|---|---|
+  | `18dda2c` | `18dd400` | 1,921 |
+  | `18e09de` | `18e0980` | 26,035 |
+  | `18e08fe` | `18e08a0` | 153,127 |
+  | `18dffd4` | flagged-neighbor update | 45,946 |
+  | `18e064b` | flagged-neighbor create | 22 |
+
+Dispatcher:
+
+- **The dispatcher capacity `[[0x143336610]+0x10]` was 1 in every step.** So
+  `min(32, capacity, n/10+1)` was always 1, and the claim cursor confirmed
+  `+0x17c - +0x178 = 1` in all 12,000 steps, with 0 mismatches.
+- 2,009 steps had at least 10 new pairs, up to 83 in one step.
+- **No multi-worker step occurred.** With capacity 1, `18b7ca0` takes its
+  single-worker branch and calls the callback on the caller's thread. That matches the
+  observed thread identity.
+
+Lock objects:
+
+- **11 of the 12 globals point to Wine CRITICAL_SECTION-shaped objects:** 0x143336ab0,
+  ac0, aa0, bb8, 800, 7f0, 7d0, 810, 868, 878 and 888.
+- The 11 pointees are distinct and lie within one 560-byte span. Each pointer was
+  stable across all samples.
+- The first 0x28 bytes were byte-identical in all 2,288 samples: DebugInfo all-ones,
+  LockCount -1, RecursionCount 0, OwningThread 0, LockSemaphore 0, SpinCount 0. **So
+  none was ever held at S0, S1, S2, in the worker path or asynchronously.** That
+  includes never by the sampling thread.
+- The SRW shape is rejected, because the first qword is all ones.
+- **`0x14333c5e8` holds an all-ones value, not a pointer.** That fits its role as the
+  magic-static guard/epoch word noted in the census.
+- Live shapes for the offline thunk-emulation lane to cross-check against:
+  CRITICAL_SECTION objects, uncontended at every sample point.
+
+Cleanup in census-01 was fully verified:
+
+- both vtable pointers were restored and drained;
+- no foreign detour calls occurred;
+- the bottle stopped, saves and settings were restored, and the original DLL was
+  verified.
+
+Session census-02 stalled at the title screen before arming, and cleanup was verified.
+Session census-03 used steering holds and installed both hooks. The launcher watchdog
+then stopped the bottle for host memory pressure (system free memory 19%; game RSS
+about 1.1 GiB), so the in-memory step records were lost. Its cleanup was also verified.
+
+Limits:
+
+- This is Wine on macOS. Pool placement and dispatcher capacity may differ on Windows
+  or with another CPU count.
+- Locks were sampled at discrete points.
+- Thread labels are per session.
+- Step records are held in memory until restore.
+
+Static leads:
+
+- Where dispatcher+0x10 (capacity) is initialized, and whether it derives from the CPU
+  count.
+- `0x1c94b94` (the job-pool thread entry).
+- The CS block around the 11 guard objects, and the code that initializes it.
