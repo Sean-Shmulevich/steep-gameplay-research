@@ -10330,3 +10330,81 @@ Limits:
 - The eight eligible removed rows with no tree node are probably pairs the
   pair filter never linked. Check this against `18deb70`.
 - A multi-worker dispatch needs a scene with more than 20 overlapping pairs.
+
+### Job ring queue (0x18b7710 push, pop in 0x18b7f80, exit-record push in 0x18b797e)
+
+`engine.pose_job_ring_queue` reconstructs the record queue that `0x18b7ca0` (see
+Dispatcher claim and completion counters) fills through its enqueue service and that
+ordinary workers drain. 0x18b7d03 is a chunk of the dispatcher (slot reservation, then a
+call to 0x18b7710 per extra worker); 0x18b797e is a chunk of the shutdown routine
+0x18b7940 with the push inlined; the pop is inlined in the worker loop 0x18b7f80.
+Receipt: native/snow_host/pose_job_ring_queue_validation.json.
+
+Layout (relative to the queue at dispatcher+0x218): 0x400 ring bytes, then u32 counters
++0x400 read claim, +0x404 read published, +0x408 write claim, +0x40c write published.
+Counters run freely with wrapping 32-bit arithmetic; a record at counter c starts at
+ring offset c and 0x3ff and splits across the ring end (two memcpy calls). Records are
+24 bytes: tag, slot, callback, argument (the existing dispatcher enqueue tuple).
+
+```python
+push(record):                               # spins until it succeeds
+    loop:
+        A = read(read_published); B = read(write_claim)     # this order matters
+        if (B - A) > 0x400 or (A - B + 0x400) < 24: continue   # full or inconsistent
+        if cas(write_claim, B, B + 24) != B: continue
+        copy record to ring[B & 0x3ff] (two pieces at the end)
+        while cas(write_published, B, B + 24) != B: pass       # publish in claim order
+        return
+pop():                                      # one attempt, never spins on emptiness
+    R = read(read_claim); W = read(write_published)
+    if (W - R) > 0x400 or (W - R) < 24: return None
+    if cas(read_claim, R, R + 24) != R: retry from the top
+    copy ring[R & 0x3ff] out
+    while cas(read_published, R, R + 24) != R: pass           # release in claim order
+```
+
+Worker loop 0x18b7f80(dispatcher, i): wait(handle[i]); pop. Empty: scan unclaimed[0..31];
+the first nonzero entry calls the opaque non-returning routine 0x143e20621, otherwise wait
+again. TAG_CALL 0x1de3f0c7: unclaimed[slot] -= 1, callback(token, 0), unfinished[slot] -= 1.
+TAG_EXIT 0x1de3f0c9: unclaimed[slot] -= 1, unfinished[slot] -= 1, return. Any other tag only
+re-reads. After a record, a nonzero unclaimed[slot] skips the next wait.
+
+Preserved quirks: exit records carry slot 0, and the shutdown routine seeds
+unclaimed[0] = unfinished[0] = workers - 1, so exit records are accounted on slot 0. Push
+never reports failure (blocks on a full ring or an unpublished earlier writer); pop
+reports empty on any inconsistent or short snapshot. Capacity 0x400 is not a multiple of
+24, so at most 42 records fit and free space after 42 is 16.
+
+Validation: 512 native Unicorn cases (192 push including 8 full-ring and 8 unpublished-writer
+spin states and 95 with a consumer in flight, 256 worker-loop runs with 244 callbacks, 65 exit
+returns, 94 opaque-routine faults and 67 unknown-tag records, 64 shutdown runs with 207 exit
+records); all 0x728 dispatcher bytes, wait/callback/notify/fault service calls and counter
+snapshots at every callback match. memcpy runs natively. Supplied: event wait stub
+0x143f45b93 (modeled as callee cleaning the pushed queue pointer), callback, 0x143e20621,
+notify stub 0x143f93753. Single-threaded: no native concurrency evidence.
+
+Authored interleaving exploration (NOT native evidence): `engine.pose_job_ring_model_check`
+explores every interleaving of the atomic-step machines under sequentially consistent
+memory on a 0x40-byte ring (two records, wraps and splits). Example scenarios, all clean:
+2 producers x 2 pushes + 1 consumer x 3 pops (19541 states); 2x2 pushes + 2 consumers x 2
+pops across the 2^32 counter wrap (447557 states). Checked: no lost, duplicated, torn or
+phantom records, counter order invariant, push counter equals pop counter for each record,
+per-producer and per-consumer FIFO. Full ring: a producer finishes only when a consumer
+pops; with no consumer it never finishes (no failure return). Mutants (unordered
+publication, no space check) are detected. Liveness caveat: published records are visible
+only as a prefix, so one stalled writer blocks every later publication and all consumers
+(head-of-line blocking); this is structural, not a violation.
+
+Static leads: the opaque routine 0x143e20621 reached from an empty pop while any
+unclaimed counter is nonzero; the stub 0x143f45b93 calling convention; the remainder of
+0x18b7940 after 0x18b7a6a.
+
+### Contract entry: job ring queue
+`engine.pose_job_ring_queue` offers `PushOp`/`PopOp` step machines, sequential
+`push_record`/`pop_record`, `handle_job_record`, `run_job_worker` and `publish_exit_records`.
+Sequential behavior is natively validated; interleavings are authored exploration only.
+Push raises `RingStalled` (authored guard) where the native routine spins; slot >= 32 is
+rejected. Layout offsets are evidence anchors, not portable API fields.
+
+### PROGRESS bullet
+- Job ring queue (0x18b7710 push, pop and tag handling in 0x18b7f80, exit-record push in 0x18b797e): 512 native cases, authored interleaving model with no property violations, composes with `engine.pose_dispatch`.

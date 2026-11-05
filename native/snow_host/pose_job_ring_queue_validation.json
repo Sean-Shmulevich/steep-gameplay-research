@@ -1,0 +1,52 @@
+{
+  "schema": "pose-job-ring-queue-validation-v1",
+  "cases": 512,
+  "passed": true,
+  "push_cases": 192,
+  "push_wrapped_split": 7,
+  "push_counter_wrap": 1,
+  "push_inflight_reader": 95,
+  "push_full_spin": 8,
+  "push_unpublished_writer_spin": 8,
+  "worker_cases": 256,
+  "worker_exit_returns": 65,
+  "worker_halted_in_wait": 97,
+  "worker_faults": 94,
+  "worker_calls": 244,
+  "worker_ignored_tags": 67,
+  "worker_skip_wait": 253,
+  "shutdown_cases": 64,
+  "shutdown_records": 207,
+  "shutdown_no_loop": 20,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18b7710",
+    "0x18b7f80",
+    "0x18b7940 (chunk 0x18b797e)"
+  ],
+  "method": "Original push 0x18b7710, ordinary worker loop 0x18b7f80 (pop, tag handling, counter updates, empty-pop counter scan) and shutdown routine 0x18b7940 through its inlined exit-record push executed natively in Unicorn, single-threaded; memcpy 0x141c6afb0 runs natively. Supplied services: the event wait stub 0x143f45b93 (modeled as ret 8, scripted to inject records), the worker callback, the opaque non-returning routine 0x143e20621 at 0x18b80ee, and the per-worker notify stub 0x143f93753.",
+  "comparisons": [
+    "all 0x728 dispatcher bytes (ring, four queue counters, both counter arrays, handles) after every case",
+    "service call order and arguments (wait handle and edx, callback token and caller flag, notify handle, fault index and value)",
+    "dispatcher counter and queue-counter snapshot at every callback invocation",
+    "return address, stack pointer and rax for push",
+    "state reached while spinning (full ring, unpublished prior writer) after a bounded native run"
+  ],
+  "coverage": [
+    "occupancies 0..41 records, arbitrary 32-bit counter origins including values near 2^32 and non-multiples of 24",
+    "records split across the end of the ring",
+    "consumer in flight (read published behind read claim) reducing push space",
+    "tags 0x1de3f0c7, 0x1de3f0c9 and unknown tags; slots 0..31",
+    "empty pops with all-zero and nonzero unclaimed counters",
+    "shutdown with 0,1,2,3,5,9 workers"
+  ],
+  "limits": [
+    "Single-threaded only. No native concurrency evidence: every interleaving result lives in engine.pose_job_ring_model_check and is authored exploration.",
+    "Full ring and unpublished-writer states make native push spin forever; only that the native state reaches an unchanging spin and equals the model after a bounded run is checked.",
+    "Wait stub 0x143f45b93 and the notify stub are opaque; the stub is modeled as callee-cleanup of the pushed queue pointer, which the frame layout requires but was not decoded.",
+    "The routine called at 0x18b80ee when an empty pop sees a nonzero unclaimed counter is opaque and never returns in the model.",
+    "Worker slot values >= 32 excluded; later parts of the shutdown routine (0x18b7a6a onward) not executed.",
+    "Initial queue contents are built with the reconstructed push, which is separately validated by the push cases.",
+    "No live validation."
+  ]
+}
