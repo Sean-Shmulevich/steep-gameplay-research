@@ -326,6 +326,16 @@ for stores to body +0x1a0..+0x1b7 and calls to the known setters; 1957590 and 13
 flagged by the same scan as positive controls). Two dynamic gaps remain: the C3 entry
 update virtual and the C2 gameplay callback.
 
+## 6b. Phase 2 result: composed island step
+
+The whole solver half `18ae2c0` now runs as a composed model (`engine/pose_island_step.py`) and
+matches the native routine on 1024 of 1024 synthetic rider-shaped cases at every stage boundary;
+see LINK_SOLVER.md "Composed island step" and
+[the receipt](../../native/snow_host/pose_island_step_validation.json). Only the C4 finish is
+replayed. Settings +0x34 is the quiet-duration threshold and +0x38/+0x3c the linear/angular
+speed-squared thresholds (validated poststep chain; the JSON is corrected). Phase 3 replaces the
+synthetic fixture with a live capture at the points in section 6.
+
 ## 7. Open questions (ranked)
 
 1. **C3 action tree** (`1959a70` on `world+0xd0`): which objects, and whether they write body

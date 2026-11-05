@@ -85,9 +85,9 @@
       {"offset": "0x2a", "type": "u16", "default": 0, "at_world_creation": 4, "consumer": "secondary iterations, flags bits 16..26"},
       {"offset": "0x2c", "type": "float32", "default": 0.1, "consumer": "solver ctx+0x14"},
       {"offset": "0x30", "type": "float32", "default": 0.2, "consumer": "solver ctx+0x18"},
-      {"offset": "0x34", "type": "float32", "default": 0.5, "consumer": "quiet threshold (linear by position, I); setter 0x18ae5e0"},
-      {"offset": "0x38", "type": "float32", "default": 0.5, "consumer": "quiet threshold (angular by position, I); setter 0x18ae530"},
-      {"offset": "0x3c", "type": "float32", "default": 0.5, "consumer": "quiet duration (I); setter 0x18ae3c0"},
+      {"offset": "0x34", "type": "float32", "default": 0.5, "consumer": "quiet duration threshold (N: worker 18e31b0 -> 18c0190 compares the quiet timer); setter 0x18ae5e0"},
+      {"offset": "0x38", "type": "float32", "default": 0.5, "consumer": "quiet linear speed-squared threshold (N: 18c0190); setter 0x18ae530"},
+      {"offset": "0x3c", "type": "float32", "default": 0.5, "consumer": "quiet angular speed-squared threshold (N: 18c0190); setter 0x18ae3c0"},
       {"offset": "0x40", "type": "float32", "default": 0.001, "consumer": "island setter 0x18e2ce0"},
       {"offset": "0x44", "type": "float32", "default": 0.001, "consumer": "island setter 0x18e2ca0"}
     ],

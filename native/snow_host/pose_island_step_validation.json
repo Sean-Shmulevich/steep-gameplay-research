@@ -1,0 +1,200 @@
+{
+  "schema": "pose-island-step-validation-v1",
+  "cases": 1024,
+  "passed": 1024,
+  "all_passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18ae2c0",
+  "method": "Original island step 0x18ae2c0 -> 0x18b9710 (C1..C9) -> 0x18b74e0/0x18e1990 (C10) run uninterrupted in Unicorn over synthetic rider-shaped fixtures; compared byte for byte at every stage boundary and before every group poststep against engine.pose_island_step composed from the reconstructed modules. Each case is compared twice: bound mode (C3/C4 begin/C5/C6/C9 run the reconstructed island-stage modules; only the C4 finish 0x195c040 is replayed from recorded native memory effects) and replay mode (C3, C4 begin/finish and C5 replayed). A case passes only if both modes match.",
+  "supplied_native_services": [
+    "CRT byte-fill 0x1c6ad80 and copy 0x1c6afb0",
+    "solver scratch allocator 0x18c9140/0x18c8f50 (pool of preset buffers)",
+    "protected contact payload pool return block at 0x19587e9 (recorded, skipped)",
+    "atan2 output observed at 0x1c88cec/0x19a17da and replayed into the model",
+    "broadphase slots +0x98/+0xa8: original table 0x29ca8a0 receivers 0x199b590/0x193fa10 run natively in 90% of cases, recording stubs in the rest",
+    "body-list callback [0x1433365e0]+0x38 (recording stub)",
+    "C4 finish 0x195c040 (runs natively; effects replayed into the model)",
+    "action-object virtuals slot 0 and +8 (authored stubs; +8 writes an authored velocity nudge)",
+    "dispatcher capacity 1 (inline branch of 0x18b7ca0)"
+  ],
+  "modelled_stages": [
+    "C1/C6/C9 order 0x18b9710 (pose_update_stage)",
+    "C2 0x18b9830 driver and 0x19445c0 wrapper (pose_command_prepare; stored callback authored)",
+    "C3 0x1959a70 walk + 0x18b8c90 gate (pose_island_action_tree; entry virtuals authored)",
+    "C4 0x195b190 begin (pose_island_ccd_stage)",
+    "C4 0x0ed2ea0 dt store",
+    "C5 0x18e2200 attach incl. wake/finalize and link append (pose_island_attach)",
+    "C6/C9 receivers 0x199b590/0x193fa10 (pose_island_attach)",
+    "C7 0x18e2fb0 order/batches/dispatch/transfer",
+    "C8 worker 0x18e31b0",
+    "D1-D9 group step 0x1994da0 incl. secondary and poststep",
+    "D10 free motion 0x1957590",
+    "capsule bounds 0x18c64a0",
+    "C10a 0x18b74e0 dispatch",
+    "C10b 0x18e1990"
+  ],
+  "replayed_stages": {
+    "bound_mode": [
+      "C4 0x195c040 finish"
+    ],
+    "replay_mode": [
+      "C3 0x1959a70",
+      "C4 0x195b190",
+      "C4 0x195c040",
+      "C5 0x18e2200"
+    ]
+  },
+  "comparisons": [
+    "every byte of every fixture region (controller, world, settings, island, provider, stage object, groups, bodies, metadata, links, entries, payloads, poses, resources, transforms, arrays, batches, dispatcher, solver scratch pool) at 11 stage boundaries and before each group poststep",
+    "service call order and arguments (supplied stages, publish, notify, body-list callback)",
+    "allocator requests, payload releases, atan2 call count",
+    "no native write outside registered regions"
+  ],
+  "coverage": {
+    "group_poststeps": 2724,
+    "publishes": 103,
+    "notifies": 906,
+    "payload_releases": 534,
+    "solver_allocations": 972,
+    "atan2_calls": 2031,
+    "action_calls": 1091,
+    "moved_bodies": 3147,
+    "cases_with_sleep_list": 186,
+    "cases_with_wake_list": 92,
+    "cases_all_groups_inactive": 118,
+    "action_destroys": 61,
+    "command_callbacks": 1075,
+    "second_rider_cases": 146,
+    "dt_cases": {
+      "1/30": 204,
+      "1/60": 103,
+      "other": 717
+    },
+    "cases_with_replayed_effects": {
+      "action_tree": 514,
+      "stage_begin": 0,
+      "stage_finish": 1024,
+      "attach_links": 850
+    }
+  },
+  "injected_bugs": {
+    "gravity_after_solve": {
+      "cases": 96,
+      "detected": 96,
+      "detected_by_exception": 0,
+      "first_divergent_stage": {
+        "poststep": 96
+      }
+    },
+    "iterations_swapped": {
+      "cases": 96,
+      "detected": 91,
+      "detected_by_exception": 0,
+      "first_divergent_stage": {
+        "poststep": 91
+      }
+    },
+    "poststep_skipped": {
+      "cases": 96,
+      "detected": 96,
+      "detected_by_exception": 0,
+      "first_divergent_stage": {
+        "poststep": 83,
+        "C7-D10": 13
+      }
+    },
+    "action_tree_after_batches": {
+      "cases": 96,
+      "detected": 48,
+      "detected_by_exception": 0,
+      "first_divergent_stage": {
+        "C3": 48
+      }
+    },
+    "attach_skipped": {
+      "cases": 96,
+      "detected": 82,
+      "detected_by_exception": 60,
+      "first_divergent_stage": {
+        "raised": 60,
+        "C5": 22
+      }
+    },
+    "lists_not_cleared": {
+      "cases": 96,
+      "detected": 31,
+      "detected_by_exception": 0,
+      "first_divergent_stage": {
+        "C10b": 31
+      }
+    },
+    "cache_bit_ignored": {
+      "cases": 96,
+      "detected": 91,
+      "detected_by_exception": 0,
+      "first_divergent_stage": {
+        "poststep": 91
+      }
+    },
+    "dt_fixed_1_60": {
+      "cases": 96,
+      "detected": 86,
+      "detected_by_exception": 0,
+      "first_divergent_stage": {
+        "poststep": 86
+      }
+    },
+    "mode_forced_zero": {
+      "cases": 96,
+      "detected": 87,
+      "detected_by_exception": 0,
+      "first_divergent_stage": {
+        "poststep": 87
+      }
+    },
+    "notify_gate_pre_batch": {
+      "cases": 96,
+      "detected": 12,
+      "detected_by_exception": 0,
+      "first_divergent_stage": {
+        "C7-D10": 8,
+        "services": 4
+      }
+    },
+    "stage_scalar_reciprocal": {
+      "cases": 96,
+      "detected": 96,
+      "detected_by_exception": 0,
+      "first_divergent_stage": {
+        "C4.scalar": 96
+      }
+    },
+    "command_dt_not_reciprocal": {
+      "cases": 96,
+      "detected": 60,
+      "detected_by_exception": 0,
+      "first_divergent_stage": {
+        "services": 60
+      }
+    },
+    "sleep_wake_swapped": {
+      "cases": 96,
+      "detected": 85,
+      "detected_by_exception": 0,
+      "first_divergent_stage": {
+        "services": 85
+      }
+    }
+  },
+  "failures": [],
+  "limits": [
+    "Synthetic rider-shaped fixtures; no live capture. Masses, placements, contacts, profiles and action objects are authored.",
+    "C4 finish 0x195c040 is replayed (not reconstructed); its sweep body tree is empty and no kind-6 constraints exist, so C4 begin removes nothing.",
+    "C5 reaches wake/finalize, link append and the special-group skip; merge/absorb, body removal 0x1957fc0 and all growth paths are not reached (capacities ample).",
+    "C3 callback 0x18b8c90 always takes its metadata+0x52 bit0 gate (authored action targets); the locked transition path is not reached.",
+    "Dispatcher capacity 1 only (inline); no concurrent workers. Damping pointers are null; quiet overrides absent.",
+    "Atan2 outputs observed natively; allocator, byte-fill and payload pool internals supplied.",
+    "One body class (0x29c99a8) and box/capsule resources; terrain is a stand-in static body with a kind-7 profile-only resource."
+  ],
+  "seconds": 45.6
+}

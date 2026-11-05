@@ -2276,3 +2276,22 @@ action tree walk", "Island swept-contact stage", "Changed-link attachment" and
 UNRESOLVED: the action-entry class and insertion, the swept-stage finish numerics, the C2
 gameplay callback. No claim of original-engine equivalence outside the validated
 fixtures.
+
+### Composed island step
+
+`engine.pose_island_step`: `run_pose_island_step(state, *, dt, stages, observe=None)` runs
+`0x18ae2c0` over an `IslandState` (retained records keyed by address). `stages` must name
+`command_prepare`, `action_tree`, `stage_begin`, `stage_scalar`, `stage_finish`,
+`attach_links`, `publish_link`, `batches`, `notify_active`, `body_lists`,
+`body_list_callback` and `clear_lists` (signatures in the docstring). `default_island_stages`
+supplies the modelled C2, C4 dt, C7–D10 and C10 stages. `bind_reconstructed_island_stages(state,
+action_update, action_destroy, constraint_kind, services=None, log=None)` binds C3, C4 begin,
+C5 and C6/C9 (broadphase table 0x29ca8a0); any other callee it reaches must be supplied, or
+it raises. `make_composed_batch_stage(state, atan2, allocate, release_buffer,
+release_payload, get_kind, ...)` covers C7–D10. `replay_effects(regions, effects)` serves a
+stage from recorded native effects (currently the C4 finish `0x195c040`). Helpers:
+`RetainedRegions`, `RegionMemory`, `native_crt_sort_prefix`, `capsule_resource_bounds`.
+Fixtures: `engine.pose_island_step_fixtures.build_island_fixture(case)` (synthetic,
+authored). Follows LINK_SOLVER.md "Composed island step". Evidence:
+`native/snow_host/pose_island_step_validation.json` (1024/1024, both modes). No claim of
+original-engine equivalence outside the validated fixtures.

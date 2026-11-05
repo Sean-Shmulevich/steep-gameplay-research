@@ -12230,3 +12230,73 @@ null publication as normal at the interface level). Slot +0xa8 = `0x193fa10`: by
 Validation: [publish](../../native/snow_host/pose_island_publish_validation.json), 320 runs
 of the original `0x18b9710` with other subsystems as no-ops and both receivers native. 3
 injected bugs detected.
+
+### Composed island step
+
+`engine/pose_island_step.py` composes the whole solver half of one substep,
+`0x18ae2c0(controller, dt)`, from the reconstructed modules (see PHYSICS_SUBSTEP_ORDER.md).
+`0x18b9710` sets phase 3, then in order:
+
+- C2 `0x18b9830`: command collections (`pose_update_stage`, `pose_command_prepare`).
+- C3 `0x1959a70`: action tree on world+0xd0 with callback `0x18b8c90` (`pose_island_action_tree`).
+- C4 `0x195b190`, `0x0ed2ea0`, `0x195c040` on the stage at controller+0x40 (`pose_island_ccd_stage` for begin and dt).
+- C5 `0x18e2200`: attach changed links (`pose_island_attach`).
+- C6: publish island+0x490 pending links to broadphase slot +0x98.
+- C7–D10 `0x18e2fb0`: order, batches, dispatcher, worker, group step, free motion, poststep, transfer (`pose_batch_runtime` and the retained worker modules).
+- C9: slot +0xa8 with null if island+0x420 is nonzero; then phase 0.
+- C10a `0x18b74e0`: calls `[0x1433365e0]+0x38` with (controller, sleep list +0x480/+0x488, wake list +0x470/+0x478) when that slot is nonnull.
+- C10b `0x18e1990`: clears both counts.
+
+Every stage is a named service of `run_pose_island_step`; missing stages are an error, not a
+default. `bind_reconstructed_island_stages` binds C3, C4 begin/dt, C5 and the dynamic-tree
+broadphase receivers `0x199b590` (+0x98) and `0x193fa10` (+0xa8). `replay_effects` turns
+recorded native memory effects into a service for a stage without a reconstruction; only the
+C4 finish needs that now. The body-list callback, action-object virtuals and the command
+callback are external services.
+
+Supporting pieces: `native_crt_sort_prefix` applies the CRT sort `0x1c8fd50` permutation to
+the active group list (equal work keys keep the native unstable order).
+`capsule_resource_bounds` restates capsule bounds `0x18c64a0` (table `0x29c9b58` slot 0x10:
+ext = |h·row1| + r; low = t − ext; high = ext + t). Bounds dispatch by resource vtable
+covers box and capsule; other classes are rejected.
+
+Validation: [1024 native island-step comparisons](../../native/snow_host/pose_island_step_validation.json)
+run the original `0x18ae2c0` uninterrupted over synthetic rider-shaped fixtures
+(`engine/pose_island_step_fixtures.py`, authored): a main body with capsules (0.175, 0.16),
+2 × (0.5625, 0.034375) and (0.6101562, 0.05546877); a rider body with three small capsules
+linked by a kind-2 pose constraint; terrain contact payloads against a fixed stand-in body;
+free-motion, fixed, quiet and sleeping groups and a second rider group; changed links (none,
+flagged, append, wake), action trees with removal, command collections; the live settings
+values and variants; dt 1/30 (204), 1/60 (103) and 717 odd values. Every byte of every
+retained record (controller, world, settings, island, provider, stage, groups, bodies,
+metadata, links, entries, payloads, poses, resources, transforms, arrays, batches,
+dispatcher, broadphase vector, solver scratch pool) is compared at 11 stage boundaries and
+before each group poststep, along with service order and arguments, allocations, payload
+releases and atan2 counts. Each case passes in both bound mode (only the C4 finish replayed)
+and replay mode (C3, C4 and C5 replayed). Coverage: 2724 group poststeps, 103 publishes, 906
+notifies, 534 payload releases, 972 solver allocations, 1091 action calls (61 destroys),
+1075 command callbacks, 3147 moved bodies; 186 cases with a sleep list, 92 with woken
+groups, 118 with every group inactive.
+
+Supplied natively at their call sites: CRT fill/copy, the scratch allocator
+`18c9140`/`18c8f50`, the protected payload pool return block at `19587e9`, observed atan2
+outputs (2031), the body-list callback (recording stub), action-object virtuals (authored
+velocity nudge), the command callback (authored output), and the dispatcher at capacity 1
+(inline). A guard hook fails any case that executes the protected 0x143000000+ range.
+
+Thirteen injected stage-boundary bugs are caught at the expected boundary (gravity added
+after the solve 96/96, iteration counts swapped 91/96, poststep skipped 96/96, action tree
+after the batches 48/48 cases with actions, attach skipped 82/96, lists not cleared 31/96,
+cache bit ignored 91/96, dt forced to 1/60 86/96, mode forced to 0 87/96, notify gate read
+early 12/96, C4 storing 1/dt 96/96, C2 passing dt instead of 1/dt 60/96, sleep and wake lists
+swapped 85/96; misses are fixtures where the bug changes nothing).
+
+Settings correction: the validated poststep chain consumes settings +0x34 as the
+quiet-duration threshold and +0x38/+0x3c as the linear/angular speed-squared thresholds
+(worker `18e31b0` → `18c0190`); `physics_substep_order.json` is corrected accordingly.
+
+Limits: synthetic fixtures, not a live capture. The C4 finish is not reconstructed (its
+sweep tree and kind-6 lists are empty here). C5 merge/absorb, body removal and growth are
+not reached; the C3 callback always takes its gate; no damping, quiet overrides or
+concurrent workers; one body class and box/capsule resources only. Snow and board forces
+(actor batch 1) are outside `18ae2c0` and not part of this composition.
