@@ -1,0 +1,3020 @@
+{
+ "schema": "substep-replay-live-validation-v1",
+ "evidence": {
+  "live": "L: bounded in-step page snapshots of one physics substep (BEFORE at S2, AFTER at the C9 slot entry)",
+  "native": "N: the original 0x18ae2c0 run in Unicorn over the BEFORE pages (memory image code, live .data pages)",
+  "model": "engine.pose_island_step composed from reconstructed modules over the same BEFORE pages",
+  "note": "Three separate comparisons; no claim of original-engine equivalence. A deterministic replay of a captured substep does not prove the reconstruction matches the engine in states that were not captured."
+ },
+ "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+ "routine_rva": "0x18ae2c0",
+ "capture": {
+  "plugin": "private bounded snow-host plugin; only writes: one compare-exchanged vtable-pointer swap of the broadphase object (controller+0x28) to a private copy of its 34-slot table, restored and verified; slots +0x88/+0x98/+0xa8 forward always",
+  "before_point": "broadphase slot +0x88 inside 0x18b8fa0 (return 0x18b907b, S2): after the pair update, pair jobs and contact generation",
+  "before_to_island_entry": "static: rest of 0x18b8fa0 (counter +0x4c += 1, bp+8 and provider+0x180 = counter via 0x18df490, phase 2) is applied by the loader; then the protected lock transition 0x1c3d1e0 (not emulated, assumed not to write island records) and 0x140efa0 (tail jump)",
+  "after_point": "broadphase slot +0xa8 entry inside 0x18b9710 (return 0x18b9808, C9, called only when island+0x420 != 0): state right after C7-D10; nothing is written between the C7-D10 return (0x18b97ed) and this call",
+  "stages_between_before_and_after": "C1..C7-D10 of the island step only (C9 receiver, phase 0, C10a/C10b run after the AFTER read)",
+  "substep_identity": "caller frames checked at both points: 0x18ae2b9/0x1389b02 at S2 and 0x18ae2ce/0x1389b21 at C9, same timing record, outer counter, substep ordinal, dt bits and thread",
+  "walker": "structural walk (controller, world and settings, island, provider, stage, broadphase and its vectors, dispatcher, all active and inactive groups with bodies, metadata, entries, resources, profiles, profile byte maps, transforms, damping and quiet records, link rings, links, entries, payloads, poses, world constraint lists and sets, trees, command lists, C4 per-thread scratch) plus one level of pointer chase; whole 4 KiB pages; reads via ReadProcessMemory of the own process; walk time 1.4-11 ms per snapshot"
+ },
+ "sessions": [
+  {
+   "session": "sr-01",
+   "ko": true,
+   "ko_detected_by_coordinator": false,
+   "ko_reason": "riding chain lost; this run predates KO detection",
+   "inputs_after_ko": 6,
+   "actions": 10,
+   "plugin": {
+    "verified": 1,
+    "installed": 1,
+    "restored": 1,
+    "vptr_after_original": 1,
+    "drained": 1,
+    "substeps_seen": 6845,
+    "chain_ok": 6845,
+    "chain_bad": 0,
+    "after_chain_bad": 0,
+    "after_mismatch": 0,
+    "after_missing": 0,
+    "foreign_s2": 0,
+    "captures": 10
+   },
+   "cleanup": {
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+   }
+  },
+  {
+   "session": "sr-02",
+   "ko": true,
+   "ko_detected_by_coordinator": false,
+   "ko_reason": "riding chain lost; this run predates KO detection",
+   "inputs_after_ko": 8,
+   "actions": 12,
+   "plugin": {
+    "verified": 1,
+    "installed": 1,
+    "restored": 1,
+    "vptr_after_original": 1,
+    "drained": 1,
+    "substeps_seen": 8396,
+    "chain_ok": 8396,
+    "chain_bad": 0,
+    "after_chain_bad": 0,
+    "after_mismatch": 0,
+    "after_missing": 0,
+    "foreign_s2": 0,
+    "captures": 16
+   },
+   "cleanup": {
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+   }
+  },
+  {
+   "session": "sr-03",
+   "ko": true,
+   "ko_detected_by_coordinator": true,
+   "ko_reason": "riding chain lost",
+   "inputs_after_ko": 0,
+   "actions": 3,
+   "plugin": {
+    "verified": 1,
+    "installed": 1,
+    "restored": 1,
+    "vptr_after_original": 1,
+    "drained": 1,
+    "substeps_seen": 1546,
+    "chain_ok": 1546,
+    "chain_bad": 0,
+    "after_chain_bad": 0,
+    "after_mismatch": 0,
+    "after_missing": 0,
+    "foreign_s2": 0,
+    "captures": 5
+   },
+   "cleanup": {
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+   }
+  },
+  {
+   "session": "sr-04",
+   "ko": true,
+   "ko_detected_by_coordinator": true,
+   "ko_reason": "riding chain lost",
+   "inputs_after_ko": 0,
+   "actions": 3,
+   "plugin": {
+    "verified": 1,
+    "installed": 1,
+    "restored": 1,
+    "vptr_after_original": 1,
+    "drained": 1,
+    "substeps_seen": 1465,
+    "chain_ok": 1465,
+    "chain_bad": 0,
+    "after_chain_bad": 0,
+    "after_mismatch": 0,
+    "after_missing": 0,
+    "foreign_s2": 0,
+    "captures": 5
+   },
+   "cleanup": {
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+   }
+  },
+  {
+   "session": "sr-05",
+   "ko": true,
+   "ko_detected_by_coordinator": true,
+   "ko_reason": "riding chain lost",
+   "inputs_after_ko": 0,
+   "actions": 1,
+   "plugin": {
+    "verified": 1,
+    "installed": 1,
+    "restored": 1,
+    "vptr_after_original": 1,
+    "drained": 1,
+    "substeps_seen": 2161,
+    "chain_ok": 2161,
+    "chain_bad": 0,
+    "after_chain_bad": 0,
+    "after_mismatch": 0,
+    "after_missing": 0,
+    "foreign_s2": 0,
+    "captures": 8
+   },
+   "cleanup": {
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+   }
+  }
+ ],
+ "comparison_method": {
+  "native_vs_live": "every byte of every page present in BEFORE, AFTER and the native result; differences classified as live_only (live wrote, native did not), predicted_only or both_differ, and attributed to the walked record containing them",
+  "model_vs_native": "every byte of every retained model region at the C7-D10 boundary against the native memory at the same addresses",
+  "model_vs_live": "float fields of every island body (linear/angular velocity, rotation rows, translation): max abs and max ulp"
+ },
+ "supplied_services": [
+  "CRT fill/copy 0x1c6ad80/0x1c6afb0",
+  "solver scratch allocator 0x18c9140/0x18c8f50 (fresh zeroed buffers; same addresses given to the model)",
+  "locked pool allocator methods 0x18b72b0/0x18b7270/0x18b7320 (scratch; reached only by the C4 finish)",
+  "protected payload pool return block 0x19587e9 (recorded, skipped)",
+  "atan2 outputs observed natively and replayed into the model",
+  "damping library 0x1c453d0 outputs observed natively (call sites 0x19947f7, 0x195763b) and replayed into the model",
+  "constraint kind virtual (+0x10) run natively per pose",
+  "C4 finish 0x195c040: NOT executed (see c4_finish)",
+  "CRT math dispatch flags 0x333e29c/0x333c630 forced to the non-FMA path (Unicorn has no FMA); live had 0x333e29c = 1"
+ ],
+ "c4_finish": {
+  "status": "supplied as a no-op in both native-on-live and model-on-live",
+  "reason": "with live data the swept-contact finish 0x195c040 reaches a broadphase proxy query (bp+0x60 proxies, 64-byte tree nodes at bp+0x70) and the shapes of every overlapping proxy, plus per-thread scratch lists of the global at 0x143336900; 22-32 pages per capture remained unmapped after two walker iterations, so its native run is incomplete and is not used",
+  "effect_on_comparison": "its live writes appear as live_only differences: the stage object at controller+0x40 and the per-thread scratch in every capture, and in two captures new broadphase pair rows and one link entry/payload; in one capture an extra contact entry on a newly attached link changed one free body (see residuals)"
+ },
+ "model_composition_notes": [
+  "harness-side composition of make_composed_batch_stage with damping records/response and quiet-override records plumbed (the engine function does not pass them; every live body has a damping record)",
+  "harness-side sphere resource bounds (class 0x29c9be8, routine 0x18c75a0: low = t - r, high = r + t), checked only through the byte comparison; the engine bounds dispatch covers box and capsule only",
+  "inline small-buffer arrays (group body/link arrays at group+0x20/+0x50, link entries at link+0x68, body entries at body+0xc8) are exposed to the model as views into their containing record",
+  "region sizes trimmed where live records are packed closer than the fixture sizes (resources 0x48, links 0x88)"
+ ],
+ "captures": [
+  {
+   "session": "sr-03",
+   "capture": "cap00",
+   "trigger": "periodic",
+   "substep_ordinal": 0,
+   "substeps_in_frame": 1,
+   "dt_bits": "3c23ab00",
+   "consumed_bits": "3c23ab00",
+   "rider_contacts_at_capture": 1,
+   "active_groups": 7,
+   "inactive_groups": 0,
+   "island_bodies": 8,
+   "island_links": 6,
+   "island_poses": 3,
+   "contact_payloads": 1,
+   "contact_points": 1,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 2,
+    "contact_links": 1,
+    "points": 1,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "b1d1692a84cf668ae223e9104e33790c3951cd0ea73b31c2d70a3edee5bfd5e2",
+    "bytes": 5528797,
+    "pages_before": 491,
+    "pages_after": 494
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 4,
+    "services": {
+     "solver_allocations": 1,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 6,
+     "group_poststeps": 7,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 483,
+     "bytes_compared": 1978368,
+     "live_changed_bytes": 1253,
+     "native_changed_bytes": 397,
+     "both_changed_equal_bytes": 397,
+     "differing_bytes": 856,
+     "differing_outside_walked_records": {
+      "live_only": 573
+     },
+     "differing_records_by_category": {
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 4,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "BP": {
+       "records": 1,
+       "bytes": 2,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 277,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "angular_velocity": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "rotation_rows": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "translation": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      }
+     },
+     "differing_island_bodies": 0,
+     "rider_bodies_bit_exact": true,
+     "verdict": "pass"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 572,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "trimmed": 34,
+     "absent": 1,
+     "contained": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 6,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (7 regions differ)",
+     "gravity_zero": "detected (19 regions differ)",
+     "damping_ignored": "detected (8 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "angular_velocity": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "rotation_rows": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "translation": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     }
+    },
+    "verdict_vs_live_after": "pass"
+   }
+  },
+  {
+   "session": "sr-03",
+   "capture": "cap01",
+   "trigger": "landing (first contact after >= 40 contact-free substeps)",
+   "substep_ordinal": 0,
+   "substeps_in_frame": 1,
+   "dt_bits": "3c3bbd46",
+   "consumed_bits": "3c3bbd46",
+   "rider_contacts_at_capture": 1,
+   "active_groups": 11,
+   "inactive_groups": 0,
+   "island_bodies": 12,
+   "island_links": 12,
+   "island_poses": 3,
+   "contact_payloads": 5,
+   "contact_points": 5,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 2,
+    "contact_links": 1,
+    "points": 1,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "dddc70a379767d294dba94ee91effccebdc55300142b8ea43c977cf71dbb1efe",
+    "bytes": 6164357,
+    "pages_before": 554,
+    "pages_after": 556
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 4,
+    "services": {
+     "solver_allocations": 1,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 10,
+     "group_poststeps": 11,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 546,
+     "bytes_compared": 2236416,
+     "live_changed_bytes": 1991,
+     "native_changed_bytes": 674,
+     "both_changed_equal_bytes": 601,
+     "differing_bytes": 1412,
+     "differing_outside_walked_records": {
+      "live_only": 913
+     },
+     "differing_records_by_category": {
+      "ARRAY(bp_new_pair_rows)": {
+       "records": 1,
+       "bytes": 9,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 2,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "BODY": {
+       "records": 1,
+       "bytes": 58,
+       "kinds": [
+        "both_differ",
+        "live_only",
+        "predicted_only"
+       ]
+      },
+      "BPVEC": {
+       "records": 1,
+       "bytes": 1,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "LENT": {
+       "records": 2,
+       "bytes": 19,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "LINK": {
+       "records": 2,
+       "bytes": 3,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "META": {
+       "records": 1,
+       "bytes": 8,
+       "kinds": [
+        "both_differ",
+        "live_only"
+       ]
+      },
+      "PAYLOAD": {
+       "records": 5,
+       "bytes": 83,
+       "kinds": [
+        "live_only",
+        "predicted_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 316,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 12,
+       "max_abs": 4.721290647983551,
+       "max_ulp": 2134877757
+      },
+      "angular_velocity": {
+       "bodies": 12,
+       "max_abs": 23.9017174243927,
+       "max_ulp": 34354520
+      },
+      "rotation_rows": {
+       "bodies": 12,
+       "max_abs": 0.2840126268565655,
+       "max_ulp": 29307285
+      },
+      "translation": {
+       "bodies": 12,
+       "max_abs": 0.057373046875,
+       "max_ulp": 235
+      }
+     },
+     "differing_island_bodies": 1,
+     "rider_bodies_bit_exact": true,
+     "verdict": "fail (attributed)"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 665,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "trimmed": 58,
+     "absent": 1,
+     "contained": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 10,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (15 regions differ)",
+     "gravity_zero": "detected (32 regions differ)",
+     "damping_ignored": "detected (23 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 12,
+      "max_abs": 4.721290647983551,
+      "max_ulp": 2134877757
+     },
+     "angular_velocity": {
+      "bodies": 12,
+      "max_abs": 23.9017174243927,
+      "max_ulp": 34354520
+     },
+     "rotation_rows": {
+      "bodies": 12,
+      "max_abs": 0.2840126268565655,
+      "max_ulp": 29307285
+     },
+     "translation": {
+      "bodies": 12,
+      "max_abs": 0.057373046875,
+      "max_ulp": 235
+     }
+    },
+    "verdict_vs_live_after": "fail (same residual as native-on-live)"
+   }
+  },
+  {
+   "session": "sr-03",
+   "capture": "cap02",
+   "trigger": "landing (first contact after >= 40 contact-free substeps)",
+   "substep_ordinal": 0,
+   "substeps_in_frame": 1,
+   "dt_bits": "3c3d9f32",
+   "consumed_bits": "3c3d9f32",
+   "rider_contacts_at_capture": 1,
+   "active_groups": 10,
+   "inactive_groups": 1,
+   "island_bodies": 11,
+   "island_links": 14,
+   "island_poses": 3,
+   "contact_payloads": 27,
+   "contact_points": 27,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 3,
+    "contact_links": 1,
+    "points": 1,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "d56905a3ac695dbfd10412da73eeaa8a5095a158b0a8f5f1e29d5395a7bc8f16",
+    "bytes": 6794550,
+    "pages_before": 613,
+    "pages_after": 615
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 3,
+    "services": {
+     "solver_allocations": 1,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 9,
+     "group_poststeps": 10,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 605,
+     "bytes_compared": 2478080,
+     "live_changed_bytes": 1808,
+     "native_changed_bytes": 620,
+     "both_changed_equal_bytes": 620,
+     "differing_bytes": 1188,
+     "differing_outside_walked_records": {
+      "live_only": 1005
+     },
+     "differing_records_by_category": {
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 2,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 181,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 11,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "angular_velocity": {
+       "bodies": 11,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "rotation_rows": {
+       "bodies": 11,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "translation": {
+       "bodies": 11,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      }
+     },
+     "differing_island_bodies": 0,
+     "rider_bodies_bit_exact": true,
+     "verdict": "pass"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 694,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "trimmed": 60,
+     "absent": 1,
+     "contained": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 9,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (25 regions differ)",
+     "gravity_zero": "detected (35 regions differ)",
+     "damping_ignored": "detected (26 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 11,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "angular_velocity": {
+      "bodies": 11,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "rotation_rows": {
+      "bodies": 11,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "translation": {
+      "bodies": 11,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     }
+    },
+    "verdict_vs_live_after": "pass"
+   }
+  },
+  {
+   "session": "sr-03",
+   "capture": "cap03",
+   "trigger": "landing (first contact after >= 40 contact-free substeps)",
+   "substep_ordinal": 0,
+   "substeps_in_frame": 1,
+   "dt_bits": "3c14544b",
+   "consumed_bits": "3c14544b",
+   "rider_contacts_at_capture": 1,
+   "active_groups": 7,
+   "inactive_groups": 4,
+   "island_bodies": 8,
+   "island_links": 7,
+   "island_poses": 3,
+   "contact_payloads": 9,
+   "contact_points": 9,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 2,
+    "contact_links": 1,
+    "points": 1,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "c3fd1b3fb6092cfc6974dbbd731bd1aa0c5cfdbaafd5eb2d3a0c3258155d98eb",
+    "bytes": 6744616,
+    "pages_before": 608,
+    "pages_after": 612
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 2,
+    "services": {
+     "solver_allocations": 1,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 6,
+     "group_poststeps": 7,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 600,
+     "bytes_compared": 2457600,
+     "live_changed_bytes": 1079,
+     "native_changed_bytes": 412,
+     "both_changed_equal_bytes": 412,
+     "differing_bytes": 667,
+     "differing_outside_walked_records": {
+      "live_only": 500
+     },
+     "differing_records_by_category": {
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 2,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 165,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "angular_velocity": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "rotation_rows": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "translation": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      }
+     },
+     "differing_island_bodies": 0,
+     "rider_bodies_bit_exact": true,
+     "verdict": "pass"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 673,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "trimmed": 54,
+     "absent": 1,
+     "contained": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 6,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (13 regions differ)",
+     "gravity_zero": "detected (22 regions differ)",
+     "damping_ignored": "detected (14 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "angular_velocity": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "rotation_rows": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "translation": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     }
+    },
+    "verdict_vs_live_after": "pass"
+   }
+  },
+  {
+   "session": "sr-03",
+   "capture": "cap04",
+   "trigger": "landing (first contact after >= 40 contact-free substeps)",
+   "substep_ordinal": 0,
+   "substeps_in_frame": 1,
+   "dt_bits": "3c41ac07",
+   "consumed_bits": "3c41ac07",
+   "rider_contacts_at_capture": 1,
+   "active_groups": 6,
+   "inactive_groups": 5,
+   "island_bodies": 7,
+   "island_links": 5,
+   "island_poses": 3,
+   "contact_payloads": 13,
+   "contact_points": 13,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 2,
+    "contact_links": 1,
+    "points": 1,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "6fbaa5a118708aa1fc923c4c4ae00a019c1a515cf937219004a2896a48f9c408",
+    "bytes": 6674635,
+    "pages_before": 601,
+    "pages_after": 604
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 3,
+    "services": {
+     "solver_allocations": 1,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 5,
+     "group_poststeps": 6,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 593,
+     "bytes_compared": 2428928,
+     "live_changed_bytes": 1676,
+     "native_changed_bytes": 356,
+     "both_changed_equal_bytes": 356,
+     "differing_bytes": 1320,
+     "differing_outside_walked_records": {
+      "live_only": 1175
+     },
+     "differing_records_by_category": {
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 2,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 143,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 7,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "angular_velocity": {
+       "bodies": 7,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "rotation_rows": {
+       "bodies": 7,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "translation": {
+       "bodies": 7,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      }
+     },
+     "differing_island_bodies": 0,
+     "rider_bodies_bit_exact": true,
+     "verdict": "pass"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 676,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "trimmed": 53,
+     "absent": 1,
+     "contained": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 5,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (15 regions differ)",
+     "gravity_zero": "detected (22 regions differ)",
+     "damping_ignored": "detected (15 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 7,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "angular_velocity": {
+      "bodies": 7,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "rotation_rows": {
+      "bodies": 7,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "translation": {
+      "bodies": 7,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     }
+    },
+    "verdict_vs_live_after": "pass"
+   }
+  },
+  {
+   "session": "sr-04",
+   "capture": "cap00",
+   "trigger": "landing (first contact after >= 40 contact-free substeps)",
+   "substep_ordinal": 0,
+   "substeps_in_frame": 1,
+   "dt_bits": "3c1d9fb8",
+   "consumed_bits": "3c1d9fb8",
+   "rider_contacts_at_capture": 1,
+   "active_groups": 7,
+   "inactive_groups": 0,
+   "island_bodies": 8,
+   "island_links": 6,
+   "island_poses": 3,
+   "contact_payloads": 1,
+   "contact_points": 1,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 2,
+    "contact_links": 1,
+    "points": 1,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "49bb95390b1060839a8c15bfb8ce926babdef05d7998f2a08d794d0c2ea9a6dc",
+    "bytes": 5258091,
+    "pages_before": 568,
+    "pages_after": 574
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 28,
+    "services": {
+     "solver_allocations": 1,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 6,
+     "group_poststeps": 7,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 560,
+     "bytes_compared": 2293760,
+     "live_changed_bytes": 4032,
+     "native_changed_bytes": 423,
+     "both_changed_equal_bytes": 423,
+     "differing_bytes": 3609,
+     "differing_outside_walked_records": {
+      "live_only": 3342
+     },
+     "differing_records_by_category": {
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 4,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 263,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "angular_velocity": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "rotation_rows": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "translation": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      }
+     },
+     "differing_island_bodies": 0,
+     "rider_bodies_bit_exact": true,
+     "verdict": "pass"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 573,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "contained": 1,
+     "trimmed": 34,
+     "absent": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 6,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (7 regions differ)",
+     "gravity_zero": "detected (19 regions differ)",
+     "damping_ignored": "detected (8 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "angular_velocity": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "rotation_rows": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "translation": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     }
+    },
+    "verdict_vs_live_after": "pass"
+   }
+  },
+  {
+   "session": "sr-04",
+   "capture": "cap01",
+   "trigger": "landing (first contact after >= 40 contact-free substeps)",
+   "substep_ordinal": 0,
+   "substeps_in_frame": 1,
+   "dt_bits": "3c39baa2",
+   "consumed_bits": "3c39baa2",
+   "rider_contacts_at_capture": 1,
+   "active_groups": 11,
+   "inactive_groups": 0,
+   "island_bodies": 12,
+   "island_links": 12,
+   "island_poses": 3,
+   "contact_payloads": 13,
+   "contact_points": 13,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 2,
+    "contact_links": 1,
+    "points": 1,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "b8ebaa0fbde8b3e5dadad2b7cdea6d15448a7427ac8a9c70df8cd843765b95d9",
+    "bytes": 5881546,
+    "pages_before": 630,
+    "pages_after": 634
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 27,
+    "services": {
+     "solver_allocations": 1,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 10,
+     "group_poststeps": 11,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 622,
+     "bytes_compared": 2547712,
+     "live_changed_bytes": 2165,
+     "native_changed_bytes": 668,
+     "both_changed_equal_bytes": 668,
+     "differing_bytes": 1497,
+     "differing_outside_walked_records": {
+      "live_only": 1166
+     },
+     "differing_records_by_category": {
+      "ARRAY(bp_new_pair_rows)": {
+       "records": 1,
+       "bytes": 12,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 6,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "BPVEC": {
+       "records": 1,
+       "bytes": 1,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "LENT": {
+       "records": 1,
+       "bytes": 16,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "LINK": {
+       "records": 1,
+       "bytes": 1,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "PAYLOAD": {
+       "records": 1,
+       "bytes": 46,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 249,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 12,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "angular_velocity": {
+       "bodies": 12,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "rotation_rows": {
+       "bodies": 12,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "translation": {
+       "bodies": 12,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      }
+     },
+     "differing_island_bodies": 0,
+     "rider_bodies_bit_exact": true,
+     "verdict": "pass (island-record differences are live-only writes; see attribution)"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 671,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "contained": 1,
+     "trimmed": 57,
+     "absent": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 10,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (17 regions differ)",
+     "gravity_zero": "detected (32 regions differ)",
+     "damping_ignored": "detected (23 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 12,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "angular_velocity": {
+      "bodies": 12,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "rotation_rows": {
+      "bodies": 12,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "translation": {
+      "bodies": 12,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     }
+    },
+    "verdict_vs_live_after": "pass"
+   }
+  },
+  {
+   "session": "sr-04",
+   "capture": "cap02",
+   "trigger": "landing (first contact after >= 40 contact-free substeps)",
+   "substep_ordinal": 1,
+   "substeps_in_frame": 2,
+   "dt_bits": "3c199f0d",
+   "consumed_bits": "3c999f0d",
+   "rider_contacts_at_capture": 1,
+   "active_groups": 9,
+   "inactive_groups": 2,
+   "island_bodies": 10,
+   "island_links": 9,
+   "island_poses": 3,
+   "contact_payloads": 3,
+   "contact_points": 3,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 3,
+    "contact_links": 1,
+    "points": 1,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "b46b6011f536a672cc702ff0987b97eaee04143614102fb3e998675536b1e75f",
+    "bytes": 6264135,
+    "pages_before": 679,
+    "pages_after": 682
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 32,
+    "services": {
+     "solver_allocations": 1,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 8,
+     "group_poststeps": 9,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 671,
+     "bytes_compared": 2748416,
+     "live_changed_bytes": 4612,
+     "native_changed_bytes": 537,
+     "both_changed_equal_bytes": 537,
+     "differing_bytes": 4075,
+     "differing_outside_walked_records": {
+      "live_only": 3799
+     },
+     "differing_records_by_category": {
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 2,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 274,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 10,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "angular_velocity": {
+       "bodies": 10,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "rotation_rows": {
+       "bodies": 10,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "translation": {
+       "bodies": 10,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      }
+     },
+     "differing_island_bodies": 0,
+     "rider_bodies_bit_exact": true,
+     "verdict": "pass"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 648,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "contained": 1,
+     "trimmed": 53,
+     "absent": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 8,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (9 regions differ)",
+     "gravity_zero": "detected (23 regions differ)",
+     "damping_ignored": "detected (16 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 10,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "angular_velocity": {
+      "bodies": 10,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "rotation_rows": {
+      "bodies": 10,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "translation": {
+      "bodies": 10,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     }
+    },
+    "verdict_vs_live_after": "pass"
+   }
+  },
+  {
+   "session": "sr-04",
+   "capture": "cap03",
+   "trigger": "landing (first contact after >= 40 contact-free substeps)",
+   "substep_ordinal": 0,
+   "substeps_in_frame": 1,
+   "dt_bits": "3c075ba9",
+   "consumed_bits": "3c075ba9",
+   "rider_contacts_at_capture": 1,
+   "active_groups": 9,
+   "inactive_groups": 2,
+   "island_bodies": 10,
+   "island_links": 7,
+   "island_poses": 3,
+   "contact_payloads": 19,
+   "contact_points": 19,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 2,
+    "contact_links": 1,
+    "points": 1,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "6b46b7dca2b3a77221f9328d396f68c234ab6b1ea4ae6760c7c374ca63a849c4",
+    "bytes": 6281227,
+    "pages_before": 679,
+    "pages_after": 683
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 25,
+    "services": {
+     "solver_allocations": 1,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 8,
+     "group_poststeps": 9,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 671,
+     "bytes_compared": 2748416,
+     "live_changed_bytes": 3637,
+     "native_changed_bytes": 545,
+     "both_changed_equal_bytes": 545,
+     "differing_bytes": 3092,
+     "differing_outside_walked_records": {
+      "live_only": 2887
+     },
+     "differing_records_by_category": {
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 3,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 202,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 10,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "angular_velocity": {
+       "bodies": 10,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "rotation_rows": {
+       "bodies": 10,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "translation": {
+       "bodies": 10,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      }
+     },
+     "differing_island_bodies": 0,
+     "rider_bodies_bit_exact": true,
+     "verdict": "pass"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 666,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "contained": 1,
+     "trimmed": 51,
+     "absent": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 8,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (23 regions differ)",
+     "gravity_zero": "detected (30 regions differ)",
+     "damping_ignored": "detected (23 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 10,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "angular_velocity": {
+      "bodies": 10,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "rotation_rows": {
+      "bodies": 10,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "translation": {
+      "bodies": 10,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     }
+    },
+    "verdict_vs_live_after": "pass"
+   }
+  },
+  {
+   "session": "sr-04",
+   "capture": "cap04",
+   "trigger": "periodic",
+   "substep_ordinal": 0,
+   "substeps_in_frame": 1,
+   "dt_bits": "3c3015dd",
+   "consumed_bits": "3c3015dd",
+   "rider_contacts_at_capture": 0,
+   "active_groups": 4,
+   "inactive_groups": 3,
+   "island_bodies": 5,
+   "island_links": 2,
+   "island_poses": 3,
+   "contact_payloads": 0,
+   "contact_points": 0,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 2,
+    "contact_links": 0,
+    "points": 0,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "c796edc831b5bbe6ab959faf5cf0f08dc2b84baed7e85baff02e704500280c8a",
+    "bytes": 5484792,
+    "pages_before": 600,
+    "pages_after": 604
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 22,
+    "services": {
+     "solver_allocations": 1,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 3,
+     "group_poststeps": 4,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 592,
+     "bytes_compared": 2424832,
+     "live_changed_bytes": 2881,
+     "native_changed_bytes": 188,
+     "both_changed_equal_bytes": 188,
+     "differing_bytes": 2693,
+     "differing_outside_walked_records": {
+      "live_only": 2522
+     },
+     "differing_records_by_category": {
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 5,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 166,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 5,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "angular_velocity": {
+       "bodies": 5,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "rotation_rows": {
+       "bodies": 5,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "translation": {
+       "bodies": 5,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      }
+     },
+     "differing_island_bodies": 0,
+     "rider_bodies_bit_exact": true,
+     "verdict": "pass"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 568,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "contained": 1,
+     "trimmed": 31,
+     "absent": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 3,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (6 regions differ)",
+     "gravity_zero": "detected (12 regions differ)",
+     "damping_ignored": "detected (6 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 5,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "angular_velocity": {
+      "bodies": 5,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "rotation_rows": {
+      "bodies": 5,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "translation": {
+      "bodies": 5,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     }
+    },
+    "verdict_vs_live_after": "pass"
+   }
+  },
+  {
+   "session": "sr-05",
+   "capture": "cap00",
+   "trigger": "landing (first contact after >= 40 contact-free substeps)",
+   "substep_ordinal": 0,
+   "substeps_in_frame": 1,
+   "dt_bits": "3c144242",
+   "consumed_bits": "3c144242",
+   "rider_contacts_at_capture": 1,
+   "active_groups": 7,
+   "inactive_groups": 0,
+   "island_bodies": 8,
+   "island_links": 6,
+   "island_poses": 3,
+   "contact_payloads": 1,
+   "contact_points": 1,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 2,
+    "contact_links": 1,
+    "points": 1,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "6df6aacec34179f50695914d5eed0f147685a96e8edf2c0bf7622847222d0512",
+    "bytes": 3853285,
+    "pages_before": 403,
+    "pages_after": 407
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 27,
+    "services": {
+     "solver_allocations": 1,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 6,
+     "group_poststeps": 7,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 395,
+     "bytes_compared": 1617920,
+     "live_changed_bytes": 2003,
+     "native_changed_bytes": 415,
+     "both_changed_equal_bytes": 415,
+     "differing_bytes": 1588,
+     "differing_outside_walked_records": {
+      "live_only": 1323
+     },
+     "differing_records_by_category": {
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 4,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 261,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "angular_velocity": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "rotation_rows": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "translation": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      }
+     },
+     "differing_island_bodies": 0,
+     "rider_bodies_bit_exact": true,
+     "verdict": "pass"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 573,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "contained": 1,
+     "trimmed": 34,
+     "absent": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 6,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (7 regions differ)",
+     "gravity_zero": "detected (19 regions differ)",
+     "damping_ignored": "detected (8 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "angular_velocity": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "rotation_rows": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "translation": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     }
+    },
+    "verdict_vs_live_after": "pass"
+   }
+  },
+  {
+   "session": "sr-05",
+   "capture": "cap01",
+   "trigger": "landing (first contact after >= 40 contact-free substeps)",
+   "substep_ordinal": 0,
+   "substeps_in_frame": 1,
+   "dt_bits": "3c45260f",
+   "consumed_bits": "3c45260f",
+   "rider_contacts_at_capture": 1,
+   "active_groups": 11,
+   "inactive_groups": 0,
+   "island_bodies": 12,
+   "island_links": 12,
+   "island_poses": 3,
+   "contact_payloads": 3,
+   "contact_points": 3,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 2,
+    "contact_links": 1,
+    "points": 1,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "adec5620868779a513caabed55a4361ef8af8c3763f02ec0afb4c03444e96e38",
+    "bytes": 4529489,
+    "pages_before": 464,
+    "pages_after": 469
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 32,
+    "services": {
+     "solver_allocations": 1,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 10,
+     "group_poststeps": 11,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 456,
+     "bytes_compared": 1867776,
+     "live_changed_bytes": 2969,
+     "native_changed_bytes": 676,
+     "both_changed_equal_bytes": 676,
+     "differing_bytes": 2293,
+     "differing_outside_walked_records": {
+      "live_only": 1757
+     },
+     "differing_records_by_category": {
+      "ARRAY(bp_new_pair_rows)": {
+       "records": 1,
+       "bytes": 6,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 8,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "BPVEC": {
+       "records": 1,
+       "bytes": 1,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "LENT": {
+       "records": 1,
+       "bytes": 9,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "LINK": {
+       "records": 1,
+       "bytes": 1,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "PAYLOAD": {
+       "records": 1,
+       "bytes": 46,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 465,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 12,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "angular_velocity": {
+       "bodies": 12,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "rotation_rows": {
+       "bodies": 12,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "translation": {
+       "bodies": 12,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      }
+     },
+     "differing_island_bodies": 0,
+     "rider_bodies_bit_exact": true,
+     "verdict": "pass (island-record differences are live-only writes; see attribution)"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 656,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "contained": 1,
+     "trimmed": 55,
+     "absent": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 10,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (9 regions differ)",
+     "gravity_zero": "detected (28 regions differ)",
+     "damping_ignored": "detected (20 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 12,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "angular_velocity": {
+      "bodies": 12,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "rotation_rows": {
+      "bodies": 12,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "translation": {
+      "bodies": 12,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     }
+    },
+    "verdict_vs_live_after": "pass"
+   }
+  },
+  {
+   "session": "sr-05",
+   "capture": "cap02",
+   "trigger": "periodic",
+   "substep_ordinal": 0,
+   "substeps_in_frame": 1,
+   "dt_bits": "3c1f6f9d",
+   "consumed_bits": "3c1f6f9d",
+   "rider_contacts_at_capture": 0,
+   "active_groups": 9,
+   "inactive_groups": 2,
+   "island_bodies": 10,
+   "island_links": 8,
+   "island_poses": 3,
+   "contact_payloads": 18,
+   "contact_points": 18,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 2,
+    "contact_links": 0,
+    "points": 0,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "2e5df804004f194088b577c85d1083a206f210f60a4b0fb283582877a82cf1ec",
+    "bytes": 4752739,
+    "pages_before": 493,
+    "pages_after": 495
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 25,
+    "services": {
+     "solver_allocations": 2,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 8,
+     "group_poststeps": 9,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 485,
+     "bytes_compared": 1986560,
+     "live_changed_bytes": 1639,
+     "native_changed_bytes": 516,
+     "both_changed_equal_bytes": 516,
+     "differing_bytes": 1123,
+     "differing_outside_walked_records": {
+      "live_only": 920
+     },
+     "differing_records_by_category": {
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 4,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 199,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 10,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "angular_velocity": {
+       "bodies": 10,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "rotation_rows": {
+       "bodies": 10,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "translation": {
+       "bodies": 10,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      }
+     },
+     "differing_island_bodies": 0,
+     "rider_bodies_bit_exact": true,
+     "verdict": "pass"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 661,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "contained": 1,
+     "trimmed": 51,
+     "absent": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 8,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (18 regions differ)",
+     "gravity_zero": "detected (29 regions differ)",
+     "damping_ignored": "detected (23 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 10,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "angular_velocity": {
+      "bodies": 10,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "rotation_rows": {
+      "bodies": 10,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "translation": {
+      "bodies": 10,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     }
+    },
+    "verdict_vs_live_after": "pass"
+   }
+  },
+  {
+   "session": "sr-05",
+   "capture": "cap03",
+   "trigger": "periodic",
+   "substep_ordinal": 0,
+   "substeps_in_frame": 1,
+   "dt_bits": "3c224463",
+   "consumed_bits": "3c224463",
+   "rider_contacts_at_capture": 1,
+   "active_groups": 7,
+   "inactive_groups": 4,
+   "island_bodies": 8,
+   "island_links": 3,
+   "island_poses": 3,
+   "contact_payloads": 5,
+   "contact_points": 5,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 2,
+    "contact_links": 1,
+    "points": 1,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "17ff76d95df034be32f13007fc4a5a9d111c3a71ed7a02b4d2d7c95aaf3b7c4f",
+    "bytes": 4785103,
+    "pages_before": 501,
+    "pages_after": 501
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 18,
+    "services": {
+     "solver_allocations": 1,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 6,
+     "group_poststeps": 7,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 493,
+     "bytes_compared": 2019328,
+     "live_changed_bytes": 1915,
+     "native_changed_bytes": 345,
+     "both_changed_equal_bytes": 345,
+     "differing_bytes": 1570,
+     "differing_outside_walked_records": {
+      "live_only": 1376
+     },
+     "differing_records_by_category": {
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 2,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 192,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "angular_velocity": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "rotation_rows": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "translation": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      }
+     },
+     "differing_island_bodies": 0,
+     "rider_bodies_bit_exact": true,
+     "verdict": "pass"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 634,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "contained": 1,
+     "trimmed": 45,
+     "absent": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 6,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (8 regions differ)",
+     "gravity_zero": "detected (20 regions differ)",
+     "damping_ignored": "detected (14 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "angular_velocity": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "rotation_rows": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "translation": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     }
+    },
+    "verdict_vs_live_after": "pass"
+   }
+  },
+  {
+   "session": "sr-05",
+   "capture": "cap04",
+   "trigger": "periodic",
+   "substep_ordinal": 0,
+   "substeps_in_frame": 1,
+   "dt_bits": "3c10fb65",
+   "consumed_bits": "3c10fb65",
+   "rider_contacts_at_capture": 0,
+   "active_groups": 7,
+   "inactive_groups": 4,
+   "island_bodies": 8,
+   "island_links": 2,
+   "island_poses": 3,
+   "contact_payloads": 0,
+   "contact_points": 0,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 2,
+    "contact_links": 0,
+    "points": 0,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "70fcf827e08c640a4b9efcd9c042208c405b3c29009b3fa361603d5f7ff0c5f1",
+    "bytes": 4257565,
+    "pages_before": 447,
+    "pages_after": 447
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 16,
+    "services": {
+     "solver_allocations": 1,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 6,
+     "group_poststeps": 7,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 439,
+     "bytes_compared": 1798144,
+     "live_changed_bytes": 3067,
+     "native_changed_bytes": 290,
+     "both_changed_equal_bytes": 290,
+     "differing_bytes": 2777,
+     "differing_outside_walked_records": {
+      "live_only": 2553
+     },
+     "differing_records_by_category": {
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 1,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 223,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "angular_velocity": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "rotation_rows": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "translation": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      }
+     },
+     "differing_island_bodies": 0,
+     "rider_bodies_bit_exact": true,
+     "verdict": "pass"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 618,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "contained": 1,
+     "trimmed": 44,
+     "absent": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 6,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (6 regions differ)",
+     "gravity_zero": "detected (18 regions differ)",
+     "damping_ignored": "detected (12 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "angular_velocity": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "rotation_rows": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "translation": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     }
+    },
+    "verdict_vs_live_after": "pass"
+   }
+  },
+  {
+   "session": "sr-05",
+   "capture": "cap05",
+   "trigger": "periodic",
+   "substep_ordinal": 0,
+   "substeps_in_frame": 1,
+   "dt_bits": "3c3d160b",
+   "consumed_bits": "3c3d160b",
+   "rider_contacts_at_capture": 0,
+   "active_groups": 7,
+   "inactive_groups": 0,
+   "island_bodies": 8,
+   "island_links": 6,
+   "island_poses": 3,
+   "contact_payloads": 0,
+   "contact_points": 0,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 2,
+    "contact_links": 0,
+    "points": 0,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "7fa0c703cece0df78faf75ba7259d39444504ed7f9147c064c17a05ef2326b6b",
+    "bytes": 4186380,
+    "pages_before": 440,
+    "pages_after": 443
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 25,
+    "services": {
+     "solver_allocations": 1,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 6,
+     "group_poststeps": 7,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 432,
+     "bytes_compared": 1769472,
+     "live_changed_bytes": 3236,
+     "native_changed_bytes": 374,
+     "both_changed_equal_bytes": 374,
+     "differing_bytes": 2862,
+     "differing_outside_walked_records": {
+      "live_only": 2605
+     },
+     "differing_records_by_category": {
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 1,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 256,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "angular_velocity": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "rotation_rows": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "translation": {
+       "bodies": 8,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      }
+     },
+     "differing_island_bodies": 0,
+     "rider_bodies_bit_exact": true,
+     "verdict": "pass"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 580,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "damping absent": 1,
+     "contained": 1,
+     "trimmed": 32,
+     "absent": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 6,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (5 regions differ)",
+     "gravity_zero": "detected (18 regions differ)",
+     "damping_ignored": "detected (12 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "angular_velocity": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "rotation_rows": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "translation": {
+      "bodies": 8,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     }
+    },
+    "verdict_vs_live_after": "pass"
+   }
+  },
+  {
+   "session": "sr-05",
+   "capture": "cap06",
+   "trigger": "periodic",
+   "substep_ordinal": 0,
+   "substeps_in_frame": 1,
+   "dt_bits": "3c31fcd2",
+   "consumed_bits": "3c31fcd2",
+   "rider_contacts_at_capture": 0,
+   "active_groups": 10,
+   "inactive_groups": 1,
+   "island_bodies": 11,
+   "island_links": 10,
+   "island_poses": 3,
+   "contact_payloads": 2,
+   "contact_points": 2,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 2,
+    "contact_links": 0,
+    "points": 0,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "924d171cd880e2b9ee5a7286f9671583e993cca192dafe68f9d8a1180dda32be",
+    "bytes": 5365788,
+    "pages_before": 558,
+    "pages_after": 561
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 30,
+    "services": {
+     "solver_allocations": 1,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 9,
+     "group_poststeps": 10,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 550,
+     "bytes_compared": 2252800,
+     "live_changed_bytes": 3983,
+     "native_changed_bytes": 595,
+     "both_changed_equal_bytes": 595,
+     "differing_bytes": 3388,
+     "differing_outside_walked_records": {
+      "live_only": 3047
+     },
+     "differing_records_by_category": {
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 4,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "BP": {
+       "records": 1,
+       "bytes": 1,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 336,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 11,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "angular_velocity": {
+       "bodies": 11,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "rotation_rows": {
+       "bodies": 11,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      },
+      "translation": {
+       "bodies": 11,
+       "max_abs": 0.0,
+       "max_ulp": 0
+      }
+     },
+     "differing_island_bodies": 0,
+     "rider_bodies_bit_exact": true,
+     "verdict": "pass"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 666,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "damping absent": 1,
+     "contained": 1,
+     "trimmed": 51,
+     "absent": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 9,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (6 regions differ)",
+     "gravity_zero": "detected (24 regions differ)",
+     "damping_ignored": "detected (18 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 11,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "angular_velocity": {
+      "bodies": 11,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "rotation_rows": {
+      "bodies": 11,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     },
+     "translation": {
+      "bodies": 11,
+      "max_abs": 0.0,
+      "max_ulp": 0
+     }
+    },
+    "verdict_vs_live_after": "pass"
+   }
+  },
+  {
+   "session": "sr-05",
+   "capture": "cap07",
+   "trigger": "periodic",
+   "substep_ordinal": 0,
+   "substeps_in_frame": 1,
+   "dt_bits": "3c1b1d92",
+   "consumed_bits": "3c1b1d92",
+   "rider_contacts_at_capture": 0,
+   "active_groups": 10,
+   "inactive_groups": 1,
+   "island_bodies": 11,
+   "island_links": 8,
+   "island_poses": 3,
+   "contact_payloads": 12,
+   "contact_points": 12,
+   "rider_group": {
+    "same_group": true,
+    "bodies": 2,
+    "links": 2,
+    "contact_links": 0,
+    "points": 0,
+    "poses": 3
+   },
+   "dump": {
+    "sha256": "362a40b9d0b91bf3feca812d40e30c64cf59cba227a7af9bf8f4aafc0d48bdc4",
+    "bytes": 5424182,
+    "pages_before": 558,
+    "pages_after": 563
+   },
+   "native_on_live": {
+    "mode": "skip_c4_finish",
+    "complete_modes": {
+     "full": false,
+     "skip_c4_finish": true
+    },
+    "full_c4_finish_missing_pages": 25,
+    "services": {
+     "solver_allocations": 2,
+     "payload_releases": 0,
+     "atan2_calls": 6,
+     "damping_library_calls": 9,
+     "group_poststeps": 10,
+     "live_crt_fma_flag": "01000000"
+    },
+    "vs_live_after": {
+     "pages_compared": 550,
+     "bytes_compared": 2252800,
+     "live_changed_bytes": 3680,
+     "native_changed_bytes": 596,
+     "both_changed_equal_bytes": 534,
+     "differing_bytes": 3158,
+     "differing_outside_walked_records": {
+      "live_only": 2791
+     },
+     "differing_records_by_category": {
+      "ARRAY(bp_new_pair_rows)": {
+       "records": 1,
+       "bytes": 10,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "ARRAY(c4_thread_scratch)": {
+       "records": 1,
+       "bytes": 2,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "BODY": {
+       "records": 1,
+       "bytes": 52,
+       "kinds": [
+        "both_differ",
+        "live_only",
+        "predicted_only"
+       ]
+      },
+      "BPVEC": {
+       "records": 1,
+       "bytes": 1,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "LENT": {
+       "records": 1,
+       "bytes": 4,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "LINK": {
+       "records": 1,
+       "bytes": 2,
+       "kinds": [
+        "live_only"
+       ]
+      },
+      "META": {
+       "records": 1,
+       "bytes": 6,
+       "kinds": [
+        "both_differ",
+        "live_only",
+        "predicted_only"
+       ]
+      },
+      "PAYLOAD": {
+       "records": 4,
+       "bytes": 40,
+       "kinds": [
+        "live_only",
+        "predicted_only"
+       ]
+      },
+      "STAGE": {
+       "records": 1,
+       "bytes": 250,
+       "kinds": [
+        "live_only"
+       ]
+      }
+     },
+     "island_body_fields": {
+      "linear_velocity": {
+       "bodies": 11,
+       "max_abs": 0.6153356730937958,
+       "max_ulp": 35120189
+      },
+      "angular_velocity": {
+       "bodies": 11,
+       "max_abs": 6.183786869049072,
+       "max_ulp": 2150578502
+      },
+      "rotation_rows": {
+       "bodies": 11,
+       "max_abs": 0.04350215196609497,
+       "max_ulp": 2665791
+      },
+      "translation": {
+       "bodies": 11,
+       "max_abs": 0.0057373046875,
+       "max_ulp": 47
+      }
+     },
+     "differing_island_bodies": 1,
+     "rider_bodies_bit_exact": true,
+     "verdict": "fail (attributed)"
+    }
+   },
+   "model_on_live": {
+    "error": null,
+    "reached_C7_D10": true,
+    "regions_compared": 687,
+    "regions_differing_vs_native": {},
+    "verdict_vs_native": "pass (byte-identical)",
+    "region_notes": {
+     "contained": 1,
+     "trimmed": 47,
+     "absent": 1
+    },
+    "atan2_replayed": 6,
+    "damping_replayed": 9,
+    "constraint_kinds": [
+     2
+    ],
+    "negative_controls": {
+     "iterations_swapped": "detected (17 regions differ)",
+     "gravity_zero": "detected (29 regions differ)",
+     "damping_ignored": "detected (23 regions differ)",
+     "dt_ulp": "detected (raised: ValueError)"
+    },
+    "body_fields_vs_live_after": {
+     "linear_velocity": {
+      "bodies": 11,
+      "max_abs": 0.6153356730937958,
+      "max_ulp": 35120189
+     },
+     "angular_velocity": {
+      "bodies": 11,
+      "max_abs": 6.183786869049072,
+      "max_ulp": 2150578502
+     },
+     "rotation_rows": {
+      "bodies": 11,
+      "max_abs": 0.04350215196609497,
+      "max_ulp": 2665791
+     },
+     "translation": {
+      "bodies": 11,
+      "max_abs": 0.0057373046875,
+      "max_ulp": 47
+     }
+    },
+    "verdict_vs_live_after": "fail (same residual as native-on-live)"
+   }
+  }
+ ],
+ "excluded_captures": [],
+ "summary": {
+  "captures_compared": 18,
+  "native_vs_live_pass": 16,
+  "native_vs_live_island_bodies_bit_exact": 16,
+  "model_vs_native_byte_identical": 18,
+  "model_vs_live_bodies_bit_exact": 16,
+  "negative_controls_detected": 72,
+  "negative_controls_run": 72,
+  "rider_bodies_bit_exact_native_vs_live": 18,
+  "landing_captures": 10,
+  "captures_with_rider_contact": 12
+ },
+ "limits": [
+  "Wine on macOS, one build, dispatcher capacity 1 (inline worker); spawn-area riding only (captures within the first ~15 s of riding; riding was lost (KO) in all five sessions, 20-37 s after riding started, at about the same place on the spawn line; sr-01/sr-02 captures are excluded because their walker missed records (fixed later); the first KO-detecting coordinator ran from sr-03).",
+  "The C4 swept-contact finish is not replayed; substeps where it changes island records cannot pass.",
+  "Sequential self-reads inside the stepping thread, not atomic against other threads; co-located heap bytes written by other threads show up as live_only differences outside walked records.",
+  "The protected lock transition 0x1c3d1e0 between S2 and the island step is assumed not to write island records (consistent with the results).",
+  "Action tree and command collections were empty in every capture (C2/C3 callbacks not exercised); only kind-2 poses occurred; C5 attach ran with live changed links.",
+  "Native and model share the replayed services (atan2, damping library, allocator addresses); their agreement does not test those services."
+ ]
+}

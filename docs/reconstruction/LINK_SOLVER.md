@@ -12300,3 +12300,32 @@ sweep tree and kind-6 lists are empty here). C5 merge/absorb, body removal and g
 not reached; the C3 callback always takes its gate; no damping, quiet overrides or
 concurrent workers; one body class and box/capsule resources only. Snow and board forces
 (actor batch 1) are outside `18ae2c0` and not part of this composition.
+
+### Composed island step on live substeps
+
+See PHYSICS_SUBSTEP_ORDER.md "Phase 3 result: live substep replay" and
+[the receipt](../../native/snow_host/substep_replay_live_validation.json). On 18 live substeps
+the composed model matched the original `18ae2c0` byte for byte at the C7–D10 boundary; the
+original matched live AFTER on every island body in 16 of 18 substeps (the rider in 18 of 18).
+The C4 finish was not run on either side.
+
+Live layout facts needed to run it, which the Phase 2 fixture did not exercise:
+
+- Groups keep small-buffer arrays inline: bodies at group+0x20 (capacity 4) and links at +0x50
+  (capacity 8). Link entries are inline at link+0x68 (capacity 1); single-entry bodies keep their
+  entry at body+0xc8.
+- Live link records are 0x88 apart, resources 0x48, bodies 0x1d0. Static link endpoints use body
+  class `0x29c98c8`.
+- Every live body has a damping record (+0x1b8, 16 bytes) and most have quiet overrides (+0x1c0,
+  3 floats). `make_composed_batch_stage` does not pass these through, so the live run used a
+  harness-side copy that does (engine gap).
+- The rider's sphere shapes use resource class `0x29c9be8`, bounds `0x18c75a0`: low = t − r,
+  high = r + t. `make_resource_bounds` covers only box and capsule (engine gap).
+- `IslandState`/`RetainedRegions` cannot represent the inline small-buffer arrays; the live run
+  exposed them as views into the containing record (engine gap).
+- C4 begin also scans the world+0x50 sets (count +0x58; each set holds constraints at +0x58 with
+  count +0x60); about 466 sets live, handled by `begin_swept_stage`.
+- The world+0x90 tree has 24-byte nodes whose value is a body.
+- The C4 finish uses the per-thread scratch global `0x143336900` (0x1a28-byte records, index =
+  count − 1) and the locked pool allocator methods `18b72b0`/`18b7270`/`18b7320`. With moving
+  bodies it queries the broadphase proxies, so it was supplied rather than run.

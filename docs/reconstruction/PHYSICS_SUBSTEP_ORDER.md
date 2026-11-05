@@ -336,6 +336,53 @@ replayed. Settings +0x34 is the quiet-duration threshold and +0x38/+0x3c the lin
 speed-squared thresholds (validated poststep chain; the JSON is corrected). Phase 3 replaces the
 synthetic fixture with a live capture at the points in section 6.
 
+## 6c. Phase 3 result: live substep replay
+
+Receipt: [substep replay live](../../native/snow_host/substep_replay_live_validation.json). Three
+comparisons, kept separate: live capture (L), the original `18ae2c0` run offline over the
+captured pages (N), and the composed model `engine/pose_island_step.py` (reconstruction).
+
+**Capture.** A private bounded plugin's only write was the broadphase vtable-pointer swap: a
+private copy of the 34-slot table with slots `+0x88`, `+0x98` and `+0xa8` forwarding,
+compare-exchanged in and back and verified. BEFORE is S2 (`+0x88`, return `18b907b`). AFTER is
+the C9 slot `+0xa8` entry (return `18b9808`), the state right after C7–D10. Both points are
+checked as the same substep: caller frames `18ae2b9`/`1389b02` and `18ae2ce`/`1389b21`, timing
+record, outer counter, ordinal, dt bits and thread. The rest of `18b8fa0` after S2 (counter,
+bp+8, `18df490`, phase 2) is applied from a static read. The protected `1c3d1e0` in between is
+assumed not to write island records, which is consistent with the results. A structural walker
+copies whole pages (403–679 per snapshot, 1.4–11 ms on the stepping thread) into a private dump.
+
+**Native-on-live.** The original `18ae2c0` ran in Unicorn over the BEFORE pages (image code, live
+`.data` pages), with services supplied as in the Phase 2 harness: CRT fill/copy, solver scratch
+allocator, payload pool return, observed atan2 and damping-library outputs, and the locked pool
+allocator methods `18b72b0`/`18b7270`/`18b7320`. Nothing at or above `0x143000000` was executed.
+The C4 finish `195c040` is supplied as a no-op: with live data it reaches the broadphase proxy
+query (bp+0x60 proxies, bp+0x70 tree nodes) and the shapes of overlapping proxies, and 2–32 pages
+per capture stayed unmapped. In 16 of 18 substeps every island body's pose and velocity is
+byte-identical to live AFTER; **the rider's two bodies are byte-identical in all 18**. Live-only
+differences occur in the stage object and the C4 per-thread scratch in every substep. In 4
+substeps live also wrote new broadphase pair rows and a new link entry/payload; in two of those
+(sr-03 cap01, sr-05 cap07) that extra contact on a newly attached link changed one non-rider free
+body (up to 4.7 m/s velocity, 0.057 translation), attributed (inference) to the skipped C4 finish.
+
+**Model-on-live.** An `IslandState` built from the same BEFORE pages ran in bound mode, with only
+the C4 finish replayed (a no-op here). It matched the native run byte for byte at the C7–D10
+boundary in 18 of 18 substeps (11,481 regions). Injected faults were caught in 72 of 72 runs
+(iterations swapped, gravity zero, damping ignored, dt +1 ulp). The live run needed harness-side
+additions not yet in the engine module (damping and quiet-override pass-through, sphere bounds,
+inline arrays; see LINK_SOLVER.md "Composed island step on live substeps"). An independent rerun
+of the sr-05 replay (8 substeps) reproduced the result.
+
+**Coverage.** Wine on macOS, dispatcher capacity 1. Spawn-line riding in the first ~20 s (every
+session ended in a KO at about the same place on the spawn line, even with no input). 4–11 active
+groups, 5–12 bodies, 0–27 contact points; the rider group had 2 bodies, 3 kind-2 poses and one
+terrain contact link. 10 substeps were landing-triggered; dt 0.00826–0.01203; one capture from a
+2-substep frame. Action tree and command collections were empty, so the C2/C3 callbacks were not
+exercised. Live used the CRT FMA path (`0x333e29c` = 1); emulation forces the non-FMA path, and
+no bit difference appeared.
+
+Nothing here claims equivalence with the original engine outside the captured states.
+
 ## 7. Open questions (ranked)
 
 1. **C3 action tree** (`1959a70` on `world+0xd0`): which objects, and whether they write body
