@@ -8697,3 +8697,9 @@ cases. This is not wired into a live host API and does not pin manager or module
   `Physic::UpdateBroadphase` body `1389a50`. Removed broadphase pairs feed the select and
   rebuild stages, new pairs feed the pair jobs, and one shared output vector carries the
   selection into the jobs' retire stage. Pair rows are confirmed as 24 bytes.
+- Captured 64 real in-game executions of the per-step pair update `18b8fa0` (37
+  with removed rows), using a reversible broad-phase vtable-pointer swap with
+  three snapshots per step. Python selection and rebuild matched S1 byte for
+  byte (802 predicted changes, 0 unattributed). Pair-job merges, publish fields,
+  tree and ring membership passed structurally in 64/64 steps. Negative
+  controls fail as expected. Receipt `pose_pair_update_live_validation.json`.

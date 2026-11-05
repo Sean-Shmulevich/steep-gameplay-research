@@ -2018,3 +2018,13 @@ vcall, select, rebuild, jobs, release) -> True`.
   the observed class getters.
 - **Supplied.** Select, rebuild, the jobs, the broadphase update and the allocator.
 - **Receipt.** 512 native cases in `native/snow_host/pose_pair_update_step_validation.json`.
+
+### Live pair update capture (18b8fa0)
+
+Evidence only; no new engine module. Private plugin `step_hook`
+(analysis/connectivity-live/step-hook) takes three snapshots inside real in-game
+`18b8fa0` steps through a broad-phase vtable-pointer swap. Python selection and
+rebuild must reproduce S1 exactly, apart from bytes attributed to `18e2de0`.
+The pair-job merges must be consistent with the worker vectors. Receipt:
+`native/snow_host/pose_pair_update_live_validation.json` (64/64 steps, 0
+unattributed bytes).

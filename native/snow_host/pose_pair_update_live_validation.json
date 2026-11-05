@@ -1,0 +1,303 @@
+{
+  "schema": "pose-pair-update-live-validation-v1",
+  "date": "2026-11-04",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18b8fa0",
+  "kind": "real in-game executions of the per-step pair update, captured by a private bounded plugin at three points inside the step, compared offline with the Python chain",
+  "source_sha256": {
+    "engine/pose_provider_link_selection.py": "27a157fae1700fe15fa07ecee2d25a0f1a977baf88407215cd2766de9e1748d0",
+    "engine/pose_body_connectivity_rebuild.py": "f5b766cd33979158823c519d491493b301069f05883c95280681630b6734a404",
+    "engine/pose_group_link_remove.py": "b9bf56da27e1d20bda7796c60810cde1c7d9d54d82e5ad86ee6a1d2a65de4fa0",
+    "engine/pose_pair_link_merge.py": "7553ebb60cb05b15f9c31aac03a4779da0853545ffb67187faaee84eedc6484d",
+    "engine/pose_pair_link_jobs.py": "655b79c40d47ac14903abed06a4be69594ad0938b4f7379254377c0b3ed7e34d",
+    "engine/pose_body_tree.py": "89f7e9386409308170c6e76d998a95a4ff255db42c74d53eb046c8cceb552dab"
+  },
+  "capture_point": {
+    "routine": "18b8fa0(controller), sole direct caller 18ae2b4 (reached from 140b1a0, called directly by the world step 1389a50); no stored pointer on that path",
+    "mechanism": "object vtable-pointer swap: the broad-phase object at controller+0x28 (vtable image RVA 0x29ca8a0, 34 slots, referenced only by its constructor and destructor) had its vtable pointer compare-exchanged to a private copy of the table with slots +0x60, +0x40 and +0x88 replaced by forwarding detours; heap data write only, no code bytes, no page protections, no change to the shared .rdata table",
+    "snapshots": {
+      "S0": "vt+0x60 call (return 18b8ff2): before 18dedf0 select, 18e28d0 rebuild and 18ddc40 pair jobs",
+      "S1": "vt+0x40 call (return 18b902c): after select and rebuild, before pair jobs; includes the caller-local selection vector at caller rsp+0x20",
+      "S2": "vt+0x88 call (return 18b907b): after pair jobs, before the controller+0x4c bump, broad-phase +8 write and 18df490"
+    },
+    "identity_checks": "image base; 274-byte fingerprint of 18b8fa0; 64-byte fingerprint of the four getters 19403e0..1940410; all 34 vtable slots equal the image; controller vtable 0x29ca0e0 reached from the player body chain; controller+0x28 vtable pointer equals the image table; detours act only when self is the target object and the return address is the 18b8fa0 call site",
+    "bounds": "armed when a player body first had a controller and a +0x80 head; at most 32 captured steps per session; spacing and minimum-removed filters; per-walk caps 16000 regions / 6 MiB; fixed 160 MiB buffer; self ReadProcessMemory reads; trace written by a worker thread after restore",
+    "restore": "re-check controller+0x28 and that the object still holds the private table, compare-exchange the original table pointer back, wait for in-flight detour calls to drain; module pinned"
+  },
+  "comparison_method": {
+    "stage_a_S0_to_S1": "Python select_pose_provider_links on the S0 removed rows, then rebuild_pose_body_connectivity (link = remove_pose_group_link, 18e2de0 = recording stub). Selection list compared with the game vector; predicted bytes compared with S1 at every S0-captured address. Group/slot-array/context differences are attributed to 18e2de0 only when Python queued a group; any other difference is unattributed and fails the step.",
+    "stage_b_S1_to_S2": "structural: publish fields provider+0x170/+0x178, claim cursor +0x17c minus the pair count gives the worker count (bounded by the 18ddc40 formula); the new-link merge (merge_pose_new_links semantics) is checked by count, multiset and comparator order of provider+0x28 against the S2 worker vectors (supplied product of the pair workers), tree membership of every merged link key and ring membership of its endpoints; fate of every selected link; red-black invariants of both provider trees at S0, S1 and S2; a census of S1->S2 changed bytes by region role."
+  },
+  "verdict": "PASS: 64 captured in-game 18b8fa0 steps (37 with removed rows); stage A 64/64 (selection equal 64, 802 predicted changed bytes matched, 0 unattributed of 1164424 compared); stage B structural 64/64.",
+  "overall": {
+    "sessions": 2,
+    "cleanup_verified_for_every_session": true,
+    "vtable_pointer_restored_and_drained_every_session": true,
+    "in_game_steps_while_installed": {
+      "steps": 3021,
+      "steps_removed_nonempty": 304,
+      "steps_new_nonempty": 3021,
+      "steps_both_nonempty": 304,
+      "sum_removed": 452,
+      "sum_new": 20992,
+      "foreign60": 0,
+      "foreign40": 0,
+      "foreign88": 0,
+      "s1_missing": 0,
+      "s2_missing": 0,
+      "selection_vector_unreadable": 0
+    },
+    "max_removed_rows_in_a_step": 8,
+    "max_pair_rows_in_a_step": 16,
+    "captured_steps": 64,
+    "captured_steps_with_removed_rows": 37,
+    "removed_rows_histogram": {
+      "0": 27,
+      "1": 29,
+      "2": 6,
+      "3": 2
+    },
+    "pair_rows_histogram": {
+      "3": 12,
+      "4": 7,
+      "5": 1,
+      "6": 6,
+      "7": 3,
+      "8": 3,
+      "9": 2,
+      "10": 4,
+      "11": 13,
+      "12": 9,
+      "13": 1,
+      "14": 1,
+      "15": 1,
+      "16": 1
+    },
+    "selected_histogram": {
+      "0": 30,
+      "1": 33,
+      "2": 1
+    },
+    "same_thread_all_three_snapshots": true,
+    "lists_unchanged_between_S0_and_S1": true,
+    "walk_overflows": 0,
+    "unreadable_regions": 0,
+    "errors": 0,
+    "stage_a": {
+      "passed": 64,
+      "selection_equal": 64,
+      "rows_eligible_total": 43,
+      "selected_total": 35,
+      "groups_processed_total": 35,
+      "bytes_compared": 1164424,
+      "python_predicted_changed_bytes": 802,
+      "game_changed_bytes": 830,
+      "predicted_changes_matched": 802,
+      "differing_bytes_by_owner": {
+        "18e2de0_group_processing": 28
+      },
+      "unattributed_differing_bytes": 0,
+      "unattributed_by_role_offset": {},
+      "python_errors": []
+    },
+    "stage_b": {
+      "passed": 64,
+      "publish_fields_equal": 64,
+      "workers_histogram": {
+        "1": 64
+      },
+      "workers_within_bound": 64,
+      "worker_new_links_total": 28,
+      "merge_count_and_multiset_equal": 64,
+      "merge_order_violations_total": 0,
+      "merged_links_with_key_in_tree": 28,
+      "merged_links_captured": 28,
+      "merged_link_endpoint_ring_membership": {
+        "True": 56
+      },
+      "selected_link_fate": {
+        "recycled_as_new_link": 27,
+        "in_owner_free_list": 8
+      },
+      "trees_red_black_ok_every_snapshot": true,
+      "pair_row_keys_in_link_tree_S1_vs_S2": [
+        425,
+        453,
+        517
+      ],
+      "s1_to_s2_changed_bytes_by_role": {
+        "provider": 270,
+        "contact_span": 257,
+        "link": 756,
+        "slot_owner": 62,
+        "metadata": 330,
+        "tree_nodes": 377,
+        "provider_link_vector": 34,
+        "owner_vector_0x8": 34,
+        "owner_vector_0x28": 45,
+        "group": 101,
+        "body": 39
+      }
+    },
+    "passed": true,
+    "negative_controls": {
+      "note": "deliberate bugs injected into the Python side once, then restored (rerun of analyze_step on the same traces)",
+      "rebuild_skips_context_counter": "stage A failed 34 of 64 steps (every step whose rebuild processed a group)",
+      "rebuild_skips_group_link_removal": "stage A failed the same 34 steps",
+      "selection_takes_only_first_reversed_row": "stage A failed 1 of 32 session-2 steps (the only step with two selected links)",
+      "merge_comparator_inverted": "stage B failed 2 of 32 session-2 steps (merges with links of differing body kinds)",
+      "restored": "all 64 steps pass both stages"
+    }
+  },
+  "limits": [
+    "The three snapshots are sequential self-reads on the stepping thread; other threads may run meanwhile, so snapshots are not atomic.",
+    "Stage B is structural, not byte-level: retire 18de440, neighbor retire 18de510, free-list rebalance 1989e60, the pair workers (contact generation, link acquire/reinit, filters) and the tree inserts 18de6a0/18de830 ran in game and are not reproduced byte for byte.",
+    "The vt+0x40/+0x48 list holds every current overlapping pair (most already have links), not only newly created pairs.",
+    "The S2 snapshot precedes the controller counter bump, the broad-phase +8 write and 18df490; those are outside the comparison.",
+    "Steps captured were on the player world controller only; removal rows were small (see histograms).",
+    "Heap addresses, raw bytes and traces are private and not published."
+  ],
+  "sessions": [
+    {
+      "session": "step-01",
+      "plugin_revision": "private-1 (captures any step with a nonempty list, 400 ms spacing)",
+      "startup": "native director plugin, hands-off title/offline notice/map",
+      "navigation": "scheduler_ready",
+      "cleanup": {
+        "ok": true,
+        "ended_by": "stop",
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      },
+      "keyboard_holds": {
+        "count": 2,
+        "scan_codes": [
+          17
+        ],
+        "ms": [
+          1500
+        ],
+        "helper_rc_nonzero": 0
+      },
+      "armed_when_player_body_had_controller_and_ring": true,
+      "host_disconnect_observed": false,
+      "plugin": {
+        "verified": 1,
+        "installed": 1,
+        "why": "",
+        "restored": 1,
+        "vptr_after_ours": 0,
+        "vptr_after_original": 1,
+        "drained": 1,
+        "max_captures": 32,
+        "window_ms": 150000,
+        "spacing_ms": 400,
+        "calls60": 1335,
+        "calls40": 1335,
+        "calls88": 1335,
+        "foreign60": 0,
+        "foreign40": 0,
+        "foreign88": 0,
+        "steps": 1335,
+        "steps_after_window": 0,
+        "steps_removed_nonempty": 134,
+        "steps_new_nonempty": 1335,
+        "steps_both_nonempty": 134,
+        "sum_removed": 201,
+        "sum_new": 8977,
+        "max_removed": 7,
+        "max_new": 16,
+        "captured": 32,
+        "skipped_busy": 0,
+        "skipped_spacing": 1301,
+        "skipped_limit": 2,
+        "walk_overflows": 0,
+        "buffer_full": 0,
+        "s1_missing": 0,
+        "s2_missing": 0,
+        "selection_vector_unreadable": 0,
+        "slow_walks": 0,
+        "player_roots_given": 2
+      },
+      "trace_sha256": [
+        "1cfa120a38dae3a06e82df9f4aab327fc9e573e128641bbc51991688b520a723"
+      ],
+      "steps_captured": 32,
+      "stage_a_passed": 32,
+      "stage_b_passed": 32
+    },
+    {
+      "session": "step-02",
+      "plugin_revision": "private-2 (adds a minimum removed-row filter; min_removed=1, 150 ms spacing)",
+      "startup": "native director plugin, hands-off title/offline notice/map",
+      "navigation": "scheduler_ready",
+      "cleanup": {
+        "ok": true,
+        "ended_by": "stop",
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      },
+      "keyboard_holds": {
+        "count": 2,
+        "scan_codes": [
+          17
+        ],
+        "ms": [
+          1500
+        ],
+        "helper_rc_nonzero": 0
+      },
+      "armed_when_player_body_had_controller_and_ring": true,
+      "host_disconnect_observed": false,
+      "plugin": {
+        "verified": 1,
+        "installed": 1,
+        "why": "",
+        "restored": 1,
+        "vptr_after_ours": 0,
+        "vptr_after_original": 1,
+        "drained": 1,
+        "max_captures": 32,
+        "window_ms": 240000,
+        "spacing_ms": 150,
+        "min_removed": 1,
+        "calls60": 1686,
+        "calls40": 1686,
+        "calls88": 1686,
+        "foreign60": 0,
+        "foreign40": 0,
+        "foreign88": 0,
+        "steps": 1686,
+        "steps_after_window": 0,
+        "steps_removed_nonempty": 170,
+        "steps_new_nonempty": 1686,
+        "steps_both_nonempty": 170,
+        "sum_removed": 251,
+        "sum_new": 12015,
+        "max_removed": 8,
+        "max_new": 16,
+        "captured": 32,
+        "skipped_busy": 0,
+        "skipped_spacing": 137,
+        "skipped_limit": 1,
+        "walk_overflows": 0,
+        "buffer_full": 0,
+        "s1_missing": 0,
+        "s2_missing": 0,
+        "selection_vector_unreadable": 0,
+        "slow_walks": 0,
+        "player_roots_given": 2
+      },
+      "trace_sha256": [
+        "6b5212b7d5b8ee7263afd9c17de5850491cce8e35ff112a09cd6f7b48af18339"
+      ],
+      "steps_captured": 32,
+      "stage_a_passed": 32,
+      "stage_b_passed": 32
+    }
+  ]
+}

@@ -9994,7 +9994,9 @@ reads +0 and +0x10; `199b590` writes 16 bytes then 8 bytes per row.
 0x40/0x48 (current header) feed pair-link jobs `18ddc40(provider, rows, count,
 buffer)`. The role names "removed" and "added" are inferred from that order
 and from `18dedf0` locating existing links by key; they are not proven by a
-producer trace.
+producer trace. Live correction (see "Live pair update capture"): the +0x40/+0x48
+list is every currently overlapping pair, not only new pairs; most of its keys
+already have links.
 
 Validation. `engine/pose_broadphase_pair_lists.py` has the four accessors plus
 an authored row decoder. `check_pose_broadphase_pair_lists.py` ran 512
@@ -10043,8 +10045,8 @@ a = bp->vfunc[0x68] ()               ; removed-pair array
 18dedf0(controller+0x38, a, n, &output)    ; select (resets output count itself)
 18e28d0(controller+0x30, &output)          ; rebuild
 bp = controller+0x28
-n = (u32) bp->vfunc[0x40] ()         ; new-pair count
-a = bp->vfunc[0x48] ()               ; new-pair array
+n = (u32) bp->vfunc[0x40] ()         ; overlapping-pair count (live-corrected)
+a = bp->vfunc[0x48] ()               ; overlapping-pair array (live-corrected)
 18ddc40(controller+0x38, a, n, &output)    ; pair jobs; their retire 18de440 consumes output
 if output.cap != 0 and output.ptr != inline: allocator[0x1433365b8]->vfunc[0x18] (ptr)
 (controller+0x28)->vfunc[0x88] ()    ; `ret 0` stub 0x75e600 in the observed class
@@ -10141,3 +10143,190 @@ Static leads:
   refresh (chunk `18b88e1`) and from this step. `18de440` is called only from the
   refresh and from `18ddc40`, and `18ddc40` only from this step. So in gameplay, every
   select, rebuild and retire runs inside `18b8fa0`.
+
+### Live pair update capture
+
+This check records real in-game executions of the per-step pair update
+`18b8fa0(controller)`, which runs the selection, rebuild and pair-job services
+that the listener capture never reached. The receipt is
+`native/snow_host/pose_pair_update_live_validation.json`.
+
+**Routine.** In native order:
+
+```
+controller+0x48 = 1
+19598b0(B)                         ; B = controller+0x28, calls B.vt+0x90 (update)
+n = B.vt+0x60(); rows = B.vt+0x68()  ; removed rows: inline list at B+0x118, count B+0x120
+18dedf0(provider38, rows, n, &vec)   ; selection into a local vector, 512 inline slots
+18e28d0(context30, &vec)             ; rebuild
+m = B.vt+0x40(); pairs = B.vt+0x48() ; pair rows: header at B+0xf8, {data, count}
+18ddc40(provider38, pairs, m, &vec)  ; pair jobs: retire, neighbor retire, rebalance, workers, merges
+free vec if external
+B.vt+0x88()                          ; shared no-op 75e600
+controller+0x4c += 1; B+8 = controller+0x4c
+18df490(provider38, controller+0x4c)
+controller+0x48 = 2; return 1
+```
+
+B is the broad-phase object, built by `193f450`. Its vtable is at image RVA
+`0x29ca8a0` and has 34 slots. Only its constructor and destructor reference that
+table, and no code compares an object against it. Both row lists use 24-byte
+rows: body A, body B, u64 key.
+
+**Capture point.** The path into `18b8fa0` has no stored pointer:
+
+- `1389a50` (the world step) calls `140b1a0` directly.
+- `140b1a0` loads `[rcx+8]` and jumps to `18ae2b0`.
+- `18ae2b0` calls `18b8fa0`.
+
+The hook is therefore a heap data write on B itself. A private plugin used an
+aligned compare-exchange to point B's vtable at a private copy of the 34-slot
+table. In the copy, slots +0x60, +0x40 and +0x88 were replaced by detours, and
+each detour always forwards to the original slot. No code bytes, page
+protections or shared `.rdata` table were changed.
+
+A detour acts only when two conditions hold:
+
+- self is the target object;
+- the return address is the matching `18b8fa0` call site: `18b8ff2`, `18b902c`
+  or `18b907b`.
+
+That gives three snapshots per step, all taken on the stepping thread:
+
+- **S0** (at +0x60): before select, rebuild and the pair jobs.
+- **S1** (at +0x40): after select and rebuild, before the pair jobs. S1 also
+  reads the caller's local selection vector at caller rsp+0x20. The caller
+  frame is located through the detour's frame pointer, and the return address
+  stored there is checked first.
+- **S2** (at +0x88): after the pair jobs. This is before the counter bump, the
+  B+8 write and `18df490`.
+
+Before installing, the plugin checked:
+
+- the image base;
+- a 274-byte fingerprint of `18b8fa0` and a 64-byte fingerprint of the four
+  getters;
+- all 34 table slots against the image;
+- the controller vtable `0x29ca0e0`, reached from the player body chain;
+- that B's vtable pointer equals the image table.
+
+On restore, the plugin re-checked controller+0x28 and the private table,
+compare-exchanged the original table back and waited for in-flight detours to
+drain. The module stays pinned.
+
+Each snapshot walked these regions:
+
+- B and its list header;
+- both row arrays;
+- controller, context and provider;
+- both provider trees with all node values;
+- provider vectors +0x28 and +0x58, and the publish rows at +0x170;
+- the 32 slot owners and their vectors at +8, +0x18, +0x28 and +0x48;
+- the row bodies, with their metadata and their +0x80, +0x88 and +0x90 rings;
+- endpoint bodies, link contact spans, and groups with their slot arrays and
+  members.
+
+**Stage A (S0 to S1), byte level.** `select_pose_provider_links` runs on the S0
+removed rows, then `rebuild_pose_body_connectivity`. Its link service is
+`remove_pose_group_link` and `18e2de0` is a recording stub. The selection list
+is compared with the game's vector. Predicted bytes are compared with S1 at
+every S0 address.
+
+Group and group-slot differences, and context bytes outside +0x464..+0x46b, are
+attributed to `18e2de0` only when Python queued a group. Rebuild owns the
+context counter, so those bytes are always compared. Any other difference
+fails the step.
+
+**Stage B (S1 to S2), structural.** These checks run:
+
+- Publish fields: provider+0x170 and +0x178.
+- Worker count: the claim cursor +0x17c minus the pair count, bounded by the
+  `18ddc40` formula.
+- New-link merge (`merge_pose_new_links` semantics): provider+0x28 is checked
+  against the S2 worker vectors at owner+8 for count, multiset and
+  `compare_pose_link_order` order. The worker vectors are the pair workers'
+  supplied output.
+- Each merged link's key is in the link tree, and the link is in both endpoint
+  +0x80 rings.
+- The fate of every selected link.
+- Red-black invariants of both provider trees at S0, S1 and S2.
+
+**Results.** Two sessions used director startup and forward holds (scan 17,
+1500 ms). Session 1 captured any step with a nonempty list, spaced 400 ms
+apart, in a 150 s window. Session 2 captured only steps with a removed row,
+spaced 150 ms apart, in a 240 s window.
+
+In both sessions:
+
+- the vtable pointer was restored (the private table was gone afterwards) and
+  in-flight calls drained;
+- no foreign calls reached the detours;
+- S1 and S2 were never missed;
+- the walks had no overflow and no unreadable regions;
+- cleanup was fully verified (bottle stopped, saves and settings restored,
+  original DLL verified).
+
+While installed, the hook saw 3,021 steps (7–9 per second). Every step had
+a nonempty pair list, with at most 16 rows per step (3–16 in captured steps). 304 steps (10%) had removed
+rows, at most 8 in one step.
+
+All 64 captured steps (37 with removed rows) passed both stages:
+
+- **Selection:** 43 removed rows passed the priority/quiet gate. Python
+  selected 35 links, and the game's vector was identical in all 64 steps. Eight
+  eligible rows had no tree node.
+- **Bytes:** 1,164,424 bytes compared. 802 predicted changed bytes matched
+  (link removal from groups, context clear and counter, tree removal). 28
+  differing bytes were attributed to `18e2de0`, across 35 processed groups.
+  There were 0 unattributed bytes.
+- **Pair jobs:** one worker in all 64 steps. Publish fields were equal in all
+  64.
+- **Merges:** 28 links were merged. All 64 steps matched by count and multiset,
+  with 0 comparator order violations. All 28 merged keys were in the tree, and
+  all 56 endpoint ring memberships held.
+- **Selected links:** 27 of the 35 were reused in the same step as the merged
+  link object for a pair, and 8 went to the slot owner's +0x28 free list.
+- **Trees:** both trees were valid red-black trees at every snapshot.
+
+Negative controls injected one deliberate bug at a time into the Python side,
+then restored it:
+
+- Rebuild skipping the context counter: 34 steps failed, which is every step that processed a group.
+- Rebuild skipping group link removal: the same 34 steps failed.
+- Selection truncated to its first match on reversed rows: the one step with
+  two selected links failed.
+- Inverted merge comparator: 2 steps failed.
+
+With the chain restored, all 64 steps passed.
+
+**Interpretation.**
+
+- Selection and rebuild are now confirmed byte for byte on real in-game
+  executions.
+- The pair list at B.vt+0x40/+0x48 holds every currently overlapping pair, not
+  only new ones. In steady state the pair jobs write only the provider claim
+  cursor and publish fields. At S1, 425 of the 517 captured pair-row keys
+  already had a tree link, and 453 did at S2.
+- A removed pair usually reappears in the same step's pair list. Its retired
+  link goes onto the slot owner's free list and is reused for that pair through
+  the recycled-link path.
+
+Limits:
+
+- **Atomicity:** the snapshots are sequential self-reads, not atomic.
+- **Stage B is structural:** retire `18de440`, neighbor retire `18de510`,
+  rebalance `1989e60`, the pair workers and the tree inserts `18de6a0` and
+  `18de830` ran in game and are not reproduced byte for byte.
+- **Worker count:** pair lists never exceeded 16 rows, so only one-worker
+  dispatch was observed.
+- **Outside S2:** `18df490` and the counter bump run after S2 and are not
+  compared.
+- **Coverage:** only the player's world controller was captured.
+
+**Leads.**
+
+- Byte-level stage B needs the tree inserts `18de6a0` and `18de830`
+  reconstructed, so that S1 plus the worker vectors gives a predicted S2 tree.
+- The eight eligible removed rows with no tree node are probably pairs the
+  pair filter never linked. Check this against `18deb70`.
+- A multi-worker dispatch needs a scene with more than 20 overlapping pairs.
