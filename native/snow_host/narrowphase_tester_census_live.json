@@ -1,0 +1,903 @@
+{
+ "schema": "narrowphase-tester-census-live-v1",
+ "date": "2026-11-05",
+ "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+ "kind": "live observation (not a reconstruction check): which narrow-phase tester cells run while riding, from which callers, and how many contact records each tester call returns (n = tester vt[0x18] return value)",
+ "capture": {
+  "mechanism": "private bounded snow-host plugin, data writes only. (A) broad-phase object controller+0x28: vtable pointer compare-exchanged to a private copy (image 0x29ca8a0) with slot +0x60 forwarding (step counter). (B) pair-collider factory / tester dispatcher at provider+0x68 (provider = controller+0x38; vtable image 0x29ca780): private copy with slot +8 (selector 18de680) forwarding; records masked kinds (shape+0x28 & 0x7fff, A = rdx shape, B = r8 shape), bit 15, the returned tester pointer and the return site. (T) each of the 32 tester objects (8-byte heap objects at dispatcher+8+8*(kA*8+kB) holding only a vtable pointer) had its vtable pointer compare-exchanged to a private copy of its 4-slot vtable whose slot +0x18 forwards to the original entry and records (kind pair, n, capacity, return site, the selector return site last seen on the same thread). No code bytes, page protections or shared .rdata were changed; no obfuscated thunks were traced.",
+  "identity_checks": "image base; 274-byte fingerprint of 18b8fa0, 64-byte getter fingerprint, all 34 broad-phase slots; controller vtable 0x29ca0e0 from the player body chain; factory vptr = image 0x29ca780, its 4 slots and prefix word, 32-byte fingerprint of 18de680, selector call-site encodings at 18dda28/18e09db/18e08fb; tester call-site encodings (call [r10+0x18]) at 18dda47/18e09fe/18e091e; all 64 dispatcher cells: the 32 filled cells hold distinct objects whose vptr equals the TESTER_TABLE vtable, whose 4 slots and prefix word match the image and whose entry has the expected 16-byte fingerprint; the 32 other cells are 0",
+  "restore": "testers, then factory, then broad-phase: each compare-exchanged back after re-checking the owner (dispatcher cell / provider+0x68 / controller+0x28); in-flight detours drained; original vptrs re-read and verified; module pinned",
+  "site_map": {
+   "selector returns": {
+    "0x18dda2c": "18dd400 direct (sel ret 18dda2c)",
+    "0x18e09de": "terrain wrapper 18e0980 (sel ret 18e09de)",
+    "0x18e08fe": "terrain wrapper 18e08a0 (sel ret 18e08fe)",
+    "0x18dffd4": "flagged-neighbor body 18dfa10 chunk (sel ret 18dffd4)",
+    "0x18e064b": "flagged-neighbor body 18e01e0 chunk (sel ret 18e064b)"
+   },
+   "tester returns": {
+    "0x18dda4b": "18dd400 direct (tester ret 18dda4b)",
+    "0x18e0a02": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+    "0x18e0922": "terrain wrapper 18e08a0 (tester ret 18e0922)"
+   }
+  },
+  "kind_labels": "kinds 2 sphere, 3 box, 4 capsule, 5 convex hull, 6 terrain, 7 terrain grid: labels from field use (LINK_SOLVER.md), not recovered names",
+  "plugin_source_sha256": "bb25c19db1c2cefcd105885afdd31bac9fda063f3dfbb6a902bcd00fcdfda46c",
+  "coordinator_source_sha256": "0d7e5224426e2f00fcc2caf777401835f0df7e97d05615ef34c681ff7c13165a",
+  "driving": "director startup (no keyboard until gameplay), then single-key holds <=1500 ms via the input helper: forward 17, jump 57 (700/400 ms charge then release), steer 30/32 (700 ms; 1200 ms in the late phase to seek obstacles)"
+ },
+ "attempts": [
+  {
+   "name": "np-01",
+   "launcher_ok": true,
+   "ended_by": "stop",
+   "coordinator_error": null,
+   "plugin_done": false,
+   "testers_installed": null
+  },
+  {
+   "name": "np-02",
+   "launcher_ok": true,
+   "ended_by": "stop",
+   "coordinator_error": null,
+   "plugin_done": true,
+   "testers_installed": 32
+  },
+  {
+   "name": "np-03",
+   "launcher_ok": true,
+   "ended_by": "stop",
+   "coordinator_error": null,
+   "plugin_done": true,
+   "testers_installed": 32
+  }
+ ],
+ "sessions": [
+  {
+   "name": "np-01",
+   "launcher_result": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+   },
+   "coordinator": {
+    "ok": true,
+    "error": null,
+    "navigation": "scheduler_ready",
+    "image_base_matches": true
+   },
+   "ko": false,
+   "plugin_done": null
+  },
+  {
+   "name": "np-02",
+   "launcher_result": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+   },
+   "coordinator": {
+    "ok": true,
+    "error": null,
+    "navigation": "scheduler_ready",
+    "image_base_matches": true
+   },
+   "ko": false,
+   "plugin_done": {
+    "verified": 1,
+    "installed": 1,
+    "why": "",
+    "restored": 1,
+    "vptr_after_original": 1,
+    "drained": 1,
+    "factory_verified": 1,
+    "factory_installed": 1,
+    "factory_why": "",
+    "factory_restored": 1,
+    "factory_vptr_after_original": 1,
+    "factory_drained": 1,
+    "testers_verified": 1,
+    "testers_cells_ok": 32,
+    "testers_empty_cells_ok": 32,
+    "testers_distinct": 1,
+    "testers_installed": 32,
+    "testers_restored": 32,
+    "testers_vptr_after_original": 32,
+    "testers_drained": 1,
+    "testers_why": "",
+    "tls_ok": 1,
+    "window_ms": 240000,
+    "window_actual_ms": 240017,
+    "calls60": 27770,
+    "foreign60": 0,
+    "steps": 27770,
+    "selector_calls": 1077761,
+    "selector_foreign_self": 0,
+    "selector_bit15": 1077761,
+    "selector_ret_ours": 1077761,
+    "selector_ret_other": 0,
+    "tester_calls": 937687,
+    "tester_unknown_self": 0,
+    "tester_link_cell_mismatch": 0,
+    "n_gt4_total": 0,
+    "init_tid": 460,
+    "run_tid": 464,
+    "player_roots_given": 2
+   },
+   "actions": {
+    "count": 16,
+    "by_label": {
+     "forward": 8,
+     "jump": 3,
+     "pre_arm_forward": 1,
+     "steer_left": 2,
+     "steer_right": 2
+    }
+   },
+   "data": {
+    "selector_histogram_pair_x_site": {
+     "(2,4)": {
+      "18dd400 direct (sel ret 18dda2c)": 169
+     },
+     "(2,6)": {
+      "terrain wrapper 18e0980 (sel ret 18e09de)": 35410
+     },
+     "(2,7)": {
+      "terrain wrapper 18e08a0 (sel ret 18e08fe)": 368002
+     },
+     "(4,3)": {
+      "flagged-neighbor body 18dfa10 chunk (sel ret 18dffd4)": 139974,
+      "flagged-neighbor body 18e01e0 chunk (sel ret 18e064b)": 100
+     },
+     "(4,4)": {
+      "18dd400 direct (sel ret 18dda2c)": 12619
+     },
+     "(4,6)": {
+      "terrain wrapper 18e0980 (sel ret 18e09de)": 67760
+     },
+     "(4,7)": {
+      "terrain wrapper 18e08a0 (sel ret 18e08fe)": 453727
+     }
+    },
+    "selector_null_tester_by_pair": {},
+    "tester_census": [
+     {
+      "pair": "(4,7)",
+      "kinds": "capsule x terrain grid",
+      "tester_return_site": "terrain wrapper 18e08a0 (tester ret 18e0922)",
+      "calls": 453727,
+      "max_n": 4,
+      "n_histogram": {
+       "0": 411304,
+       "1": 29744,
+       "2": 9644,
+       "3": 2886,
+       "4": 149
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "terrain wrapper 18e08a0 (sel ret 18e08fe)": 453727
+      },
+      "calls_n_gt4": 0
+     },
+     {
+      "pair": "(2,7)",
+      "kinds": "sphere x terrain grid",
+      "tester_return_site": "terrain wrapper 18e08a0 (tester ret 18e0922)",
+      "calls": 368002,
+      "max_n": 3,
+      "n_histogram": {
+       "0": 230094,
+       "1": 137272,
+       "2": 634,
+       "3": 2
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "terrain wrapper 18e08a0 (sel ret 18e08fe)": 368002
+      },
+      "calls_n_gt4": 0
+     },
+     {
+      "pair": "(4,6)",
+      "kinds": "capsule x terrain",
+      "tester_return_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "calls": 67760,
+      "max_n": 4,
+      "n_histogram": {
+       "0": 65027,
+       "1": 1453,
+       "2": 1162,
+       "3": 101,
+       "4": 17
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "terrain wrapper 18e0980 (sel ret 18e09de)": 67760
+      },
+      "calls_n_gt4": 0
+     },
+     {
+      "pair": "(2,6)",
+      "kinds": "sphere x terrain",
+      "tester_return_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "calls": 35410,
+      "max_n": 2,
+      "n_histogram": {
+       "0": 34274,
+       "1": 1134,
+       "2": 2
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "terrain wrapper 18e0980 (sel ret 18e09de)": 35410
+      },
+      "calls_n_gt4": 0
+     },
+     {
+      "pair": "(4,4)",
+      "kinds": "capsule x capsule",
+      "tester_return_site": "18dd400 direct (tester ret 18dda4b)",
+      "calls": 12619,
+      "max_n": 1,
+      "n_histogram": {
+       "0": 12233,
+       "1": 386
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "18dd400 direct (sel ret 18dda2c)": 12619
+      },
+      "calls_n_gt4": 0
+     },
+     {
+      "pair": "(2,4)",
+      "kinds": "sphere x capsule",
+      "tester_return_site": "18dd400 direct (tester ret 18dda4b)",
+      "calls": 169,
+      "max_n": 1,
+      "n_histogram": {
+       "0": 165,
+       "1": 4
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "18dd400 direct (sel ret 18dda2c)": 169
+      },
+      "calls_n_gt4": 0
+     }
+    ],
+    "max_n_per_pair_and_caller": {
+     "(4,7)": {
+      "terrain wrapper 18e08a0 (tester ret 18e0922)": {
+       "calls": 453727,
+       "max_n": 4,
+       "calls_n_gt4": 0
+      }
+     },
+     "(2,7)": {
+      "terrain wrapper 18e08a0 (tester ret 18e0922)": {
+       "calls": 368002,
+       "max_n": 3,
+       "calls_n_gt4": 0
+      }
+     },
+     "(4,6)": {
+      "terrain wrapper 18e0980 (tester ret 18e0a02)": {
+       "calls": 67760,
+       "max_n": 4,
+       "calls_n_gt4": 0
+      }
+     },
+     "(2,6)": {
+      "terrain wrapper 18e0980 (tester ret 18e0a02)": {
+       "calls": 35410,
+       "max_n": 2,
+       "calls_n_gt4": 0
+      }
+     },
+     "(4,4)": {
+      "18dd400 direct (tester ret 18dda4b)": {
+       "calls": 12619,
+       "max_n": 1,
+       "calls_n_gt4": 0
+      }
+     },
+     "(2,4)": {
+      "18dd400 direct (tester ret 18dda4b)": {
+       "calls": 169,
+       "max_n": 1,
+       "calls_n_gt4": 0
+      }
+     }
+    },
+    "n_gt4_events_logged": 0,
+    "n_gt4_events_total": 0,
+    "n_gt4_events_sample": [],
+    "action_windows": {
+     "pre_arm_forward": {
+      "actions": 1,
+      "tester_calls": 1905,
+      "nmax": 2,
+      "calls_n_ge2": 2,
+      "calls_n_gt4": 0
+     },
+     "forward": {
+      "actions": 8,
+      "tester_calls": 447244,
+      "nmax": 4,
+      "calls_n_ge2": 9516,
+      "calls_n_gt4": 0
+     },
+     "jump": {
+      "actions": 3,
+      "tester_calls": 221831,
+      "nmax": 4,
+      "calls_n_ge2": 1953,
+      "calls_n_gt4": 0
+     },
+     "steer_left": {
+      "actions": 2,
+      "tester_calls": 158831,
+      "nmax": 4,
+      "calls_n_ge2": 352,
+      "calls_n_gt4": 0
+     },
+     "steer_right": {
+      "actions": 2,
+      "tester_calls": 81843,
+      "nmax": 4,
+      "calls_n_ge2": 2655,
+      "calls_n_gt4": 0
+     }
+    },
+    "last_10s_before_host_disconnect": null,
+    "bins_500ms": {
+     "count": 481,
+     "tester_calls_total": 937687,
+     "max_nmax": 4,
+     "bins_with_n_ge2": 400,
+     "bins_with_n_gt4": 0
+    }
+   }
+  },
+  {
+   "name": "np-03",
+   "launcher_result": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+   },
+   "coordinator": {
+    "ok": true,
+    "error": null,
+    "navigation": "scheduler_ready",
+    "image_base_matches": true
+   },
+   "ko": false,
+   "plugin_done": {
+    "verified": 1,
+    "installed": 1,
+    "why": "",
+    "restored": 1,
+    "vptr_after_original": 1,
+    "drained": 1,
+    "factory_verified": 1,
+    "factory_installed": 1,
+    "factory_why": "",
+    "factory_restored": 1,
+    "factory_vptr_after_original": 1,
+    "factory_drained": 1,
+    "testers_verified": 1,
+    "testers_cells_ok": 32,
+    "testers_empty_cells_ok": 32,
+    "testers_distinct": 1,
+    "testers_installed": 32,
+    "testers_restored": 32,
+    "testers_vptr_after_original": 32,
+    "testers_drained": 1,
+    "testers_why": "",
+    "tls_ok": 1,
+    "window_ms": 240000,
+    "window_actual_ms": 240018,
+    "calls60": 28613,
+    "foreign60": 0,
+    "steps": 28613,
+    "selector_calls": 1435086,
+    "selector_foreign_self": 0,
+    "selector_bit15": 1435086,
+    "selector_ret_ours": 1435086,
+    "selector_ret_other": 0,
+    "tester_calls": 1285827,
+    "tester_unknown_self": 0,
+    "tester_link_cell_mismatch": 0,
+    "n_gt4_total": 11,
+    "init_tid": 404,
+    "run_tid": 460,
+    "player_roots_given": 2
+   },
+   "actions": {
+    "count": 22,
+    "by_label": {
+     "forward": 12,
+     "jump": 4,
+     "pre_arm_forward": 1,
+     "steer_left": 3,
+     "steer_right": 2
+    }
+   },
+   "data": {
+    "selector_histogram_pair_x_site": {
+     "(2,4)": {
+      "18dd400 direct (sel ret 18dda2c)": 6
+     },
+     "(2,6)": {
+      "terrain wrapper 18e0980 (sel ret 18e09de)": 75185
+     },
+     "(2,7)": {
+      "terrain wrapper 18e08a0 (sel ret 18e08fe)": 544534
+     },
+     "(4,3)": {
+      "flagged-neighbor body 18dfa10 chunk (sel ret 18dffd4)": 149105,
+      "flagged-neighbor body 18e01e0 chunk (sel ret 18e064b)": 154
+     },
+     "(4,4)": {
+      "18dd400 direct (sel ret 18dda2c)": 17582
+     },
+     "(4,6)": {
+      "terrain wrapper 18e0980 (sel ret 18e09de)": 174954
+     },
+     "(4,7)": {
+      "terrain wrapper 18e08a0 (sel ret 18e08fe)": 473566
+     }
+    },
+    "selector_null_tester_by_pair": {},
+    "tester_census": [
+     {
+      "pair": "(2,7)",
+      "kinds": "sphere x terrain grid",
+      "tester_return_site": "terrain wrapper 18e08a0 (tester ret 18e0922)",
+      "calls": 544534,
+      "max_n": 2,
+      "n_histogram": {
+       "0": 371640,
+       "1": 171786,
+       "2": 1108
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "terrain wrapper 18e08a0 (sel ret 18e08fe)": 544534
+      },
+      "calls_n_gt4": 0
+     },
+     {
+      "pair": "(4,7)",
+      "kinds": "capsule x terrain grid",
+      "tester_return_site": "terrain wrapper 18e08a0 (tester ret 18e0922)",
+      "calls": 473566,
+      "max_n": 3,
+      "n_histogram": {
+       "0": 426799,
+       "1": 42831,
+       "2": 3929,
+       "3": 7
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "terrain wrapper 18e08a0 (sel ret 18e08fe)": 473566
+      },
+      "calls_n_gt4": 0
+     },
+     {
+      "pair": "(4,6)",
+      "kinds": "capsule x terrain",
+      "tester_return_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "calls": 174954,
+      "max_n": 12,
+      "n_histogram": {
+       "0": 171869,
+       "1": 1862,
+       "2": 1159,
+       "3": 22,
+       "4": 31,
+       "5": 6,
+       "6": 1,
+       "8": 1,
+       "10": 2,
+       "12": 1
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "terrain wrapper 18e0980 (sel ret 18e09de)": 174954
+      },
+      "calls_n_gt4": 11
+     },
+     {
+      "pair": "(2,6)",
+      "kinds": "sphere x terrain",
+      "tester_return_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "calls": 75185,
+      "max_n": 2,
+      "n_histogram": {
+       "0": 70770,
+       "1": 4392,
+       "2": 23
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "terrain wrapper 18e0980 (sel ret 18e09de)": 75185
+      },
+      "calls_n_gt4": 0
+     },
+     {
+      "pair": "(4,4)",
+      "kinds": "capsule x capsule",
+      "tester_return_site": "18dd400 direct (tester ret 18dda4b)",
+      "calls": 17582,
+      "max_n": 1,
+      "n_histogram": {
+       "0": 16909,
+       "1": 673
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "18dd400 direct (sel ret 18dda2c)": 17582
+      },
+      "calls_n_gt4": 0
+     },
+     {
+      "pair": "(2,4)",
+      "kinds": "sphere x capsule",
+      "tester_return_site": "18dd400 direct (tester ret 18dda4b)",
+      "calls": 6,
+      "max_n": 0,
+      "n_histogram": {
+       "0": 6
+      },
+      "capacity_min": 500,
+      "capacity_max": 500,
+      "preceding_selector_site": {
+       "18dd400 direct (sel ret 18dda2c)": 6
+      },
+      "calls_n_gt4": 0
+     }
+    ],
+    "max_n_per_pair_and_caller": {
+     "(2,7)": {
+      "terrain wrapper 18e08a0 (tester ret 18e0922)": {
+       "calls": 544534,
+       "max_n": 2,
+       "calls_n_gt4": 0
+      }
+     },
+     "(4,7)": {
+      "terrain wrapper 18e08a0 (tester ret 18e0922)": {
+       "calls": 473566,
+       "max_n": 3,
+       "calls_n_gt4": 0
+      }
+     },
+     "(4,6)": {
+      "terrain wrapper 18e0980 (tester ret 18e0a02)": {
+       "calls": 174954,
+       "max_n": 12,
+       "calls_n_gt4": 11
+      }
+     },
+     "(2,6)": {
+      "terrain wrapper 18e0980 (tester ret 18e0a02)": {
+       "calls": 75185,
+       "max_n": 2,
+       "calls_n_gt4": 0
+      }
+     },
+     "(4,4)": {
+      "18dd400 direct (tester ret 18dda4b)": {
+       "calls": 17582,
+       "max_n": 1,
+       "calls_n_gt4": 0
+      }
+     },
+     "(2,4)": {
+      "18dd400 direct (tester ret 18dda4b)": {
+       "calls": 6,
+       "max_n": 0,
+       "calls_n_gt4": 0
+      }
+     }
+    },
+    "n_gt4_events_logged": 11,
+    "n_gt4_events_total": 11,
+    "n_gt4_events_sample": [
+     {
+      "pair": "(4,6)",
+      "tester_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "selector_site": "terrain wrapper 18e0980 (sel ret 18e09de)",
+      "n": 6,
+      "capacity": 500,
+      "ms_after_install": 21248
+     },
+     {
+      "pair": "(4,6)",
+      "tester_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "selector_site": "terrain wrapper 18e0980 (sel ret 18e09de)",
+      "n": 5,
+      "capacity": 500,
+      "ms_after_install": 47141
+     },
+     {
+      "pair": "(4,6)",
+      "tester_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "selector_site": "terrain wrapper 18e0980 (sel ret 18e09de)",
+      "n": 5,
+      "capacity": 500,
+      "ms_after_install": 47142
+     },
+     {
+      "pair": "(4,6)",
+      "tester_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "selector_site": "terrain wrapper 18e0980 (sel ret 18e09de)",
+      "n": 5,
+      "capacity": 500,
+      "ms_after_install": 47187
+     },
+     {
+      "pair": "(4,6)",
+      "tester_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "selector_site": "terrain wrapper 18e0980 (sel ret 18e09de)",
+      "n": 5,
+      "capacity": 500,
+      "ms_after_install": 47210
+     },
+     {
+      "pair": "(4,6)",
+      "tester_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "selector_site": "terrain wrapper 18e0980 (sel ret 18e09de)",
+      "n": 5,
+      "capacity": 500,
+      "ms_after_install": 47211
+     },
+     {
+      "pair": "(4,6)",
+      "tester_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "selector_site": "terrain wrapper 18e0980 (sel ret 18e09de)",
+      "n": 5,
+      "capacity": 500,
+      "ms_after_install": 47211
+     },
+     {
+      "pair": "(4,6)",
+      "tester_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "selector_site": "terrain wrapper 18e0980 (sel ret 18e09de)",
+      "n": 12,
+      "capacity": 500,
+      "ms_after_install": 137086
+     },
+     {
+      "pair": "(4,6)",
+      "tester_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "selector_site": "terrain wrapper 18e0980 (sel ret 18e09de)",
+      "n": 10,
+      "capacity": 500,
+      "ms_after_install": 137153
+     },
+     {
+      "pair": "(4,6)",
+      "tester_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "selector_site": "terrain wrapper 18e0980 (sel ret 18e09de)",
+      "n": 10,
+      "capacity": 500,
+      "ms_after_install": 137163
+     },
+     {
+      "pair": "(4,6)",
+      "tester_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+      "selector_site": "terrain wrapper 18e0980 (sel ret 18e09de)",
+      "n": 8,
+      "capacity": 500,
+      "ms_after_install": 205071
+     }
+    ],
+    "action_windows": {
+     "pre_arm_forward": {
+      "actions": 1,
+      "tester_calls": 1590,
+      "nmax": 2,
+      "calls_n_ge2": 1,
+      "calls_n_gt4": 0
+     },
+     "forward": {
+      "actions": 12,
+      "tester_calls": 731686,
+      "nmax": 8,
+      "calls_n_ge2": 4767,
+      "calls_n_gt4": 7
+     },
+     "steer_left": {
+      "actions": 3,
+      "tester_calls": 150660,
+      "nmax": 6,
+      "calls_n_ge2": 402,
+      "calls_n_gt4": 1
+     },
+     "jump": {
+      "actions": 4,
+      "tester_calls": 252671,
+      "nmax": 12,
+      "calls_n_ge2": 584,
+      "calls_n_gt4": 3
+     },
+     "steer_right": {
+      "actions": 2,
+      "tester_calls": 176870,
+      "nmax": 4,
+      "calls_n_ge2": 555,
+      "calls_n_gt4": 0
+     }
+    },
+    "last_10s_before_host_disconnect": null,
+    "bins_500ms": {
+     "count": 480,
+     "tester_calls_total": 1285827,
+     "max_nmax": 12,
+     "bins_with_n_ge2": 259,
+     "bins_with_n_gt4": 4
+    }
+   }
+  }
+ ],
+ "combined_tester_census": [
+  {
+   "pair": "(4,7)",
+   "kinds": "capsule x terrain grid",
+   "tester_return_site": "terrain wrapper 18e08a0 (tester ret 18e0922)",
+   "calls": 927293,
+   "max_n": 4,
+   "calls_n_gt4": 0,
+   "n_histogram": {
+    "0": 838103,
+    "1": 72575,
+    "2": 13573,
+    "3": 2893,
+    "4": 149
+   }
+  },
+  {
+   "pair": "(2,7)",
+   "kinds": "sphere x terrain grid",
+   "tester_return_site": "terrain wrapper 18e08a0 (tester ret 18e0922)",
+   "calls": 912536,
+   "max_n": 3,
+   "calls_n_gt4": 0,
+   "n_histogram": {
+    "0": 601734,
+    "1": 309058,
+    "2": 1742,
+    "3": 2
+   }
+  },
+  {
+   "pair": "(4,6)",
+   "kinds": "capsule x terrain",
+   "tester_return_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+   "calls": 242714,
+   "max_n": 12,
+   "calls_n_gt4": 11,
+   "n_histogram": {
+    "0": 236896,
+    "1": 3315,
+    "2": 2321,
+    "3": 123,
+    "4": 48,
+    "5": 6,
+    "6": 1,
+    "8": 1,
+    "10": 2,
+    "12": 1
+   }
+  },
+  {
+   "pair": "(2,6)",
+   "kinds": "sphere x terrain",
+   "tester_return_site": "terrain wrapper 18e0980 (tester ret 18e0a02)",
+   "calls": 110595,
+   "max_n": 2,
+   "calls_n_gt4": 0,
+   "n_histogram": {
+    "0": 105044,
+    "1": 5526,
+    "2": 25
+   }
+  },
+  {
+   "pair": "(4,4)",
+   "kinds": "capsule x capsule",
+   "tester_return_site": "18dd400 direct (tester ret 18dda4b)",
+   "calls": 30201,
+   "max_n": 1,
+   "calls_n_gt4": 0,
+   "n_histogram": {
+    "0": 29142,
+    "1": 1059
+   }
+  },
+  {
+   "pair": "(2,4)",
+   "kinds": "sphere x capsule",
+   "tester_return_site": "18dd400 direct (tester ret 18dda4b)",
+   "calls": 175,
+   "max_n": 1,
+   "calls_n_gt4": 0,
+   "n_histogram": {
+    "0": 171,
+    "1": 4
+   }
+  }
+ ],
+ "combined_selector_histogram": {
+  "(2,4)": {
+   "18dd400 direct (sel ret 18dda2c)": 175
+  },
+  "(2,6)": {
+   "terrain wrapper 18e0980 (sel ret 18e09de)": 110595
+  },
+  "(2,7)": {
+   "terrain wrapper 18e08a0 (sel ret 18e08fe)": 912536
+  },
+  "(4,3)": {
+   "flagged-neighbor body 18dfa10 chunk (sel ret 18dffd4)": 289079,
+   "flagged-neighbor body 18e01e0 chunk (sel ret 18e064b)": 254
+  },
+  "(4,4)": {
+   "18dd400 direct (sel ret 18dda2c)": 30201
+  },
+  "(4,6)": {
+   "terrain wrapper 18e0980 (sel ret 18e09de)": 242714
+  },
+  "(4,7)": {
+   "terrain wrapper 18e08a0 (sel ret 18e08fe)": 927293
+  }
+ },
+ "driving_cycles": {
+  "np-01": "no input before arming; the rider never started riding, so the plugin was never armed (no hook installed). Counted as a failed attempt.",
+  "np-02": "one pre-arm forward hold, then cycle forward,forward,jump 700,forward,steer_left 700,forward,jump 400,steer_right 700,forward (late phase after 150 s: steer 1200 ms). The input helper took 11-16 s per action, so 16 actions in 240 s. Rider descended about 950 m of altitude in the first ~95 s, then stood nearly still (speed < 2 m/s) until ~225 s.",
+  "np-03": "one pre-arm forward hold, then cycle forward,forward,steer_left 1500,forward,jump 700,forward,steer_right 1500,forward,jump 400 (no late phase change). 22 actions in 240 s; rider kept moving most of the window (polled speed 1-47 m/s), descending about 1190 m."
+ },
+ "findings": [
+  "Tester vt[0x18] was called from exactly three return sites in both complete sessions: 18dda4b (18dd400 direct path), 18e0a02 (terrain wrapper 18e0980) and 18e0922 (terrain wrapper 18e08a0). Every call had capacity 500. Every tester call on a thread was preceded by the matching selector call (0 cell mismatches; 0 calls without a preceding selector).",
+  "Only six kind pairs reached tester vt[0x18]: (2,4) and (4,4) on the direct path; (2,6) and (4,6) via 18e0980; (2,7) and (4,7) via 18e08a0. The selector also returned the (4,3) capsule x box tester, but only to the flagged-neighbor bodies (see below). No convex-hull (5) kind and no (2,2) pair was selected in 480 s of hooked riding, and no box pair reached vt[0x18].",
+  "Direct path 18dd400 (return 18dda4b): max n = 1 in 30,376 calls ((4,4) 30,201 calls, max 1; (2,4) 175 calls, max 1). No n > 4 was observed on that path, so these sessions show no live overrun of the 198fdc0 payload rows. Box and hull testers never ran on that path, so their counts there remain unobserved.",
+  "Terrain wrapper 18e0980 (kind 6): (4,6) max n = 12 (np-03; 11 calls with n > 4: n = 5,5,5,5,5,5,6,8,10,10,12), (2,6) max n = 2. Terrain wrapper 18e08a0 (kind 7): (4,7) max n = 4, (2,7) max n = 3. These counts go to 198f910, which reduces groups to four, not straight to 198fdc0.",
+  "The flagged-neighbor bodies (selector returns 18dffd4 and 18e064b) selected only the (4,3) cell (289,079 + 254 = 289,333 selections) and never called tester vt[0x18]. In straight-line code after both returns, rcx = the selected tester and the code calls its slot +8 and tests al (calls at 18e011a and 18e0784). Slot +8 was not hooked, so those results are not observed.",
+  "Bit 15 of a shape +0x28 word was set on at least one of the two shapes in every selector call (2,512,847 of 2,512,847); the plugin did not record which side.",
+  "The n = 10/12 events in np-03 fell 3.3-3.4 s after the start of a 700 ms jump hold (at about 137 s); whether that was the landing is not established (no airborne flag was polled at that moment)."
+ ],
+ "limits": [
+  "Two complete sessions, 240 s each, one start location (director spawn) and one descent line; the input helper was slow (11-16 s per action), so maneuvers were sparse.",
+  "No rock or tree contact was identified: no box or hull kind ever appeared, and no crash/KO occurred. Whether such obstacles use kinds 3/5 is not shown here.",
+  "Jump/landing alignment is by wall-clock bins (500 ms, offset uncertainty about 0.25 s); airborne state was not recorded at plugin resolution.",
+  "Tester slot +8 (used by the flagged-neighbor bodies) was not hooked: its arity is unestablished, and a forwarding detour with a guessed arity could drop stack arguments.",
+  "The coordinator source hash is that of the np-03 version; np-02 used the earlier action cycle described in driving_cycles.np-02 (the only change).",
+  "Counts are observations under Wine on one machine; they do not establish an upper bound for the original engine."
+ ]
+}

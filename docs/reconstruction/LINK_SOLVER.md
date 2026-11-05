@@ -11346,3 +11346,77 @@ Harness correction: before 2026-11-05 the sphere harness set only static `3336a3
 its native `18f0a70` runs used zero thresholds for the triangle and volume tests. Its
 record comparison stayed valid (the model consumed the native result). The harness now
 sets all three statics; the regenerated receipt is again 2560 of 2560.
+
+### Live narrow-phase tester census
+
+This is a live observation, not a reconstruction check. It records which tester cells
+run while riding, who calls them, and how many contact records each tester call
+returns. Receipt: `native/snow_host/narrowphase_tester_census_live.json`.
+
+**Capture.** A private bounded snow-host plugin extends "Live thread and lock
+observation". Its only writes were vtable-pointer compare-exchanges to private copies,
+each swapped back and verified afterwards. No code bytes, page protections or shared
+`.rdata` were changed, and no obfuscated thunks were traced.
+
+- **A.** Broad-phase slot `+0x60`, used only to count steps.
+- **B.** The provider+0x68 dispatcher, slot `+8` (selector `18de680`). Per call: masked
+  kinds (shape+0x28 & 0x7fff; A = the rdx shape), bit 15, the returned tester and the
+  return site; (cell, site) is left in a thread-local slot.
+- **T.** All 32 tester objects (8-byte heap objects at dispatcher+8+8*(kA*8+kB)). Each
+  vtable pointer was swapped to a private copy of its 4-slot table whose slot `+0x18`
+  forwards to the original entry and records the cell, n, the capacity, the return site
+  and the selector site last seen on the same thread.
+
+Identity checks before install: the hook B checks; the tester call-site encodings
+`call [r10+0x18]` at `18dda47`, `18e09fe` and `18e091e`; all 64 cells (the 32 filled
+cells hold distinct objects whose vtable equals the `TESTER_TABLE` vtable, with matching
+4 slots, prefix word and a 16-byte entry fingerprint; the other 32 cells are 0). Restore
+order: testers, dispatcher, broad-phase, re-checking each owner before its
+compare-exchange back, draining in-flight detours and re-reading the original pointers.
+
+Driving: director startup, then single-key holds through the input helper (forward,
+jump 700 and 400 ms, left/right steering), 11–16 s per action.
+
+Sessions: np-01 did not arm (the rider never moved without input). np-02: 240 s, 27,770
+steps, 16 actions; the rider was nearly still after about 95 s. np-03: 240 s, 28,613
+steps, 22 actions; the rider kept moving and descended about 1,190 m. In both complete
+sessions 32/32 testers were installed, restored and read back as original, every hook
+drained, 0 foreign objects, 0 tester calls disagreeing with the preceding selector cell,
+and every tester call had capacity 500.
+
+Results (both sessions, 480 s hooked):
+
+| Pair (kinds) | Caller (tester return) | Calls | n histogram | Max n | n>4 |
+|---|---|---|---|---|---|
+| (4,7) capsule × grid terrain | 18e08a0 (`18e0922`) | 927,293 | 0:838,103 1:72,575 2:13,573 3:2,893 4:149 | 4 | 0 |
+| (2,7) sphere × grid terrain | 18e08a0 (`18e0922`) | 912,536 | 0:601,734 1:309,058 2:1,742 3:2 | 3 | 0 |
+| (4,6) capsule × terrain | 18e0980 (`18e0a02`) | 242,714 | 0:236,896 1:3,315 2:2,321 3:123 4:48 5:6 6:1 8:1 10:2 12:1 | 12 | 11 |
+| (2,6) sphere × terrain | 18e0980 (`18e0a02`) | 110,595 | 0:105,044 1:5,526 2:25 | 2 | 0 |
+| (4,4) capsule × capsule | 18dd400 direct (`18dda4b`) | 30,201 | 0:29,142 1:1,059 | 1 | 0 |
+| (2,4) sphere × capsule | 18dd400 direct (`18dda4b`) | 175 | 0:171 1:4 | 1 | 0 |
+
+Selector sites agree with the table: `18dda2c` returned only (2,4)/(4,4), `18e09de` only
+(x,6), `18e08fe` only (x,7). The flagged-neighbor bodies (`18dffd4`: 289,079; `18e064b`:
+254) selected only (4,3) capsule × box and never called vt[0x18]; straight-line code
+after both returns calls the tester's slot `+8` and tests `al` (`18e011a`, `18e0784`).
+Bit 15 of a +0x28 word was set on at least one shape in all 2,512,847 selector calls
+(which side was not recorded).
+
+- Direct path: max n = 1 in 30,376 calls. No live n > 4 reached `198fdc0`, consistent
+  with the static bounds in the tester sections above.
+- Terrain path: n > 4 occurs through `18e0980`, up to 12, all (4,6) and all in np-03.
+  Those counts go to `198f910`, which reduces groups to four. The n = 10/12 calls came
+  3.3–3.4 s after a 700 ms jump hold began; whether that was the landing is not
+  established.
+- So the rider is modelled as spheres and capsules against terrain in these sessions;
+  box (3) and convex hull (5) shapes appear only on the flagged-neighbor path (4,3).
+
+Limits: two sessions, one spawn and one descent line each, sparse maneuvers. No (5,x),
+(2,2) or box pair reached vt[0x18]; no rock or tree contact or KO was identified, so
+box and hull counts on the direct path are unobserved live (their static bounds stand).
+Tester slot `+8` (flagged-neighbor path) was not hooked; its arity is unestablished.
+Timing alignment uses 500 ms bins (about 0.25 s uncertainty). Observations under Wine
+on macOS, not a bound for the original engine.
+
+Static leads: the terrain testers (4,6) `19cc160` and (4,7) `19e0430`, the hot paths for
+the rider; tester slot `+8` (`19d4df0` etc.) and its use by `18dfa10`/`18e01e0`.
