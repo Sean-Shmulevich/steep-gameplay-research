@@ -8732,3 +8732,4 @@ cases. This is not wired into a live host API and does not pin manager or module
   There are 11 tests, and the routine is composed as the `update_payload` service of
   `generate_pose_pair_contacts`. Open: the hardware two-NaN rule, the live MXCSR, and
   the handler count bound at `18dd400`.
+- Narrow-phase tester table and sphere-sphere tester (`engine/pose_narrowphase_dispatch.py`). The dispatcher table constructor `0x198cf70` now runs natively: 64 runs, including random allocation failures, match all 0x208 bytes. The 32 filled cells are mapped to tester vtables and slot-3 entries, six of them swapped through `0x1994f60`. The (2,2) sphere-sphere tester `0x19d4d20`/`0x19d4bd0` matches 4,096 native runs bit for bit, and four injected bugs fail. It ignores capacity and returns at most 1, so the sphere-sphere cell cannot overrun `198fdc0`'s payload rows. The other cells' bounds are open.

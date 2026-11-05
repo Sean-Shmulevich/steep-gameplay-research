@@ -2058,3 +2058,22 @@ services. Authored choices: the pair descriptor is passed as bytes, alignment is
 checked, aliasing is not modeled and home-space stores are omitted. UNRESOLVED: the
 hardware two-NaN rule, the live MXCSR, and the caller-side count bound on the `18dd400`
 path. Evidence: `native/snow_host/pose_contact_payload_update_validation.json`.
+
+### Narrow-phase tester table and sphere-sphere tester
+
+`engine.pose_narrowphase_dispatch`:
+
+- `TESTER_TABLE` maps each kind pair to its tester vtable, slot-3 entry and, for the
+  six swapped cells, the forward pair.
+- `build_pose_tester_table(mem, dispatcher, allocate)` (`0x198cf70`): `allocate(size,
+  align, tag)` is supplied and may return 0.
+- `select_pose_tester(mem, dispatcher, shapeA, shapeB)` (`0x18de680`, flat memory, no
+  range guard).
+- `sphere_sphere_tester(mem, geom, out, capacity=500, *, mask, nan_rule)` (`0x19d4d20`
+  and `0x19d4bd0`) returns 0 or 1 and writes one 0x30-byte record. `sphere_sphere_core`
+  exposes the lane arithmetic.
+
+Capacity is accepted and ignored, as natively. Authored: a null shape raises
+`ValueError` where the native code would fault. Kind 2 is a sphere, kind 3 a box
+(earlier evidence), and kinds 4 and 5 are unidentified. Evidence:
+`native/snow_host/pose_narrowphase_dispatch_validation.json`.

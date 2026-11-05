@@ -2799,7 +2799,9 @@ pretend that a supplied identity establishes native lifetime.
 [256 original lookup comparisons](../../native/snow_host/pose_contact_dispatch_validation.json)
 cover all64 pairs with all four combinations of bit15, including zero and arbitrary
 64-bit handler identities. The complete original function executes without call
-interception. This receipt validates selection, not constructor allocation.
+interception. This receipt validates selection, not constructor allocation. The
+constructor itself now runs natively in "Narrow-phase tester table and sphere-sphere
+tester".
 
 Static constructor0x198cf70 clears512 bytes at receiver+8, then allocates8-byte
 handler objects through a supplied allocator, with alignment16 and argument10.
@@ -10858,3 +10860,71 @@ Static leads:
   overwrite the payload past +0x110.
 - What writes the row +0x30 cached word between passes (the downstream solver), and the
   live MXCSR of the physics job thread.
+
+### Narrow-phase tester table and sphere-sphere tester
+
+`engine/pose_narrowphase_dispatch.py` binds the dispatcher table built by `0x198cf70`,
+the selector `0x18de680` over flat memory, and the (2,2) tester (entry `0x19d4d20`,
+core `0x19d4bd0`). It extends "Resource-pair dispatch lookup": that section's selection
+receipt stays authoritative for the lookup, and this one adds a native run of the
+constructor and the first tester body.
+
+Every tester's slot 3 (vt[0x18]) has the signature `(tester, geom, out, capacity)`.
+`geom` is the 0x93-byte block from `18dd400`: frameA rows at +0x00..+0x3f, frameB rows at
++0x40..+0x7f, shapeA at +0x80 and shapeB at +0x88. `18dd400` passes `out = owner+0x58`
+and capacity 500. Of the 32 filled cells, six swap their arguments: (3,2) (4,2) (4,3)
+(5,2) (5,3) (5,4). Each calls the forward cell's entry and then `0x1994f60`. Their
+vtables and entries are listed in `TESTER_TABLE`. Kind 2 is a sphere, with its radius
+at shape+0x40.
+
+```text
+19d4d20(tester, geom, out, cap):        # entry: copy and mask all 8 geom rows (movups, andps 0x3336890)
+    return 19d4bd0(shapeA+0x40 or 0, frameA, shapeB+0x40 or 0, frameB, out, cap)
+19d4bd0(rA*, fA, rB*, fB, out, cap):    # cap is never read
+    d = fB.t - fA.t                     # 4 lanes
+    dist2 = hadd(hadd((d*d) & mask))    # (x+y)+(z+w)
+    rsum = rB + rA
+    if !(dist2 <= rsum*rsum): return 0  # ordered compare: NaN rejects
+    eps = (rB + rA) * 5e-6f             # 0x36a7c5ac at 0x1ef69e0
+    dist = sqrt(dist2)
+    if eps < dist: n = d/dist; pA = fA.t + n*rA; pB = fB.t - n*rB
+    else:          n = (0,0,1,0);  pA = fA.t; pB = fB.t      # constant at 0x1df4060
+    out[0] = n.xyz, minps(dist - rsum, 0), pA.xyz, 0, pB.xyz, 0xffff0000
+    return 1
+```
+
+Behaviour worth preserving:
+
+- At most one record, whatever the capacity. Capacity 0 still writes one record.
+- An exact touch (`dist2 == rsum^2`) is a contact with depth +0.
+- The coincidence test is strict. When `dist == eps` the fallback normal (0,0,1) is
+  used, and both points are the centres.
+- With `minps`, a NaN depth lane becomes 0, while `dist - inf` gives -inf.
+- Under the standard mask, a NaN anywhere in the centres or radii fails the first
+  compare, so the two-NaN rule never reaches a stored lane.
+
+Validation: `native/snow_host/pose_narrowphase_dispatch_validation.json`, from
+`analysis/command-executor-audit/check_pose_narrowphase_dispatch.py`.
+
+- **Table constructor `0x198cf70`.** 64 native runs, 8 with every allocation
+  succeeding and 56 with random failures. Only the allocator object is supplied (the
+  global at `0x1433365b8`, slot 1). CRT memset runs natively. All 0x208 dispatcher
+  bytes and every allocation byte match, and the allocator saw (8, 16, 10) 32 times per
+  run.
+- **Selector.** 2,048 flat-memory comparisons. 887 have a masked kind above 7, which
+  reads past the table, and 962 have bit 15 set.
+- **Sphere-sphere.** 4,096 native runs of the real entry and core with no hooks. They
+  produced 1,794 contacts, 2,302 rejections, 545 fallback-normal records, 427 exact
+  touches, 349 contacts at capacity 0, 2,304 cases with special lanes and 256 with a
+  random mask. Compared: the return value, both output records (the second must stay
+  untouched), and unchanged geom, shapes and mask.
+- **Injected bugs.** Each fails a case: fallback (0,1,0) at case 0, `<` for the
+  radius test at case 2, a missing depth clamp at case 1026, and `<=` for the epsilon
+  test at case 1441.
+
+Limits: MXCSR 0x1f80, synthetic fixtures, no null shapes. Only the (2,2) cell body
+is validated here; the other bodies are separate passes.
+
+Count bound on the `18dd400` path: the sphere-sphere tester returns at most 1, so
+this cell cannot overrun the payload rows of `198fdc0`. The other cells are still
+open.
