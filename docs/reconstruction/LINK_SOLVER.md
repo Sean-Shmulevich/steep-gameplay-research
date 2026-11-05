@@ -11895,7 +11895,7 @@ is a fixture; only event kind and size are compared.
 `engine/pose_narrowphase_slot8.py` restates slot 1 (vt[1], +8) of every non-terrain cell
 of the tester table (see "Narrow-phase tester table and sphere-sphere tester"), which the
 flagged-neighbor bodies call ("Live narrow-phase tester census"). Signature
-`vt[1](tester, geom) -> al` (0 or 1); `geom` is the same 0x90-byte block slot 3 receives
+`vt[1] (tester, geom) -> al` (0 or 1); `geom` is the same 0x90-byte block slot 3 receives
 (frameA +0x00, frameB +0x40, shapeA +0x80, shapeB +0x88). The routine is pure: it writes
 nothing and calls nothing except the shapes' own virtual functions. At `18e011a` (in
 18dfa10) and `18e0784` (in 18e01e0) the encoding is `mov rax,[rcx]; call [rax+8]; test
