@@ -1,0 +1,722 @@
+{
+ "schema": "terrain6_edge_convention_live/1",
+ "kind": "live observation (read-only copies of kind-6 mesh tables in a private dump; offline analysis); not a reconstruction check",
+ "question": "Which vertex pair does kind-6 edge-id slot 3*t+k (mesh+0xb8 -> pair table mesh+0xa8) denote, and do 0x1995fa0 (edge j reads slot (j+1)%3) and 0x1996280 (fan crosses slot 3*cur+pos(v)) reach the geometrically adjacent triangle?",
+ "capture": {
+  "session": "t6-01",
+  "hooks": "same as terrain_flags_live_observation.json (broad-phase +0x60, dispatcher selector, 32 tester slot +0x18): vtable-pointer compare-exchange to private copies, restored and verified; no code bytes, page protections or obfuscated thunks touched",
+  "added_reads": "inside the tester detour, on first sight of each distinct kind-6 mesh pointer (shape+0x48): ReadProcessMemory copies of u16 indices (+0x40, 3*count), u32 edge ids (+0xb8, 3*count), u16 pair table (+0xa8, 2*(max(edge id, +0xb0 count))) and float3 vertices (+0x30, max(index)+1 or +0x38 count) into a private buffer written at the end; tables re-read and compared after restore",
+  "plugin_done": {
+   "verified": 1,
+   "installed": 1,
+   "restored": 1,
+   "vptr_after_original": 1,
+   "drained": 1,
+   "factory_verified": 1,
+   "factory_installed": 1,
+   "factory_restored": 1,
+   "factory_vptr_after_original": 1,
+   "factory_drained": 1,
+   "testers_verified": 1,
+   "testers_installed": 32,
+   "testers_restored": 32,
+   "testers_vptr_after_original": 32,
+   "testers_drained": 1,
+   "window_actual_ms": 170015,
+   "steps": 20218,
+   "tester_calls": 871707,
+   "tester_unknown_self": 0,
+   "tester_link_cell_mismatch": 0,
+   "mesh_seen": 19,
+   "mesh_dumped": 19,
+   "mesh_overflow": 0,
+   "mesh_toobig": 0,
+   "mesh_rdfail": 0,
+   "dump_bytes": 332800,
+   "mesh_end_same": 1,
+   "mesh_end_diff": 18,
+   "mesh_end_unread": 0
+  },
+  "coordinator": {
+   "ok": true,
+   "error": null,
+   "image_base_matches": true
+  },
+  "ko": false,
+  "actions": 20,
+  "launcher_result": {
+   "ok": true,
+   "ended_by": "stop",
+   "bottle_stopped": true,
+   "saves_restored": true,
+   "settings_restored": true,
+   "original_dll_verified": true
+  }
+ },
+ "dump": {
+  "sha256": "670afe52e4c70093c6c79e2df683050b617b849ab3a2f6d672087547a0f1ec77",
+  "bytes": 332800,
+  "meshes": 19,
+  "location": "private, outside this repository"
+ },
+ "per_mesh": [
+  {
+   "triangles": 20,
+   "vertices_header": 12,
+   "vertices_referenced": 12,
+   "edges_header": 30,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 60
+   },
+   "slot_label_by_position": {},
+   "sha256": "cbf77a7915bedc75bd15601d92ddde9af57b3bd7764bf0fc4d4f3fea29f06a53",
+   "edge_ids_distinct": 30,
+   "edge_id_uses_hist": {
+    "2": 30
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 30,
+   "interior_slots": 60,
+   "neighbour_opposite_winding": 60,
+   "t_second_in_pair": 30,
+   "edgetest_neighbour_shares_edge_j": 60,
+   "edgetest_N1_is_opposite_vertex": 60,
+   "slot_j_neighbour_other_edge": 60,
+   "fan_end_closed": 60,
+   "fan_visits_all_incident_tris": 60,
+   "fan_tests_all_ring_vertices": 60,
+   "fan_step_crosses_edge_prev_v": 60,
+   "boundary_fraction": 0.0,
+   "first_seen_ms": 2827
+  },
+  {
+   "triangles": 4550,
+   "vertices_header": 2277,
+   "vertices_referenced": 2277,
+   "edges_header": 6825,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 13650
+   },
+   "slot_label_by_position": {},
+   "sha256": "c3c8b2acba8ca1259102171410ed06a79978e9af0d602783361abb6aa132a4c8",
+   "edge_ids_distinct": 6825,
+   "edge_id_uses_hist": {
+    "2": 6825
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 6825,
+   "interior_slots": 13650,
+   "neighbour_opposite_winding": 13650,
+   "t_second_in_pair": 6825,
+   "edgetest_neighbour_shares_edge_j": 13650,
+   "edgetest_N1_is_opposite_vertex": 13650,
+   "slot_j_neighbour_other_edge": 13650,
+   "fan_end_closed": 13650,
+   "fan_visits_all_incident_tris": 13650,
+   "fan_tests_all_ring_vertices": 13650,
+   "fan_step_crosses_edge_prev_v": 13650,
+   "boundary_fraction": 0.0,
+   "first_seen_ms": 12555
+  },
+  {
+   "triangles": 1750,
+   "vertices_header": 877,
+   "vertices_referenced": 877,
+   "edges_header": 2625,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 5250
+   },
+   "slot_label_by_position": {},
+   "sha256": "9c4fbfc9a7e51fdb8c56ccc00c361b11671d6d0a072987d690d398be038fae57",
+   "edge_ids_distinct": 2625,
+   "edge_id_uses_hist": {
+    "2": 2625
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 2625,
+   "interior_slots": 5250,
+   "neighbour_opposite_winding": 5250,
+   "t_second_in_pair": 2625,
+   "edgetest_neighbour_shares_edge_j": 5250,
+   "edgetest_N1_is_opposite_vertex": 5250,
+   "slot_j_neighbour_other_edge": 5250,
+   "fan_end_closed": 5250,
+   "fan_visits_all_incident_tris": 5250,
+   "fan_tests_all_ring_vertices": 5250,
+   "fan_step_crosses_edge_prev_v": 5250,
+   "boundary_fraction": 0.0,
+   "first_seen_ms": 16397
+  },
+  {
+   "triangles": 180,
+   "vertices_header": 112,
+   "vertices_referenced": 112,
+   "edges_header": 270,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 540
+   },
+   "slot_label_by_position": {},
+   "sha256": "49cabaf08f5e934030ef183d252db04e6562213cba0f2a6b1a621423ede23eaf",
+   "edge_ids_distinct": 270,
+   "edge_id_uses_hist": {
+    "2": 270
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 270,
+   "interior_slots": 540,
+   "neighbour_opposite_winding": 540,
+   "t_second_in_pair": 270,
+   "edgetest_neighbour_shares_edge_j": 540,
+   "edgetest_N1_is_opposite_vertex": 540,
+   "slot_j_neighbour_other_edge": 540,
+   "fan_end_closed": 540,
+   "fan_visits_all_incident_tris": 540,
+   "fan_tests_all_ring_vertices": 540,
+   "fan_step_crosses_edge_prev_v": 540,
+   "boundary_fraction": 0.0,
+   "first_seen_ms": 39941
+  },
+  {
+   "triangles": 1750,
+   "vertices_header": 877,
+   "vertices_referenced": 877,
+   "edges_header": 2625,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 5250
+   },
+   "slot_label_by_position": {},
+   "sha256": "8edc7d7a1813c42e43e5425e9a9b2f2b49aed9344dfc18de64d89518a9a2bf64",
+   "edge_ids_distinct": 2625,
+   "edge_id_uses_hist": {
+    "2": 2625
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 2625,
+   "interior_slots": 5250,
+   "neighbour_opposite_winding": 5250,
+   "t_second_in_pair": 2625,
+   "edgetest_neighbour_shares_edge_j": 5250,
+   "edgetest_N1_is_opposite_vertex": 5250,
+   "slot_j_neighbour_other_edge": 5250,
+   "fan_end_closed": 5250,
+   "fan_visits_all_incident_tris": 5250,
+   "fan_tests_all_ring_vertices": 5250,
+   "fan_step_crosses_edge_prev_v": 5250,
+   "boundary_fraction": 0.0,
+   "first_seen_ms": 57047
+  },
+  {
+   "triangles": 1750,
+   "vertices_header": 877,
+   "vertices_referenced": 877,
+   "edges_header": 2625,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 5250
+   },
+   "slot_label_by_position": {},
+   "sha256": "fee04c5a956fad4dde3d7d37e485f1893acaf2bb7b8b2ca103d716b239b3d55f",
+   "edge_ids_distinct": 2625,
+   "edge_id_uses_hist": {
+    "2": 2625
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 2625,
+   "interior_slots": 5250,
+   "neighbour_opposite_winding": 5250,
+   "t_second_in_pair": 2625,
+   "edgetest_neighbour_shares_edge_j": 5250,
+   "edgetest_N1_is_opposite_vertex": 5250,
+   "slot_j_neighbour_other_edge": 5250,
+   "fan_end_closed": 5250,
+   "fan_visits_all_incident_tris": 5250,
+   "fan_tests_all_ring_vertices": 5250,
+   "fan_step_crosses_edge_prev_v": 5250,
+   "boundary_fraction": 0.0,
+   "first_seen_ms": 57084
+  },
+  {
+   "triangles": 30,
+   "vertices_header": 17,
+   "vertices_referenced": 17,
+   "edges_header": 45,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 90
+   },
+   "slot_label_by_position": {},
+   "sha256": "580c2b12c83d019d4fd52f9b40daf722551eb39c20849d32a5c62cf327482cf9",
+   "edge_ids_distinct": 45,
+   "edge_id_uses_hist": {
+    "2": 45
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 45,
+   "interior_slots": 90,
+   "neighbour_opposite_winding": 90,
+   "t_second_in_pair": 45,
+   "edgetest_neighbour_shares_edge_j": 90,
+   "edgetest_N1_is_opposite_vertex": 90,
+   "slot_j_neighbour_other_edge": 90,
+   "fan_end_closed": 90,
+   "fan_visits_all_incident_tris": 90,
+   "fan_tests_all_ring_vertices": 90,
+   "fan_step_crosses_edge_prev_v": 90,
+   "boundary_fraction": 0.0,
+   "first_seen_ms": 59252
+  },
+  {
+   "triangles": 22,
+   "vertices_header": 13,
+   "vertices_referenced": 13,
+   "edges_header": 33,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 66
+   },
+   "slot_label_by_position": {},
+   "sha256": "22bbfa48ac51e028b288a2929190c143df1616ad425d4c4f8e0ac224de1e34cb",
+   "edge_ids_distinct": 33,
+   "edge_id_uses_hist": {
+    "2": 33
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 33,
+   "interior_slots": 66,
+   "neighbour_opposite_winding": 66,
+   "t_second_in_pair": 33,
+   "edgetest_neighbour_shares_edge_j": 66,
+   "edgetest_N1_is_opposite_vertex": 66,
+   "slot_j_neighbour_other_edge": 66,
+   "fan_end_closed": 66,
+   "fan_visits_all_incident_tris": 66,
+   "fan_tests_all_ring_vertices": 66,
+   "fan_step_crosses_edge_prev_v": 66,
+   "boundary_fraction": 0.0,
+   "first_seen_ms": 59540
+  },
+  {
+   "triangles": 22,
+   "vertices_header": 13,
+   "vertices_referenced": 13,
+   "edges_header": 33,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 66
+   },
+   "slot_label_by_position": {},
+   "sha256": "5ebbee770c5310aa3bb6426bbc5131e5855d54ab2d4af147d6ccca8997e81b10",
+   "edge_ids_distinct": 33,
+   "edge_id_uses_hist": {
+    "2": 33
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 33,
+   "interior_slots": 66,
+   "neighbour_opposite_winding": 66,
+   "t_second_in_pair": 33,
+   "edgetest_neighbour_shares_edge_j": 66,
+   "edgetest_N1_is_opposite_vertex": 66,
+   "slot_j_neighbour_other_edge": 66,
+   "fan_end_closed": 66,
+   "fan_visits_all_incident_tris": 66,
+   "fan_tests_all_ring_vertices": 66,
+   "fan_step_crosses_edge_prev_v": 66,
+   "boundary_fraction": 0.0,
+   "first_seen_ms": 62371
+  },
+  {
+   "triangles": 12,
+   "vertices_header": 8,
+   "vertices_referenced": 8,
+   "edges_header": 18,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 36
+   },
+   "slot_label_by_position": {},
+   "sha256": "fe999175017b5bc3972110706e6aa979f6d3ef7ab2a59fd32d0c7762d60079c8",
+   "edge_ids_distinct": 18,
+   "edge_id_uses_hist": {
+    "2": 18
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 18,
+   "interior_slots": 36,
+   "neighbour_opposite_winding": 36,
+   "t_second_in_pair": 18,
+   "edgetest_neighbour_shares_edge_j": 36,
+   "edgetest_N1_is_opposite_vertex": 36,
+   "slot_j_neighbour_other_edge": 36,
+   "fan_end_closed": 36,
+   "fan_visits_all_incident_tris": 36,
+   "fan_tests_all_ring_vertices": 36,
+   "fan_step_crosses_edge_prev_v": 36,
+   "boundary_fraction": 0.0,
+   "first_seen_ms": 64924
+  },
+  {
+   "triangles": 20,
+   "vertices_header": 12,
+   "vertices_referenced": 12,
+   "edges_header": 30,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 60
+   },
+   "slot_label_by_position": {},
+   "sha256": "e9132e710f54de32e35ed6719fb1b8282484538e09414d714e58f8cb4932b684",
+   "edge_ids_distinct": 30,
+   "edge_id_uses_hist": {
+    "2": 30
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 30,
+   "interior_slots": 60,
+   "neighbour_opposite_winding": 60,
+   "t_second_in_pair": 30,
+   "edgetest_neighbour_shares_edge_j": 60,
+   "edgetest_N1_is_opposite_vertex": 60,
+   "slot_j_neighbour_other_edge": 60,
+   "fan_end_closed": 60,
+   "fan_visits_all_incident_tris": 60,
+   "fan_tests_all_ring_vertices": 60,
+   "fan_step_crosses_edge_prev_v": 60,
+   "boundary_fraction": 0.0,
+   "first_seen_ms": 65633
+  },
+  {
+   "triangles": 30,
+   "vertices_header": 17,
+   "vertices_referenced": 17,
+   "edges_header": 45,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 90
+   },
+   "slot_label_by_position": {},
+   "sha256": "c983da9a4545a62398df56a9b1bac94f16262101117b85cb906ab1535edae699",
+   "edge_ids_distinct": 45,
+   "edge_id_uses_hist": {
+    "2": 45
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 45,
+   "interior_slots": 90,
+   "neighbour_opposite_winding": 90,
+   "t_second_in_pair": 45,
+   "edgetest_neighbour_shares_edge_j": 90,
+   "edgetest_N1_is_opposite_vertex": 90,
+   "slot_j_neighbour_other_edge": 90,
+   "fan_end_closed": 90,
+   "fan_visits_all_incident_tris": 90,
+   "fan_tests_all_ring_vertices": 90,
+   "fan_step_crosses_edge_prev_v": 90,
+   "boundary_fraction": 0.0,
+   "first_seen_ms": 67400
+  },
+  {
+   "triangles": 10,
+   "vertices_header": 7,
+   "vertices_referenced": 7,
+   "edges_header": 15,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 30
+   },
+   "slot_label_by_position": {},
+   "sha256": "6a6c9b3f967c67bcb2385d653f63c04e854d4a518863bf18a061fd15af403f18",
+   "edge_ids_distinct": 15,
+   "edge_id_uses_hist": {
+    "2": 15
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 15,
+   "interior_slots": 30,
+   "neighbour_opposite_winding": 30,
+   "t_second_in_pair": 15,
+   "edgetest_neighbour_shares_edge_j": 30,
+   "edgetest_N1_is_opposite_vertex": 30,
+   "slot_j_neighbour_other_edge": 30,
+   "fan_end_closed": 30,
+   "fan_visits_all_incident_tris": 30,
+   "fan_tests_all_ring_vertices": 30,
+   "fan_step_crosses_edge_prev_v": 30,
+   "boundary_fraction": 0.0,
+   "first_seen_ms": 73741
+  },
+  {
+   "triangles": 30,
+   "vertices_header": 17,
+   "vertices_referenced": 17,
+   "edges_header": 45,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 90
+   },
+   "slot_label_by_position": {},
+   "sha256": "4f1f4e29975772255b782c76ff1aef9ec285b3fb9283c88a62f05f50153517f6",
+   "edge_ids_distinct": 45,
+   "edge_id_uses_hist": {
+    "2": 45
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 45,
+   "interior_slots": 90,
+   "neighbour_opposite_winding": 90,
+   "t_second_in_pair": 45,
+   "edgetest_neighbour_shares_edge_j": 90,
+   "edgetest_N1_is_opposite_vertex": 90,
+   "slot_j_neighbour_other_edge": 90,
+   "fan_end_closed": 90,
+   "fan_visits_all_incident_tris": 90,
+   "fan_tests_all_ring_vertices": 90,
+   "fan_step_crosses_edge_prev_v": 90,
+   "boundary_fraction": 0.0,
+   "first_seen_ms": 117543
+  },
+  {
+   "triangles": 22,
+   "vertices_header": 13,
+   "vertices_referenced": 13,
+   "edges_header": 33,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 66
+   },
+   "slot_label_by_position": {},
+   "sha256": "22bbfa48ac51e028b288a2929190c143df1616ad425d4c4f8e0ac224de1e34cb",
+   "edge_ids_distinct": 33,
+   "edge_id_uses_hist": {
+    "2": 33
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 33,
+   "interior_slots": 66,
+   "neighbour_opposite_winding": 66,
+   "t_second_in_pair": 33,
+   "edgetest_neighbour_shares_edge_j": 66,
+   "edgetest_N1_is_opposite_vertex": 66,
+   "slot_j_neighbour_other_edge": 66,
+   "fan_end_closed": 66,
+   "fan_visits_all_incident_tris": 66,
+   "fan_tests_all_ring_vertices": 66,
+   "fan_step_crosses_edge_prev_v": 66,
+   "boundary_fraction": 0.0,
+   "first_seen_ms": 130371
+  },
+  {
+   "triangles": 164,
+   "vertices_header": 85,
+   "vertices_referenced": 85,
+   "edges_header": 248,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 488
+   },
+   "slot_label_by_position": {},
+   "sha256": "71d66ed2010771010e7c65b1f2242ebf0ad3076480ea8acb32ccd9c2909f7c11",
+   "edge_ids_distinct": 248,
+   "edge_id_uses_hist": {
+    "1": 4,
+    "2": 244
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 248,
+   "interior_slots": 488,
+   "neighbour_opposite_winding": 488,
+   "boundary_slots": 4,
+   "t_second_in_pair": 244,
+   "edgetest_neighbour_shares_edge_j": 488,
+   "edgetest_N1_is_opposite_vertex": 488,
+   "slot_j_neighbour_other_edge": 488,
+   "fan_end_closed": 480,
+   "fan_visits_all_incident_tris": 484,
+   "fan_tests_all_ring_vertices": 480,
+   "fan_step_crosses_edge_prev_v": 488,
+   "fan_end_boundary": 12,
+   "fan_misses_incident_tris": 8,
+   "fan_misses_ring_vertices": 12,
+   "edgetest_none": 4,
+   "boundary_fraction": 0.00813,
+   "first_seen_ms": 143566
+  },
+  {
+   "triangles": 164,
+   "vertices_header": 85,
+   "vertices_referenced": 85,
+   "edges_header": 248,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 488
+   },
+   "slot_label_by_position": {},
+   "sha256": "f956f61ed074fae9e5f7fdc91dc6401806f153ea8205de290a7c191355d6c1d3",
+   "edge_ids_distinct": 248,
+   "edge_id_uses_hist": {
+    "1": 4,
+    "2": 244
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 248,
+   "interior_slots": 488,
+   "neighbour_opposite_winding": 488,
+   "boundary_slots": 4,
+   "t_second_in_pair": 244,
+   "edgetest_neighbour_shares_edge_j": 488,
+   "edgetest_N1_is_opposite_vertex": 488,
+   "slot_j_neighbour_other_edge": 488,
+   "fan_end_closed": 480,
+   "fan_visits_all_incident_tris": 484,
+   "fan_tests_all_ring_vertices": 480,
+   "fan_step_crosses_edge_prev_v": 488,
+   "fan_end_boundary": 12,
+   "fan_misses_incident_tris": 8,
+   "fan_misses_ring_vertices": 12,
+   "edgetest_none": 4,
+   "boundary_fraction": 0.00813,
+   "first_seen_ms": 149037
+  },
+  {
+   "triangles": 22,
+   "vertices_header": 13,
+   "vertices_referenced": 13,
+   "edges_header": 33,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 66
+   },
+   "slot_label_by_position": {},
+   "sha256": "5e95479f51e4af437bbc8cce5c7d583f613e86e1cf2c6b92b1fba3566453f2e6",
+   "edge_ids_distinct": 33,
+   "edge_id_uses_hist": {
+    "2": 33
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 33,
+   "interior_slots": 66,
+   "neighbour_opposite_winding": 66,
+   "t_second_in_pair": 33,
+   "edgetest_neighbour_shares_edge_j": 66,
+   "edgetest_N1_is_opposite_vertex": 66,
+   "slot_j_neighbour_other_edge": 66,
+   "fan_end_closed": 66,
+   "fan_visits_all_incident_tris": 66,
+   "fan_tests_all_ring_vertices": 66,
+   "fan_step_crosses_edge_prev_v": 66,
+   "boundary_fraction": 0.0,
+   "first_seen_ms": 154714
+  },
+  {
+   "triangles": 356,
+   "vertices_header": 181,
+   "vertices_referenced": 181,
+   "edges_header": 536,
+   "degenerate_triangles": 0,
+   "scale_uniform": true,
+   "slot_label_by_index": {
+    "k+2,k": 1064
+   },
+   "slot_label_by_position": {},
+   "sha256": "aded86882852006ecdab5ea70fcd41be6952166110e1059f6279f012515379ee",
+   "edge_ids_distinct": 536,
+   "edge_id_uses_hist": {
+    "1": 4,
+    "2": 532
+   },
+   "vertices_sharing_position_with_another": 0,
+   "t_first_in_pair": 536,
+   "interior_slots": 1064,
+   "neighbour_opposite_winding": 1064,
+   "boundary_slots": 4,
+   "t_second_in_pair": 532,
+   "edgetest_neighbour_shares_edge_j": 1064,
+   "edgetest_N1_is_opposite_vertex": 1064,
+   "slot_j_neighbour_other_edge": 1064,
+   "fan_end_closed": 1056,
+   "fan_visits_all_incident_tris": 1060,
+   "fan_tests_all_ring_vertices": 1056,
+   "fan_step_crosses_edge_prev_v": 1064,
+   "fan_end_boundary": 12,
+   "fan_misses_incident_tris": 8,
+   "fan_misses_ring_vertices": 12,
+   "edgetest_none": 4,
+   "boundary_fraction": 0.003745,
+   "first_seen_ms": 168242
+  }
+ ],
+ "aggregate": {
+  "degenerate_triangles": 0,
+  "vertices_sharing_position_with_another": 0,
+  "t_first_in_pair": 16362,
+  "interior_slots": 32700,
+  "neighbour_opposite_winding": 32700,
+  "t_second_in_pair": 16350,
+  "edgetest_neighbour_shares_edge_j": 32700,
+  "edgetest_N1_is_opposite_vertex": 32700,
+  "slot_j_neighbour_other_edge": 32700,
+  "fan_end_closed": 32676,
+  "fan_visits_all_incident_tris": 32688,
+  "fan_tests_all_ring_vertices": 32676,
+  "fan_step_crosses_edge_prev_v": 32700,
+  "boundary_slots": 12,
+  "fan_end_boundary": 36,
+  "fan_misses_incident_tris": 24,
+  "fan_misses_ring_vertices": 36,
+  "edgetest_none": 12
+ },
+ "aggregate_slot_labels": {
+  "index:k+2,k": 32700
+ },
+ "label_key": {
+  "k,k+1": "slot k shares vertex positions k and k+1 of the triangle (edge Vk->Vk+1)",
+  "k+1,k+2": "slot k shares positions k+1 and k+2",
+  "k+2,k": "slot k shares positions k+2 and k (edge V(k-1)->Vk)"
+ },
+ "tools": {
+  "plugin_source_sha256": "93c3af3bb8f9281c5b6a626fe6fa756e1607a219a3c6154350668f8b64a186de",
+  "analysis_sha256": "5a66a993553bb6fa734bcc523e8152a5a04525955e74446fec67e1db1dac7cae",
+  "receipt_builder_sha256": "f6d6afde6646985a647089ffdf9b8e2808c17dc393c86b4d260b6c7a626bc214"
+ },
+ "driving": "t6-01: one pre-arm forward hold, then the tf-01 cycle (forward x2, steer_left 1500, forward, jump 700, forward, steer_right 1500, forward, jump 400); 20 actions in a 170 s window, 20,218 steps, about 1,160 m of altitude descended, no host disconnect or KO. Kind-6 tester calls: (4,6) 64,717, (2,6) 26,343; 86 kind-6 shape pointers referenced 19 distinct mesh pointers, all 19 copied.",
+ "verdict": {
+  "slot_convention": "slot 3*t+k holds the edge between triangle positions k+2 and k (i.e. vertex k-1 -> vertex k; the edge opposite vertex k+1). Equivalently, edge j = Vj -> V(j+1) is stored in slot (j+1)%3. 32,700 of 32,700 interior slots in 19 meshes; 0 for k->k+1 or k+1->k+2.",
+  "edge_test_1995fa0": "consistent: for edge j the slot (j+1)%3 neighbour shares Vj and V(j+1) in 32,700/32,700 cases, and 'the vertex after VA in the neighbour' is the neighbour's opposite (non-shared) vertex in 32,700/32,700. Reading slot j instead would reach a triangle across a different edge in 32,700/32,700. The (j+1)%3 offset is the storage convention, not a quirk.",
+  "fan_walk_1996280": "consistent: slot pos(v) is the edge (previous vertex, v), so each step crosses an edge incident to v into a triangle that contains v (32,700/32,700 first steps). On the 16 closed meshes every walk returns to the start, visits every incident triangle and tests every ring vertex. On the 3 open meshes 12 walks per mesh (36) stop at 0xffff; 24 of them miss incident triangles and 36 miss ring vertices (the documented one-way walk)."
+ },
+ "findings": [
+  "Pair table: for every slot the triangle itself is one of the two entries (0 slots without it, 0 entries naming the triangle twice). Interior entries are stored (lower triangle, higher triangle) in 16,350/16,350 edges; boundary edges are (t, 0xffff) with 0xffff second in 12/12.",
+  "Edge ids are numbered in order of first appearance over slots 3t+k in all 19 meshes; every interior id is used by exactly two slots, every boundary id by one. Mesh +0xb0 equals the number of distinct edge ids and +0x38 equals max(index)+1 on all 19.",
+  "Triangles share vertex indices (no index-distinct vertices at the same position within 1e-4; no degenerate triangles). Shared edges are traversed in opposite directions by the two triangles in 32,700/32,700 interior slots (consistent winding).",
+  "Topology: 16 meshes are closed (0 boundary slots; V - E + F = 2 on 15, and 22 on the 180-triangle mesh, consistent with several closed components); 3 meshes (164, 164, 356 triangles) each have 4 boundary edges (boundary fractions 0.00813, 0.00813, 0.00375). Overall 12 boundary slots of 32,712 (0.037%).",
+  "Consistency across meshes: the same convention holds on every mesh, triangle counts 10, 12, 20, 22, 30, 164, 180, 356, 1750 and 4550 (two meshes had byte-identical tables)."
+ ],
+ "limits": [
+  "One 170 s session, one spawn and one descent line; 19 distinct mesh pointers near that line. Tables were copied once at first sight; after restore only 1 of 19 mesh headers and tables re-read identically (the rest had been freed or reused), so stability over a mesh lifetime is not shown.",
+  "The copy is sequential ReadProcessMemory reads, not an atomic snapshot; internal consistency (every slot names its own triangle, every pair shares exactly one edge with matching winding) is the evidence that the copies were coherent.",
+  "The conclusion concerns the stored tables and what the two readers would reach with them; the readers' arithmetic was not executed live. Observations under Wine on macOS for one build; not a statement about other maps or the original engine generally."
+ ]
+}

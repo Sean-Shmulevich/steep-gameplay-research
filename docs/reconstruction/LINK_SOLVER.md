@@ -11578,7 +11578,8 @@ Kind 6, from field use (our labels):
   keeps two register slots plus an append-only queue of 0x30-byte entries (inline 0x100)
   and grows it through `1952f20`; see "Kind-6 tree query and mode-2 neighbourhood filter".
 - Mode 2 only: +0xa8 u16 triangle pair per edge (0xffff = none), +0xb8 u32 edge id per
-  triangle edge (edge j = vertex j to vertex j+1).
+  triangle edge. Slot 3t+k holds the edge V(k-1)→Vk, i.e. edge j = Vj→V(j+1) is in slot
+  (j+1)%3 (live, see "Live kind-6 edge-slot convention"; an earlier note here said slot j).
 
 Unlike kind 7 (a float height grid that makes triangles per cell, see "Kind-7 grid
 resource bounds"), kind 6 stores triangles explicitly with 16-bit identities throughout.
@@ -11882,11 +11883,11 @@ fixtures as in the tester harness; `18c9140/18c8f50` ret stubs, not traced).
 Tests: `tests/test_pose_terrain6_tree_query.py` (9) and
 `tests/test_pose_terrain6_edge_filter.py` (9).
 
-Limits: synthetic trees, meshes and adjacency (slot j = edge v_j -> v_(j+1)), not game
-assets. Because `1995fa0` reads slot (j+1)%3, either the real +0xb8 convention differs
-from ours or the original pairs edge j with slot j+1; unresolved (live mode-2 tables
-exist on every observed mesh, see "Live terrain filter settings", so a live read could
-settle it). Emulator two-NaN rule, MXCSR 0x1f80. The native fan walk has no bound (the
+Limits: synthetic trees, meshes and adjacency, not game assets. The fixtures first used
+slot j = edge v_j -> v_(j+1); the live read ("Live kind-6 edge-slot convention") showed
+slot j = edge v_(j-1) -> v_j, so `1995fa0` reading slot (j+1)%3 is the adjacent triangle,
+not a quirk. Both harnesses now build adjacency that way and still pass (640/640 tester,
+640/640/320 leaves, all injected bugs caught). Emulator two-NaN rule, MXCSR 0x1f80. The native fan walk has no bound (the
 model raises after 2^20 steps); non-terminating adjacency was not exercised. Allocation
 is a fixture; only event kind and size are compared.
 
@@ -12050,3 +12051,43 @@ slot +8 observation.
 
 Static leads: the terrain slot-1 bodies; callers of +0x10 and +0x20 (filtered queries);
 whether live frames can carry NaN into `19c6520`, which would hang.
+
+### Live kind-6 edge-slot convention
+
+A live observation, not a reconstruction check. Receipt:
+`native/snow_host/terrain6_edge_convention_live.json`.
+
+**Capture.** Same private hooks, identity checks and restore discipline as "Live terrain
+filter settings" (only vtable-pointer compare-exchanges to private copies, restored and
+verified; no obfuscated thunks traced). Inside the tester detour, on first sight of each
+distinct kind-6 mesh (shape+0x48), the plugin copied the u16 indices (+0x40), u32 edge ids
+(+0xb8), u16 pair table (+0xa8) and vertices (+0x30) into a private dump outside this
+repository, analysed offline. Session t6-01: 170 s, 20,218 steps, 20 single-key actions,
+about 1,160 m descended, no KO; 32/32 testers, the dispatcher and the broad-phase object
+restored and read back as original. 86 kind-6 shapes referenced 19 distinct meshes
+(10 to 4550 triangles), all copied. The receipt holds counts, tallies and hashes only.
+
+**Convention.** Slot `3*t + k` holds the edge between triangle positions k+2 and k, i.e.
+V(k-1)→Vk (the edge opposite V(k+1)). Equivalently, edge j = Vj→V(j+1) is in slot (j+1)%3.
+This held in 32,700 of 32,700 interior slots on all 19 meshes; none matched k→k+1 or
+k+1→k+2.
+
+**Readers.** `1995fa0` reads slot (j+1)%3 for edge j, which is the triangle across edge j,
+and its "vertex after VA" is that neighbour's opposite vertex (32,700/32,700): the offset
+is the storage convention, not a quirk. `1996280` crosses slot pos(v), the edge (previous
+vertex, v), so each step enters a triangle containing v (32,700/32,700 first steps). On
+the 16 closed meshes every walk returns to its start after visiting every incident
+triangle and testing every ring vertex; on the 3 open meshes 36 walks stop at 0xffff
+(the documented one-way walk).
+
+**Table shape.** Every slot's pair contains its own triangle; interior pairs are stored
+(lower, higher), boundary pairs (t, 0xffff). Edge ids are numbered in first-appearance
+order over 3t+k, each interior id used twice. mesh+0xb0 = edge count and mesh+0x38 =
+vertex count. Triangles share vertex indices (no duplicate positions, no degenerate
+triangles) and adjacent triangles have opposite winding. 16 meshes are closed; three
+(164, 164, 356 triangles) have 4 boundary edges each (12 of 32,712 slots overall).
+
+Limits: one session and one descent line; tables copied once per mesh; after restore 18
+of 19 meshes had been freed or reused, so stability over a mesh's lifetime is not shown.
+Sequential reads, not an atomic snapshot (the internal consistency is the coherence
+evidence). The readers were not executed live. Wine on macOS, one build.

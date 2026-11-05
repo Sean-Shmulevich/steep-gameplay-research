@@ -59,39 +59,39 @@
     "cases": 640,
     "passed": 640,
     "records_in": 2505,
-    "records_kept": 886,
+    "records_kept": 758,
     "special_cases": 80,
     "nonfinite_cases": 55,
     "non_identity_frames": 278,
     "no_pairs_table": 27,
     "decisions": {
       "back_rejected": 905,
-      "edge0_kept": 87,
-      "edge0_rejected": 79,
-      "edge1_kept": 82,
-      "edge1_rejected": 105,
-      "edge2_kept": 89,
-      "edge2_rejected": 76,
+      "edge0_kept": 35,
+      "edge0_rejected": 131,
+      "edge1_kept": 34,
+      "edge1_rejected": 153,
+      "edge2_kept": 40,
+      "edge2_rejected": 125,
       "interior_kept": 326,
-      "vertex0_kept": 67,
-      "vertex0_rejected": 178,
-      "vertex1_kept": 61,
-      "vertex1_rejected": 141,
-      "vertex2_kept": 47,
-      "vertex2_rejected": 135
+      "vertex0_kept": 79,
+      "vertex0_rejected": 166,
+      "vertex1_kept": 67,
+      "vertex1_rejected": 135,
+      "vertex2_kept": 50,
+      "vertex2_rejected": 132
     },
     "paths": {
       "past_back_gate": 470,
       "vertex_call": 169,
       "edge_call": 233,
-      "removed": 481,
-      "fan_walk": 113,
-      "fan_boundary_or_loop": 125,
-      "fan_step_test": 89,
-      "vertex_reject": 278,
-      "edge_neighbour": 196,
+      "removed": 486,
+      "fan_walk": 127,
+      "fan_boundary_or_loop": 141,
+      "fan_step_test": 87,
+      "vertex_reject": 271,
+      "edge_neighbour": 200,
       "edge_second_test": 190,
-      "edge_reject": 188,
+      "edge_reject": 257,
       "early_return": 103
     },
     "failures": []
@@ -108,13 +108,13 @@
     "special_cases": 64,
     "special_mode2": 54,
     "nonfinite_cases": 26,
-    "mode2_filter_calls": 10110,
+    "mode2_filter_calls": 11953,
     "query_calls": 387,
     "requery_0x80": 67,
     "max_triangles_from_query": 1150,
     "max_count": 500,
     "queue_growth_runs": 13,
-    "filter_rejections": 6065,
+    "filter_rejections": 8536,
     "per_call_mismatch": 0,
     "failures": []
   },
@@ -177,7 +177,7 @@
     {
       "leaf": "0x19974c0",
       "bug": "edge threshold 0.001 instead of 0.0001",
-      "caught_at_case": 4
+      "caught_at_case": 2
     },
     {
       "leaf": "0x19974c0",
@@ -187,7 +187,7 @@
     {
       "leaf": "composed 0x198af50",
       "bug": "composed: breadth-first tree order",
-      "caught_at_case": 10
+      "caught_at_case": 7
     },
     {
       "leaf": "composed 0x198af50",
@@ -201,7 +201,7 @@
     }
   ],
   "limits": [
-    "Synthetic trees, meshes and adjacency, not game assets; the real kind-6 edge-table convention (which slot holds which edge) is unknown, and the edge test reads slot (j+1)%3.",
+    "Synthetic trees, meshes and adjacency, not game assets. Fixture adjacency follows the live kind-6 convention (slot 3t+k = edge V(k-1)-Vk, terrain6_edge_convention_live.json), so the edge test reading slot (j+1)%3 reaches the triangle adjacent across edge j.",
     "MXCSR is the Unicorn default 0x1f80; hardware two-NaN choice not observed.",
     "Allocation is a fixture; only the event sequence (kind and size) is compared.",
     "Non-terminating fan walks (possible with inconsistent adjacency) are not exercised natively."
