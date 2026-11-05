@@ -2077,3 +2077,21 @@ Capacity is accepted and ignored, as natively. Authored: a null shape raises
 `ValueError` where the native code would fault. Kind 2 is a sphere, kind 3 a box
 (earlier evidence), and kinds 4 and 5 are unidentified. Evidence:
 `native/snow_host/pose_narrowphase_dispatch_validation.json`.
+
+### Narrow-phase sphere testers and swap wrapper
+
+`engine.pose_narrowphase_sphere`: `sphere_box_tester`, `sphere_capsule_tester`,
+`sphere_convex_tester(mem, geom, out, capacity=500, *, point_query, mask=XYZ_MASK, nan_rule='sse')`,
+the lane-level cores `sphere_box_core`, `sphere_capsule_core`, `sphere_convex_core`,
+`flip_contact_records(mem, begin, end)` (0x1994f60), `swapped_geom(raw, lane3=0)`,
+`swapped_tester(forward, mem, geom, out, capacity, ...)` and
+`bind_sphere_testers(*, point_query, ...)` (kind pair → tester for (2,3) (2,4) (2,5) (3,2)
+(4,2) (5,2)). Follows LINK_SOLVER.md "Narrow-phase sphere testers and swap wrapper".
+Capacity is accepted and never read. Each tester writes at most one 0x30-byte record and
+returns 0 or 1. Supplied: `point_query(frame_b_rows, shape_b, point) -> (dist, on_hull,
+on_point)` stands for 0x18f0a70 and is not restated. Authored: the service signature,
+the swapped-geom placement (`SWAP_GEOM_ADDRESS`) and the lane-3 parameter (native:
+stale stack). A null shape raises where native faults. UNRESOLVED: the hardware two-NaN
+rule, the live MXCSR, the 0x1949480 count-1 scan and the +0xc0 support path. Evidence:
+`native/snow_host/pose_narrowphase_sphere_validation.json`. No claim of original-engine
+equivalence outside the validated fixtures.

@@ -1,0 +1,74 @@
+{
+  "schema": "pose-narrowphase-sphere-validation-v1",
+  "routines": {
+    "(2,3)": "0x19d5260 -> 0x19d4e50",
+    "(2,4)": "0x19d5720 -> 0x19d53b0",
+    "(2,5)": "0x19d5c90 -> 0x19d58b0 (+0x18f0a70 native)",
+    "(3,2)": "0x198b400",
+    "(4,2)": "0x198b590",
+    "(5,2)": "0x198b720",
+    "flip": "0x1994f60"
+  },
+  "cases": {
+    "2,3": 512,
+    "2,4": 512,
+    "2,5": 512,
+    "3,2": 256,
+    "4,2": 256,
+    "5,2": 256,
+    "flip": 256
+  },
+  "passed": 2560,
+  "method": "offline Unicorn run of the original entry wrappers over the memory image; nothing hooked out; 0x18f0a70 runs natively and its result is captured at 0x19d5930 and supplied to the model as the point_query service; a code hook asserts execution stays in the allowed ranges",
+  "fixtures": [
+    "XYZ mask {-1,-1,-1,0} (initializer 0x400c7e60); 1 case in 16 of the forward runs uses a random mask",
+    "TEB+0x10 StackLimit for __chkstk 0x1c45120; TEB+0x58 TLS array, epoch 1 at block+0x4eec",
+    "function-local static 0x3336a30 pre-set to its initializer value (RVA 0x29ca870, 1e-7 x4), guard 0x3336a40 = 1",
+    "convex shapes: support lookup pointer +0xc0 = 0 (brute-force vertex scan path only)"
+  ],
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "stats": {
+    "nan_lanes_in": 984,
+    "inf_lanes_in": 117,
+    "subnormal_lanes_in": 1409,
+    "nonstandard_mask": 96,
+    "capacity_zero_with_record": 211,
+    "records": 1084,
+    "cases_where_sse_rule_differs": 2,
+    "plane_counts_deep_zero": 46,
+    "swap_records": 362
+  },
+  "native_branches": {
+    "box_separated": 115,
+    "box_inside": 143,
+    "box_none": 510,
+    "capsule_degenerate": 87,
+    "capsule_normal": 245,
+    "capsule_none": 436,
+    "convex_none": 274,
+    "convex_shallow": 129,
+    "convex_deep": 365
+  },
+  "comparisons": [
+    "return value (32-bit)",
+    "all 0x270 bytes of the out area (13 records, only record 0 may change)",
+    "geom, both shapes, vertex, plane block and plane bytes unchanged",
+    "model inputs to the point-query service equal the native call arguments (frame rows, shape, point, 16)",
+    "bit-exact float32 lanes under the emulator two-NaN rule"
+  ],
+  "bug_injections": {
+    "box near-surface threshold 1e-4 -> 0 (dist^2 test)": "2,3 case 2 (record bytes)",
+    "convex deep branch keeps the most penetrating plane (comparison reversed)": "2,5 case 1027 (record bytes)",
+    "capsule degenerate branch always uses (Dy,-Dx,0)": "2,4 case 558 (record bytes)",
+    "swap flip does not negate the normal": "3,2 case 1536 (record bytes)",
+    "sequential ((p0+p1)+p2)+p3 instead of the haddps pair tree": "2,4 case 975 (record bytes)"
+  },
+  "limits": [
+    "0x18f0a70 is not restated: the model consumes its native result. Its own correctness (GJK convergence, the count-1 vertex scan in 0x1949480) is outside this receipt.",
+    "The +0xc0 support-lookup path of 0x1949480 is not exercised.",
+    "Two-NaN lanes compared under nan_rule x87 (QEMU softfloat); the manual rule differs in the counted cases.",
+    "MXCSR is the Unicorn default 0x1f80; the live MXCSR is not established.",
+    "Swap wrappers are run with the standard mask only; their frame lane 3 is uninitialised stack.",
+    "Synthetic fixtures; no live shapes. Kinds 4/5 identification is from field use, not from a live shape."
+  ]
+}

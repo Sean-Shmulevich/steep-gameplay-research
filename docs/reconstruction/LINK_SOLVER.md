@@ -10928,3 +10928,130 @@ is validated here; the other bodies are separate passes.
 Count bound on the `18dd400` path: the sphere-sphere tester returns at most 1, so
 this cell cannot overrun the payload rows of `198fdc0`. The other cells are still
 open.
+
+### Narrow-phase sphere testers and swap wrapper
+
+`engine/pose_narrowphase_sphere.py` restates the sphere row of the tester table (see
+"Narrow-phase tester table and sphere-sphere tester"): (2,3) entry `19d5260` → core
+`19d4e50` (tail `19d5209`), (2,4) entry `19d5720` → core `19d53b0`, (2,5) entry
+`19d5c90` → core `19d58b0`, the swapped entries (3,2) `198b400`, (4,2) `198b590`,
+(5,2) `198b720` and their post-process `1994f60`. Every entry masks the eight geom rows
+with M (`3336890`, runtime {-1,-1,-1,0}) before calling the core
+(rcx = shapeA', rdx = frameA, r8 = shapeB', r9 = frameB, [rsp+0x20] = out,
+[rsp+0x28] = capacity). (2,3) and (2,5) pass raw shape pointers, and the core reads
++0x40 itself. (2,4) passes shape+0x40, or 0 for a null shape. No core null-checks.
+
+Kinds (from field use): 3 = box (extents xyz at +0x40/44/48, consistent with the
+box/terrain producer). 4 = capsule (half-height h at +0x40, radius at +0x44, segment
+local (0,±h,0) on frame row 1). 5 = convex hull (vertices q +0x40 as packed float3,
+count d +0x48, optional support lookup +0xc0/+0xd0/+0xe0..e8, plane block q +0x100:
+block+8 array, block+0x22 u16 count, 0x14-byte planes nx,ny,nz,d,-). "Capsule" and
+"convex hull" are our labels from field use, not recovered names.
+
+None of the three cores reads the capacity. Each writes at most one record (also when
+capacity is 0) and returns 0 or 1. Record: +0 normal (from A toward B), +0xc depth,
++0x10 point on A, +0x1c = 0, +0x20 point on B, +0x2c = 0xffff0000.
+
+```text
+box 19d4e50(r = sA.f40, FA, E = sB.v40 & M, FB):        # rows b0,b1,b2,t
+  d = tA - tB;  l_k = hadd2((b_k*d) & M)                 # (p0+p1)+(p2+p3)
+  c_k = maxps(minps(l_k, E_k), -E_k)
+  C = ((tB + c0*b0) + c1*b1) + c2*b2;  v = C - tA;  q = hadd2((v*v) & M)
+  if !(q <= r*r): return 0
+  if 1e-4 < q:                                           # 1e-4 compared with dist^2
+     L = sqrt q; n = v/L; depth = L - r; pA = C - n*depth; pB = C
+  else:                                                  # inside, or within 1e-2 outside
+     l = hadd(hadd(b0*d, b1*d), hadd(d*b2, same)) & M     # unmasked products, lane 3 included
+     m_k = E_k - |l_k|
+     k = m0<m1 ? (m0<m2 ? 0 : 2) : (m1<m2 ? 1 : 2)        # cmpltps, ties go to the later axis
+     u = unit_k (1e25250/1e25270/1df4060); if l_k < 0: u = -u (all lanes)
+     N = b2*u.z + (b1*u.y + b0*u.x)
+     n = -N; depth = -(m_k + r); pB = m_k*N + tA; pA = tA - N*r
+  return 1
+
+capsule 19d53b0(rs = *sA', FA, h = *sB', rc = sB'[1], FB):
+  P0 = b2*0 + ((b0*0 + tB) + b1*(-h));  D = b2*0 + (b1*(h+h) + b0*0)
+  t = maxps(minps((D·(tA-P0)) / (D·D), 1), 0)            # NaN t -> 1
+  C = D*t + P0;  v = C - tA;  q = hadd2((v*v) & M);  R = rc + rs
+  if !(q < R*R): return 0                                # strict
+  if |q| <= (rs + rc) * 5e-6 (1ef69e0):                  # centre on the axis
+     a = |D|; perp = (min(ax,ay)-az < Z) ? ((ay-ax < Z) ? (Dz,0,-Dx) : (0,Dz,-Dy)) : (Dy,-Dx,0)
+     vec = perp; depth = +0.0                            # Z = 33368c0 = 0 (initializer 400c7ea0)
+  else: vec = v; depth = sqrt(q) - R
+  n = vec * (1 / sqrt(hadd2((vec*vec) & M)))
+  pA = n*rs + tA;  pB = C - rc*n;  return 1
+
+convex 19d58b0(r = sA.f40, FA, FB, sB):
+  (dist, P_hull, P_q) = 18f0a70(&out, &{FB rows, sB}, &tA, 16)    # point query, supplied
+  if r < dist (lanes 0..2): return 0
+  if 2^-23 (1eeb1f0) < dist:                             # shallow
+     depth = dist - r; n = (P_hull - P_q) * (1/len); pA = n*r + tA; pB = P_hull
+  else:                                                  # on/inside: face planes
+     best = FLT_MAX; bn = 0
+     for each plane (nx,ny,nz,d) in sB.q100->(q8, w22):
+        Nw = b2*nz' + (b0*nx' + b1*ny')                  # (n,d) & M; d itself unmasked
+        dW = hadd2((tB*Nw) & M) + d;  Nm = (Nw.xyz, dW) & M
+        s = -(hadd2((tA*Nm) & M) - dW)
+        if s < best: best = s; bn = Nm                   # = largest signed distance
+     n = -bn; depth = -(best + r); pB = bn*best + tA; pA = (-r)*bn + tA
+  return 1
+
+swap 198b400/198b590/198b720(tester, geom, out, cap):
+  g' = { rowsA = geom rows 40..7f (xyz only; lane 3 = stale stack), rowsB = geom 00..3f,
+         +80 = geom+88, +88 = geom+80, +90..92 = geom+90..92, +b8 = forward vtable }
+  n = forward_entry(&tmp_tester, g', out, cap)            # 19d5260 / 19d5720 / 19d5c90
+  1994f60(out, out + 0x30 n): per record n.xyz ^= sign; swap +10..+1b with +20..+2b
+  return n
+```
+
+Behaviour worth preserving:
+
+- None of these cores bounds by capacity, and none writes more than one record. Sphere
+  pairs therefore never give n > 1 at `18dd400`.
+- Box: the switch to the inside branch tests dist² against 1e-4. A centre up to 1e-2
+  outside a face is treated as inside, with a negative margin. Depth is then
+  -(margin + r), and the contact is pushed out along the least-margin face. On equal
+  margins the later axis wins.
+- Box radius test `<=`, capsule radius test `<` (strict).
+- Capsule on-axis case: depth is +0.0, not the overlap. The normal is a perpendicular of
+  D chosen by component magnitudes. h = 0 gives t = 0/0 → NaN → 1 (minps), so the
+  capsule behaves like a sphere.
+- Convex deep branch: the plane offset d is unmasked, and the plane is chosen by the
+  largest signed distance of the centre. With zero planes the result is normal (-0,-0,-0),
+  depth -(FLT_MAX + r), pB = tA.
+- Swap: depth and both feature words are unchanged. Only the normal is negated and the
+  points are exchanged. The forward tester runs with the original capacity.
+
+Validation: `native/snow_host/pose_narrowphase_sphere_validation.json` has 2560 of 2560
+Unicorn cases over the memory image: 512 each for (2,3)/(2,4)/(2,5), 256 each for
+(3,2)/(4,2)/(5,2) through the real swap entries, and 256 standalone `1994f60` runs over
+0..12 records. Nothing is hooked out. `18f0a70`, `1949480` and their vector leaves run
+natively. The query result is captured at `19d5930` and supplied to the model, and its
+inputs are compared with the model's. A code hook pins execution to the listed ranges.
+Fixtures stand in for process state: TEB StackLimit for `__chkstk`, the TLS epoch, and the
+function-local static `3336a30` set to its initializer value 1e-7 (RVA `29ca870`). Every
+out byte (13 records), the return value and the input regions (unchanged) are compared
+under the emulator two-NaN rule. Native branch visits: box separated 115 / inside 143,
+capsule normal 245 / degenerate 87, convex shallow 129 / deep 365 (46 with zero
+planes), plus no-contact exits. Lanes: 984 NaN, 117 inf, 1409 subnormal. 96 cases use a
+random mask. 211 have capacity 0 with a written record. Injected bugs (each caught):
+box threshold 0 at case 2; reversed plane choice at case 1027; fixed capsule
+perpendicular at case 558; flip without negation at case 1536; sequential sum instead of
+the hadd tree at case 975 (non-standard mask).
+
+Tests: `tests/test_pose_narrowphase_sphere.py`, 22 tests covering the box, capsule and
+convex branches, capacity 0, NaN radius, null shapes, the flip, the swapped-geom layout,
+(3,2) = forward + flip, and agreement with the dispatch table.
+
+Limits: `18f0a70` is not restated. The model consumes its native result, and its own
+correctness is outside the receipt. The `+0xc0` support-lookup path is not exercised.
+The live MXCSR, hardware two-NaN behavior and live shapes are not observed. Swap runs use
+the standard mask only.
+
+Static leads:
+
+- `1949480` brute-force path: `dec r8d` before the scan, so it visits vertices
+  0..count-2. Is +0x48 count+1 (a sentinel), or is the last vertex skipped?
+- The +0xc0 lookup structure of the hull (grid at +0xc0, adjacency at +0xd0, dims
+  +0xe0/e4/e8).
+- `18f0a70` itself (GJK; 1e-7 static at `3336a30`) and its sibling at `18f3710`.
