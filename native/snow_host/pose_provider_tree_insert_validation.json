@@ -1,0 +1,61 @@
+{
+  "schema": "pose-provider-tree-insert-validation-v1",
+  "trials": 512,
+  "insert_calls": 35640,
+  "inserted": 30211,
+  "duplicate_rejected": 5429,
+  "removals_between_inserts": 11738,
+  "allocator_calls": 1884,
+  "calls_by_routine": {
+    "18de6a0": 23071,
+    "18de830": 12569
+  },
+  "passed": true,
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rvas": [
+    "0x18de6a0",
+    "0x18de830",
+    "0x18df350",
+    "0x18df3f0",
+    "0x19a3d40",
+    "0x1959bb0",
+    "0x18da970"
+  ],
+  "method": "Original insert/grow/fixup/rotations run in Unicorn without interception; only the allocator vtable (alloc/realloc/free) is an authored deterministic stub shared in model by the Python side",
+  "comparisons": [
+    "return value",
+    "allocator call sequence (kind, size, alignment, tag, pointers)",
+    "all bytes of 0x9f000-byte fixture (descriptor, initial and grown node arrays, junk-filled uninitialized slots) after every call",
+    "red-black validity after every call: BST order unsigned 64-bit, parent links, root black, no red-red, equal black height, live count, free-list partition of used slots"
+  ],
+  "coverage": [
+    "null pointer and capacity 0..6 initial arrays growing to 2x/4",
+    "free-list slot reuse (removals via pose_body_tree _Tree.remove key_size 8 between inserts)",
+    "append slot",
+    "duplicate keys (no growth, no write)",
+    "ascending, descending, random, boundary-value (high bit) and small-domain keys",
+    "both routines 0x18de6a0 (tag 0x21) and 0x18de830 (tag 0x23)",
+    "native branch hit: 0x18de6e7",
+    "native branch hit: 0x18de6f6",
+    "native branch hit: 0x18de7a6",
+    "native branch hit: 0x18de7aa",
+    "native branch hit: 0x18de7ec",
+    "native branch hit: 0x18de7f0",
+    "native branch hit: 0x18de7f8",
+    "native branch hit: 0x18de877",
+    "native branch hit: 0x18de936",
+    "native branch hit: 0x18de93a",
+    "native branch hit: 0x19a3db2",
+    "native branch hit: 0x19a3dd3",
+    "native branch hit: 0x19a3dd7",
+    "native branch hit: 0x19a3df5",
+    "native branch hit: 0x19a3e0d",
+    "native branch hit: 0x19a3e58",
+    "native branch hit: 0x19a3e6c"
+  ],
+  "limits": [
+    "Fixtures are synthetic; removals are authored Python (pose_body_tree) mirrored into native memory.",
+    "Allocator is an authored stub: real allocator alignment/tag behavior and failure are not modeled.",
+    "No live gameplay identity or concurrency proof."
+  ]
+}

@@ -10723,3 +10723,48 @@ Cleanup was verified in all three sessions:
 - what the `controller+0x50` protected sync excludes against;
 - whether any loading or idle-task path takes the 11 guards (exercise with a hold during a fast-travel load);
 - confirming PhysicsWorldStep `+0x58`/`+0x5c` as last-run/current-request from the job class.
+
+### Provider tree inserts (0x18de6a0, 0x18de830)
+
+Two byte-identical bodies for the narrow-phase provider trees at provider+8 (new links, key = qword link+0x18) and provider+0x38 (neighbor records). They differ only in the grow helper they call: `18df350` (allocator tag 0x21) and `18df3f0` (tag 0x23). Nodes are the 32-byte indexed red-black nodes of Body metadata tree removal, with an 8-byte unsigned key at +0x18 and an 8-byte value at +0x10. The descriptor is node pointer q@0, active u32@8, free u32@0xC, capacity u32@0x10, root i32@0x14, free-list head i32@0x18.
+
+```
+insert(tree, &key, &value):
+    parent = -1
+    for node from root: parent = node
+        key < node.key  -> left (went_left = true);  node.key < key -> right
+        equal           -> return false         # nothing written, no growth
+    if active == capacity:
+        grow(tree, capacity ? 2*capacity : 4)   # 18df350 / 18df3f0
+    if free_head != -1:  slot = free_head; free--; free_head = node[slot].right
+                         if free_head != -1: node[free_head].left = -1
+    else:                slot = active
+    node[slot] = { left=-1, right=-1, key, value, red=1, free=0 }   # bytes 0xE/0xF and old parent word not cleared
+    active++
+    parent == -1 ? root = slot, node.parent = -1 : node.parent = parent, parent.(left|right) = slot
+    fixup(tree, slot)                           # 19a3d40
+    return true
+
+grow(tree, n): n = max(n, active); if n == capacity return
+    ptr ? (n ? realloc(ptr, n*32, 0x10, tag) : free(ptr), ptr = 0) : alloc(n*32, 0x10, tag)
+    store ptr, capacity = n      # allocator vtable +8 alloc, +0x10 realloc, +0x18 free
+
+fixup(tree, i):  # 19a3d40
+    parent == -1 -> paint i black, return
+    loop: parent black (byte == 0) -> return
+          uncle = other child of grandparent; if uncle red (byte == 1):
+              parent, uncle black; grandparent red; i = grandparent; parent = its parent;
+              root reached -> paint black, return; else continue
+          inner case: i right of parent and parent left of grandparent -> rotate left at parent (1959bb0), i = i.left;
+                      mirror -> rotate right at parent (18da970), i = i.right
+          parent black, grandparent red, rotate grandparent away from i's side
+          (i left of parent -> right rotation 18da970, else left rotation 1959bb0); return
+```
+
+Preserved quirks: the duplicate test happens before growth and before the free-list pop, so a duplicate on a full tree allocates nothing and writes nothing. The parent test treats any nonzero red byte as red, the uncle test needs exactly 1. A reused slot keeps its stale bytes 0xE/0xF. Growth is by doubling from a minimum of four; the realloc contents carry only the old node bytes and the new tail is whatever the allocator returns.
+
+Reconstruction: `engine/pose_provider_tree_insert.py` (`insert_pose_link_tree`, `insert_pose_neighbor_tree`, `fixup_pose_tree_insert`), reusing `_Tree.rotate`/`paint` from `engine/pose_body_tree.py` unchanged. They plug straight into the `insert` service of `merge_pose_new_links` and `merge_pose_neighbor_records` by closing over memory and an allocator.
+
+Validation: `analysis/command-executor-audit/check_pose_provider_tree_insert.py` runs the original 18de6a0/18de830, the grow helpers, 19a3d40 and both rotations in Unicorn without interception (only the allocator vtable alloc/realloc/free is an authored deterministic stub). 512 trials, 35,640 insert calls (30,211 inserted, 5,429 duplicates rejected, 1,884 allocator calls), with 11,738 interleaved removals (pose_body_tree `_Tree.remove` with key_size 8, mirrored into native memory) to create real free lists. Trial starts: null pointer and capacity 0 to 6; keys ascending, descending, random 64-bit, high-bit boundary values and small domains; routines alternate. After every call the harness compares the return value, the allocator call sequence, and all 0x9f000 fixture bytes (descriptor, node arrays, junk-filled uninitialized slots), and checks red-black validity (unsigned order, parent links, black root, no red-red, equal black height, live count, free-list partition of used slots). All 17 targeted native branches were hit. A deliberate bug in the uncle test failed trial 0, and the restore regenerated the receipt `native/snow_host/pose_provider_tree_insert_validation.json`. Unit and composition tests: `tests/test_pose_provider_tree_insert.py` (7 tests, including both pair link merges feeding real trees and checking validity and key order).
+
+Limits: the allocator is an authored stub, fixtures are synthetic, no live or concurrency evidence. Byte-level stage B in the safe-point contract (O7) is now reproducible offline up to the supplied allocator and the already-supplied attach, sort and neighbor-walk services.
