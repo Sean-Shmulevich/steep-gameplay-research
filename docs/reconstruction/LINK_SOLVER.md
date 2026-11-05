@@ -10398,13 +10398,3 @@ only as a prefix, so one stalled writer blocks every later publication and all c
 Static leads: the opaque routine 0x143e20621 reached from an empty pop while any
 unclaimed counter is nonzero; the stub 0x143f45b93 calling convention; the remainder of
 0x18b7940 after 0x18b7a6a.
-
-### Contract entry: job ring queue
-`engine.pose_job_ring_queue` offers `PushOp`/`PopOp` step machines, sequential
-`push_record`/`pop_record`, `handle_job_record`, `run_job_worker` and `publish_exit_records`.
-Sequential behavior is natively validated; interleavings are authored exploration only.
-Push raises `RingStalled` (authored guard) where the native routine spins; slot >= 32 is
-rejected. Layout offsets are evidence anchors, not portable API fields.
-
-### PROGRESS bullet
-- Job ring queue (0x18b7710 push, pop and tag handling in 0x18b7f80, exit-record push in 0x18b797e): 512 native cases, authored interleaving model with no property violations, composes with `engine.pose_dispatch`.

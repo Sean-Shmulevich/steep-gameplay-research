@@ -2028,3 +2028,10 @@ rebuild must reproduce S1 exactly, apart from bytes attributed to `18e2de0`.
 The pair-job merges must be consistent with the worker vectors. Receipt:
 `native/snow_host/pose_pair_update_live_validation.json` (64/64 steps, 0
 unattributed bytes).
+
+### Job ring queue
+`engine.pose_job_ring_queue` offers `PushOp`/`PopOp` step machines, sequential
+`push_record`/`pop_record`, `handle_job_record`, `run_job_worker` and `publish_exit_records`.
+Sequential behavior is natively validated; interleavings are authored exploration only.
+Push raises `RingStalled` (authored guard) where the native routine spins; slot >= 32 is
+rejected. Layout offsets are evidence anchors, not portable API fields.
