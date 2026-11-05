@@ -2233,3 +2233,23 @@ the 2^20-step fan guard (native has no bound). UNRESOLVED: the real +0xb8 edge-s
 convention, real kind-6 trees and adjacency, the hardware two-NaN rule, live MXCSR.
 Evidence: `native/snow_host/pose_terrain6_leaves_validation.json`. No claim of
 original-engine equivalence outside the validated fixtures.
+
+### Narrow-phase tester slot +8 (overlap test)
+
+`engine.pose_narrowphase_slot8`: `pose_tester_overlap(mem, tester, geom, *, mask=XYZ_MASK,
+nan_rule='sse', **options) -> 0/1` (tester vt[1]) and `cell_overlap(mem, cell, rows_a,
+rows_b, shape_a, shape_b, ...)`. Bodies: `sphere_sphere_overlap` (19d4df0),
+`sphere_box_overlap` (19d5300), `sphere_capsule_overlap` (19d57f0), `box_box_overlap`
+(19d8cf0), `capsule_capsule_overlap` (19dcf20/19dca50), `portal_overlap` (19c6520), with
+`shape_centre`/`shape_support` (shape vt+0x68/+0x40). `SLOT_TABLE` maps all 32 cells to
+slots 1, 2 and 4 and the forward cell. `bind_pose_flagged_tester_services(mem, ...)`
+supplies `select_tester`/`select_collider` (18de680) and `test_update`/`test_create` for
+`engine.pose_flagged_neighbor_update`/`_create`. Follows LINK_SOLVER.md "Narrow-phase
+tester slot +8 (overlap test)". Authored: the portal iteration guard (`max_iterations`,
+default 4096, raises `PortalIterationLimit`; native has no cap),
+`TerrainSlot8Unavailable` for the eight terrain bodies, a zero fourth lane for stale lanes
+and Python-float frames (exact under the standard mask only), adapter names and log.
+UNRESOLVED: terrain slot-1 bodies; slot +0x10/+0x20 filter semantics on terrain; the
+hardware two-NaN rule; live MXCSR; real hull tables. Evidence:
+`native/snow_host/pose_narrowphase_slot8_validation.json`. No claim of original-engine
+equivalence outside the validated fixtures.

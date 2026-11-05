@@ -1,0 +1,503 @@
+{
+ "schema": "pose-narrowphase-slot8-validation-v1",
+ "passed": true,
+ "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+ "static_checks": {
+  "vtables": 32,
+  "forwarders": 2,
+  "swap_wrappers": 14,
+  "shape_vtables": 4,
+  "call_sites": 2
+ },
+ "slot_map": {
+  "(2, 2)": {
+   "vtable": "0x29cb1c0",
+   "slot1": "0x19d4df0",
+   "slot2": "0x1163990",
+   "slot3": "0x19d4d20",
+   "slot4": "0xfec1b0",
+   "body": "0x19d4df0",
+   "swapped": false
+  },
+  "(2, 3)": {
+   "vtable": "0x29cb1e8",
+   "slot1": "0x19d5300",
+   "slot2": "0x1163990",
+   "slot3": "0x19d5260",
+   "slot4": "0xfec1b0",
+   "body": "0x19d5300",
+   "swapped": false
+  },
+  "(2, 4)": {
+   "vtable": "0x29cb210",
+   "slot1": "0x19d57f0",
+   "slot2": "0x1163990",
+   "slot3": "0x19d5720",
+   "slot4": "0xfec1b0",
+   "body": "0x19d57f0",
+   "swapped": false
+  },
+  "(2, 5)": {
+   "vtable": "0x29cb238",
+   "slot1": "0x19c6520",
+   "slot2": "0x1163990",
+   "slot3": "0x19d5c90",
+   "slot4": "0xfec1b0",
+   "body": "0x19c6520",
+   "swapped": false
+  },
+  "(2, 6)": {
+   "vtable": "0x29cb3f0",
+   "slot1": "0x198e230",
+   "slot2": "0x198f3b0",
+   "slot3": "0x198b270",
+   "slot4": "0x198c8f0",
+   "body": "0x19c8840",
+   "swapped": true
+  },
+  "(2, 7)": {
+   "vtable": "0x29cb418",
+   "slot1": "0x198dd30",
+   "slot2": "0x198eeb0",
+   "slot3": "0x198ac30",
+   "slot4": "0x198c270",
+   "body": "0x19e33f0",
+   "swapped": true
+  },
+  "(3, 2)": {
+   "vtable": "0x29cb440",
+   "slot1": "0x198e370",
+   "slot2": "0x198f4f0",
+   "slot3": "0x198b400",
+   "slot4": "0x198ca90",
+   "body": "0x19d5300",
+   "swapped": true
+  },
+  "(3, 3)": {
+   "vtable": "0x29cb260",
+   "slot1": "0x19d8cf0",
+   "slot2": "0x1163990",
+   "slot3": "0x19d8cd0",
+   "slot4": "0xfec1b0",
+   "body": "0x19d8cf0",
+   "swapped": false
+  },
+  "(3, 4)": {
+   "vtable": "0x29cb288",
+   "slot1": "0x19c6520",
+   "slot2": "0x1163990",
+   "slot3": "0x19db670",
+   "slot4": "0xfec1b0",
+   "body": "0x19c6520",
+   "swapped": false
+  },
+  "(3, 5)": {
+   "vtable": "0x29cb2b0",
+   "slot1": "0x19c6520",
+   "slot2": "0x1163990",
+   "slot3": "0x19dbba0",
+   "slot4": "0xfec1b0",
+   "body": "0x19c6520",
+   "swapped": false
+  },
+  "(3, 6)": {
+   "vtable": "0x29cb468",
+   "slot1": "0x198de70",
+   "slot2": "0x198eff0",
+   "slot3": "0x198adc0",
+   "slot4": "0x198c410",
+   "body": "0x19cb1d0",
+   "swapped": true
+  },
+  "(3, 7)": {
+   "vtable": "0x29cb490",
+   "slot1": "0x198d970",
+   "slot2": "0x198eaf0",
+   "slot3": "0x198a780",
+   "slot4": "0x198bd90",
+   "body": "0x19df180",
+   "swapped": true
+  },
+  "(4, 2)": {
+   "vtable": "0x29cb4b8",
+   "slot1": "0x198e4b0",
+   "slot2": "0x198f630",
+   "slot3": "0x198b590",
+   "slot4": "0x198cc30",
+   "body": "0x19d57f0",
+   "swapped": true
+  },
+  "(4, 3)": {
+   "vtable": "0x29cb4e0",
+   "slot1": "0x198d5b0",
+   "slot2": "0x198e730",
+   "slot3": "0x198a2d0",
+   "slot4": "0x198b8b0",
+   "body": "0x19c6520",
+   "swapped": true
+  },
+  "(4, 4)": {
+   "vtable": "0x29cb2d8",
+   "slot1": "0x19dcf20",
+   "slot2": "0x1163990",
+   "slot3": "0x19dcd40",
+   "slot4": "0xfec1b0",
+   "body": "0x19dcf20",
+   "swapped": false
+  },
+  "(4, 5)": {
+   "vtable": "0x29cb300",
+   "slot1": "0x19c6520",
+   "slot2": "0x1163990",
+   "slot3": "0x19ddbc0",
+   "slot4": "0xfec1b0",
+   "body": "0x19c6520",
+   "swapped": false
+  },
+  "(4, 6)": {
+   "vtable": "0x29cb508",
+   "slot1": "0x198dfb0",
+   "slot2": "0x198f130",
+   "slot3": "0x198af50",
+   "slot4": "0x198c5b0",
+   "body": "0x19cddb0",
+   "swapped": true
+  },
+  "(4, 7)": {
+   "vtable": "0x29cb530",
+   "slot1": "0x198dab0",
+   "slot2": "0x198ec30",
+   "slot3": "0x198a910",
+   "slot4": "0x198bf30",
+   "body": "0x19e1830",
+   "swapped": true
+  },
+  "(5, 2)": {
+   "vtable": "0x29cb558",
+   "slot1": "0x198e5f0",
+   "slot2": "0x198f770",
+   "slot3": "0x198b720",
+   "slot4": "0x198cdd0",
+   "body": "0x19c6520",
+   "swapped": true
+  },
+  "(5, 3)": {
+   "vtable": "0x29cb580",
+   "slot1": "0x198d6f0",
+   "slot2": "0x198e870",
+   "slot3": "0x198a460",
+   "slot4": "0x198ba50",
+   "body": "0x19c6520",
+   "swapped": true
+  },
+  "(5, 4)": {
+   "vtable": "0x29cb5a8",
+   "slot1": "0x198d830",
+   "slot2": "0x198e9b0",
+   "slot3": "0x198a5f0",
+   "slot4": "0x198bbf0",
+   "body": "0x19c6520",
+   "swapped": true
+  },
+  "(5, 5)": {
+   "vtable": "0x29cb328",
+   "slot1": "0x19c6520",
+   "slot2": "0x1163990",
+   "slot3": "0x19dde00",
+   "slot4": "0xfec1b0",
+   "body": "0x19c6520",
+   "swapped": false
+  },
+  "(5, 6)": {
+   "vtable": "0x29cb5d0",
+   "slot1": "0x198e0f0",
+   "slot2": "0x198f270",
+   "slot3": "0x198b0e0",
+   "slot4": "0x198c750",
+   "body": "0x19d3c30",
+   "swapped": true
+  },
+  "(5, 7)": {
+   "vtable": "0x29cb5f8",
+   "slot1": "0x198dbf0",
+   "slot2": "0x198ed70",
+   "slot3": "0x198aaa0",
+   "slot4": "0x198c0d0",
+   "body": "0x19e46a0",
+   "swapped": true
+  },
+  "(6, 2)": {
+   "vtable": "0x29cb120",
+   "slot1": "0x19c8840",
+   "slot2": "0x19c8ec0",
+   "slot3": "0x19c7050",
+   "slot4": "0x19c7c40",
+   "body": "0x19c8840",
+   "swapped": false
+  },
+  "(6, 3)": {
+   "vtable": "0x29cb148",
+   "slot1": "0x19cb1d0",
+   "slot2": "0x19cb990",
+   "slot3": "0x19c9640",
+   "slot4": "0x19ca3f0",
+   "body": "0x19cb1d0",
+   "swapped": false
+  },
+  "(6, 4)": {
+   "vtable": "0x29cb170",
+   "slot1": "0x19cddb0",
+   "slot2": "0x19ce540",
+   "slot3": "0x19cc160",
+   "slot4": "0x19ccf70",
+   "body": "0x19cddb0",
+   "swapped": false
+  },
+  "(6, 5)": {
+   "vtable": "0x29cb198",
+   "slot1": "0x19d3c30",
+   "slot2": "0x19d43f0",
+   "slot3": "0x19d1fa0",
+   "slot4": "0x19d2de0",
+   "body": "0x19d3c30",
+   "swapped": false
+  },
+  "(7, 2)": {
+   "vtable": "0x29cb3a0",
+   "slot1": "0x19e33f0",
+   "slot2": "0x19e3430",
+   "slot3": "0x19e3360",
+   "slot4": "0x19e33b0",
+   "body": "0x19e33f0",
+   "swapped": false
+  },
+  "(7, 3)": {
+   "vtable": "0x29cb350",
+   "slot1": "0x19df180",
+   "slot2": "0x19df8c0",
+   "slot3": "0x19dde20",
+   "slot4": "0x19de7c0",
+   "body": "0x19df180",
+   "swapped": false
+  },
+  "(7, 4)": {
+   "vtable": "0x29cb378",
+   "slot1": "0x19e1830",
+   "slot2": "0x19e1f10",
+   "slot3": "0x19e0430",
+   "slot4": "0x19e0e20",
+   "body": "0x19e1830",
+   "swapped": false
+  },
+  "(7, 5)": {
+   "vtable": "0x29cb3c8",
+   "slot1": "0x19e46a0",
+   "slot2": "0x19e46e0",
+   "slot3": "0x19e4610",
+   "slot4": "0x19e4660",
+   "body": "0x19e46a0",
+   "swapped": false
+  }
+ },
+ "direct": {
+  "cases": 4096,
+  "by_body": {
+   "0x19d4df0": 256,
+   "0x19d5300": 512,
+   "0x19d57f0": 512,
+   "0x19c6520": 2304,
+   "0x19d8cf0": 256,
+   "0x19dcf20": 256
+  },
+  "by_cell": {
+   "(2, 2)": [
+    256,
+    202
+   ],
+   "(2, 3)": [
+    256,
+    145
+   ],
+   "(2, 4)": [
+    256,
+    159
+   ],
+   "(2, 5)": [
+    256,
+    156
+   ],
+   "(3, 2)": [
+    256,
+    157
+   ],
+   "(3, 3)": [
+    256,
+    122
+   ],
+   "(3, 4)": [
+    256,
+    126
+   ],
+   "(3, 5)": [
+    256,
+    144
+   ],
+   "(4, 2)": [
+    256,
+    142
+   ],
+   "(4, 3)": [
+    256,
+    126
+   ],
+   "(4, 4)": [
+    256,
+    115
+   ],
+   "(4, 5)": [
+    256,
+    113
+   ],
+   "(5, 2)": [
+    256,
+    151
+   ],
+   "(5, 3)": [
+    256,
+    123
+   ],
+   "(5, 4)": [
+    256,
+    124
+   ],
+   "(5, 5)": [
+    256,
+    136
+   ]
+  },
+  "hits": 2241,
+  "misses": 1845,
+  "special_lanes": 95,
+  "random_mask": 77,
+  "junk_lane3": 832,
+  "swapped_cases": 1536,
+  "slot2_forward_runs": 160,
+  "portal_nonterminating": 10,
+  "model_paths": {
+   "0x19c6520:replace_v2": 761,
+   "0x19c6520:portal_hit": 1140,
+   "0x19c6520:v1_miss": 653,
+   "0x19c6520:refine": 792,
+   "0x19c6520:v4_miss": 424,
+   "0x19c6520:v3_miss": 14,
+   "0x19c6520:centres_coincide": 57,
+   "0x19c6520:replace_v1": 6,
+   "0x19c6520:v1_on_axis": 2,
+   "0x19c6520:refine_stall": 4,
+   "0x19d8cf0:overlap": 122,
+   "0x19d8cf0:axis_b": 17,
+   "0x19d8cf0:axis_a": 96,
+   "0x19d8cf0:axis_a2xb": 7,
+   "0x19d8cf0:axis_a0xb": 7,
+   "0x19d8cf0:axis_a1xb": 7,
+   "0x19dcf20:parallel": 64,
+   "0x19dcf20:t_high": 52,
+   "0x19dcf20:s_high": 54,
+   "0x19dcf20:s_low": 43,
+   "0x19dcf20:t_low": 53
+  },
+  "native_portal_marks": {
+   "native_centres_coincide": 57,
+   "native_refinement": 1578,
+   "native_refine_loop": 851,
+   "native_hit_exit": 1142
+  }
+ },
+ "composed": {
+  "cases": 384,
+  "direct_create": 128,
+  "router": 256,
+  "router_found": 124,
+  "router_missed": 132,
+  "tester_calls": 1185,
+  "tester_hits": 409,
+  "calls_by_cell": {
+   "(3, 4)": 188,
+   "(3, 5)": 49,
+   "(4, 4)": 192,
+   "(4, 5)": 45,
+   "(5, 4)": 44,
+   "(5, 5)": 9,
+   "(2, 4)": 54,
+   "(2, 5)": 16,
+   "(4, 3)": 186,
+   "(3, 3)": 197,
+   "(2, 3)": 44,
+   "(5, 3)": 42,
+   "(3, 2)": 50,
+   "(4, 2)": 49,
+   "(5, 2)": 11,
+   "(2, 2)": 9
+  },
+  "hits_by_cell": {
+   "(3, 4)": 75,
+   "(3, 5)": 9,
+   "(4, 4)": 40,
+   "(4, 5)": 3,
+   "(5, 4)": 10,
+   "(5, 5)": 0,
+   "(2, 4)": 19,
+   "(2, 5)": 6,
+   "(4, 3)": 77,
+   "(3, 3)": 97,
+   "(2, 3)": 15,
+   "(5, 3)": 11,
+   "(3, 2)": 25,
+   "(4, 2)": 18,
+   "(5, 2)": 3,
+   "(2, 2)": 1
+  },
+  "update_calls": 390,
+  "create_calls": 795,
+  "records_pushed": 113,
+  "allocations": 284
+ },
+ "failure_proof": [
+  "portal without the v4 miss exit: direct case 775, cell (2, 5)",
+  "portal refinement replaces v3 where it keeps v1: direct case 775, cell (2, 5)",
+  "portal queries A support along +n: direct case 768, cell (2, 5)",
+  "hull centre ignored: direct case 784, cell (2, 5)",
+  "sphere-capsule radius read from +0x40: direct case 519, cell (2, 4)",
+  "capsule-capsule s_high without +b: direct case 2571, cell (4, 4)",
+  "box-box without the A2 x Bj axes: direct case 1319, cell (3, 3)",
+  "sphere-box without the max(.,0) clamp: direct case 256, cell (2, 3)",
+  "swap wrapper keeps the shape order: direct case 1029, cell (3, 2)",
+  "sphere-sphere strict compare: direct case 18, cell (2, 2)",
+  "capsule support without the half-height sign: direct case 1539, cell (3, 4)"
+ ],
+ "native_routines_run": [
+  "slot-1 bodies 0x19d4df0 0x19d5300 0x19d57f0 0x19d8cf0 0x19dcf20/0x19dca50 0x19c6520",
+  "geom-swap wrappers 0x198e370 0x198e4b0 0x198d5b0 0x198e5f0 0x198d6f0 0x198d830",
+  "slot-2 forwarder 0x1163990",
+  "shape centre 0x18aae30 0x18af7b0",
+  "shape support 0x18ab4b0 0x18ab2e0 0x18ab3b0 0x1949450 0x1949400 0x1949480",
+  "composed: 0x18e0a60 0x18dfa10 0x18e01e0 0x18de680 0x18c16e0 0x18de2e0 0x195c3e0 0x18dccb0 0x18df150 0x18df1e0"
+ ],
+ "supplied": [
+  "runtime XYZ mask 0x3336890 (zero in the image); 0x33368c0 is zero in the image and left so",
+  "composed: allocator vtable +8/+0x10/+0x18 (global 0x1433365b8)"
+ ],
+ "comparisons": [
+  "direct: returned al, unchanged geom/shape/vertex bytes, executed addresses inside the listed routines",
+  "slot +0x10 forwarder: same al as slot +8 with a random filter pointer",
+  "composed: ordered (tester object, al) at 0x18e011a/0x18e0784, allocator calls, global serial, every fixture byte"
+ ],
+ "limits": [
+  "Emulator two-NaN rule (x87 rule of the model); MXCSR 0x1f80; hardware NaN choice not observed.",
+  "Portal body: standard mask only (the centre and hull support read a stale fourth lane, modelled as 0).",
+  "Portal body with NaN/inf lanes can loop without bound natively; such cases stop at the instruction limit and the model must raise PortalIterationLimit.",
+  "Hull shapes are synthetic clouds/boxes without the +0xc0 support table.",
+  "Terrain cells (kind 6/7 rows and their swaps) are not restated or run.",
+  "Composed fixtures are synthetic; no live slot +8 observation."
+ ]
+}

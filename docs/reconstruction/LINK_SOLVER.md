@@ -11370,7 +11370,9 @@ each swapped back and verified afterwards. No code bytes, page protections or sh
 Identity checks before install: the hook B checks; the tester call-site encodings
 `call [r10+0x18]` at `18dda47`, `18e09fe` and `18e091e`; all 64 cells (the 32 filled
 cells hold distinct objects whose vtable equals the `TESTER_TABLE` vtable, with matching
-4 slots, prefix word and a 16-byte entry fingerprint; the other 32 cells are 0). Restore
+4 slots, the qword before the table and a 16-byte entry fingerprint; the other 32 cells
+are 0). The tables are in fact five qwords packed every 0x28 bytes with no prefix, so that
+qword is the preceding table's +0x20 (see "Narrow-phase tester slot +8"). Restore
 order: testers, dispatcher, broad-phase, re-checking each owner before its
 compare-exchange back, draining in-flight detours and re-reading the original pointers.
 
@@ -11887,3 +11889,164 @@ exist on every observed mesh, see "Live terrain filter settings", so a live read
 settle it). Emulator two-NaN rule, MXCSR 0x1f80. The native fan walk has no bound (the
 model raises after 2^20 steps); non-terminating adjacency was not exercised. Allocation
 is a fixture; only event kind and size are compared.
+
+### Narrow-phase tester slot +8 (overlap test)
+
+`engine/pose_narrowphase_slot8.py` restates slot 1 (vt[1], +8) of every non-terrain cell
+of the tester table (see "Narrow-phase tester table and sphere-sphere tester"), which the
+flagged-neighbor bodies call ("Live narrow-phase tester census"). Signature
+`vt[1](tester, geom) -> al` (0 or 1); `geom` is the same 0x90-byte block slot 3 receives
+(frameA +0x00, frameB +0x40, shapeA +0x80, shapeB +0x88). The routine is pure: it writes
+nothing and calls nothing except the shapes' own virtual functions. At `18e011a` (in
+18dfa10) and `18e0784` (in 18e01e0) the encoding is `mov rax,[rcx]; call [rax+8]; test
+al,al`.
+
+**Vtable layout (correction).** Each tester vtable is five qwords with no RTTI prefix,
+packed every 0x28 bytes: +0 destructor `198a280`; +8 overlap test (this section); +0x10
+overlap test with a filter `(tester, geom, filter*)`; +0x18 contact generation; +0x20
+contact generation with the same filter as a fifth argument (`[rsp+0x28]`). Non-terrain
+cells use shared forwarders for +0x10 (`1163990`, `mov rax,[rcx]; jmp [rax+8]`) and +0x20
+(`fec1b0`, `jmp [rax+0x18]`), so the filter is ignored there. Terrain cells have their own
++0x10 and +0x20 bodies. The filter is a 16-byte pair of masks {any-of, all-of} (stored at
+`rbp+0x90`/`+0x98` in `19c8ec0`); when terrain+0x68 is non-zero, a triangle is skipped
+unless its material qword +0x38 meets both masks (material via the per-triangle u8 index
+at +0x60 into the pointer table at +0x50, or +0x20 without an index array). No caller of
++0x10 or +0x20 has been identified.
+
+Slot map (→ = geom-swap wrapper calling this body; fwd = shared forwarder):
+
+| cell | vtable | slot1 (+8) | slot2 (+0x10) | slot3 (+0x18) | slot4 (+0x20) | slot-1 body |
+|---|---|---|---|---|---|---|
+| (2,2) | 29cb1c0 | 19d4df0 | fwd | 19d4d20 | fwd | sphere-sphere |
+| (2,3) | 29cb1e8 | 19d5300 | fwd | 19d5260 | fwd | sphere-box |
+| (2,4) | 29cb210 | 19d57f0 | fwd | 19d5720 | fwd | sphere-capsule |
+| (2,5) | 29cb238 | 19c6520 | fwd | 19d5c90 | fwd | portal |
+| (2,6) | 29cb3f0 | 198e230→19c8840 | 198f3b0→19c8ec0 | 198b270 | 198c8f0→19c7c40 | terrain (6,2) swapped |
+| (2,7) | 29cb418 | 198dd30→19e33f0 | 198eeb0→19e3430 | 198ac30 | 198c270→19e33b0 | terrain (7,2) swapped |
+| (3,2) | 29cb440 | 198e370→19d5300 | 198f4f0 | 198b400 | 198ca90 | sphere-box swapped |
+| (3,3) | 29cb260 | 19d8cf0 | fwd | 19d8cd0 | fwd | box-box SAT |
+| (3,4) | 29cb288 | 19c6520 | fwd | 19db670 | fwd | portal |
+| (3,5) | 29cb2b0 | 19c6520 | fwd | 19dbba0 | fwd | portal |
+| (3,6) | 29cb468 | 198de70→19cb1d0 | 198eff0→19cb990 | 198adc0 | 198c410→19ca3f0 | terrain (6,3) swapped |
+| (3,7) | 29cb490 | 198d970→19df180 | 198eaf0→19df8c0 | 198a780 | 198bd90→19de7c0 | terrain (7,3) swapped |
+| (4,2) | 29cb4b8 | 198e4b0→19d57f0 | 198f630 | 198b590 | 198cc30 | sphere-capsule swapped |
+| (4,3) | 29cb4e0 | 198d5b0→19c6520 | 198e730 | 198a2d0 | 198b8b0 | portal swapped (live flagged cell) |
+| (4,4) | 29cb2d8 | 19dcf20 (core 19dca50) | fwd | 19dcd40 | fwd | capsule-capsule |
+| (4,5) | 29cb300 | 19c6520 | fwd | 19ddbc0 | fwd | portal |
+| (4,6) | 29cb508 | 198dfb0→19cddb0 | 198f130→19ce540 | 198af50 | 198c5b0→19ccf70 | terrain (6,4) swapped |
+| (4,7) | 29cb530 | 198dab0→19e1830 | 198ec30→19e1f10 | 198a910 | 198bf30→19e0e20 | terrain (7,4) swapped |
+| (5,2) | 29cb558 | 198e5f0→19c6520 | 198f770 | 198b720 | 198cdd0 | portal swapped |
+| (5,3) | 29cb580 | 198d6f0→19c6520 | 198e870 | 198a460 | 198ba50 | portal swapped |
+| (5,4) | 29cb5a8 | 198d830→19c6520 | 198e9b0 | 198a5f0 | 198bbf0 | portal swapped |
+| (5,5) | 29cb328 | 19c6520 | fwd | 19dde00 | fwd | portal |
+| (5,6) | 29cb5d0 | 198e0f0→19d3c30 | 198f270→19d43f0 | 198b0e0 | 198c750→19d2de0 | terrain (6,5) swapped |
+| (5,7) | 29cb5f8 | 198dbf0→19e46a0 | 198ed70→19e46e0 | 198aaa0 | 198c0d0→19e4660 | terrain (7,5) swapped |
+| (6,2) | 29cb120 | 19c8840 | 19c8ec0 | 19c7050 | 19c7c40 | terrain |
+| (6,3) | 29cb148 | 19cb1d0 | 19cb990 | 19c9640 | 19ca3f0 | terrain |
+| (6,4) | 29cb170 | 19cddb0 | 19ce540 | 19cc160 | 19ccf70 | terrain |
+| (6,5) | 29cb198 | 19d3c30 | 19d43f0 | 19d1fa0 | 19d2de0 | terrain |
+| (7,2) | 29cb3a0 | 19e33f0 (→core 19e2d80) | 19e3430 (→19e2d80) | 19e3360 | 19e33b0 (→19e2600) | terrain |
+| (7,3) | 29cb350 | 19df180 | 19df8c0 | 19dde20 | 19de7c0 | terrain |
+| (7,4) | 29cb378 | 19e1830 | 19e1f10 | 19e0430 | 19e0e20 | terrain |
+| (7,5) | 29cb3c8 | 19e46a0 (→core 19e3eb0) | 19e46e0 (→19e3eb0) | 19e4610 | 19e4660 (→19e3460) | terrain |
+
+In swapped non-terrain rows, slot 2 calls `1163990` and slot 4 calls `fec1b0` then the
+flip `1994f60`; in swapped terrain rows, slot 4 calls the forward slot 4 then `1994f60`.
+
+Distinct slot-1 bodies (all mask every row with M `3336890` first):
+
+```text
+19d4df0 (2,2): d = tA - tB; return hadd2(d*d & M) <= (rB + rA)^2           # cmpleps; touch = hit
+19d5300 (2,3): l = B^T(tA - tB) & M; x = maxps(|l| - (E & M), 0); return hadd2(x*x & M) <= r*r
+19d57f0 (2,4): l = B^T(tA - tB) & M; v = (l.x, maxps(|l.y| - h, 0), l.z, 0)
+               return hadd2(v*v & M) <= (rA + rc)^2                         # rA + rc by addss
+19dcf20 -> 19dca50 (4,4): P = t - h*b1, D = 2*(h*b1) per capsule; w = PA - PB
+   a=DA.DA b=DA.DB e=DB.DB c=DA.w f=w.DB (hadd2); den = a*e - b*b
+   if |den| <= a*1e-5 (1e252b0): sN=0, sD=e, tN=f, tD=e                   # sD = e, not 1
+   else sN=f*b-c*e; tN=a*f-c*b; sD=den
+        sN<0: sN=0,tN=f,tD=e | den<sN: sN=den,tN=f+b,tD=e | else tD=den
+   tN<0:  tc=0; x=-c;   sc = x<0 ? 0 : a<x ? 1 : x/a
+   tD<tN: tc=1; x=-c+b; sc = (same)
+   else:  sc=sN/sD; tc=tN/tD
+   diff = (DA*sc + w) - tc*DB; return hadd2(diff^2 & M) <= (rA + rB)^2
+19d8cf0 (3,3): 15-axis SAT. R_ij = A.bi . B.bj (hadd2); AR = |R| + (1e-5,1e-5,1e-5,0) (29cc0e0);
+   t = A^T(tB - tA) (v*row products)
+   A faces: |t| <= (AR . eB) + eA                         (all 4 lanes)
+   B faces: |tz*R2 + (ty*R1 + tx*R0)| <= ((ez*AR2 + (ey*AR1 + ex*AR0)) + eB)
+   A0xBj: |tz*R1 - ty*R2| <= (ey*AR2 + ez*AR1) + (AR0.yzx*eB.zxy + AR0.zxy*eB.yzx); A1xBj, A2xBj likewise
+   any failed lane -> 0
+19c6520 (2,5)(3,4)(3,5)(4,5)(5,5), swapped (4,3)(5,2)(5,3)(5,4): Minkowski portal refinement on B - A
+   centres: shape vt+0x68; supports: shape vt+0x40(shape, out, &dir) with dir = A^T(-n) / B^T(n);
+   world point = ((b0*s.x + t) + b1*s.y) + b2*s.z
+   v0 = cB - cA; |v0| <= 2^-14 (29cc0d0) on all 4 lanes -> 1
+   n = -v0; v1 = S(n); v1.n <= 0 -> 0; n = v1 x v0; |n| <= 2^-14 (4 lanes) -> 1
+   v2 = S(n); v2.n <= 0 -> 0; n = (v1-v0)x(v2-v0); if 0 < v0.n: swap v1,v2; n = -n
+   loop: v3 = S(n); v3.n <= 0 -> 0; v0.(v1xv3) < 0: v2=v3, n=(v1-v0)x(v3-v0), again
+         v0.(v3xv2) < 0: v1=v3, n=(v3-v0)x(v2-v0), again; else portal found
+   loop: n = norm((v2-v1)x(v3-v1)) (1/sqrtps); 0 <= v1.n -> 1
+         v4 = S(n); 0 <= -(v4.n) -> 0; (v4-v3).n <= 0 -> 0
+         c = v4 x v0: 0<c.v1 ? (0<c.v2 ? v1=v4 : v3=v4) : (0<c.v3 ? v2=v4 : v1=v4)
+```
+
+Shape virtuals called by `19c6520` (sphere `29c9be8`, box `29c9ac8`, capsule `29c9b58`,
+hull `29c9d80`): centre (+0x68) `18aae30` returns (0,0,0) for sphere, box and capsule;
+the hull uses `18af7b0` (+0x64/+0x68/+0x6c). Support (+0x40): sphere `18ab4b0`
+d*(r/|d|), or (r,0,0,0) unless 0 < |d|; box `18ab2e0` per lane -e if d < 0 else +e (-0
+gives +e); capsule `18ab3b0` d*(r/|d|) with no zero guard, then y += (d.y < 0 ? -h : h);
+hull `1949450` → `1949400` → `1949480` (the existing `hull_support`).
+
+Swap wrappers: 14, template `198d5b0` (0x134 bytes). Each copies only xyz of the eight
+rows (the fourth lane is stale stack), exchanges the shapes and passes a stack tester
+with the forward cell's vtable; the result is not post-processed, so (4,3) is exactly
+`19c6520(capsule ↔ box)`. The terrain slot-1 bodies are not restated; (7,2) and (7,5)
+are 0x38-byte wrappers around cores `19e2d80` and `19e3eb0`, shared with slot 2.
+
+Behaviour worth preserving:
+
+- Exact touch is a hit for sphere-sphere, sphere-box, sphere-capsule and capsule-capsule
+  (`<=`); box-box adds 1e-5 to |R| on every axis.
+- Capsule-capsule parallel branch: sD is e, so a zero-length second capsule gives 0/0 when
+  f == 0 and the test misses.
+- The portal test has no iteration cap. With a NaN or infinity in a frame, 10 of 18
+  special-lane portal cases did not return within 3 M instructions; the model raises
+  `PortalIterationLimit`.
+- Coincident centres (|v0| <= 2^-14) count as overlap whatever the shapes are.
+
+Validation: `native/snow_host/pose_narrowphase_slot8_validation.json`, from
+`analysis/command-executor-audit/check_pose_narrowphase_slot8.py`.
+
+- Static: 32 vtables (all five qwords), both forwarders, 14 swap wrappers (call target
+  and temporary vtable), 4 shape vtables (+0x40/+0x68), both call sites.
+- Direct: 4096/4096 Unicorn runs through the real slot-1 entries, 256 per non-terrain
+  cell, with real tester objects and shapes carrying image vtables; nothing hooked;
+  inputs unchanged. Per body: sphere-sphere 256, sphere-box 512, sphere-capsule 512,
+  box-box 256, capsule-capsule 256, portal 2304; 1536 through swap wrappers. 2241 hits;
+  95 special-lane, 77 random-mask and 832 junk-fourth-lane cases. 160 slot +0x10 runs
+  give the same `al` as slot +8. Portal: coincide 57, refinement 1578, refine loop 851,
+  hit exit 1142; model paths v1 miss 653, v4 miss 424, replace v2 761, replace v1 6,
+  stall 4. Box-box separating axes A 96, B 17, edge 7/7/7, overlap 122. Capsule paths:
+  parallel 64, s low 43, s high 54, t low 53, t high 52.
+- Composed: 384/384 native runs (128 entering at `18e01e0`, 256 through `18e0a60`: 124 to
+  18dfa10, 132 to 18e01e0) with the real selector, dispatcher table, tester objects,
+  slot-1 bodies, shape virtuals, 18c16e0, record acquire, pushes and reserves; only the
+  allocator hooked. Python side: `create_pose_flagged_neighbor` and
+  `route_pose_flagged_pair_indexed` with `bind_pose_flagged_tester_services`. Compared:
+  the ordered (tester, `al`) sequence at both call sites (1185 calls, 409 hits; (4,3) 186
+  calls with 77 hits, (3,4) 188, (3,3) 197, (4,4) 192), allocator calls, the global
+  serial and every fixture byte.
+- 11 injected bugs, each caught (portal without the v4 miss exit, refinement replacing
+  v3, querying A along +n, hull centre ignored, sphere-capsule radius from +0x40, capsule
+  s-high without +b, box-box without A2xBj axes, sphere-box without the clamp, swap
+  keeping shape order, strict sphere-sphere compare, capsule support without the
+  half-height sign).
+
+Tests: `tests/test_pose_narrowphase_slot8.py`, 24 tests.
+
+Limits: emulator two-NaN rule, MXCSR 0x1f80; portal checked under the standard mask
+only (the centre function and hull support read a stale fourth lane, treated as 0);
+synthetic hulls without the +0xc0 table; the portal orientation swap never hit and the
+|v1xv0| exit only twice; terrain bodies and slot +0x10/+0x20 logic not restated; no live
+slot +8 observation.
+
+Static leads: the terrain slot-1 bodies; callers of +0x10 and +0x20 (filtered queries);
+whether live frames can carry NaN into `19c6520`, which would hang.
