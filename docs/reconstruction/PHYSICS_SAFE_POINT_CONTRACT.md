@@ -151,7 +151,10 @@ the host re-checks on every use (AUTHORED POLICY, the same model as the player b
 |---|---|---|
 | Player linear velocity | `141397ba0` -> `141404910` (takes the runtime lock at runtime+0x1588) | ESTABLISHED (live, host 0.4) |
 | Player pose and velocities | `1413bcbb0` -> `14140f990` (runtime lock) | ESTABLISHED (live, host 0.5) |
-| Whether these reach pool guards `0x143336aa0` and `0x143336bb8` through `18b8380` (controller+0x50 entry), and on which thread | `18aa520` notify flag -> `18b8380` -> `18e14f0` -> `18e19c0` / `18e23c0` ... `1958720` | **SLOT P2 (lane t2hostpath)**: PENDING. Reach is ESTABLISHED (static) only when the notify flag is nonzero; whether the host path sets it is unverified ([host mutation reach](PHYSICS_ATOMICS_AND_THREADS.md#host-mutation-reach)) |
+| Setter gates: `18aa520` (linear, body+0x1a0) and `18aa360` (angular, body+0x1ac) store 12 bytes. They skip the store for kind-2 bodies (metadata+0x53 low nibble) when the force byte is zero, and call `18b8380` only when force != 0 and the controller is non-null. Pose `18a8c20` calls body virtual +0xa0, then always notifies a non-null controller through `18b8380`, with no force flag. | `18aa520`, `18aa360`, `18a8c20` | **SLOT P2 filled (t2hostpath):** ESTABLISHED (static, 512 native cases, `engine/pose_body_state_setters.py`, [Body velocity and pose setters](LINK_SOLVER.md#body-velocity-and-pose-setters-host-set_velocity--set_pose-entry-path)) |
+| Pool-guard reach. Guards are reached only when, in order: the setter gate passes, `18b8380`'s gates pass (flags52 bit0 clear, group non-null), and `18e14f0`'s group selection actually changes. Then guard `0x143336bb8` (contact payload pool) is reached via `18e23c0` -> `1957fc0` -> `1958030` -> `1958b90` -> `1958720`, for links with non-null contact payloads. Guard `0x143336aa0` (pose-group pool) is reached via `18e19c0` (third arm) or `18e23c0` -> `18e2de0`. With no selection change, no pool guard is taken; only the protected controller sync at controller+0x50 runs. | `18b8380` -> `18e14f0` | ESTABLISHED (static, same receipt). That no selection change is the usual steady state is expected, not measured |
+| Host path. `set_pose` reaches `18a8c20` under the runtime lock (runtime+0x1588), so it always notifies the controller. `set_velocity` reaches `18aa520` under the runtime lock; whether that path passes a nonzero force byte has not been checked. | `141404910`, `14140f990` | Path ESTABLISHED (static, adapter source and README); **force argument PENDING (P2b)** |
+| Thread and lock order: the host setters enter controller+0x50 (and possibly a pool guard) from the executor thread while holding the runtime lock. No engine thread is stepping (A1), but off-graph threads are not excluded (A6). | executor thread | Order ESTABLISHED (static); contention with off-graph threads PENDING (P3) |
 
 ### 5.2 Proposed for T3 (requested at Step-hold, applied at S0)
 
@@ -213,6 +216,9 @@ All AUTHORED POLICY. The reason is given where evidence motivates it.
 - Mutating while not held, while torn, while a guard reads held, or while `SNOW_PLAYER_IN_WORLD`
   is clear.
 - Queuing more than one physics request per released step in T3.
+- Calling `set_player_velocity` or `set_player_pose` in a hold that has a queued physics request
+  (T3 interim rule until P2b is settled). `set_pose` always notifies the controller, and either
+  setter can take pool guards if group selection changes (P2, ESTABLISHED (static)).
 
 ## 8. Failure modes and recovery
 
@@ -234,7 +240,7 @@ All AUTHORED POLICY. The reason is given where evidence motivates it.
 | ID | Item | Slot | Lane |
 |---|---|---|---|
 | O1 | Step-hold freeze of pair and provider state, guard state while held, `18b8fa0` not entered | A5 / P1 | t2live |
-| O2 | Host setter path: notify flag, `18b8380` entry, pool guards taken from the executor thread, ordering against the runtime lock | 5.1 / P2 | t2hostpath |
+| O2 | Host setter path. Filled by t2hostpath: setter gates, `18b8380` gates and the selection-change condition for pool-guard reach. Still open (P2b): the force byte the host `set_velocity` path passes to `18aa520`, and whether a host setter ever changes group selection live | 5.1 / P2, P2b | t2hostpath (P2 done; P2b open) |
 | O3 | Outside-step mutators: thread, trigger and an observable "loading or body lifecycle in flight" predicate | A7, C8 / P3 | t2mutators |
 | O4 | Concurrent writers to provider, group or pool state during S0..S2 from other threads | B7 / P4 | unassigned (partly t2mutators) |
 | O5 | Collision-mask or filter word on a body; identity of predicates at provider+0x188, kind+0x70, body+0xA0 | 5.2 | unassigned, static lead in [Pair link filter](LINK_SOLVER.md#pair-link-filter) |
@@ -252,8 +258,11 @@ Evidence gates:
 
 - [ ] P1 (t2live) filled: during a hold, `18b8fa0` was not entered, pair lists and both trees were
       byte-stable, and all guards read free.
-- [ ] P2 (t2hostpath) filled, or T3 is documented not to depend on it (T3 does not call the host
-      setters in the same step).
+- [x] P2 (t2hostpath) filled statically: the setters reach pool guards only on a group-selection
+      change ([Body velocity and pose setters](LINK_SOLVER.md#body-velocity-and-pose-setters-host-set_velocity--set_pose-entry-path)).
+- [ ] P2b settled, or T3 forbids host setters in the same hold as a queued request. The interim
+      rule is to forbid them, so a setter cannot change group selection or take guard
+      `0x143336aa0`/`0x143336bb8` before the S0 apply.
 - [ ] P3 (t2mutators) filled with an observable in-flight predicate, or the interim steady-ride rule
       in C8 is accepted in writing for T3 only.
 - [ ] O6 answered statically: nothing reads the removed-row array after select in `18b8fa0` or the
