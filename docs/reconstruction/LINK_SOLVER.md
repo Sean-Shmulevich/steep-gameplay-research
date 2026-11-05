@@ -11055,3 +11055,83 @@ Static leads:
 - The +0xc0 lookup structure of the hull (grid at +0xc0, adjacency at +0xd0, dims
   +0xe0/e4/e8).
 - `18f0a70` itself (GJK; 1e-7 static at `3336a30`) and its sibling at `18f3710`.
+
+### Narrow-phase box testers
+
+`engine/pose_narrowphase_kind3.py` restates the kind-3 row of the tester table (see
+"Narrow-phase tester table and sphere-sphere tester"): (3,3) entry `19d8cd0` → core
+`19d6900`, (3,4) entry `19db670` → core `19d9160`, (3,5) entry `19dbba0` → core
+`19db710`. It also restates the shared face emitter `18e4060`, clip driver `1996bf0` and
+reduce driver `19984f0`. `19d8cd0` and `19dbba0` are thunks, `core(geom, out, cap)`.
+`19db670` masks both frames into its stack (frameB at rsp+0x30, frameA at rsp+0x70),
+then calls `19d9160(shapeA, &frameA, shapeB, &frameB, out, cap)`.
+
+```text
+19d6900 box-box(geom, out, cap):
+  if 19d8550(S, geom, eA, frameB, eB): return 0              # separated
+  if geom+0x91 and !19d7540(...): out[0] = edge record (feature 0xff); return 1   # no cap check
+  19d6200 side planes; 19d5d30 incident polygon (count at rbp+0xb0, 8-point buffer)
+  n = 1996bf0(poly, count, 8, planes, 4); n = 19984f0(depths, poly, n, plane, geom+0x90)
+  for i < n while written < cap: if depth_i < 0: emit(S.n, depth_i, p_i, feature_i, flip = S+0x11 > 2)
+1996bf0 clip driver: 19980f0 ping-pong over 0x80-point buffers; any pass < 3 points -> 0;
+  last plane = max(1, nplanes-1). 19980f0 never reads its rdx capacity (<= 2 outputs per input).
+19984f0 reduce: n = 19986e0(...); n = 1998e80(..., 1e-4); if flag and n > 4: 19989d0 picks 4, gather, n = 4
+19d9160 box-capsule(box, FA, cap, FB, out, -):                # capacity never read
+  p0/p1 = FB applied to (0,-h,0)/(0,+h,0); 18eab80(&res, &{FA, extA & M}, &{p0,p1}, 16)
+  if !(2^-23 < dist, lanes 0..2): deep
+  n = (P_axis - P_box) * (1/sqrt(hadd2(d*d & M))); face = 19db080(FA, &n); plane = 19da3f0(FA, box, face)
+  if 0.997 < |hadd2((plane & M)*n & M)|:
+     4 side planes 19da100; clip [p0|0x80000000|face&0xfff, p1|0x81000000|face&0xfff]:
+       keep d <= 0 (4 lanes), crossing when d1*d0 < 0 (tag of the point with 0 < d0);
+       any pass leaving != 2 points -> single
+     per point: s = hadd2(p*n) - plane.d; if s <= r: record(n, s-r, p - s*n, tag, p - r*n)  # <= 2
+     return count
+  single: if dist - r <= 0 (4 lanes): record(n, dist-r, P_box, 0, P_axis - r*n); return 1; else 0
+  deep: box -> 19db710 hull (edge static 3336930); sel = 19daf90(FA, hull, &p0, &p1)
+     kind 0 -> 19daa60 (<= 2), kind 2 -> 19da4e0 (0/1), else 0
+19db710 box-hull: box hull on stack; 190f700 SAT (edge flag geom+0x91);
+  0 -> 18e4060(A ref, flip 0), 1 -> 18e4060(B ref, flip 1), 2 -> 18e3aa0(out, cap, ...), else 0
+18e4060: incident face = min dot (first wins); 18e3980 polygon; 18e3450 planes; 1996bf0(.., 0x80, ..);
+  19984f0; emit every surviving point while written < cap (no depth test, feature 0)
+```
+
+Behaviour worth preserving:
+
+- Capacity: the box-box and box-hull face paths stop at `capacity`. The box-box edge
+  path writes 1 record even at capacity 0. Box-capsule never reads capacity. The
+  box-hull edge path `18e3aa0` returned min(full, cap) in every sweep case.
+- Counts: with `geom+0x90` set, both face paths return at most 4. With it clear, only
+  the clipped polygon bounds them (the box-box 8-point buffer at rbp+0x30 is safe only
+  while clipping stays convex; highest observed 7). Box-capsule returns at most 2.
+- `18dd400` always sets `geom+0x90` (`[rbp+0x30] = 1`, geom = rbp-0x60), so every
+  kind-3 forward cell returns at most 4 on that path and cannot overrun `198fdc0`.
+- Box-capsule face path filters on the plane distance `s <= r`, not the GJK distance;
+  the normal is the box face normal and point A lies on the face. Under a non-standard
+  mask the tag word (lane 3) enters the clip dot products.
+- Box-box flip: when S+0x11 > 2 the normal is negated and the points swapped.
+- With NaN/inf lanes, `19daf90` can return selection (0, -1, -1); `19daa60` then indexes
+  face -1 inside `18e3450` (reads at `18e34a5`, `18e34f1`): native faults in the harness,
+  a read before the face array in the game.
+
+Validation: `native/snow_host/pose_narrowphase_kind3_validation.json`, from
+`analysis/command-executor-audit/check_pose_narrowphase_kind3.py`. Unicorn runs the real
+entries over the memory image with every callee native (only CRT `__chkstk` and
+`_Init_thread_header/footer` are fixtures). Each supplied leaf call is recorded
+(arguments, bytes read before writing, bytes written, rax) and replayed into the model,
+which must present identical registers and bytes. Results: (3,3) 640/640 (edge 47, face
+444, none 149; highest count 7, reduce flag clear); (3,4) 534/576 (clip 271, single 97,
+deep kind 0 147, deep kind 2 19; highest 2; the other 42 are the native faults above,
+all special-lane cases); (3,5) 640/640 (edge 195, face 350, none 95; highest 5). A
+capacity sweep (caps 0..3 on 48 geometries per pair) matches. 12 injected bugs are
+caught. Tests: `tests/test_pose_narrowphase_kind3.py`, 18 tests with authored leaf stubs.
+
+Limits: supplied leaves (results from the native run): box-box `19d8550`, `19d7540`,
+`19d6200`, `19d5d30`; shared `19980f0`, `19986e0`, `1998e80`, `19989d0`; box-hull
+`190f700`, `18e3aa0`, `18e3980`, `18e3450`; box-capsule `18eab80`, `19db080`, `19da3f0`,
+`19da100`, `19daf90`, `19daa60`, `19da4e0`. Emulator two-NaN rule, MXCSR 0x1f80,
+synthetic box and prism hulls. The swapped cells (4,3) `198a2d0` and (5,3) `198a460`
+are not run here.
+
+Static leads: the leaves above; whether degenerate clipping can exceed 8 points in
+`19d6900` with the reduce flag clear; whether live hulls can reach the (0, -1, -1)
+selection.

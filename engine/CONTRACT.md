@@ -2095,3 +2095,20 @@ stale stack). A null shape raises where native faults. UNRESOLVED: the hardware 
 rule, the live MXCSR, the 0x1949480 count-1 scan and the +0xc0 support path. Evidence:
 `native/snow_host/pose_narrowphase_sphere_validation.json`. No claim of original-engine
 equivalence outside the validated fixtures.
+
+### Narrow-phase box testers
+
+`engine.pose_narrowphase_kind3`: `box_box_tester`, `box_capsule_tester`,
+`box_hull_tester(mem, geom, out, capacity=500, *, services, sp, mask=XYZ_MASK, nan_rule='sse')`
+(`19d8cd0`, `19db670`, `19dbba0`); `TESTERS` maps (3,3) (3,4) (3,5). Lane-level pieces:
+`box_box_core`, `box_capsule_core`, `box_hull_core`, `face_contact` (`18e4060`),
+`clip_polygon` (`1996bf0`), `reduce_contacts` (`19984f0`), `build_box_hull`,
+`box_edge_table`; `MAX_RECORDS` holds the per-path bounds. Follows LINK_SOLVER.md
+"Narrow-phase box testers". Supplied: `services(rva, mem, rcx, rdx, r8, r9, xmm3)` for
+the leaves in `SUPPLIED_RVAS` (not restated). Authored: `sp` places locals at native
+stack offsets; saved registers and spills are not written; the box edge table is written
+on every call instead of once. Capacity is honoured by the box-box and box-hull face
+paths, ignored by the box-box edge path and never read by box-capsule. UNRESOLVED: the
+leaves, the hardware two-NaN rule, live MXCSR, the (0, -1, -1) selection under NaN lanes.
+Evidence: `native/snow_host/pose_narrowphase_kind3_validation.json`. No claim of
+original-engine equivalence outside the validated fixtures.

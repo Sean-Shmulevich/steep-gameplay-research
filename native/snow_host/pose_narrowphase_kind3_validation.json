@@ -1,0 +1,883 @@
+{
+  "schema": "pose-narrowphase-kind3-validation-v1",
+  "entries": {
+    "3,3": "0x19d8cd0 -> 0x19d6900",
+    "3,4": "0x19db670 -> 0x19d9160",
+    "3,5": "0x19dbba0 -> 0x19db710"
+  },
+  "method": "offline Unicorn run of the original entry wrappers over the memory image with every callee native except CRT __chkstk/_Init_thread_header/_Init_thread_footer; supplied-leaf calls recorded (args, bytes read before written, bytes written, rax) and replayed into the model, which must present identical arguments and identical bytes at every address each leaf read",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "results": {
+    "3,3": {
+      "cases": 640,
+      "passed": 640,
+      "native_faults": 0,
+      "max_count": 7,
+      "by_path_flag_count": [
+        "edge/no_reduce/1: 12",
+        "edge/reduce/1: 35",
+        "face/no_reduce/0: 37",
+        "face/no_reduce/1: 19",
+        "face/no_reduce/2: 9",
+        "face/no_reduce/3: 18",
+        "face/no_reduce/4: 30",
+        "face/no_reduce/5: 6",
+        "face/no_reduce/7: 1",
+        "face/reduce/0: 89",
+        "face/reduce/1: 34",
+        "face/reduce/2: 55",
+        "face/reduce/3: 48",
+        "face/reduce/4: 98",
+        "none/no_reduce/0: 37",
+        "none/reduce/0: 112"
+      ]
+    },
+    "3,4": {
+      "cases": 576,
+      "passed": 534,
+      "native_faults": 42,
+      "max_count": 2,
+      "by_path_flag_count": [
+        "clip/no_reduce/0: 18",
+        "clip/no_reduce/1: 5",
+        "clip/no_reduce/2: 53",
+        "clip/reduce/0: 52",
+        "clip/reduce/1: 18",
+        "clip/reduce/2: 125",
+        "deep_edge/no_reduce/1: 4",
+        "deep_edge/reduce/1: 15",
+        "deep_face/no_reduce/0: 6",
+        "deep_face/no_reduce/1: 6",
+        "deep_face/no_reduce/2: 15",
+        "deep_face/reduce/0: 22",
+        "deep_face/reduce/1: 22",
+        "deep_face/reduce/2: 76",
+        "gjk/no_reduce/0: 9",
+        "gjk/no_reduce/1: 12",
+        "gjk/reduce/0: 30",
+        "gjk/reduce/1: 46"
+      ]
+    },
+    "3,5": {
+      "cases": 640,
+      "passed": 640,
+      "native_faults": 0,
+      "max_count": 5,
+      "by_path_flag_count": [
+        "edge/no_reduce/0: 5",
+        "edge/no_reduce/1: 57",
+        "edge/reduce/0: 10",
+        "edge/reduce/1: 123",
+        "face/no_reduce/0: 27",
+        "face/no_reduce/1: 10",
+        "face/no_reduce/2: 15",
+        "face/no_reduce/3: 10",
+        "face/no_reduce/4: 25",
+        "face/no_reduce/5: 5",
+        "face/reduce/0: 70",
+        "face/reduce/1: 44",
+        "face/reduce/2: 38",
+        "face/reduce/3: 27",
+        "face/reduce/4: 79",
+        "none/no_reduce/0: 24",
+        "none/reduce/0: 71"
+      ]
+    }
+  },
+  "native_faults": [
+    {
+      "pair": "3,4",
+      "trial": 7,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34f1",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 15,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 23,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34f1",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 31,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 63,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 71,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 111,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 119,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 127,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 135,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 151,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 167,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 175,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34f1",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 183,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 199,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 207,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34f1",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 223,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 231,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 247,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34f1",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 255,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 287,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 311,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 327,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 343,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34f1",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 359,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 367,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34f1",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 375,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34f1",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 399,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 415,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34f1",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 423,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34f1",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 447,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 455,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 463,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 471,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 479,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 495,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 535,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 543,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34f1",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 551,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34f1",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 559,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 567,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    },
+    {
+      "pair": "3,4",
+      "trial": 575,
+      "special": true,
+      "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "rip": "0x1418e34a5",
+      "leaves": [
+        "0x18eab80",
+        "0x19daf90"
+      ],
+      "active": "0x19daa60",
+      "box_capsule_selection": [
+        0,
+        -1,
+        -1
+      ]
+    }
+  ],
+  "capacity_sweep": {
+    "3,3": {
+      "full<=cap, n==min(full,cap)": 53,
+      "full>cap, n==full": 2,
+      "full>cap, n==min(full,cap)": 137
+    },
+    "3,4": {
+      "full<=cap, n==min(full,cap)": 115,
+      "full>cap, n==full": 77
+    },
+    "3,5": {
+      "full<=cap, n==min(full,cap)": 122,
+      "full>cap, n==min(full,cap)": 70
+    }
+  },
+  "crt_calls": {
+    "epoch": -2147483644,
+    "header": 4,
+    "footer": 4,
+    "chkstk": 2315
+  },
+  "stats": {
+    "pick4_calls": 66,
+    "cap_bound_cases_3_3": 133,
+    "touching_3_3": 80,
+    "cap_bound_cases_3_4": 44,
+    "lying_3_4": 208,
+    "hull_box": 444,
+    "cap_bound_cases_3_5": 132,
+    "touching_3_5": 80,
+    "hull_prism": 244
+  },
+  "supplied_leaf_calls": {
+    "0x19d8550": 880,
+    "0x19d6200": 649,
+    "0x19d5d30": 649,
+    "0x19980f0": 4118,
+    "0x19986e0": 1074,
+    "0x1998e80": 1074,
+    "0x19d7540": 478,
+    "0x19989d0": 106,
+    "0x18eab80": 816,
+    "0x19db080": 523,
+    "0x19da3f0": 523,
+    "0x19da100": 396,
+    "0x19daf90": 293,
+    "0x19daa60": 259,
+    "0x19da4e0": 34,
+    "0x190f700": 880,
+    "0x18e3980": 425,
+    "0x18e3450": 425,
+    "0x18e3aa0": 310
+  },
+  "comparisons": [
+    "return eax",
+    "all 600 output record slots (0x30 bytes each, random prefill)",
+    "every supplied-leaf call: RVA order, rcx/rdx/r8/r9 (0x1998e80: rcx, rdx, r8d, xmm3 lane 0)",
+    "every byte each supplied leaf read from scratch, stack or the 0x143336880..0x14333699f data range"
+  ],
+  "bug_injections": [
+    "box-box emission ignores capacity: fails at stored case 0 (output mismatch)",
+    "depth < 0 filter dropped (box-box emits every clipped point): fails at stored case 3 (output mismatch)",
+    "flip rule inverted (S+0x11 > 2): fails at stored case 0 (output mismatch)",
+    "face-contact flip inverted: fails at stored case 0 (output mismatch)",
+    "clip driver runs one plane more: fails at stored case 0 (replay mismatch)",
+    "reduce flag geom+0x90 ignored: fails at stored case 24 (replay mismatch)",
+    "box-hull face emitter ignores capacity: fails at stored case 14 (output mismatch)",
+    "box-capsule clip crossing takes the other point tag: fails at stored case 30 (output mismatch)",
+    "box-capsule parallel test never passes (no face clip): fails at stored case 0 (replay mismatch)",
+    "box-capsule deep kind 2 sent to the kind-0 emitter: fails at stored case 8 (replay mismatch)",
+    "box-capsule deep threshold 1e-2: fails at stored case 24 (replay mismatch)",
+    "box-capsule wrapper swaps frame copies: fails at stored case 0 (replay mismatch)"
+  ],
+  "limits": [
+    "The model reconstructs the three entry wrappers, the box-box core 0x19d6900, the box-capsule core 0x19d9160 (axis points, GJK-result use, parallel test, unrolled four-plane segment clip, both emitters, deep-path box hull and dispatch), the box-hull core 0x19db710, 0x18e4060 and the clip/reduce drivers 0x1996bf0/0x19984f0. Supplied (results from the native run): box SAT 0x19d8550, box edge query 0x19d7540, box side planes 0x19d6200, incident polygon 0x19d5d30, per-plane clip 0x19980f0, depths 0x19986e0, prune 0x1998e80, pick-4 0x19989d0, hull SAT 0x190f700, hull edge contact 0x18e3aa0, hull polygon 0x18e3980, hull side planes 0x18e3450, segment-box GJK 0x18eab80, box face pick 0x19db080, box face plane 0x19da3f0, box side planes 0x19da100, capsule-hull selector 0x19daf90 and its emitters 0x19daa60 / 0x19da4e0.",
+    "Native faults (special-lane (3,4) cases only) are not compared; they are listed with the capsule-hull selector output.",
+    "Two-NaN lanes use nan_rule x87 (emulator rule); MXCSR 0x1f80; hardware behaviour not observed.",
+    "Hull fixtures are boxes (native layout) and triangular prisms built by the harness; no game hulls.",
+    "Synthetic shapes and frames; no live geom blocks. Stack contents are random per case, so a leaf read of uninitialised caller stack would have been flagged."
+  ]
+}
