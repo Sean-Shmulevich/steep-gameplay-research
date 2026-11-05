@@ -1,0 +1,349 @@
+{
+ "schema": "physics-step-hold-safe-point-live-v1",
+ "date": "2026-11-04",
+ "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+ "kind": "live observation (not a reconstruction check): whether holding the host native Step pause leaves physics pair/body state untouched by the engine, and what the host setters touch while held",
+ "capture": {
+  "mechanism": "private bounded snow-host plugin. Data writes only: the broad-phase object at controller+0x28 had its vtable pointer compare-exchanged to a private copy of the 34-slot table (image RVA 0x29ca8a0) with slot +0x60 (S0 inside 18b8fa0) a forwarding detour; the provider+0x68 pair-collider factory (vtable image RVA 0x29ca780) had slot +8 (18de680) forwarded the same way. A read-only sampler thread swept the 11 guard globals: LockCount/RecursionCount/OwningThread of each CRITICAL_SECTION and count/head of the sibling free-list pool at guard-8, continuously while held and in 20 ms bursts every 200 ms otherwise. on_pause/on_resume callbacks snapshotted the world Step job last-run counter and the PhysicsWorldStep job header (state+0x1b0, reached from world+0xff0 -> physics+0x18, checked by back-link, state+0x10, delegate 0x8ab390 and job vtable 0x1e89618).",
+  "frozen_window": "from on_pause (host verified the hold) until the sampler first saw the Step last-run counter change after the resume clear; every 18b8fa0 entry, factory call and sampler sweep is tagged with the Step last-run value it saw, so activity in a frozen window is one tagged with the value frozen at on_pause",
+  "holds": "host simulation.pause (lease 8 s) for about 1.2 s, then simulation.resume; early holds just after the drop-in, main holds between 1.5 s forward (optionally steered) key holds while riding",
+  "setter_holds": "every third main hold: player.set_velocity with the held velocity x1.0 and x0.9, then player.set_position at the current position; marks timestamp each call window; the coordinator reads both player bodies' +0x10 group words (read-only, external) before and after each call",
+  "restore": "factory then broad-phase vtable pointer compare-exchanged back after re-checking the owner fields; in-flight detours drained",
+  "plugin_source_sha256": "906259b0c1f8b1d22a8f1fdaa4eb9a34a507343cc6f839ab8599e9d91d63f2a9"
+ },
+ "sessions": [
+  {
+   "session": "t2-01",
+   "map_key_attempt": null,
+   "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+   },
+   "hooks": {
+    "verified": 1,
+    "installed": 1,
+    "restored": 1,
+    "vptr_after_original": 1,
+    "drained": 1,
+    "factory_installed": 1,
+    "factory_restored": 1,
+    "factory_vptr_after_original": 1,
+    "factory_drained": 1,
+    "foreign60": 0,
+    "factory_foreign": 0,
+    "entries_dropped": 0,
+    "events_dropped": 0,
+    "guard_ptr_changes": 0
+   },
+   "physics_job_located": true,
+   "holds": {
+    "total": 25,
+    "early_before_riding": 4,
+    "with_hook_a": 21,
+    "set_holds": 7,
+    "frozen_window_s": {
+     "min": 1.243,
+     "median": 1.261,
+     "max": 1.34
+    },
+    "host_step_counter_unchanged_while_held": true,
+    "plain_hold_held_reads_identical": 18,
+    "plain_holds": 18,
+    "resume_fallback_restores": 0
+   },
+   "frozen_window_results": {
+    "pair_update_18b8fa0_entries": 0,
+    "worker_path_factory_calls": 0,
+    "physics_world_step_last_run_changes": 0,
+    "guard_sampler_sweeps_hold_to_on_resume": 579050918,
+    "guard_owned_observations": 0,
+    "pool_count_or_head_changes": 0
+   },
+   "sampler_sensitivity_outside_holds": {
+    "owned_observations_per_guard": {
+     "0x143336ab0": 1615,
+     "0x143336ac0": 132,
+     "0x143336aa0": 248,
+     "0x143336bb8": 1929,
+     "0x143336800": 174,
+     "0x1433367f0": 227,
+     "0x1433367d0": 800,
+     "0x143336810": 167,
+     "0x143336868": 0,
+     "0x143336878": 47,
+     "0x143336888": 85
+    },
+    "pool_changes_per_guard": {
+     "0x143336ab0": 189,
+     "0x143336ac0": 38,
+     "0x143336aa0": 59,
+     "0x143336bb8": 397,
+     "0x143336800": 37,
+     "0x1433367f0": 41,
+     "0x1433367d0": 133,
+     "0x143336810": 42,
+     "0x143336868": 0,
+     "0x143336878": 96,
+     "0x143336888": 52
+    },
+    "owner_thread_labels": [
+     "game job-pool worker (start 0x1c94b94)"
+    ]
+   },
+   "after_release_before_on_resume": {
+    "note": "between the resume clear and the host on_resume callback the world steps again; guard activity seen there is ordinary stepping",
+    "owner_thread_labels": [
+     "game job-pool worker (start 0x1c94b94)"
+    ]
+   },
+   "pair_update_threads": {
+    "distinct": 10,
+    "labels": {
+     "game job-pool worker (start 0x1c94b94)": 41663
+    }
+   },
+   "physics_job_vs_step": {
+    "constant_offset_at_every_pair_update_entry": true,
+    "entries": 41663
+   },
+   "host_setters_in_holds": {
+    "calls": 21,
+    "ok": 21,
+    "by_op": {
+     "set_velocity": 14,
+     "set_position": 7
+    },
+    "step_stayed_frozen_across_call": true,
+    "guard_owned_observations_in_call_windows": 0,
+    "pool_changes_in_call_windows": 0,
+    "pair_update_entries_in_call_windows": 0,
+    "body_group_selection": null,
+    "post_release_motion_after_set_holds": {
+     "holds": 7,
+     "all_finite": true,
+     "max_displacement_over_0_5_s": 8.58,
+     "max_reported_speed": 17.8
+    }
+   },
+   "post_release_motion_all_holds": {
+    "holds": 25,
+    "all_finite": true,
+    "moving_after_release": 20
+   }
+  },
+  {
+   "session": "t2-02",
+   "map_key_attempt": null,
+   "cleanup": {
+    "ok": true,
+    "ended_by": "stop",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+   },
+   "hooks": {
+    "verified": 1,
+    "installed": 1,
+    "restored": 1,
+    "vptr_after_original": 1,
+    "drained": 1,
+    "factory_installed": 1,
+    "factory_restored": 1,
+    "factory_vptr_after_original": 1,
+    "factory_drained": 1,
+    "foreign60": 0,
+    "factory_foreign": 0,
+    "entries_dropped": 0,
+    "events_dropped": 0,
+    "guard_ptr_changes": 0
+   },
+   "physics_job_located": true,
+   "holds": {
+    "total": 31,
+    "early_before_riding": 4,
+    "with_hook_a": 27,
+    "set_holds": 9,
+    "frozen_window_s": {
+     "min": 1.239,
+     "median": 1.273,
+     "max": 4.843
+    },
+    "host_step_counter_unchanged_while_held": true,
+    "plain_hold_held_reads_identical": 22,
+    "plain_holds": 22,
+    "resume_fallback_restores": 0
+   },
+   "frozen_window_results": {
+    "pair_update_18b8fa0_entries": 0,
+    "worker_path_factory_calls": 0,
+    "physics_world_step_last_run_changes": 0,
+    "guard_sampler_sweeps_hold_to_on_resume": 759058420,
+    "guard_owned_observations": 0,
+    "pool_count_or_head_changes": 0
+   },
+   "sampler_sensitivity_outside_holds": {
+    "owned_observations_per_guard": {
+     "0x143336ab0": 1037,
+     "0x143336ac0": 42,
+     "0x143336aa0": 0,
+     "0x143336bb8": 1448,
+     "0x143336800": 0,
+     "0x1433367f0": 0,
+     "0x1433367d0": 12,
+     "0x143336810": 0,
+     "0x143336868": 0,
+     "0x143336878": 0,
+     "0x143336888": 0
+    },
+    "pool_changes_per_guard": {
+     "0x143336ab0": 76,
+     "0x143336ac0": 14,
+     "0x143336aa0": 13,
+     "0x143336bb8": 265,
+     "0x143336800": 8,
+     "0x1433367f0": 10,
+     "0x1433367d0": 35,
+     "0x143336810": 10,
+     "0x143336868": 0,
+     "0x143336878": 11,
+     "0x143336888": 11
+    },
+    "owner_thread_labels": [
+     "game job-pool worker (start 0x1c94b94)"
+    ]
+   },
+   "after_release_before_on_resume": {
+    "note": "between the resume clear and the host on_resume callback the world steps again; guard activity seen there is ordinary stepping",
+    "owner_thread_labels": [
+     "game job-pool worker (start 0x1c94b94)"
+    ]
+   },
+   "pair_update_threads": {
+    "distinct": 10,
+    "labels": {
+     "game job-pool worker (start 0x1c94b94)": 58017
+    }
+   },
+   "physics_job_vs_step": {
+    "constant_offset_at_every_pair_update_entry": true,
+    "entries": 58017
+   },
+   "host_setters_in_holds": {
+    "calls": 27,
+    "ok": 27,
+    "by_op": {
+     "set_velocity": 18,
+     "set_position": 9
+    },
+    "step_stayed_frozen_across_call": true,
+    "guard_owned_observations_in_call_windows": 0,
+    "pool_changes_in_call_windows": 0,
+    "pair_update_entries_in_call_windows": 0,
+    "body_group_selection": {
+     "reads": 27,
+     "main_group_changed": 0,
+     "rider_group_changed": 0,
+     "main_group_null_before": 0,
+     "same_bodies": true
+    },
+    "post_release_motion_after_set_holds": {
+     "holds": 9,
+     "all_finite": true,
+     "max_displacement_over_0_5_s": 0.02,
+     "max_reported_speed": 0.4
+    }
+   },
+   "post_release_motion_all_holds": {
+    "holds": 31,
+    "all_finite": true,
+    "moving_after_release": 0
+   }
+  },
+  {
+   "session": "t2-03",
+   "plugin_records": "lost: the launcher watchdog stopped the bottle for host memory pressure during the last hold, before the plugin exported (coordinator-side data only)",
+   "watchdog_reason": "memory_pressure_limit",
+   "cleanup": {
+    "ok": true,
+    "ended_by": "watchdog",
+    "bottle_stopped": true,
+    "saves_restored": true,
+    "settings_restored": true,
+    "original_dll_verified": true
+   },
+   "holds": {
+    "completed": 22,
+    "early_before_riding": 3,
+    "host_step_counter_unchanged_while_held": true,
+    "plain_hold_held_reads_identical": 19,
+    "plain_holds_completed": 19,
+    "resume_fallback_restores": 0
+   },
+   "host_setters_in_holds": {
+    "calls": 9,
+    "accepted": 6,
+    "refused_note": "the 3 refusals were one hold in which the player body was out of the physics world (host flags without IN_WORLD, body group word null): the documented setter refusal",
+    "set_hold_speeds_units_per_s": [
+     45.3,
+     35.0,
+     24.1
+    ],
+    "body_group_selection": {
+     "reads": 9,
+     "main_group_changed": 0,
+     "rider_group_changed": 0,
+     "reads_with_group_null": 3,
+     "same_bodies": true
+    },
+    "post_release_motion_after_accepted_set_holds": [
+     {
+      "disp_over_0_5_s": 23.8,
+      "speed": 46.7,
+      "finite": true
+     },
+     {
+      "disp_over_0_5_s": 12.9,
+      "speed": 25.9,
+      "finite": true
+     }
+    ]
+   },
+   "map_key_attempt": "not reached (session ended during the main holds)"
+  }
+ ],
+ "totals": {
+  "holds": 56,
+  "holds_with_hook_a": 48,
+  "frozen_pair_update_entries": 0,
+  "frozen_factory_calls": 0,
+  "frozen_physics_job_changes": 0,
+  "frozen_guard_owned_observations": 0,
+  "frozen_pool_changes": 0,
+  "sweeps_hold_to_on_resume": 1338109338,
+  "setter_calls": 48,
+  "setter_guard_owned_observations": 0,
+  "setter_pool_changes": 0,
+  "setter_group_reads": 36,
+  "coordinator_only_holds": 22
+ },
+ "verdicts": {
+  "freeze": "PASS",
+  "guards_quiet_while_held": "PASS",
+  "host_setters": "PASS (no pool guard owned, no pool changed, no pair update entered in any call window)",
+  "setter_group_selection_changed": 0,
+  "loading_stress": "partial: early holds right after the drop-in and holds while riding only; the map-key attempt planned for the third session was not reached; no fast travel or map-driven load was observed"
+ },
+ "limits": [
+  "Wine on macOS, one dispatcher capacity (1) and this CPU count; Windows may differ.",
+  "The sampler sees a CRITICAL_SECTION as owned only while some sweep overlaps the hold; very short sections can be missed. The pool count/head check is a second, state-based signal for the pool-taking paths but does not cover guard use without a pool change.",
+  "The host setters also enter the protected controller synchronization at controller+0x50, which is not one of the 11 pool guards and was not sampled.",
+  "Off-graph services (loading thread, idle task workers) were not separately instrumented; their guard use would have appeared as owned observations or pool changes, and none did while held.",
+  "Thread labels are per session and relative (start module and RVA); no thread ids, heap addresses or raw bytes are published.",
+  "Live behaviour for these sessions only; not a proof for other game states (sport change, save, online, long holds)."
+ ]
+}

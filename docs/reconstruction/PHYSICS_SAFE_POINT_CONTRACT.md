@@ -312,3 +312,7 @@ Live gates (one bounded session, director startup, small buffers, experiment loc
   `pose_pair_update_live_validation.json`, `pose_pair_update_step_validation.json`,
   `pose_pair_link_filter_validation.json`, `pose_body_controller_transition_validation.json`,
   `pose_job_ring_queue_validation.json`.
+
+## Live update (2026-11-04): Step-hold check
+
+The live lane filled P1 and P2b ([receipt](../../native/snow_host/physics_step_hold_safe_point_live.json); LINK_SOLVER.md "Step-hold safe point live check"). Over 56 instrumented holds: `18b8fa0` was never entered, the PhysicsWorldStep job counter never advanced, no pool guard was owned and no pool count or head changed, while the same sampler saw thousands of owned guards outside holds (all owned by engine job threads). In 36 host setter call windows the body group never changed, so no pool guard was reached (P2b: steady riding). The loading/streaming case was not exercised and remains PENDING, as does the controller+0x50 sync. Step-hold is adopted as the T3 safe point under the steady-riding interim rule.

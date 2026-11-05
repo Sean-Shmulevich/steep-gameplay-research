@@ -10620,3 +10620,106 @@ Classes used below: (a) runs inside the simulation half that the Step hold freez
 - Live observation remains the way to settle any of these; this pass says only where to look.
 
 Evidence file: `analysis/thread-census/t2mutators.json` (private workspace, not published).
+
+Append after "### Body velocity and pose setters (host set_velocity / set_pose entry path)".
+
+### Step-hold safe point live check
+
+This is a live observation, not a reconstruction check. It asks whether holding the host's native Step pause leaves the physics pair and body state alone, and what the host's own setters touch while the pause is held. The receipt is `native/snow_host/physics_step_hold_safe_point_live.json`.
+
+**Capture.** A private, bounded snow-host plugin was used. Its only writes were the two vtable-pointer swaps from "Live thread and lock observation", each compare-exchanged in and back:
+
+- broad-phase slot `+0x60` (S0 inside `18b8fa0`);
+- the provider+0x68 pair-collider factory slot `+8` (`18de680`).
+
+Each detour records the calling thread and the world Step job's last-run counter (engine owner `+0x3b08`).
+
+The plugin also read, never wrote, the PhysicsWorldStep job at `state+0x1b0`. It found the job through `world+0xff0 -> physics+0x18`. Before use it checked four things: the back-link, `state+0x10`, the delegate `0x8ab390` and the job vtable `0x1e89618`.
+
+A read-only sampler thread swept the 11 guard globals. For each guard it read:
+
+- the CRITICAL_SECTION's LockCount, RecursionCount and OwningThread;
+- the count and head (`+0x28`/`+0x30`) of the sibling free-list pool at guard-8.
+
+It swept continuously while held, and in 20 ms bursts every 200 ms otherwise.
+
+`on_pause` and `on_resume` snapshotted the counters. A **frozen window** runs from `on_pause` (the host has verified the hold) to the first sweep that sees the Step last-run counter change after the resume clear. Every entry, factory call and sweep is tagged with the Step last-run value it saw. Activity counts as "in a frozen window" only when it carries the value that was frozen at `on_pause`.
+
+The coordinator drove the session:
+
+- host `simulation.pause` with an 8 s lease, held for about 1.2 s, then `simulation.resume`;
+- early holds right after the drop-in;
+- main holds between 1.5 s forward key holds (optionally steered);
+- every third main hold (the first, second and fourth in session 3) was a setter hold: `player.set_velocity` at the held velocity x1.0 and x0.9, then `player.set_position` at the current position;
+- marks timestamped each call window;
+- sessions 2–3 also read both bodies' `+0x10` group word before and after each call, read-only and from outside the process.
+
+**Results.**
+
+Sessions:
+
+- **t2-01:** 25 holds, 21 with the hooks installed.
+- **t2-02:** 31 holds, 27 with the hooks installed.
+- **t2-03:** the launcher watchdog stopped the bottle for host memory pressure during its 23rd hold, so its plugin records were lost. Coordinator-side data for its 22 completed holds is kept.
+
+**Freeze.** Frozen windows lasted 1.24–4.84 s (median about 1.27 s). Across all 56 plugin-recorded holds:
+
+- 0 `18b8fa0` entries;
+- 0 worker-path factory calls;
+- 0 changes of the PhysicsWorldStep job's `+0x58` counter;
+- the host's own step counter never changed while held (all 78 holds, including t2-03);
+- position read back identically at the start and end of every plain hold (59 of 59).
+
+The physics job counter advanced normally between holds. At every one of 99,680 `18b8fa0` entries, PhysicsWorldStep `+0x58` minus Step last-run was the same constant, so there was exactly one PhysicsWorldStep execution per Step request. That makes `+0x58` a usable per-job progress counter, not just a proxy.
+
+**Guards while held.** The sampler took about 1.34 billion sweeps between `on_pause` and `on_resume`. Inside frozen windows it recorded:
+
+- 0 guard-owned observations;
+- 0 changes to any pool's count or head.
+
+The sampler is sensitive enough to catch real use. Outside holds the same sampler recorded 7,963 owned observations and 1,537 pool changes, owned only by game job-pool workers (start RVA `0x1c94b94`). In the short tail after the resume clear and before `on_resume`, job-pool workers again took ab0/ac0/bb8/7d0/878. That is ordinary stepping, and no other thread label ever owned a guard.
+
+**Host setters while held.** 48 calls were recorded by the plugin (32 `set_velocity`, 16 `set_position`), all accepted. In every call window:
+
+- Step stayed frozen;
+- 0 guard-owned observations;
+- 0 pool changes;
+- 0 `18b8fa0` entries.
+
+Group reads: 36 call windows across t2-02 and t2-03 (27 accepted and recorded by the plugin in t2-02, plus 9 coordinator-only in t2-03). In t2-03, 6 calls were accepted and 3 refused:
+
+- **Accepted (6):** made at held speeds of 45 and 24 units/s. Body group words were identical before and after every call. Main and rider shared one group.
+- **Refused (3):** all in one hold where the body was out of the world (flags without IN_WORLD, group null). That is the documented setter refusal.
+
+**P2b answered for these states:** a host setter never changed group selection, so gate 3 of the setter chain did not open and neither `0x143336aa0` nor `0x143336bb8` was reached. After release, the body moved plausibly. The two moving accepted setter holds in t2-03 covered 23.8 and 12.9 units in 0.5 s at reported 46.7 and 25.9 units/s, and every post-release read was finite. No fallback restore was needed.
+
+Cleanup was verified in all three sessions:
+
+- both vtable pointers were restored and drained, with 0 foreign detour calls (t2-01 and t2-02);
+- the bottle stopped, saves and settings were restored, and the original DLL was verified;
+- t2-03 ended via the watchdog but restored the same way.
+
+**Verdict.** Holding the Step pause is a valid safe point for physics pair/body state in the observed states:
+
+- no pair update, worker-path call, physics job execution, pool-guard ownership or pool mutation was seen while held;
+- the host setters made inside the hold took no pool guard and did not change group selection.
+
+**Anomalies:**
+
+- The rider often stopped within about 10 s of riding (terrain), so most later holds were near standstill.
+- Setter holds in t2-02 lasted 3.4–4.8 s, because the external group reads are slow.
+- The pre-existing `director.dll` startup-budget fault appeared in the host log, as in the census sessions.
+
+**Limits:**
+
+- Wine on macOS, dispatcher capacity 1.
+- The sampler can miss very short critical sections. The pool count/head check is a second, state-based signal, but it covers only pool-taking paths.
+- The protected controller sync at `controller+0x50`, which every host setter enters, was not sampled.
+- Loading stress is partial. There were early post-drop-in holds and holds while riding, but the planned map-key attempt was not reached and no fast-travel load was observed.
+- Off-graph services were not separately instrumented. They would have appeared as owned observations or pool changes, and none did.
+
+**Static leads:**
+
+- what the `controller+0x50` protected sync excludes against;
+- whether any loading or idle-task path takes the 11 guards (exercise with a hold during a fast-travel load);
+- confirming PhysicsWorldStep `+0x58`/`+0x5c` as last-run/current-request from the job class.
