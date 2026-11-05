@@ -64,6 +64,10 @@ observed game window, then passed controlled stepping after reaching gameplay.
 - Time-of-day progression, pause gates, weather scalar interpolation, and ordered preset overlays have concrete pseudocode. Track time decoding and weather-to-grip coupling remain open.
 - A trick target reaches entity transforms. The specific snowboard notification inspected performs no body assignment; other component and child paths remain unresolved.
 - Live movement was observed alongside contact return and loss. Sampling gaps prevent a precise conclusion about update ordering.
+- On 2026-11-04 the per-substep physics pair update matched a Python reconstruction byte for byte for selection and rebuild on 64 live steps; the pair jobs were checked structurally only. See [Live pair update capture](docs/reconstruction/LINK_SOLVER.md#live-pair-update-capture).
+- The Anvil reflection metadata carries plaintext class names, which now annotate several authored labels. Third-party Wildlands facts were re-derived in Steep before use. See the [Anvil cross-title check](docs/reconstruction/ANVIL_CROSS_TITLE.md).
+- The physics guard globals point to CRITICAL_SECTION-shaped objects that were never seen held in the sampled session. The pair update ran on varying engine threads with a dispatcher capacity of 1. See the [lock map](docs/reconstruction/PHYSICS_LOCK_MAP.md) and [atomics and threads](docs/reconstruction/PHYSICS_ATOMICS_AND_THREADS.md). This is Wine on macOS only.
+- Holding the host Step pause showed no pair update, physics job or pool-guard activity in steady riding, and host velocity/position setters took no pool guard. Loading behaviour is not covered. The [safe-point contract](docs/reconstruction/PHYSICS_SAFE_POINT_CONTRACT.md) is a draft design document.
 
 The chapters contain much more local arithmetic than these summaries. A recovered formula does not establish that its branch is active for every sport, material, or animation state.
 

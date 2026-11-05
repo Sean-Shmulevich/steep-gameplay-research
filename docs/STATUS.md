@@ -1,6 +1,6 @@
 # Current status
 
-Snapshot: 2026-10-13. This page qualifies older reports. No audited percentage of the complete engine is available, and no percentage estimate should be treated as measured coverage.
+Snapshot: 2026-11-04 (physics pair management and threading rows added; other rows last revised 2026-10-13). This page qualifies older reports. No audited percentage of the complete engine is available, and no percentage estimate should be treated as measured coverage.
 
 | System | Established locally | Still open |
 | --- | --- | --- |
@@ -13,6 +13,8 @@ Snapshot: 2026-10-13. This page qualifies older reports. No audited percentage o
 | Time and weather | Controller ownership, clock progression and gates, weather interpolation, ordered preset blending | Concrete track evaluator/time encoding, remaining selection, visual/physical wind joins, weather-to-grip effects |
 | Camera and air sports | Many local filters, force/control formulas, selection and projection paths | Final integration, full environmental zones, comprehensive live validation |
 | Scoring | Local formulas, thresholds, history and attribution paths | Complete detector coverage and event commit/cancel behavior |
+| Physics pair management | Static reconstruction in [LINK_SOLVER](reconstruction/LINK_SOLVER.md): broadphase pair-list accessors; the per-substep pair update `18b8fa0` (selection of removed-pair links, body connectivity rebuild, pair jobs); link retire, free-list rebalance, pair worker, pair link filter, contact generation, flagged neighbor update/create handlers, recycled link acquire and the merges with their order comparator. Selection and rebuild matched byte for byte on 64 captured live steps, and the pair-job merges matched structurally ([receipt](../native/snow_host/pose_pair_update_live_validation.json)). Reflection class names now annotate several authored labels ([Anvil cross-title check](reconstruction/ANVIL_CROSS_TITLE.md)) | Byte-level comparison of the pair jobs (retire, neighbor retire, rebalance, workers, tree inserts `18de6a0`/`18de830`); multi-worker dispatch; narrow-phase contact math and collider testers; the eight eligible removed rows with no tree node; controllers other than the player's world controller; the code after the last snapshot (`18df490`, counter bump) |
+| Physics threading | Guard globals map to 11 CRITICAL_SECTION-shaped objects, plus one non-pointer word, with a static per-guard [lock map](reconstruction/PHYSICS_LOCK_MAP.md); a 131-site atomic-instruction census and a lock-free job ring queue ([atomics and threads](reconstruction/PHYSICS_ATOMICS_AND_THREADS.md)); a hard-coded single pair-job worker with dispatcher capacity 1 in the observed session; live thread placement of the pair update (10 engine threads, none fixed) and uncontended lock state at every sample ([receipt](../native/snow_host/physics_thread_lock_live_observation.json)); holding the host Step pause left pair, worker, physics-job and pool-guard activity absent in 56 recorded steady-riding holds, and host `set_velocity`/`set_position` calls in a hold took no pool guard ([receipt](../native/snow_host/physics_step_hold_safe_point_live.json)). The [safe-point contract](reconstruction/PHYSICS_SAFE_POINT_CONTRACT.md) is a draft design document, not an implemented API | Behaviour during loading and fast travel (partial; no load observed); what the `controller+0x50` sync excludes; whether loading/idle/async paths take the pool guards; capacity and thread placement on Windows or other CPU counts; contact math and collider testers; off-graph mutators classified only statically |
 
 ## Corrections worth preserving
 
@@ -32,6 +34,12 @@ This did **not** prove same-substep execution. The95th-percentile group interval
 
 The subsequent automated Space attempt never reached gameplay: startup/control helpers timed out and the bounded launcher cleaned up. No Space-driven jump result exists from that attempt.
 
+Three further captures on 2026-11-04 used private bounded plugins that swapped object vtable pointers (data writes only, restored and verified afterwards). All ran on Wine on macOS and only on the player's world controller. Sequential self-reads are not atomic snapshots.
+
+- [Pair update capture](reconstruction/LINK_SOLVER.md#live-pair-update-capture): 64 steps (37 with removed rows) out of 3,021 seen. The Python selection and rebuild matched the game byte for byte (1,164,424 bytes compared, 802 predicted changes matched, 0 unattributed bytes). The pair jobs were checked structurally only, with one worker in every captured step. Deliberately injected bugs failed the expected steps.
+- [Thread and lock observation](reconstruction/LINK_SOLVER.md#live-thread-and-lock-observation): across 12,000 recorded steps the pair update ran on 10 different engine threads and never on the host plugin thread. Dispatcher capacity was 1 in every step, so no multi-worker step occurred. None of the 11 guard objects was seen held at any sample. The shared thread start address is the CRT thread trampoline, so it does not identify a specific pool.
+- [Step-hold check](reconstruction/LINK_SOLVER.md#step-hold-safe-point-live-check): in 56 plugin-recorded holds there were no pair update entries, worker-path calls, physics-job executions, guard ownership or pool changes, while the same sampler saw 7,963 owned observations outside holds. Accepted host setters did not change group selection. Holds were in steady riding with partial loading coverage; the `controller+0x50` sync was not sampled.
+
 ## Most useful next work
 
 1. Arm the recorder before an ordinary input command; preserve before/after history and reduce measured sampling gaps.
@@ -40,6 +48,8 @@ The subsequent automated Space attempt never reached gameplay: startup/control h
 4. Trace the shared action-vector writer and publication generation; the concrete snow callback now joins the motion action store.
 5. Recover the environment track evaluator's clock conversion.
 6. Establish a separate on-foot controller path before applying the testbench to walking.
+7. Physics: reconstruct the pair-tree inserts `18de6a0`/`18de830` so the pair jobs can be compared byte for byte, and find a scene with enough overlapping pairs to exercise multi-worker dispatch.
+8. Physics threading: observe a Step hold during a fast-travel load, determine what the `controller+0x50` sync excludes, and find where dispatcher capacity is initialised.
 
 These are research priorities, not claims that the relevant implementation is already recovered.
 
