@@ -111,7 +111,7 @@
   "supplied_state": [
     "runtime XYZ mask 0x3336890 = {-1,-1,-1,0} (zero in the image)",
     "TLS: gs:[0x58] slot array, index 0x333c630 = 0, thread epoch 0x7fffffff at +0x4eec, so guarded static initializers are skipped",
-    "guarded static 0x3336a30 = 1e-7 x4, the value its initializer copies from 0x29ca870",
+    "guarded statics 0x3336a30/0x3336a50/0x3336a70 = 1e-7 x4, the initializer values (before 2026-11-05 only 0x3336a30 was set, so 18f3710 ran its triangle and volume degeneracy tests with zero thresholds)",
     "gs:[0x10] stack limit for the stack probe",
     "comparison vector 0x33368c0 zero (image)",
     "scalar trig dispatch 0x333e29c zero (image)"

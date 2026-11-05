@@ -2192,3 +2192,22 @@ the kind-6 constructor, real terrain data (modes, group keys, scale), the hardwa
 two-NaN rule, live MXCSR. Evidence:
 `native/snow_host/pose_narrowphase_capsule_terrain6_validation.json`. No claim of
 original-engine equivalence outside the validated fixtures.
+
+### Convex segment queries
+
+`engine.pose_convex_segment_query`: `convex_segment_query(mem, rows, shape, segment,
+iterations=16, *, mask=XYZ_MASK, nan_rule='sse', statics=DEFAULT_STATICS, trace=None,
+support=None) -> (dist, on_hull, on_segment)` (0x18f3710); `box_segment_query(rows, half,
+segment, iterations=16, *, mask, nan_rule, statics, trace) -> (dist, on_box, on_segment)`
+(0x18eab80); `segment_query_at(mem, out, block, points, iterations=16, *, box=False, ...)`
+(memory form); `bind_segment_query(mem, rows, shape, *, iterations=16, mask, nan_rule,
+statics)` supplies `gjk(p0, p1)` to `engine.pose_narrowphase_kind45.capsule_hull_core` /
+`capsule_hull_tester`. Follows LINK_SOLVER.md "Convex segment queries (0x18f3710,
+0x18eab80)". Reuses the solvers, direction, combination and hull support of
+`engine.pose_convex_point_query`. Lane-exact float32 with native operand order (checked
+under a harness SSE-rule overlay); `iterations` <= 0 returns (vertex 0, p0). Supplied: CRT
+static initialisation (the statics are a parameter). Authored: names, the trace hook, the
+bind/memory helpers, the haddps two-NaN convention of the validation overlay. UNRESOLVED:
+the hardware two-NaN rule, live MXCSR, real hull/box data, composition of `18eab80` with
+`19d9160`. Evidence: `native/snow_host/pose_convex_segment_query_validation.json`. No
+claim of original-engine equivalence outside the validated fixtures.

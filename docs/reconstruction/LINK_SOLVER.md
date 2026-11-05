@@ -11734,3 +11734,60 @@ the end re-read, 7/52 grid and 13/34 mesh pointers still held the same kind, vta
 fields, the rest had been freed or reused. Ownership checked only against arrays read at
 arm time. Observations under Wine on macOS for this build, not settings for other maps
 or the original engine.
+
+### Convex segment queries (0x18f3710, 0x18eab80)
+
+`engine/pose_convex_segment_query.py` restates `18f3710` (segment vs kind-5 hull, called by
+the capsule-hull core `19dd130` as `18f3710(&out, &{FB rows, hull}, &{p0, p1}, 16)`) and
+`18eab80` (segment vs box, called by the box-capsule core `19d9160` as `18eab80(&out, &{FA
+rows, ext & M}, &{p0, p1}, 16)`). Both are instances of the GJK routine restated for
+`18f0a70`: same simplex layout {shape index, segment index, s, P, w = P - s, weight], same
+inlined 2/3/4-point solvers reading statics `3336a30/50/70` (guards `3336a40/60/80`), same
+`29ca860`/`29ca880` constants and leaves. The model imports those pieces from
+`engine/pose_convex_point_query.py`.
+
+```text
+18f3710: s0 = ((t + x0*b0) + y0*b1) + b2*z0      # third product b2-first (loop uses z*b2)
+         entry 0 = {0, 0, s0, p0, p0 - s0, 1}; prev = hadd2((w0*w0)&M)
+loop:    d, |d|^2 < 2^-46 stop, i = 1949480(-d through rows) as in 18f0a70
+         j = (0 < hadd2(((p1 - p0)*d)&M)) ? 1 : 0     # lane 0 of cmpltps; NaN -> 0; 1 from 1e04e10
+         P = j ? p1 : p0 (unmasked); save simplex; stop if (i, j) is in visited (pairs)
+         append {i, j, s_i, P, P - s_i, 1}; visited = pairs of entries 0..count-1; solve; ...
+out:     as 18f0a70 (count 1: s0/P0; 2,3: sums; 4: both rows = hull sum); dist = sqrt(hadd2)
+18eab80: block +0x40 = extents h (16-byte load each iteration, lanes 0..2)
+         support of L (masked local dir): code = (L.x<0 ? 0x100) | (L.y<0 ? 0x10) | (L.z<0 ? 1)
+         v = (code&0xf00 ? -hx : hx, code&0xf0 ? -hy : hy, code&0xf ? -hz : hz, 0) (xorps sign)
+         s = ((t + x*b0) + y*b1) + z*b2; entry 0 = vertex code 0 (+h), standard product order
+```
+
+Behaviour worth preserving:
+
+- The solvers of `18f3710` subtract a zero origin from each w (`subps w, 0`); every w is a
+  subps result (never a signalling NaN), so this is the identity and the point-query
+  solvers apply.
+- The repeat test compares both words, so a vertex can be revisited with the other segment
+  end. For a zero-length segment both ends are equal and j only changes the key.
+- -0 and NaN local lanes are "not negative" for the box support. The box vertex is not
+  masked; lane 3 is a constructed 0.
+- Function bodies: `18f3710..18f63f6` (cold static-init paths after), `18eab80..18ed9b8`.
+
+Validation (`analysis/command-executor-audit/check_pose_convex_segment_query.py`, receipt
+`native/snow_host/pose_convex_segment_query_validation.json`): 1024 direct hull cases, 512
+direct box cases and 512 composed `19ddbc0` runs, all bit exact under the emulator rule.
+Each composed run with `capsule_hull_tester` bound to the model also checks the native
+block (masked hull frame + shape pointer) and the native 0x30-byte result. The emulator's
+two-NaN rule is commutative (larger fraction, then the positive NaN), so it cannot observe
+operand order; every direct case was therefore also re-run with a harness overlay applying
+the manual SSE first-operand rule to two-NaN lanes and compared with the model under
+`nan_rule='sse'`: 1536/1536 (1820 lanes rewritten). The `haddps` NaN choice in the overlay
+(lower lane first) is authored. Every hull-solver outcome marker was reached; box
+tet_vertex_d, tet_edge_ad and tet_degenerate were not. 14 injected bugs caught (one
+operand-order bug only under the overlay). Tests: 15.
+
+Limits: synthetic hulls, boxes and poses; default MXCSR; hardware two-NaN behaviour not
+measured; `18eab80` validated directly only, not composed with its caller `19d9160`.
+
+Harness correction: `check_pose_narrowphase_kind45.py` had set only static `3336a30`
+(the same defect fixed earlier in the sphere harness), so its native `18f3710` runs used
+zero triangle and volume thresholds. It now sets all three; the regenerated receipt is
+again 1024/1024 per core.
