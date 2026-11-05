@@ -1,0 +1,457 @@
+{
+ "schema": "physics-settings-live-observation-v1",
+ "evidence": "live original-game read-only observation (Wine on macOS), one build",
+ "mechanism": "private bounded snow-host plugin derived from the terrain-flags / narrow-phase census plugin, Hook A only: the broad-phase object controller+0x28 vtable pointer compare-exchanged to a private copy whose slot +0x60 (S0 in 18b8fa0) forwards; restored and verified. No code bytes, page protections or shared .rdata changed; no obfuscated thunks traced or emulated. Inside the detour, before forwarding, reads only: the 18b8fa0 caller frame (return into thunk 18ae2b0 and into the PhysicsWorldStep substep loop 1389a50 at 1389b02 required), the loop's saved timing pointer (rbx) and loop index (edi), timing +0x1390/+0x1394/+0x136c, the outer counter [timing]+0x20, and the settings object at world+0x08 (world = controller+0x20), 0x48 bytes. Step-hold reads: host simulation.pause held, then the plugin worker read the same words.",
+ "identity_checks": [
+  "image base 0x140000000",
+  "18b8fa0 signature (frame layout: rbx home, push rdi, sub rsp 0x1030)",
+  "1389a50 substep loop bytes (0x11d)",
+  "140b1a0 and 18ae2b0 thunk bytes",
+  "settings getter 12af2d0 and default ctor 19414b0 bytes",
+  "broad-phase vtable contents (34 slots)",
+  "controller vtable 0x29ca0e0",
+  "settings vtable 0x29ca978",
+  "per call: both return addresses, [[[timing]]+8] == controller, loop index < count"
+ ],
+ "layout_static": "settings object at world+0x08: vtable +0x00 then data +0x08..+0x47 (copy 1941420/1941520 and default ctor 19414b0 cover exactly these fields). World creation 13d1bd0 applies, through copy-modify-apply setters (18ae420/18ae490/18ae4e0/18ae590 -> 18d1650): gravity (0,0,-9.81) from RVA 0x1f28140, byte +0x21 = 1, mode +0x24 = 1, +0x2a = 4.",
+ "expected_default_words": [
+  "00000000",
+  "00000000",
+  "00000000",
+  "00000000",
+  "c1200000",
+  "00000001",
+  "40000000",
+  "bc23d70a",
+  "00000100",
+  "00000000",
+  "00000008",
+  "3dcccccd",
+  "3e4ccccd",
+  "3f000000",
+  "3f000000",
+  "3f000000",
+  "3a83126f",
+  "3a83126f"
+ ],
+ "expected_after_creation_words": [
+  "00000000",
+  "00000000",
+  "00000000",
+  "00000000",
+  "c11cf5c3",
+  "00000001",
+  "40000000",
+  "bc23d70a",
+  "00000100",
+  "00000001",
+  "00040008",
+  "3dcccccd",
+  "3e4ccccd",
+  "3f000000",
+  "3f000000",
+  "3f000000",
+  "3a83126f",
+  "3a83126f"
+ ],
+ "sessions": [
+  {
+   "name": "ps-01",
+   "launcher": {
+    "ok": true,
+    "settings_restored": true,
+    "bottle_stopped": true,
+    "original_dll_replaced": null,
+    "original_dll_verified": true
+   },
+   "coordinator": {
+    "ok": true,
+    "error": null,
+    "navigation": "scheduler_ready",
+    "image_base_matches": true
+   },
+   "ko": false,
+   "actions": {
+    "pre_arm_forward": 1,
+    "forward": 6,
+    "steer_left": 2,
+    "jump": 2,
+    "steer_right": 1
+   },
+   "plugin_done": {
+    "verified": 1,
+    "installed": 1,
+    "why": "",
+    "restored": 1,
+    "vptr_after_original": 1,
+    "drained": 1,
+    "window_ms": 130000,
+    "window_actual_ms": 130016,
+    "calls60": 14752,
+    "foreign60": 0,
+    "steps": 14752,
+    "chain_ok": 14752,
+    "chain_bad_ret": 0,
+    "chain_bad_ctrl": 0,
+    "chain_bad_ord": 0,
+    "chain_unread": 0,
+    "settings_unread": 0,
+    "world_changed": 0,
+    "timing_changed": 0,
+    "settings_distinct": 1,
+    "settings_overflow": 0,
+    "key_overflow": 9013,
+    "count_gt63": 0,
+    "log_n": 14752,
+    "snaps_served": 3,
+    "outer_counter_advance": 9797
+   },
+   "holds": [
+    {
+     "n": 1,
+     "host_paused": [
+      true,
+      true
+     ],
+     "host_step_unchanged": true,
+     "plugin_substeps_unchanged_during_read": true,
+     "settings_ok": 1,
+     "world_same": 1,
+     "timing_ok": 1,
+     "settings_words_equal_detour_snapshot_0": true,
+     "settings_vtable_words_match_0x29ca978": true,
+     "data_words_+0x08_to_+0x44": [
+      "00000000",
+      "00000000",
+      "c11cf5c3",
+      "00000001",
+      "40000000",
+      "bc23d70a",
+      "00000100",
+      "00000001",
+      "00040008",
+      "3dcccccd",
+      "3e4ccccd",
+      "3f000000",
+      "3f000000",
+      "3f000000",
+      "3a83126f",
+      "3a83126f"
+     ],
+     "count": 1,
+     "dt_bits": "3c304bf8",
+     "dt": 0.010760299861431122,
+     "consumed_bits": "3c304bf8",
+     "consumed": 0.010760299861431122,
+     "error": null
+    },
+    {
+     "n": 2,
+     "host_paused": [
+      true,
+      true
+     ],
+     "host_step_unchanged": true,
+     "plugin_substeps_unchanged_during_read": true,
+     "settings_ok": 1,
+     "world_same": 1,
+     "timing_ok": 1,
+     "settings_words_equal_detour_snapshot_0": true,
+     "settings_vtable_words_match_0x29ca978": true,
+     "data_words_+0x08_to_+0x44": [
+      "00000000",
+      "00000000",
+      "c11cf5c3",
+      "00000001",
+      "40000000",
+      "bc23d70a",
+      "00000100",
+      "00000001",
+      "00040008",
+      "3dcccccd",
+      "3e4ccccd",
+      "3f000000",
+      "3f000000",
+      "3f000000",
+      "3a83126f",
+      "3a83126f"
+     ],
+     "count": 1,
+     "dt_bits": "3c442dc2",
+     "dt": 0.011973800137639046,
+     "consumed_bits": "3c442dc2",
+     "consumed": 0.011973800137639046,
+     "error": null
+    },
+    {
+     "n": 3,
+     "host_paused": [
+      true,
+      true
+     ],
+     "host_step_unchanged": true,
+     "plugin_substeps_unchanged_during_read": true,
+     "settings_ok": 1,
+     "world_same": 1,
+     "timing_ok": 1,
+     "settings_words_equal_detour_snapshot_0": true,
+     "settings_vtable_words_match_0x29ca978": true,
+     "data_words_+0x08_to_+0x44": [
+      "00000000",
+      "00000000",
+      "c11cf5c3",
+      "00000001",
+      "40000000",
+      "bc23d70a",
+      "00000100",
+      "00000001",
+      "00040008",
+      "3dcccccd",
+      "3e4ccccd",
+      "3f000000",
+      "3f000000",
+      "3f000000",
+      "3a83126f",
+      "3a83126f"
+     ],
+     "count": 2,
+     "dt_bits": "3bfe718a",
+     "dt": 0.007764999754726887,
+     "consumed_bits": "3c7e718a",
+     "consumed": 0.015529999509453773,
+     "error": null
+    }
+   ]
+  }
+ ],
+ "data": {
+  "ps-01": {
+   "arm_read_ok": true,
+   "arm_words_equal_detour_snapshot_0": true,
+   "settings_snapshots": [
+    {
+     "substep_reads": 14752,
+     "first_ms": 7,
+     "vtable_words_match_0x29ca978": true,
+     "data_words_+0x08_to_+0x44": [
+      "00000000",
+      "00000000",
+      "c11cf5c3",
+      "00000001",
+      "40000000",
+      "bc23d70a",
+      "00000100",
+      "00000001",
+      "00040008",
+      "3dcccccd",
+      "3e4ccccd",
+      "3f000000",
+      "3f000000",
+      "3f000000",
+      "3a83126f",
+      "3a83126f"
+     ],
+     "decoded": {
+      "gravity_+0x08_+0x0c_+0x10": [
+       0.0,
+       0.0,
+       -9.8100004196167
+      ],
+      "byte_+0x14 (solver flags bit 30 source)": 1,
+      "bytes_+0x15..+0x17": [
+       0,
+       0,
+       0
+      ],
+      "f32_+0x18 (-> ctx+0x20)": 2.0,
+      "f32_+0x1c (-> ctx+0x1c)": -0.009999999776482582,
+      "byte_+0x20 (worker solve gate: solve only when 0)": 0,
+      "byte_+0x21 (solver flags bit 29 source)": 1,
+      "bytes_+0x22..+0x23": [
+       0,
+       0
+      ],
+      "u32_+0x24 mode (low 2 bits -> solver flags)": 1,
+      "u16_+0x28 normal iterations": 8,
+      "u16_+0x2a secondary iterations": 4,
+      "f32_+0x2c (-> ctx+0x14)": 0.10000000149011612,
+      "f32_+0x30 (-> ctx+0x18)": 0.20000000298023224,
+      "f32_+0x34/+0x38/+0x3c (-> ctx+0x24/+0x28/+0x2c)": [
+       0.5,
+       0.5,
+       0.5
+      ],
+      "f32_+0x40 (not copied by 1990ba0)": 0.0010000000474974513,
+      "f32_+0x44 (not copied by 1990ba0)": 0.0010000000474974513
+     }
+    }
+   ],
+   "count_frame_histogram": {
+    "1": 5016,
+    "2": 4620,
+    "3": 153,
+    "4": 8,
+    "5": 1
+   },
+   "count_dt_frame_histogram_binned": {
+    "1": {
+     "[0.007,0.008)": 6,
+     "[0.008,0.009)": 167,
+     "[0.009,0.01)": 806,
+     "[0.01,0.011)": 1469,
+     "[0.011,0.012)": 1767,
+     "[0.012,0.013)": 780,
+     "[0.013,0.014)": 10,
+     "[0.014,0.015)": 9,
+     "[0.015,0.016)": 1,
+     "[0.016,0.01667)": 1
+    },
+    "2": {
+     "[0.00625,0.007)": 1913,
+     "[0.007,0.008)": 1467,
+     "[0.008,0.009)": 771,
+     "[0.009,0.01)": 332,
+     "[0.01,0.011)": 119,
+     "[0.011,0.012)": 15,
+     "[0.012,0.013)": 3
+    },
+    "3": {
+     "[0.00625,0.007)": 5,
+     "[0.007,0.008)": 87,
+     "[0.008,0.009)": 42,
+     "[0.009,0.01)": 13,
+     "[0.01,0.011)": 5,
+     "[0.011,0.012)": 1
+    },
+    "4": {
+     "[0.007,0.008)": 4,
+     "[0.008,0.009)": 3,
+     "[0.009,0.01)": 1
+    },
+    "5": {
+     "[0.008,0.009)": 1
+    }
+   },
+   "per_count_ranges": {
+    "1": {
+     "frames": 5016,
+     "dt_min": 0.007799000013619661,
+     "dt_max": 0.01665700040757656,
+     "consumed_min": 0.007799000013619661,
+     "consumed_max": 0.01665700040757656
+    },
+    "2": {
+     "frames": 4620,
+     "dt_min": 0.006250100210309029,
+     "dt_max": 0.012450099922716618,
+     "consumed_min": 0.012500200420618057,
+     "consumed_max": 0.024900199845433235
+    },
+    "3": {
+     "frames": 153,
+     "dt_min": 0.006952099967747927,
+     "dt_max": 0.01103623304516077,
+     "consumed_min": 0.020856300368905067,
+     "consumed_max": 0.033108700066804886
+    },
+    "4": {
+     "frames": 8,
+     "dt_min": 0.007354849949479103,
+     "dt_max": 0.009952300228178501,
+     "consumed_min": 0.029419399797916412,
+     "consumed_max": 0.039809200912714005
+    },
+    "5": {
+     "frames": 1,
+     "dt_min": 0.008131020702421665,
+     "dt_max": 0.008131020702421665,
+     "consumed_min": 0.04065510258078575,
+     "consumed_max": 0.04065510258078575
+    }
+   },
+   "dt_percentiles_per_frame": {
+    "0.0": 0.006250100210309029,
+    "0.01": 0.006280149798840284,
+    "0.05": 0.0064095002599060535,
+    "0.25": 0.007280849851667881,
+    "0.5": 0.009421450085937977,
+    "0.75": 0.011075800284743309,
+    "0.95": 0.012195699848234653,
+    "0.99": 0.01246199943125248,
+    "1.0": 0.01665700040757656
+   },
+   "distinct_dt_bit_patterns": 9244,
+   "distinct_count_dt_pairs": 9275,
+   "most_repeated_count_dt_pairs": [
+    {
+     "count": 2,
+     "dt_bits": "3bd73937",
+     "dt": 0.0065680998377501965,
+     "frames": 3
+    },
+    {
+     "count": 1,
+     "dt_bits": "3c36904b",
+     "dt": 0.011142800562083721,
+     "frames": 3
+    },
+    {
+     "count": 1,
+     "dt_bits": "3c4375a1",
+     "dt": 0.011929900385439396,
+     "frames": 3
+    },
+    {
+     "count": 2,
+     "dt_bits": "3be68647",
+     "dt": 0.0070350500755012035,
+     "frames": 3
+    },
+    {
+     "count": 1,
+     "dt_bits": "3c363b90",
+     "dt": 0.011122599244117737,
+     "frames": 3
+    }
+   ],
+   "dt_equals_float32_consumed_over_count_frames": 9798,
+   "plugin_hash_table_note": "the in-plugin exact (count, dt) table overflowed (dt is continuous); histograms here come from the complete per-substep log",
+   "substep_log": {
+    "records": 14752,
+    "frames": 9798,
+    "complete_ordinal_frames": 9798,
+    "single_dt_within_frame": 9798,
+    "consumed_equals_dt_records": 5016,
+    "outer_counter_gap_histogram": {
+     "1": 9797
+    }
+   }
+  }
+ },
+ "driving": {
+  "ps-01": "Native director startup, one pre-arm forward hold, arm at riding detection, then cycle forward/steer/jump (single-key holds <= 1500 ms): 11 actions in the 130 s window (the 4 Hz chain poll made the cadence slow). Polled speed 0-49.6 units/s, 15% of polls below 2; about 874 units of altitude descended. Step-hold reads at +1.3 s (just after spawn/drop-in, standstill), +62.7 s and +129.6 s. No host disconnect or KO."
+ },
+ "comparison": {
+  "settings_data_words_equal_static_after_creation_prediction": true,
+  "words_differing_from_default_ctor_19414b0": [
+   "+0x10 gravity z (-10 -> -9.81)",
+   "+0x24 mode (0 -> 1)",
+   "+0x2a secondary iterations (0 -> 4)"
+  ],
+  "byte_+0x21_note": "default ctor already writes word +0x20 = 0x0100, so +0x21 = 1 both by default and after creation; creation's 18ae490(dl=1) does not change it"
+ },
+ "findings": [
+  "Settings object at world+0x08 (vtable 0x29ca978 verified) held one value set in every read: 14,752 per-substep reads inside the broad-phase detour, the arm-time read and 3 Step-hold reads (0 changes, 0 unreadable, world pointer constant). The 16 data words +0x08..+0x44 are 00000000 00000000 c11cf5c3 00000001 40000000 bc23d70a 00000100 00000001 00040008 3dcccccd 3e4ccccd 3f000000 3f000000 3f000000 3a83126f 3a83126f, exactly the static prediction (default ctor 19414b0 then world creation 13d1bd0).",
+  "Decoded: gravity (0, 0, -9.81) [float32 0xc11cf5c3, identical to RVA 0x1f28140]; byte +0x14 = 1; +0x18 = 2.0; +0x1c = -0.01; byte +0x20 = 0 (worker solve gate open); byte +0x21 = 1; mode +0x24 = 1; normal iterations +0x28 = 8; secondary iterations +0x2a = 4; +0x2c = 0.1; +0x30 = 0.2; +0x34/+0x38/+0x3c = 0.5; +0x40 = +0x44 = 0.001. Packed solver flags from 1990ba0 therefore = mode 1 | bit29 | bit30 | 4<<16 | 8<<2. The runtime setter 13b7bb0 did not change gravity in this session.",
+  "Substep timing (every PhysicsWorldStep frame in the window: 9,798 frames, consecutive outer counters, all with complete ordinals 0..count-1; 14,752 substeps): count histogram 1: 5,016, 2: 4,620, 3: 153, 4: 8, 5: 1. No 8 was seen here (the earlier receipt saw one 8-substep group). dt (+0x1394) was the same for all substeps of a frame and equalled float32(consumed +0x136c / count) in 9,798 of 9,798 frames. dt range 0.0062501-0.016657 (median 0.00942); consumed range 0.0078-0.0407. dt is continuous (9,244 distinct bit patterns), not a fixed step.",
+  "Per count: count 1 consumed 0.0078-0.01666; count 2 consumed 0.0125-0.0249 (dt 0.00625-0.01245); count 3 consumed 0.0209-0.0331; count 4 0.0294-0.0398; count 5 0.0407. Observed dt never fell below 0.00625 (1/160) or exceeded 1/60, but count-1 and count-2 consumed ranges overlap (0.0125-0.01666), so the count is not a pure function of the current consumed interval; the selection rule (history/hysteresis) is not recovered here.",
+  "Step-hold: all 3 holds were host-paused with the host step unchanged before/after, and the plugin's substep counter did not change during the read; the held settings words equalled the detour reads. Hold timing words: count 1 / dt 0.0107603 (spawn), count 1 / dt 0.0119738, count 2 / dt 0.0077650 (consumed 0.0155300) - the last frame's values persist while held.",
+  "Identity/restore: image base, 18b8fa0, 1389a50 loop, 140b1a0, 18ae2b0, 12af2d0 and 19414b0 bytes, broad-phase vtable (34 slots), controller and settings vtables all verified before install; per call both return addresses (18ae2b9, 1389b02), [[[timing]]+8] == controller and ordinal < count held on 14,752 of 14,752 calls; 0 foreign calls; broad-phase vtable pointer restored by compare-exchange and read back original; hook drained; launcher restored settings and saves, stopped the bottle and verified the original DLL."
+ ],
+ "limits": [
+  "One 130 s session, one spawn and descent line, one build under Wine on macOS; frame pacing (and so the count/dt distribution) depends on this host's frame rate and is not a property of the original engine on other hardware.",
+  "Settings were read sequentially (not atomically) from inside the step and from the plugin thread while held; no change was ever observed, but setter activity in modes not exercised (menus, other maps, cutscenes, fast travel) was not covered.",
+  "The timing pointer and loop index were taken from the 18b8fa0 caller frame (saved rbx / pushed rdi of 1389a50), justified by verified code bytes and per-call return-address and controller checks; this is a frame-layout interpretation for this build only.",
+  "Meanings of +0x14, +0x18, +0x1c, +0x2c..+0x44 beyond their solver-context destinations remain unassigned; this receipt gives values only."
+ ]
+}

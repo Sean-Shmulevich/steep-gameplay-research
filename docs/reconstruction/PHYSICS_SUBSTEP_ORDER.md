@@ -48,7 +48,7 @@ New static facts established in this pass (class S, not yet covered by any recei
 | # | Stage | RVA(s) | Evidence | Module | Receipt | Status |
 |---|---|---|---|---|---|---|
 | F1 | `Physic::PreBeforeSimulation`, then `Physic::BeforeSimulation` receivers. The player's slot `0x270` = `0x564ee0`: motion update, input ingestion, state dispatch, conditional `queue_pending_impulse` | `0x564ee0`; route in [CENTRAL_IMPULSE](CENTRAL_IMPULSE.md#producer-route-reaches-beforesimulation) | L (the receiver returned before PhysicsWorldStep in 701 of 701 requests), S, N | `engine/snow_batch.py` (gather only); impulse route model | [live membership](live_motion_membership_validation.json), [impulse route](../../native/snow_host/impulse_route_validation.json) | partly reconstructed (route and producer gates; not the whole motion update) |
-| F2 | Physics timing producer (in `BeginEngineFrame`): substep count `timing+0x1390`, elapsed substep `+0x1394`, consumed outer interval `+0x136c` | see [scheduler clocks](research/scheduler.md#preserve-three-different-clocks) | S, N, L (selected counts 1, 2, 3 and 8 observed; float32 subdivision matched 176 of 177 groups) | testbench subdivision model | [direct substeps](../../native/snow_host/direct_substep_live_observation.json) | reconstructed (arithmetic); live bound not fixed |
+| F2 | Physics timing producer (in `BeginEngineFrame`): substep count `timing+0x1390`, elapsed substep `+0x1394`, consumed outer interval `+0x136c` | see [scheduler clocks](research/scheduler.md#preserve-three-different-clocks) | S, N, L (selected counts 1, 2, 3 and 8 observed, then 1–5 in the settings session (8 not seen there); float32 subdivision matched 176 of 177 groups) | testbench subdivision model | [direct substeps](../../native/snow_host/direct_substep_live_observation.json) | reconstructed (arithmetic); live bound not fixed |
 | F3 | `PhysicsWorldStep` job (callback `0x8ab390`, delegate `0x1389a50` stored by `136a550`) | `136a550`, `1389a50` | S for the store. L: the outer-loop return `0x141389ad8` was verified in every frame read | — | [direct substeps](../../native/snow_host/direct_substep_live_observation.json) | job-to-delegate binding statically unverified; the loop is live-confirmed |
 | F4 | After the world step: `AfterPhysicSimulationUpdate` (`0x1371bd8`) and `...CharacterWrapup` (`0x13c0b40`). Cache swap and velocity publication to the actor | see [scheduler flow](research/scheduler.md#established-producerconsumer-flow) | S, L (membership) | — | — | outside the substep; partly mapped |
 
@@ -120,10 +120,12 @@ bound: live captures saw 1, 2, 3 and 8.
 
 ### 2.1 Gravity and damping
 
-- **Source.** World settings vector `world+0x08..+0x10` (class S). The default constructor `19414b0`
-  writes `(0, 0, -10)`. World creation `13d1bd0` immediately calls setter `18ae420` with `(0, 0, -9.81)`.
-  A runtime setter `13b7bb0` (referenced from data at `0x3096c18`) can change it later. **The live
-  value has not been read.**
+- **Source.** Settings object at `world+0x08` (vtable `0x29ca978`, data `+0x08..+0x47`); gravity is
+  settings `+0x08/+0x0c/+0x10`, i.e. `world+0x10..+0x18` (class S, layout corrected by the live read).
+  The default constructor `19414b0` writes `(0, 0, -10)`. World creation `13d1bd0` immediately calls
+  setter `18ae420` with `(0, 0, -9.81)`. A runtime setter `13b7bb0` (referenced from data at
+  `0x3096c18`) can change it later. Live: (0, 0, -9.81), unchanged in the session (see "Live
+  settings" below).
 - **Transfer.** `1990ba0` copies settings `+0x08/+0x0c/+0x10` to solver context `+0x00/+0x04/+0x08`
   (N, [settings](../../native/snow_host/pose_solver_settings_validation.json)). `1993ed0` passes
   `ctx+0x10` (dt) and `ctx+0x00` (vector) to `1994560` (S, this pass).
@@ -138,6 +140,59 @@ bound: live captures saw 1, 2, 3 and 8.
   `pow`-style per-second damping is inference.
 - **Units.** m/s² and seconds are inferred from the 9.81 value and from the float32 subdivision
   of the frame interval. They are not proven.
+
+### Live settings
+
+This is a live observation (class L), not a reconstruction check. Receipt:
+[physics settings live](../../native/snow_host/physics_settings_live_observation.json).
+
+**Capture.** A private, bounded snow-host plugin. Its only write was the existing broad-phase slot
+`+0x60` vtable-pointer swap (S0 inside `18b8fa0`), compare-exchanged in and back and verified after
+restore. Inside the detour, before forwarding, it read only: the `18b8fa0` caller frame (returns into
+`18ae2b0` at `18ae2b9` and into the substep loop at `1389b02` required), giving the loop's timing
+pointer (saved rbx) and substep index (saved edi), checked by `[[[timing]]+8] == controller` and
+index < count; `timing+0x1390/+0x1394/+0x136c` and the outer counter `[timing]+0x20`; and the
+settings object at `world+0x08` (world = `controller+0x20`). Three Step-hold reads (spawn, +63 s,
++130 s) were taken with the host paused; neither the host step nor the plugin's substep count
+changed during them. Session: 130 s of riding, Wine on macOS.
+
+**Layout.** `world+0x08` is a 0x48-byte object: vtable `0x29ca978` at `+0x00`, data `+0x08..+0x47`
+(copy `1941420`/`1941520`, default constructor `19414b0`). Settings offsets on this page are relative
+to that object.
+
+**Values.** One value set in all 14,752 substep reads, the arm-time read and the 3 held reads:
+
+| Settings offset | Raw | Value | Use |
+| --- | --- | --- | --- |
+| `+0x08/+0x0c/+0x10` | `0 / 0 / c11cf5c3` | gravity (0, 0, −9.81) | ctx `+0x00..+0x08` |
+| `+0x14` (byte) | `01` | 1 | solver flags bit 30 |
+| `+0x18` | `40000000` | 2.0 | ctx `+0x20` |
+| `+0x1c` | `bc23d70a` | −0.01 | ctx `+0x1c` |
+| `+0x20` (byte) | `00` | 0 | C8 solve gate open |
+| `+0x21` (byte) | `01` | 1 | solver flags bit 29 (default already 1) |
+| `+0x24` | `00000001` | mode 1 | flags low 2 bits; full word selects `1994cc0` |
+| `+0x28` (u16) | `0008` | 8 normal iterations | flags bits 2.. |
+| `+0x2a` (u16) | `0004` | 4 secondary iterations | flags bits 16..; D7 runs |
+| `+0x2c`, `+0x30` | `3dcccccd`, `3e4ccccd` | 0.1, 0.2 | ctx `+0x14`, `+0x18` |
+| `+0x34/+0x38/+0x3c` | `3f000000` ×3 | 0.5 | ctx `+0x24..+0x2c` |
+| `+0x40`, `+0x44` | `3a83126f` ×2 | 0.001 | not copied by `1990ba0` |
+
+These are exactly the static prediction: `19414b0` defaults, then `13d1bd0` sets gravity (from
+`0x1f28140`), mode 1 and secondary 4. The runtime setter `13b7bb0` changed nothing in this session.
+Live mode is 1, so the single-row contact builder path (D4 note) applies in the observed states.
+
+**Substep timing.** 9,798 consecutive PhysicsWorldStep frames, 14,752 substeps, every frame with
+ordinals 0..count−1 complete. Frames by count: 1: 5,016; 2: 4,620; 3: 153; 4: 8; 5: 1 (no 8 this
+time; an earlier receipt saw one). Within a frame dt was constant, and dt = float32(consumed
+`+0x136c` / count) in 9,798 of 9,798 frames. dt is continuous: 9,244 distinct bit patterns, range
+0.0062501–0.016657, median 0.0094. The consumed range for count 1 (0.0078–0.0167) overlaps that for
+count 2 (0.0125–0.0249), so the count is not a function of the current interval alone; the
+selection rule remains open.
+
+**Limits.** One session, one build, Wine frame pacing (count and dt distributions reflect this host's
+frame rate). Sequential reads, not atomic. The frame-layout interpretation of the timing pointer is
+build-specific. Meanings of `+0x14`, `+0x18`, `+0x1c` and `+0x2c..+0x44` beyond their solver-context
+destinations are unassigned.
 
 ### 2.2 Snow-fluid and board forces
 
@@ -257,8 +312,8 @@ and record one substep at a time.
 
 1. **C3 action tree** (`1959a70` on `world+0xd0`): which objects, and whether they write body
    velocity or transform before the solve. Read the node count at P0.
-2. **Live settings values**: gravity, iterations (8 / 4 expected), mode (1 expected) and
-   thresholds. One P0 read of `world+0x08..+0x47` settles it.
+2. ~~Live settings values~~ Answered: see "Live settings" (gravity (0,0,-9.81), mode 1,
+   iterations 8 / 4, exactly the static prediction).
 3. **C4 stage at `controller+0x40`** and its kind-6 scan.
 4. **C5 attach `18e2200`** as one native composition (wake, migrate, merge).
 5. **E1 listener dispatch** record format (`195c380`) and who registers listeners.
