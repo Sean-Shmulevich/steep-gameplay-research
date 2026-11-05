@@ -2187,8 +2187,9 @@ and `terrain_capsule_core(...)` (`19cc160`). Lane-level pieces: `inverse3` (`19c
 (0 gives 0). +0x2c = (triangle << 16) | group key. Supplied: `query(tree_address,
 aabb_words, capacity) -> ids` stands for `1952b20`; `edge_filter(mem, shape, triangle,
 records, count) -> count` stands for `19974c0` (mode 2). Allocation is not modelled.
-Authored: names, service signatures, the trace hook. UNRESOLVED: `1952b20`, `19974c0`,
-the kind-6 constructor, real terrain data (modes, group keys, scale), the hardware
+Authored: names, service signatures, the trace hook. Both services now have models
+(`engine.pose_terrain6_tree_query.service`, `engine.pose_terrain6_edge_filter.service`).
+UNRESOLVED: the kind-6 constructor, real terrain data (modes, group keys, scale), the hardware
 two-NaN rule, live MXCSR. Evidence:
 `native/snow_host/pose_narrowphase_capsule_terrain6_validation.json`. No claim of
 original-engine equivalence outside the validated fixtures.
@@ -2211,3 +2212,24 @@ bind/memory helpers, the haddps two-NaN convention of the validation overlay. UN
 the hardware two-NaN rule, live MXCSR, real hull/box data, composition of `18eab80` with
 `19d9160`. Evidence: `native/snow_host/pose_convex_segment_query_validation.json`. No
 claim of original-engine equivalence outside the validated fixtures.
+
+### Kind-6 tree query and mode-2 neighbourhood filter
+
+`engine.pose_terrain6_tree_query`: `tree_query(mem, tree, aabb_words, capacity, out=None, *,
+nan_rule='sse', trace=None) -> [u16 ids]` (`1952b20` -> `19507f0`, growth `1952f20`),
+`decode_children`, `rejected`, `service(mem, *, nan_rule, traces)` -> the tester's
+`query(tree, aabb_words, capacity)`. `engine.pose_terrain6_edge_filter`:
+`neighbourhood_filter(mem, shape, triangle, records, count, frame=IDENTITY_FRAME, *,
+nan_rule='sse', trace=None) -> count` (`19974c0`), `vertex_fan_test` (`1996280`),
+`edge_test` (`1995fa0`), `triangle_frame`, `classify`, `read_mode2_mesh`,
+`service(*, nan_rule, traces)` -> the tester's `edge_filter(mem, shape, triangle, records,
+count)`. Follows LINK_SOLVER.md "Kind-6 tree query and mode-2 neighbourhood filter".
+Query: register slots before the append-only FIFO (not breadth-first); capacity checked
+after each write (signed), so capacity <= 0 still returns one id. Filter: D.N < -1e-5
+rejects first; one-directional vertex fan; edge neighbour from slot (j+1)%3;
+swap-with-last removal; mutates records in place. Authored: names, the explicit `frame`
+argument (identity by default, as the tester passes), service bindings, trace formats,
+the 2^20-step fan guard (native has no bound). UNRESOLVED: the real +0xb8 edge-slot
+convention, real kind-6 trees and adjacency, the hardware two-NaN rule, live MXCSR.
+Evidence: `native/snow_host/pose_terrain6_leaves_validation.json`. No claim of
+original-engine equivalence outside the validated fixtures.

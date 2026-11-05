@@ -1,0 +1,209 @@
+{
+  "schema": "pose-terrain6-leaves-validation-v1",
+  "entries": [
+    "0x1952b20 -> 0x19507f0 (+0x1952f20)",
+    "0x19974c0 (+0x1996280, 0x1995fa0)",
+    "composed: 0x198af50 -> 0x19cc160 -> 0x1994f60 with both leaves modelled"
+  ],
+  "method": "offline Unicorn runs over the memory image. Query: synthetic 8-bit quantized trees (balanced, chains, skewed and random splits up to several thousand nodes, random flags and quantized bytes, leaf ids anywhere in 0..0xffff) with root/query-box variants (full, sub-box, point, inverted, zero or negative extents, special lanes); return value, the whole 0x40000-byte id buffer (guard included) and the allocator-event sequence of the queue growth compared with engine.pose_terrain6_tree_query. Filter: synthetic kind-6 shapes/meshes (grids, steps, planes, soups; edge tables from the harness adjacency, some edges cut to 0xffff, sometimes no pair table), identity or random frames with lane-3 junk, 0..12 records placed at vertices, edges, interiors and outside with varied directions; return value and every record byte (plus two guard records) compared with engine.pose_terrain6_edge_filter. Composed: the capsule x kind-6 harness cases (half forced to mode 2) run through 0x198af50 natively and through engine.pose_narrowphase_capsule_terrain6 with query/edge_filter bound to the two new models (nothing supplied from the native run); return value and all 520 output records plus a guard compared. Inputs must be unchanged; executed blocks must stay in the named routines, the stack probe, memcpy and the allocator stubs.",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "fixtures": [
+    "global allocator object at 0x1433365b8 with alloc/realloc/free stubs (bump allocation; realloc copies)",
+    "0x18c9140 / 0x18c8f50 replaced by ret stubs (reach obfuscated thunks; not traced)",
+    "runtime statics 0x3336890 (XYZ mask), 0x3336cb0, 0x3336cc0, 0x3336cd0 from their initializer sources",
+    "gs/TLS stack-probe fixtures as in the tester harness"
+  ],
+  "nan_rule": "x87 (emulator two-NaN rule)",
+  "query": {
+    "cases": 640,
+    "passed": 640,
+    "stopped_by_capacity": 274,
+    "pair_visits": 76102,
+    "single_visits": 21587,
+    "capacity_exactly_hit": 138,
+    "truncated": 128,
+    "capacity_le_zero_wrote_one": 36,
+    "returned_zero": 214,
+    "max_ids": 4129,
+    "max_nodes": 4128,
+    "max_pushes": 1951,
+    "growth_cases": 54,
+    "max_growths": 3,
+    "special_cases": 71,
+    "degenerate_root": 80,
+    "shapes": {
+      "random": 175,
+      "skewed": 143,
+      "chain": 132,
+      "balanced": 190
+    },
+    "box_modes": {
+      "inverted": 42,
+      "sub": 359,
+      "all": 189,
+      "point": 50
+    },
+    "paths": {
+      "pair_visit": 226,
+      "single_visit": 640,
+      "push": 168,
+      "grow_call": 37,
+      "grow_call_b1": 40,
+      "heap_free": 54,
+      "grow_alloc": 54,
+      "grow_realloc": 44
+    },
+    "failures": []
+  },
+  "filter": {
+    "cases": 640,
+    "passed": 640,
+    "records_in": 2505,
+    "records_kept": 886,
+    "special_cases": 80,
+    "nonfinite_cases": 55,
+    "non_identity_frames": 278,
+    "no_pairs_table": 27,
+    "decisions": {
+      "back_rejected": 905,
+      "edge0_kept": 87,
+      "edge0_rejected": 79,
+      "edge1_kept": 82,
+      "edge1_rejected": 105,
+      "edge2_kept": 89,
+      "edge2_rejected": 76,
+      "interior_kept": 326,
+      "vertex0_kept": 67,
+      "vertex0_rejected": 178,
+      "vertex1_kept": 61,
+      "vertex1_rejected": 141,
+      "vertex2_kept": 47,
+      "vertex2_rejected": 135
+    },
+    "paths": {
+      "past_back_gate": 470,
+      "vertex_call": 169,
+      "edge_call": 233,
+      "removed": 481,
+      "fan_walk": 113,
+      "fan_boundary_or_loop": 125,
+      "fan_step_test": 89,
+      "vertex_reject": 278,
+      "edge_neighbour": 196,
+      "edge_second_test": 190,
+      "edge_reject": 188,
+      "early_return": 103
+    },
+    "failures": []
+  },
+  "composed": {
+    "runs": 320,
+    "passed": 320,
+    "modes": {
+      "2": 218,
+      "1": 55,
+      "0": 22,
+      "3": 25
+    },
+    "special_cases": 64,
+    "special_mode2": 54,
+    "nonfinite_cases": 26,
+    "mode2_filter_calls": 10110,
+    "query_calls": 387,
+    "requery_0x80": 67,
+    "max_triangles_from_query": 1150,
+    "max_count": 500,
+    "queue_growth_runs": 13,
+    "filter_rejections": 6065,
+    "per_call_mismatch": 0,
+    "failures": []
+  },
+  "bug_injections": [
+    {
+      "leaf": "0x1952b20",
+      "bug": "plain breadth-first order (no register slots)",
+      "caught_at_case": 9
+    },
+    {
+      "leaf": "0x1952b20",
+      "bug": "child min selection bits swapped",
+      "caught_at_case": 3
+    },
+    {
+      "leaf": "0x1952b20",
+      "bug": "rejection with <= instead of <",
+      "caught_at_case": 4
+    },
+    {
+      "leaf": "0x1952b20",
+      "bug": "1/255 replaced by 1/256",
+      "caught_at_case": 22
+    },
+    {
+      "leaf": "0x1952b20",
+      "bug": "capacity checked before the write (capacity 0 returns nothing)",
+      "caught_at_case": 0
+    },
+    {
+      "leaf": "0x1952b20",
+      "bug": "queue growth always allocates (never reallocates)",
+      "caught_at_case": 13
+    },
+    {
+      "leaf": "0x1952b20",
+      "bug": "inline queue of 0x80 entries",
+      "caught_at_case": 13
+    },
+    {
+      "leaf": "0x19974c0",
+      "bug": "back-facing D.N gate skipped",
+      "caught_at_case": 1
+    },
+    {
+      "leaf": "0x19974c0",
+      "bug": "edge neighbour read from slot j instead of (j + 1) % 3",
+      "caught_at_case": 2
+    },
+    {
+      "leaf": "0x19974c0",
+      "bug": "vertex fan stops after the first neighbour",
+      "caught_at_case": 4
+    },
+    {
+      "leaf": "0x19974c0",
+      "bug": "vertex threshold 0.999 instead of 0.9999",
+      "caught_at_case": 9
+    },
+    {
+      "leaf": "0x19974c0",
+      "bug": "edge threshold 0.001 instead of 0.0001",
+      "caught_at_case": 4
+    },
+    {
+      "leaf": "0x19974c0",
+      "bug": "removal keeps record order (shift)",
+      "caught_at_case": 2
+    },
+    {
+      "leaf": "composed 0x198af50",
+      "bug": "composed: breadth-first tree order",
+      "caught_at_case": 10
+    },
+    {
+      "leaf": "composed 0x198af50",
+      "bug": "composed: mode-2 back-facing gate skipped",
+      "caught_at_case": 6
+    },
+    {
+      "leaf": "composed 0x198af50",
+      "bug": "composed: mode-2 edge slot j",
+      "caught_at_case": 0
+    }
+  ],
+  "limits": [
+    "Synthetic trees, meshes and adjacency, not game assets; the real kind-6 edge-table convention (which slot holds which edge) is unknown, and the edge test reads slot (j+1)%3.",
+    "MXCSR is the Unicorn default 0x1f80; hardware two-NaN choice not observed.",
+    "Allocation is a fixture; only the event sequence (kind and size) is compared.",
+    "Non-terminating fan walks (possible with inconsistent adjacency) are not exercised natively."
+  ]
+}

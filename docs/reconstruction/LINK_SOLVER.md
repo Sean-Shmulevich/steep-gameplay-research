@@ -11573,7 +11573,8 @@ Kind 6, from field use (our labels):
   Flag bit 0/1: child 0/1 is a leaf (the u16 is then a triangle id). Bits 2..4: per axis,
   child0 takes the decoded min and child1 the parent min; bits 5..7 the same for max.
   Decode `min = (q*(1/255))*ext + pmin`, `max = (ext+pmin) - (q*(1/255))*ext`. The query
-  keeps a FIFO of 256 nodes on the stack and grows it through `1952f20`.
+  keeps two register slots plus an append-only queue of 0x30-byte entries (inline 0x100)
+  and grows it through `1952f20`; see "Kind-6 tree query and mode-2 neighbourhood filter".
 - Mode 2 only: +0xa8 u16 triangle pair per edge (0xffff = none), +0xb8 u32 edge id per
   triangle edge (edge j = vertex j to vertex j+1).
 
@@ -11668,7 +11669,9 @@ equal the model's).
 Tests: `tests/test_pose_narrowphase_capsule_terrain6.py`, 18 tests with an authored query
 stub.
 
-Limits: `1952b20` (tree query) and `19974c0` (mode 2) are not restated. Synthetic meshes
+Limits: this receipt supplies `1952b20` (tree query) and `19974c0` (mode 2); both are now
+restated in "Kind-6 tree query and mode-2 neighbourhood filter", whose composed runs use
+no supplied results. Synthetic meshes
 and conservative trees, not game assets. Live modes, group-key assignment and scale on
 real terrain are unknown. Emulator two-NaN rule only; MXCSR 0x1f80; special lanes only
 outside mode 2. Earlier docs say the 16-bit/32-bit wrapper choice depends on
@@ -11741,7 +11744,7 @@ or the original engine.
 the capsule-hull core `19dd130` as `18f3710(&out, &{FB rows, hull}, &{p0, p1}, 16)`) and
 `18eab80` (segment vs box, called by the box-capsule core `19d9160` as `18eab80(&out, &{FA
 rows, ext & M}, &{p0, p1}, 16)`). Both are instances of the GJK routine restated for
-`18f0a70`: same simplex layout {shape index, segment index, s, P, w = P - s, weight], same
+`18f0a70`: same simplex layout {shape index, segment index, s, P, w = P - s, weight}, same
 inlined 2/3/4-point solvers reading statics `3336a30/50/70` (guards `3336a40/60/80`), same
 `29ca860`/`29ca880` constants and leaves. The model imports those pieces from
 `engine/pose_convex_point_query.py`.
@@ -11791,3 +11794,96 @@ Harness correction: `check_pose_narrowphase_kind45.py` had set only static `3336
 (the same defect fixed earlier in the sphere harness), so its native `18f3710` runs used
 zero triangle and volume thresholds. It now sets all three; the regenerated receipt is
 again 1024/1024 per core.
+
+### Kind-6 tree query and mode-2 neighbourhood filter
+
+`engine/pose_terrain6_tree_query.py` restates the tree query `1952b20` (traversal
+`19507f0`, queue growth `1952f20`); `engine/pose_terrain6_edge_filter.py` restates the
+mode-2 filter `19974c0` with `1996280` (vertex fan) and `1995fa0` (edge test). Both bind
+to the service signatures of the kind-6 tester (`service(...)`), so the tester now runs
+with no supplied native results.
+
+Tree query. `1952b20(tree, aabb, out, cap)` calls `19507f0(tree, aabb, out, cap, tree+0,
+tree+0xc)`; nodes from `[tree+0x18]`; extent, minimum and box (min xyz, max xyz) are
+masked to XYZ. Decode as in the tester section (`3336cb0/3336cc0/3336cd0`); pmax is
+ext + min for register slot A and min + ext for slot B. A child is rejected when on any
+axis child max < box min or box max < child min (cmpltps; NaN never rejects, touching
+boxes are kept). Traversal:
+
+```text
+slots A, B in registers (held = 0..2), FIFO of 0x30-byte (ext, min, node) entries,
+inline 0x100, append-only with a read cursor (never compacted)
+A = root, held = 1
+loop:
+  held 0: pop A; if FIFO unread: pop B, visit pair, else visit A alone
+  held 1: if FIFO unread: pop B, visit pair, else visit A alone
+  held 2: visit pair
+  visit: held = 0; decode all (A then B), all rejections, then A.c0, A.c1, B.c0, B.c1:
+    leaf -> write u16 id; stop when count >= cap (signed, after the write)
+    internal -> slot A if held 0, slot B if held 1, else push
+                (count == capacity -> 1952f20(queue, 2*capacity))
+  continue while FIFO unread or held
+```
+
+Register-held children are visited before the FIFO, so the order (and therefore the
+tester's triangle and truncation order) is not breadth-first. Capacity 0 or negative
+still writes one id. `1952f20`: first growth allocates newcap*0x30 (align 0x10, tag 0x19,
+global allocator slot 1) and copies; later ones reallocate (slot 2); a heap queue is
+freed on exit (slot 3). Growth depends on total pushes, not live size.
+
+Mode-2 filter. The tester passes the identity rows at rbp+0x260 and the new local
+records. `count == 0` or mesh+0xa8 == 0 returns count untouched. Same skeleton as kind-7
+`1996e50` (barycentric W from (Vk-P) x (Vl-P) . N * 1/(N.N), branch order vertex A/B/C at
+> 0.9999, then edge AB/BC/CA at < 0.0001, swap-with-last removal), with three
+differences:
+
+- First, a record with D.N < -1e-5 (N unnormalised) is rejected; kind 7 has no such gate.
+- Vertex j (`1996280`): test the vertex after v in the triangle, then repeatedly cross
+  edge slot 3*cur + pos(v) (u32 at mesh+0xb8 -> u16 pair at mesh+0xa8 + 4*edge, take the
+  entry that is not cur) and test the vertex after v in the next triangle (first vertex
+  if v is absent), until 0xffff or the starting triangle. Reject when
+  normalize(Nb - Vj).D > 1e-5. The walk goes one way only: at a boundary it stops at the
+  first 0xffff, so part of the fan is never tested.
+- Edge j (`1995fa0`, VA = Vj, VB = V(j+1)): N0 = V(j+2); N1 = the vertex after VA in the
+  triangle across edge slot 3*t + (j+1)%3 (not slot j), else that triangle's first
+  vertex; N1 = N0 on 0xffff (no starting-triangle check). E, U = N0-VB, V = N1-VA are
+  always normalised (kind 7 keeps near-zero vectors). Reject if D.((E x U) x E) > 1e-5 or
+  D.(E x (V x E)) > 1e-5 (all three lanes).
+
+Operand orders kept: vertex*scale for V1.x in `19974c0` and the x lanes in `1995fa0`,
+otherwise scale*vertex.
+
+Validation: `native/snow_host/pose_terrain6_leaves_validation.json`, from
+`analysis/command-executor-audit/check_pose_terrain6_leaves.py` (Unicorn; allocator
+fixtures as in the tester harness; `18c9140/18c8f50` ret stubs, not traced).
+
+- Query 640/640: return value, the 0x40000-byte id buffer with guard, and the allocator
+  event sequence. Synthetic trees (balanced, chain, skewed, random, up to 4128 nodes):
+  138 with capacity exactly hit, 128 truncated, 36 with capacity <= 0 writing one id, 54
+  with queue growth (up to 3 growths, 1951 pushes), 80 degenerate roots, box modes
+  sub/full/point/inverted 359/189/50/42, 71 special-lane cases.
+- Filter 640/640: return value and every record byte, plus guard records. 2505 records in,
+  886 kept; identity frames plus 278 random frames with lane-3 junk; 27 without a pair
+  table; 80 special cases (55 non-finite). Decisions: back 905, vertex 0/1/2 kept or
+  rejected 67/178, 61/141, 47/135, edge 0/1/2 87/79, 82/105, 89/76, interior 326.
+- Composed 320/320 through `198af50` with both services modelled and nothing supplied;
+  all 520 records plus guard; per-call ids equal to the native captures. Modes 0/1/2/3:
+  22/55/218/25; 54 special-lane cases in mode 2; 10110 filter calls; 67 `0x80`
+  re-queries; 13 runs with queue growth; up to 1150 triangles from one query; counts up
+  to 500.
+- 16 injected bugs, each caught (breadth-first order, min-select bits swapped, <=
+  rejection, 1/256, capacity checked before the write, growth never reallocates, inline
+  queue 0x80, D.N gate skipped, edge slot j, fan stops after the first neighbour, 0.999
+  vertex threshold, 0.001 edge threshold, order-keeping removal, composed BFS / no gate /
+  slot j).
+
+Tests: `tests/test_pose_terrain6_tree_query.py` (9) and
+`tests/test_pose_terrain6_edge_filter.py` (9).
+
+Limits: synthetic trees, meshes and adjacency (slot j = edge v_j -> v_(j+1)), not game
+assets. Because `1995fa0` reads slot (j+1)%3, either the real +0xb8 convention differs
+from ours or the original pairs edge j with slot j+1; unresolved (live mode-2 tables
+exist on every observed mesh, see "Live terrain filter settings", so a live read could
+settle it). Emulator two-NaN rule, MXCSR 0x1f80. The native fan walk has no bound (the
+model raises after 2^20 steps); non-terminating adjacency was not exercised. Allocation
+is a fixture; only event kind and size are compared.
