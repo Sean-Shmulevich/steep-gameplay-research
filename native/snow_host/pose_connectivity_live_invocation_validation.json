@@ -1,0 +1,308 @@
+{
+  "schema": "pose-connectivity-live-invocation-validation-v1",
+  "date": "2026-11-04",
+  "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",
+  "routine_rva": "0x18b8860",
+  "kind": "real in-game invocations of the body connectivity refresh, captured by a private bounded plugin before and after the controller listener call, compared offline with the Python chain",
+  "source_sha256": {
+    "engine/pose_body_connectivity_refresh.py": "8ad3fbd5f658e6bd984512e298d19bdd9c6ba14c2f73e160f67b897806aeceac",
+    "engine/pose_provider_link_selection.py": "27a157fae1700fe15fa07ecee2d25a0f1a977baf88407215cd2766de9e1748d0",
+    "engine/pose_body_connectivity_rebuild.py": "f5b766cd33979158823c519d491493b301069f05883c95280681630b6734a404",
+    "engine/pose_group_link_remove.py": "b9bf56da27e1d20bda7796c60810cde1c7d9d54d82e5ad86ee6a1d2a65de4fa0",
+    "engine/pose_body_connectivity_retire.py": "c7913dbf189194f723abb96d4da8660ba32479b31182777dbd1850f1569a2d7d",
+    "engine/pose_endpoint_rings.py": "3367eab225442bdddce1d6cc26afcf61f9572387d9698fe3c3bdd8692f8d61f7",
+    "engine/pose_link_state_reset.py": "bfe7a90e572e9b6fc44f501a4ad84d7e5c9b4578386bebe894b6e520c9542798"
+  },
+  "capture_point": {
+    "reachability": "18b8860 has exactly two static call sites, both inside controller listener 18b8670 event 0; 18b8670 has no direct callers and no stored image pointer; it is reached through one row of the global body-listener registry (descriptor at image 0x33367c0) by broadcaster 18a7f60",
+    "mechanism": "registry-row callback swap (aligned 8-byte compare-exchange on heap data); no code bytes or page protections changed; detour always forwards to 18b8670",
+    "identity_checks": "image base; code fingerprints of 18b8670 (48 B), 18b8860 (32 B) and 18a7f60 (80 B); both call sites decode as call rel32 to 18b8860; exactly one enabled registry row holds 18b8670",
+    "captured_path": "event 0, metadata+0x50 bit15 clear and metadata+0x1c != controller+0x4c (the branch that stamps and calls 18b8860 without 18b8380); the priority/quiet-2 branch (18b8380 then 18b8860) is counted but not captured",
+    "bounds": "arm file written when a player body first had a controller and a +0x80 head; at most 32 captured calls; 150 s install window; per-walk caps of 6000 regions / 3 MiB; fixed 96 MiB buffer; reads via ReadProcessMemory on self; trace written by a worker thread after restore",
+    "restore": "scan the current registry for rows holding the detour and compare-exchange them back; wait for in-flight detour calls to drain; module pinned"
+  },
+  "comparison_method": "expected = pre bytes + listener stamp (metadata+0x1c := pre controller+0x4c) + Python chain (analyze.run_python, recording stubs for 18e2de0, pool return and allocator); compared with post bytes the game produced at every pre-captured address. Differences are attributed to services that really ran in game (18e2de0 for processed groups/context, allocator for slot-owner vector headers, pool return for contact spans, listener enter/leave for controller+0x50..0x60); anything else is unattributed and fails the pair. Allocated vectors are compared by content at the game-installed pointer. Native 18b8860 also runs in Unicorn on the stamped pre bytes as a coverage cross-check.",
+  "verdict": "PASS: 32/32 captured in-game invocations matched the Python chain on bytes not owned by in-game services (0 with nonempty +0x80 rings, 32 empty-ring early returns); 64 predicted changed bytes matched, 0 unattributed differing bytes. Across 3 sessions the hooked listener saw 10552 calls into 18b8860 and 0 via 18b8380; every one split by ring state had an empty +0x80 ring, so selection, rebuild and retire were NOT exercised by any observed in-game invocation.",
+  "overall": {
+    "sessions": 3,
+    "cleanup_verified_for_every_session": true,
+    "slot_restored_and_drained_every_session": true,
+    "captured_invocations": 32,
+    "captured_with_nonempty_selector1_ring": 0,
+    "captured_empty_ring_early_return": 32,
+    "captured_player_roots": {
+      "world": 32
+    },
+    "pairs_passed": 32,
+    "ring_links_histogram": {
+      "0": 32
+    },
+    "python_rows_histogram": {
+      "0": 32
+    },
+    "python_selected_histogram": {
+      "0": 32
+    },
+    "python_service_calls": {
+      "process_calls": 0,
+      "pool_calls": 0,
+      "alloc_calls": 0
+    },
+    "listener_stamp_observed_every_pair": true,
+    "same_thread_pre_post_every_pair": true,
+    "bytes_compared": 405296,
+    "python_predicted_changed_bytes": 64,
+    "game_changed_bytes": 64,
+    "predicted_changes_matched": 64,
+    "differing_bytes_by_owner": {},
+    "differing_regions_by_owner_and_role": {},
+    "unattributed_differing_bytes": 0,
+    "allocated_vector_checks": 0,
+    "allocated_vectors_contents_equal": true,
+    "python_errors": [],
+    "walk_overflows": 0,
+    "unreadable_regions": 0,
+    "unicorn_cross_check_on_pre_bytes_matches_python": 32,
+    "unicorn_coverage_gaps_total": 0,
+    "in_game_listener_totals_while_installed": {
+      "calls_total": 149689,
+      "event0_calls": 90549,
+      "path_a": 10552,
+      "path_b": 0,
+      "path_none": 55535,
+      "gate_unreadable": 24462,
+      "path_a_empty_ring": 10469,
+      "path_a_nonempty_ring": 0,
+      "path_a_player_bodies": 0
+    },
+    "in_game_listener_totals_note": "path_a = event 0, priority bit15 clear, stamp mismatch (stamps and calls 18b8860); path_b = priority set and quiet nibble 2 (18b8380 then 18b8860); path_none = event 0 that calls neither; gate_unreadable counts event-0 calls whose metadata/owner/controller chain was null or unreadable (the listener returns early for a null controller). path_a_nonempty_ring counts are from sessions 2-3 only (session 1 did not split them).",
+    "passed": true
+  },
+  "limits": [
+    "Pre and post regions are sequential self-reads on the calling thread immediately around the listener call; other threads may run meanwhile, so the regions are not atomic snapshots.",
+    "The capture brackets the whole listener call (protected enter/leave, stamp, 18b8860, controller28 virtual+a8), not 18b8860 alone.",
+    "Services 18e2de0, pool return and the allocator ran in game; their effects are attributed by region role rather than reproduced.",
+    "Only the priority-clear stamp-mismatch branch was captured; the branch that first runs 18b8380 was not.",
+    "Native removal 18bb610 does not guard a failed search; the install window was kept short so controller teardown during the swap was not expected, but this is not excluded in general.",
+    "Session 1 (v1 plugin) captured the first 32 eligible calls, all on world bodies with empty +0x80 rings; session 2 onward filtered to nonempty rings.",
+    "Heap addresses, raw bytes and traces are private and not published."
+  ],
+  "sessions": [
+    {
+      "session": "hook-01",
+      "plugin_revision": "v1 (captures the first path-A calls, including empty rings)",
+      "plugin_source_sha256": "9ce91e3102ff7c4b6cc1897765806c261ea0be2104c2a673b9280483f938ecf6",
+      "startup": "native director plugin, hands-off title/offline notice/map",
+      "navigation": "scheduler_ready",
+      "cleanup": {
+        "ok": true,
+        "ended_by": "stop",
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      },
+      "keyboard_holds": {
+        "count": 2,
+        "scan_codes": [
+          17
+        ],
+        "ms": [
+          1500
+        ],
+        "helper_rc_nonzero": 0
+      },
+      "armed_when_player_body_had_controller_and_ring": true,
+      "host_disconnect_observed": false,
+      "plugin": {
+        "verified": 1,
+        "installed": 1,
+        "why": "",
+        "registry_count": 1,
+        "rows_matching": 1,
+        "restored": 1,
+        "restore_conflicts": 0,
+        "detour_rows_after": 0,
+        "listener_rows_after": 1,
+        "drained": 1,
+        "max_captures": 32,
+        "window_ms": 150000,
+        "calls_total": 1858,
+        "event0_calls": 1150,
+        "path_a": 83,
+        "path_b": 0,
+        "path_none": 696,
+        "gate_unreadable": 371,
+        "captured": 32,
+        "skipped_busy": 0,
+        "skipped_limit": 51,
+        "nested_calls": 0,
+        "walk_overflows": 0,
+        "buffer_full": 0,
+        "slow_walks": 0
+      },
+      "diagnostics": null,
+      "trace_sha256": "e1e3383c9540a2e6a09e3a34e5cdd6b89d7ae6961369c2f6c45d424b38c0673b",
+      "pairs": 32,
+      "pairs_passed": 32
+    },
+    {
+      "session": "hook-02",
+      "plugin_revision": "v2 (captures only nonempty +0x80 rings, at most 4 calls per body, player roots tagged)",
+      "plugin_source_sha256": "7b8e9cbacaf071a754e4d52ab15cca85d10ec635eab8dfc134733cc2fd405293",
+      "startup": "native director plugin, hands-off title/offline notice/map",
+      "navigation": "scheduler_ready",
+      "cleanup": {
+        "ok": true,
+        "ended_by": "stop",
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      },
+      "keyboard_holds": {
+        "count": 9,
+        "scan_codes": [
+          17
+        ],
+        "ms": [
+          1500
+        ],
+        "helper_rc_nonzero": 0
+      },
+      "armed_when_player_body_had_controller_and_ring": true,
+      "host_disconnect_observed": false,
+      "plugin": {
+        "verified": 1,
+        "installed": 1,
+        "why": "",
+        "registry_count": 1,
+        "rows_matching": 1,
+        "restored": 1,
+        "restore_conflicts": 0,
+        "detour_rows_after": 0,
+        "listener_rows_after": 1,
+        "drained": 1,
+        "max_captures": 32,
+        "window_ms": 150000,
+        "calls_total": 68175,
+        "event0_calls": 39327,
+        "path_a": 6775,
+        "path_b": 0,
+        "path_none": 25568,
+        "gate_unreadable": 6984,
+        "captured": 0,
+        "skipped_busy": 0,
+        "skipped_limit": 0,
+        "nested_calls": 0,
+        "walk_overflows": 0,
+        "buffer_full": 0,
+        "slow_walks": 0,
+        "path_a_empty_ring": 6775,
+        "path_a_nonempty_ring": 0,
+        "skipped_per_body_cap": 0,
+        "path_a_player_bodies": 0,
+        "player_roots_given": 2
+      },
+      "diagnostics": null,
+      "trace_sha256": null,
+      "pairs": 0,
+      "pairs_passed": 0
+    },
+    {
+      "session": "hook-03",
+      "plugin_revision": "v3 (v2 plus branch diagnostics for event-0 calls on nonempty-ring bodies, path-A body class counts, 300 s window)",
+      "plugin_source_sha256": "7f6bfb01541857e736ade329476cbb04ebbd185fdba4a0ea3e4cc1cf632d119c",
+      "startup": "native director plugin, hands-off title/offline notice/map",
+      "navigation": "scheduler_ready",
+      "cleanup": {
+        "ok": true,
+        "ended_by": "stop",
+        "bottle_stopped": true,
+        "saves_restored": true,
+        "settings_restored": true,
+        "original_dll_verified": true
+      },
+      "keyboard_holds": {
+        "count": 18,
+        "scan_codes": [
+          17
+        ],
+        "ms": [
+          1500
+        ],
+        "helper_rc_nonzero": 0
+      },
+      "armed_when_player_body_had_controller_and_ring": true,
+      "host_disconnect_observed": false,
+      "plugin": {
+        "verified": 1,
+        "installed": 1,
+        "why": "",
+        "registry_count": 1,
+        "rows_matching": 1,
+        "restored": 1,
+        "restore_conflicts": 0,
+        "detour_rows_after": 0,
+        "listener_rows_after": 1,
+        "drained": 1,
+        "max_captures": 32,
+        "window_ms": 300000,
+        "calls_total": 79656,
+        "event0_calls": 50072,
+        "path_a": 3694,
+        "path_b": 0,
+        "path_none": 29271,
+        "gate_unreadable": 17107,
+        "captured": 0,
+        "skipped_busy": 0,
+        "skipped_limit": 0,
+        "nested_calls": 0,
+        "walk_overflows": 0,
+        "buffer_full": 0,
+        "slow_walks": 0,
+        "path_a_empty_ring": 3694,
+        "path_a_nonempty_ring": 0,
+        "skipped_per_body_cap": 0,
+        "path_a_player_bodies": 0,
+        "player_roots_given": 2
+      },
+      "diagnostics": {
+        "diag_nonempty_prio_set_by_quiet": [
+          19078,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "diag_nonempty_prio_clear_stamp_equal": 0,
+        "diag_nonempty_prio_clear_stamp_mismatch": 0,
+        "diag_player_ev0_[clear_empty,clear_nonempty,set_empty,set_nonempty]": [
+          0,
+          0,
+          34,
+          18516
+        ],
+        "diag_path_a_distinct_bodies": 1276,
+        "diag_path_a_vtable_rva_counts": {
+          "0x29c98c8": 3694
+        },
+        "diag_path_a_vtable_other": 0
+      },
+      "trace_sha256": null,
+      "pairs": 0,
+      "pairs_passed": 0
+    }
+  ]
+}
