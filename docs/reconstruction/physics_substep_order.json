@@ -1,0 +1,147 @@
+{
+  "schema": "physics-substep-order-v1",
+  "document": "docs/reconstruction/PHYSICS_SUBSTEP_ORDER.md",
+  "date": "2026-11-05",
+  "scope": "Static ordered map of one physics substep of the player's world plus existing receipts. No game launch, no emulation of protected thunks. RVAs are build-specific evidence anchors.",
+  "evidence_classes": {
+    "S": "static read of the analysed image",
+    "N": "native receipt (offline instruction emulation in the private harness)",
+    "L": "live receipt from a bounded original-game capture",
+    "I": "inference, not a measurement"
+  },
+  "status_values": ["reconstructed", "partly_reconstructed", "supplied", "unknown"],
+  "new_static_facts_this_pass": [
+    "Unique direct-call chain 1389a50 -> 140efa0 -> 18ae2c0 -> 18b9710 -> 18e2fb0 -> (18b7ca0) -> 18e3340 -> 18e31b0 -> 1994da0 -> 1993ed0 -> 19574f0 (rel32 scan: one caller each for 140efa0, 18ae2c0, 18b9710, 18e2fb0, 1994da0, 1993ed0)",
+    "18ae2c0 calls 18b74e0(callback holder [0x1433365e0], controller, island+0x480/+0x488, island+0x470/+0x478) then 18e1990 (zeroes counts +0x488 and +0x478)",
+    "World settings at world+0x08 (world = controller+0x20, getter 12af2d0); default constructor 19414b0 gravity (0,0,-10); world creation 13d1bd0 sets gravity (0,0,-9.81) from RVA 0x1f28140, byte +0x21=1, mode +0x24=1, secondary iterations +0x2a=4; normal iterations stay at the default 8",
+    "Actor batch 2 (13c08f0) invokes actor slot +0x2c8 for tag 1 and 13ecb10 for tag 3; PlayerSnowboardComponent slot +0x2c8 = 0x53d7f0",
+    "140b3d0 listener dispatch over the map at manager+0x18 using the body link-ring record gather 18babf0/195c380 and listener slot +0x10",
+    "Pair update, island step and listener dispatch are bracketed by protected helpers 1c3a2b0/1c388a0/1c3d1e0/1c3d1c0 on global 0x1433125e0"
+  ],
+  "frame_level": [
+    {"id": "F1", "name": "PreBeforeSimulation then BeforeSimulation receivers (player slot 0x270 = 0x564ee0): motion update, input ingestion, state dispatch, conditional queue_pending_impulse", "rvas": ["0x564ee0"], "evidence": ["L", "S", "N"], "modules": ["engine/snow_batch.py"], "receipts": ["docs/reconstruction/live_motion_membership_validation.json", "native/snow_host/impulse_route_validation.json"], "status": "partly_reconstructed"},
+    {"id": "F2", "name": "Physics timing producer: substep count timing+0x1390, elapsed substep timing+0x1394, consumed outer interval timing+0x136c", "rvas": [], "evidence": ["S", "N", "L"], "modules": [], "receipts": ["native/snow_host/direct_substep_live_observation.json"], "status": "reconstructed", "notes": "Live selected counts 1, 2, 3, 8; no universal bound"},
+    {"id": "F3", "name": "PhysicsWorldStep job (callback 0x8ab390, delegate 0x1389a50 stored by 136a550)", "rvas": ["0x136a550", "0x1389a50", "0x8ab390"], "evidence": ["S", "L"], "modules": [], "receipts": ["native/snow_host/direct_substep_live_observation.json"], "status": "partly_reconstructed", "notes": "Delegate binding statically unverified; outer-loop return 0x141389ad8 verified in every live frame read"},
+    {"id": "F4", "name": "AfterPhysicSimulationUpdate (0x1371bd8) and AfterPhysicSimulationUpdateCharacterWrapup (0x13c0b40): cache swap and velocity publication", "rvas": ["0x1371bd8", "0x13c0b40"], "evidence": ["S", "L"], "modules": [], "receipts": [], "status": "partly_reconstructed", "notes": "Outside the substep"}
+  ],
+  "substep_loop": {
+    "rva": "0x1389a50",
+    "count": "u32 timing+0x1390, reread every iteration",
+    "dt_island": "float32 timing+0x1394 (elapsed substep)",
+    "dt_consumed": "float32 timing+0x136c (consumed outer interval; actor batch 1 only)",
+    "post_loop": "manager+0x20 += 1 (also when count is 0)",
+    "pre_loop": ["profiler scope 'Physic::UpdateBroadphase' when profiling global == 2", "0x1365890([manager+8]+0x7b0, byte) unknown"],
+    "evidence": ["S", "N"],
+    "receipts": ["native/snow_host/world_loop_validation.json"]
+  },
+  "stages": [
+    {"order": 1, "id": "A1", "name": "Actor batch 1: gather tag0/tag2, chunk max(n/20,1), submit and wait; tag0 -> actor slot +0x2c0(elapsed, consumed)", "rvas": ["0x13c30c0", "0x13cd590"], "evidence": ["S", "N", "L"], "modules": ["engine/snow_batch.py"], "receipts": ["native/snow_host/snow_gather_validation.json", "native/snow_host/batch_frame_validation.json", "native/snow_host/direct_substep_live_observation.json"], "status": "partly_reconstructed"},
+    {"order": 2, "id": "A2", "name": "Player snow wrapper (PlayerSnowboardComponent slot +0x2c0 = 0x53ec30): gates, prepare, shared snow update, finish; snow forces enter here", "rvas": ["0x53ec30"], "evidence": ["S", "N"], "modules": ["engine/point_impulse.py", "engine/snow_post_pending.py"], "receipts": ["native/snow_host/consumer_wrapper_validation.json"], "status": "partly_reconstructed"},
+    {"order": 3, "id": "A3", "name": "Protected lock bracket on 0x1433125e0", "rvas": ["0x1c3a2b0", "0x1c388a0"], "evidence": ["S"], "modules": [], "receipts": [], "status": "unknown"},
+    {"order": 4, "id": "B1", "name": "Pair update entry: phase controller+0x48=1; broadphase slot +0x90 update (199c880)", "rvas": ["0x140b1a0", "0x18ae2b0", "0x18b8fa0", "0x19598b0", "0x199c880"], "evidence": ["S", "N", "L"], "modules": ["engine/pose_pair_update_step.py", "engine/pose_broadphase_pair_lists.py"], "receipts": ["native/snow_host/pose_pair_update_step_validation.json", "native/snow_host/pose_pair_update_live_validation.json"], "status": "reconstructed", "supplied": ["0x199c880"]},
+    {"order": 5, "id": "B2", "name": "Removed-pair selection and connectivity rebuild", "rvas": ["0x18dedf0", "0x18e28d0"], "evidence": ["N", "L"], "modules": ["engine/pose_pair_update_step.py"], "receipts": ["native/snow_host/pose_pair_update_live_validation.json"], "status": "reconstructed"},
+    {"order": 6, "id": "B3", "name": "Pair jobs: retire, neighbor retire, rebalance, dispatch, worker, merges", "rvas": ["0x18ddc40", "0x18de440", "0x18de510", "0x1989e60", "0x18b7ca0", "0x18ddd30", "0x18df4e0", "0x18df630"], "evidence": ["N", "L"], "modules": ["engine/pose_pair_link_jobs.py", "engine/pose_pair_link_worker.py"], "receipts": ["native/snow_host/pose_pair_link_jobs_validation.json", "native/snow_host/pose_pair_link_worker_validation.json", "native/snow_host/physics_thread_lock_live_observation.json"], "status": "reconstructed", "gaps": ["tree inserts 0x18de6a0/0x18de830", "byte-level live comparison of pair jobs", "multi-worker dispatch"]},
+    {"order": 7, "id": "B4", "name": "Narrow-phase contact generation and payload update", "rvas": ["0x18dd400", "0x18e08a0", "0x18e0980", "0x198f910", "0x198fdc0"], "evidence": ["N", "L"], "modules": ["engine/pose_pair_contact_generation.py", "engine/pose_contact_payload_update.py"], "receipts": ["native/snow_host/pose_pair_contact_generation_validation.json", "native/snow_host/pose_contact_payload_update_validation.json", "native/snow_host/narrowphase_tester_census_live.json"], "status": "reconstructed"},
+    {"order": 8, "id": "B5", "name": "Broadphase slot +0x88 stub; frame counter +0x4c += 1; bp+8 and provider+0x180 = counter; phase = 2", "rvas": ["0x18b8fa0", "0x18df490"], "evidence": ["S", "N"], "modules": ["engine/pose_pair_update_step.py"], "receipts": ["native/snow_host/pose_pair_update_step_validation.json"], "status": "reconstructed"},
+    {"order": 9, "id": "B6", "name": "Protected lock transition", "rvas": ["0x1c3d1e0"], "evidence": ["S"], "modules": [], "receipts": [], "status": "unknown"},
+    {"order": 10, "id": "C1", "name": "Outer stage entry: phase = 3", "rvas": ["0x140efa0", "0x18ae2c0", "0x18b9710"], "evidence": ["S", "N"], "modules": ["engine/pose_update_stage.py"], "receipts": ["native/snow_host/pose_update_stage_validation.json"], "status": "reconstructed"},
+    {"order": 11, "id": "C2", "name": "Command constraint preparation over two collections with 1/dt", "rvas": ["0x18b9830", "0x19445c0", "0x19440c0"], "evidence": ["N"], "modules": ["engine/pose_update_stage.py", "engine/pose_command_prepare.py"], "receipts": ["native/snow_host/pose_collection_prepare_validation.json", "native/snow_host/pose_command_prepare_validation.json"], "status": "reconstructed", "supplied": ["stored command callback"]},
+    {"order": 12, "id": "C3", "name": "Action tree walk on world+0xd0: node slot +8(dt), callback 18b8c90(obj+8), remove state-2 nodes", "rvas": ["0x1959a70", "0x18b8c90", "0x11fd350"], "evidence": ["S"], "modules": [], "receipts": [], "status": "unknown"},
+    {"order": 13, "id": "C4", "name": "Stage object at controller+0x40: begin 195b190 (kind-6 scan, deferred list +0x1030/+0x1038), ed2ea0 stores dt, finish 195c040", "rvas": ["0x195b190", "0x0ed2ea0", "0x195c040", "0x1959fc0"], "evidence": ["S"], "modules": [], "receipts": [], "status": "unknown"},
+    {"order": 14, "id": "C5", "name": "Attach changed links from provider+0x28/+0x30: wake, endpoint migration, group merge", "rvas": ["0x18e2200"], "evidence": ["S", "N"], "modules": ["engine/pose_group_migration.py", "engine/pose_group_finalize.py"], "receipts": ["native/snow_host/pose_group_reactivation_validation.json"], "status": "partly_reconstructed"},
+    {"order": 15, "id": "C6", "name": "Publish pending links island+0x490/+0x498 to broadphase slot +0x98", "rvas": ["0x18b9710"], "evidence": ["S", "N"], "modules": ["engine/pose_update_stage.py"], "receipts": ["native/snow_host/pose_update_stage_validation.json"], "status": "reconstructed", "supplied": ["broadphase slot +0x98"]},
+    {"order": 16, "id": "C7", "name": "Batch wrapper: partition, sort, batches of weight >= 25, dispatch on 0x143336610, completed-group transfer", "rvas": ["0x12af2d0", "0x18e2fb0", "0x18e2d00", "0x18e19a0", "0x18b7ca0", "0x18e3350", "0x18e1740"], "evidence": ["N"], "modules": ["engine/pose_group_batches.py", "engine/pose_dispatch.py", "engine/pose_group_transfer.py", "engine/pose_batch_runtime.py"], "receipts": ["native/snow_host/pose_group_batches_validation.json", "native/snow_host/pose_dispatch_validation.json", "native/snow_host/pose_group_transfer_validation.json", "native/snow_host/pose_joined_batch_validation.json"], "status": "reconstructed"},
+    {"order": 17, "id": "C8", "name": "Batch worker: solve group or free motion, then poststep", "rvas": ["0x18e3340", "0x18e31b0"], "evidence": ["N"], "modules": ["engine/pose_group_worker.py", "engine/pose_worker_runtime.py"], "receipts": ["native/snow_host/pose_group_worker_validation.json", "native/snow_host/pose_numerical_worker_validation.json"], "status": "reconstructed"},
+    {"order": 18, "id": "D1", "name": "Group prepare: counts, layout, settings (ctx+0x10=dt, +0x0c=1/dt, ctx+0x00..0x08=gravity)", "rvas": ["0x1994da0", "0x1994bb0", "0x1994cc0", "0x1994ad0", "0x19908d0", "0x1990ba0"], "evidence": ["N"], "modules": ["engine/pose_group_prepare.py", "engine/pose_link_counts.py", "engine/pose_category_counts.py", "engine/pose_solver_layout.py", "engine/pose_solver_settings.py"], "receipts": ["native/snow_host/pose_group_prepare_validation.json", "native/snow_host/pose_solver_layout_validation.json", "native/snow_host/pose_solver_settings_validation.json"], "status": "reconstructed"},
+    {"order": 19, "id": "D2", "name": "Body buffers: state = (velocity + gravity*dt) * damping; data = tensor and scalar +0x124", "rvas": ["0x1993ed0", "0x1994560", "0x1990af0", "0x1c453d0"], "evidence": ["N", "S"], "modules": ["engine/pose_body_buffers.py", "engine/pose_group_body_buffers.py"], "receipts": ["native/snow_host/pose_body_buffers_validation.json", "native/snow_host/pose_group_body_buffers_validation.json"], "status": "reconstructed", "supplied": ["damping library 0x1c453d0"]},
+    {"order": 20, "id": "D3", "name": "Contact row builders (four families)", "rvas": ["0x1994970", "0x1991da0", "0x19933d0", "0x1991110", "0x1992800"], "evidence": ["N"], "modules": ["engine/pose_link_dispatch.py", "engine/pose_link_arena.py"], "receipts": ["native/snow_host/pose_link_dispatch_validation.json", "native/snow_host/pose_link_arena_composition_validation.json"], "status": "reconstructed"},
+    {"order": 21, "id": "D4", "name": "Phase bit 27; pose/constraint builders kinds 1-6", "rvas": ["0x19948d0", "0x19905f0"], "evidence": ["N"], "modules": ["engine/pose_group_runtime.py"], "receipts": ["native/snow_host/pose_mixed_group_runtime_validation.json", "native/snow_host/pose_group_runtime_validation.json"], "status": "reconstructed"},
+    {"order": 22, "id": "D5", "name": "Solve: prepare + N iterations (N from settings +0x28, default 8)", "rvas": ["0x1994e80", "0x19e5aa0", "0x19e4710", "0x19e4d10"], "evidence": ["N"], "modules": ["engine/pose_solver_control.py", "engine/pose_solver_arena.py"], "receipts": ["native/snow_host/pose_solver_control_validation.json", "native/snow_host/pose_six_category_solve_validation.json", "native/snow_host/pose_solver_arena_validation.json"], "status": "reconstructed"},
+    {"order": 23, "id": "D6", "name": "Feedback: link cache, body motion +0x1a0/+0x1ac, kind-2 pose results", "rvas": ["0x1994470", "0x1994240", "0x1994080"], "evidence": ["N"], "modules": ["engine/pose_body_feedback.py", "engine/pose_constraint_feedback.py", "engine/pose_link_runtime.py"], "receipts": ["native/snow_host/pose_body_feedback_validation.json", "native/snow_host/pose_constraint_feedback_validation.json", "native/snow_host/pose_contact_pass_validation.json"], "status": "reconstructed"},
+    {"order": 24, "id": "D7", "name": "Secondary pass (settings +0x2a iterations; 4 at world creation): clear state, refresh primary rows, special-phase solve", "rvas": ["0x1993e50", "0x1994e80"], "evidence": ["N"], "modules": ["engine/pose_link_secondary_rows.py", "engine/pose_group_step.py"], "receipts": ["native/snow_host/pose_mixed_group_secondary_validation.json", "native/snow_host/pose_contact_secondary_composition_validation.json"], "status": "reconstructed"},
+    {"order": 25, "id": "D8", "name": "Apply secondary state to transforms through body slot +0x10 = 18befb0 with scalar 1.0", "rvas": ["0x19906b0", "0x18befb0"], "evidence": ["N"], "modules": ["engine/pose_body_secondary_update.py", "engine/pose_body_integration.py"], "receipts": ["native/snow_host/pose_secondary_integration_validation.json"], "status": "reconstructed", "notes": "Body table 0x29c99a8 only"},
+    {"order": 26, "id": "D9", "name": "Poststep: quiet aggregation, then (if active) integrate x += v*dt and orientation, then bounds refresh", "rvas": ["0x19574f0", "0x1958460", "0x18c0190", "0x18bebd0", "0x18befb0", "0x18bcee0"], "evidence": ["N"], "modules": ["engine/pose_group_poststep.py", "engine/pose_poststep_runtime.py", "engine/pose_body_quiet_state.py", "engine/pose_body_bounds.py"], "receipts": ["native/snow_host/pose_group_integrated_validation.json", "native/snow_host/pose_mixed_group_poststep_validation.json", "native/snow_host/pose_mixed_group_retirement_validation.json"], "status": "reconstructed"},
+    {"order": 27, "id": "D10", "name": "Zero-work groups: free motion v=(v+g*dt)*damping, then poststep", "rvas": ["0x1957590", "0x19574f0"], "evidence": ["N"], "modules": ["engine/pose_free_motion.py"], "receipts": ["native/snow_host/pose_free_motion_validation.json"], "status": "reconstructed"},
+    {"order": 28, "id": "C9", "name": "If island active count != 0: broadphase slot +0xa8(null); phase = 0", "rvas": ["0x18b9710"], "evidence": ["S", "N"], "modules": ["engine/pose_update_stage.py"], "receipts": ["native/snow_host/pose_update_stage_validation.json"], "status": "reconstructed", "supplied": ["broadphase slot +0xa8"]},
+    {"order": 29, "id": "C10", "name": "Sleep/wake body lists to callback [0x1433365e0]+0x38, then clear counts", "rvas": ["0x18b74e0", "0x18e1990"], "evidence": ["S", "N"], "modules": ["engine/pose_group_transfer.py"], "receipts": ["native/snow_host/pose_group_transfer_validation.json"], "status": "unknown", "notes": "+0x480 filled by transfer (N); +0x470 inferred wake list (I); consumer unknown"},
+    {"order": 30, "id": "E1", "name": "Listener dispatch: per listener in manager+0x18 map, gather body link records, listener slot +0x10 per record", "rvas": ["0x140b3d0", "0x14070f0", "0x18a88a0", "0x18babf0", "0x195c380"], "evidence": ["S", "I"], "modules": [], "receipts": [], "status": "unknown", "notes": "Inference: contact-event delivery after the solve"},
+    {"order": 31, "id": "E2", "name": "Protected lock release", "rvas": ["0x1c3d1c0"], "evidence": ["S"], "modules": [], "receipts": [], "status": "unknown"},
+    {"order": 32, "id": "F5", "name": "Actor batch 2: tag1 -> actor slot +0x2c8, tag3 -> 13ecb10; player slot +0x2c8 = 0x53d7f0 -> 13ac220 (gated per-axis clamp of v - [+0x1e0] on main +0x6e8 and rider +0xb90 bodies via 18aa520) and 5390d0 (slot +0x460)", "rvas": ["0x13c08f0", "0x13cd5e0", "0x53d7f0", "0x13ac220", "0x5390d0"], "evidence": ["S", "I"], "modules": [], "receipts": [], "status": "unknown"}
+  ],
+  "settings": {
+    "location": "world+0x08 (world = controller+0x20; getter 0x12af2d0)",
+    "default_constructor": "0x19414b0",
+    "world_creation_writers": "0x13d1bd0 via setters 0x18ae490, 0x18ae420, 0x18ae4e0, 0x18ae590",
+    "runtime_gravity_setter": "0x13b7bb0 (data reference 0x3096c18)",
+    "fields": [
+      {"offset": "0x08", "type": "float32[3]", "meaning": "gravity vector (I from value and use)", "default": [0.0, 0.0, -10.0], "at_world_creation": [0.0, 0.0, -9.81], "consumer": "solver ctx+0x00..0x08 -> 1994560 and 1957590"},
+      {"offset": "0x14", "type": "u8", "default": 1, "consumer": "flags bit30 (poststep quiet check); free-path poststep byte"},
+      {"offset": "0x18", "type": "float32", "default": 2.0, "consumer": "solver ctx+0x20"},
+      {"offset": "0x1c", "type": "float32", "default": -0.01, "consumer": "solver ctx+0x1c"},
+      {"offset": "0x20", "type": "u8", "default": 0, "consumer": "worker solver bypass when nonzero"},
+      {"offset": "0x21", "type": "u8", "default": 1, "at_world_creation": 1, "consumer": "flags bit29 (link result cache copy)"},
+      {"offset": "0x24", "type": "u32", "default": 0, "at_world_creation": 1, "consumer": "link count prepass selection (full word) and builder mode (low 2 bits)"},
+      {"offset": "0x28", "type": "u16", "default": 8, "consumer": "normal iterations, flags bits 2..15"},
+      {"offset": "0x2a", "type": "u16", "default": 0, "at_world_creation": 4, "consumer": "secondary iterations, flags bits 16..26"},
+      {"offset": "0x2c", "type": "float32", "default": 0.1, "consumer": "solver ctx+0x14"},
+      {"offset": "0x30", "type": "float32", "default": 0.2, "consumer": "solver ctx+0x18"},
+      {"offset": "0x34", "type": "float32", "default": 0.5, "consumer": "quiet threshold (linear by position, I); setter 0x18ae5e0"},
+      {"offset": "0x38", "type": "float32", "default": 0.5, "consumer": "quiet threshold (angular by position, I); setter 0x18ae530"},
+      {"offset": "0x3c", "type": "float32", "default": 0.5, "consumer": "quiet duration (I); setter 0x18ae3c0"},
+      {"offset": "0x40", "type": "float32", "default": 0.001, "consumer": "island setter 0x18e2ce0"},
+      {"offset": "0x44", "type": "float32", "default": 0.001, "consumer": "island setter 0x18e2ca0"}
+    ],
+    "live_values_read": false
+  },
+  "force_insertion": {
+    "gravity": {"where": "D2 body buffers (solved groups) and D10 free motion (zero-work groups)", "form": "velocity increment g*dt added to solver initial state, per substep, before rows are solved", "per_body_gates": ["flagsaa bit3 zeroes the vector", "metadata+0x52 bit3 (fixed) bypasses increment and damping"], "evidence": ["S", "N", "I"]},
+    "damping": {"where": "D2 and D10", "form": "library 0x1c453d0(1-damping, dt) multiplies linear lanes 0-2 and angular by lane 3", "evidence": ["N", "I"]},
+    "snow_and_board": {"where": "A2, actor batch 1, per substep with elapsed dt", "relative_order": "before pair update/contact generation (B) and before the island solve (C/D) of the same substep", "form": "immediate writes to body velocity +0x1a0/+0x1ac via central impulse, point impulse 0x18aa180/0x18be8a0, direct setter 0x18aa520", "contributions": ["pending impulse (queued in BeforeSimulation, consumed once)", "ground-stick/helper central impulses", "immersion density reactions and contact forces as point impulses", "velocity correction and speed floor (replacement setter)", "jump impulses"], "evidence": ["N", "L", "S"]},
+    "rider_pose_springs": {"where": "prepared in A2 (0x13fad40), submitted via 0x13f7180 -> 0x18aee00 into linked object +0x70; built as pose kind 2 in D4 and solved in D5", "form": "constraint rows", "evidence": ["N", "I"], "open": "same-substep consumption not proven"},
+    "post_integration": {"where": "F5 actor batch 2 slot +0x2c8 -> 0x13ac220", "form": "gated per-axis velocity clamp written with force", "evidence": ["S", "I"]}
+  },
+  "group_routine": {
+    "callers": "1994970 and 1994e80 <- 1993ed0 <- 1994da0 <- 18e31b0 (via 18e3340) <- dispatcher 18b7ca0 <- 18e2fb0 <- 18b9710",
+    "body_indices": "append 0x19573c0 writes group count to body+0x1c; group body array +0x10/+0x18 order used by buffers, builders and feedback",
+    "count_and_layout": "1994da0: count_pose_link_rows (1994bb0 mode 0 / 1994cc0 otherwise) + count_pose_categories 1994ad0 -> plan_pose_solver_layout 19908d0 -> settings 1990ba0 -> 1993ed0",
+    "single_entry_for_group_step": "0x1994da0(group, request{+0 dt, +8 settings, +0x10 buffer, +0x18 capacity})",
+    "external_needs": ["allocator 0x1433365b8", "byte-fill", "protected payload pool return (0x1958720 path)", "atan2 outputs", "damping library 0x1c453d0 when reached"]
+  },
+  "phase2": {
+    "primary_entry": "0x18ae2c0(controller, dt)",
+    "optional_prefix": "0x18ae2b0 -> 0x18b8fa0 (pair update)",
+    "fallback_entries": ["0x18e2fb0(island, dt, settings)", "0x1994da0(group, request)"],
+    "avoid": ["0x140efa0/0x1389a50 entry (crosses protected lock helpers and game-side actor batches)", "any address >= 0x143000000"],
+    "fixture_requirements": [
+      "controller (0x78), world object (settings +0x08 0x48 bytes; action tree +0xd0), island context (0x4a0) and provider changed-link span +0x28/+0x30",
+      "every active group: body/link/pose arrays, index, flag +0xa0",
+      "every body: record to at least +0x1c8 with vtable 0x29c99a8 verified, metadata, resource entries +0xb8/+0xc0 and shape vtables, damping +0x1b8, quiet overrides +0x1c0, link ring head +0x80",
+      "every link: header, entries +0x58/+0x60, payloads (rows, +0x110 count, +0x114 flags), profile/material tables",
+      "every pose/constraint: vtable (kind slot +0x10), inline config +0x70, endpoints; kind-4 command callbacks if C2 collections are nonempty",
+      "exact float32 dt bits (timing+0x1394) and frame ordinal",
+      "services: allocator, byte-fill, protected pool return, dispatcher record with capacity 1, broadphase slots +0x98/+0xa8 recorded, callback [0x1433365e0]+0x38 recorded, C3/C4 native only if their lists are empty",
+      "comparison target captured after the island step (P5 or P6)"
+    ]
+  },
+  "phase3_capture_points": [
+    {"id": "P0", "point": "Step-hold", "hook": "host stop mode", "captures": "settings, group/body inventory, body classes, action tree count", "status": "existing"},
+    {"id": "P1", "point": "snow wrapper entry/exit", "hook": "actor slot +0x2c0 (existing update capture with frame ordinal)", "captures": "body velocity before and after snow impulses", "status": "existing"},
+    {"id": "P2", "point": "S0/S1", "hook": "broadphase slots +0x60/+0x40", "captures": "pair lists after broadphase update", "status": "existing"},
+    {"id": "P3", "point": "S2", "hook": "broadphase slot +0x88, return 0x18b907b", "captures": "Phase 2 input fixture (links, payload rows, bodies)", "status": "existing hook, new read"},
+    {"id": "P4", "point": "pending link publish", "hook": "broadphase slot +0x98, return after 0x18b97c9", "captures": "membership after attach", "status": "new (same vtable copy); conditional"},
+    {"id": "P5", "point": "post-batch notify", "hook": "broadphase slot +0xa8, return after 0x18b9802", "captures": "bodies after solve and integration (Phase 2 comparison target)", "status": "new (same vtable copy); fires only with active groups"},
+    {"id": "P6", "point": "post-step actor", "hook": "actor slot +0x2c8 (0x53d7f0) entry", "captures": "player body transform/velocity after the physics half, before 0x13ac220", "status": "new (same technique as P1)"}
+  ],
+  "open_questions": [
+    "C3 action tree contents and whether it writes body state before the solve",
+    "live settings values (gravity, iterations 8/4, mode 1, thresholds)",
+    "C4 stage at controller+0x40 and its kind-6 scan",
+    "C5 attach 0x18e2200 as one native composition",
+    "E1 listener record format (0x195c380) and listener registration",
+    "F5 slot +0x2c8 work: clamp bounds in runtime .data near 0x3315958, 0x5390d0 slot +0x460",
+    "C10 consumer [0x1433365e0]+0x38 and the producer of island+0x470",
+    "same-substep consumption of rider pose records submitted in A2",
+    "pre-loop 0x1365890; protected bracket on 0x1433125e0; PhysicsTerrainUpdate/PhysicsPropsUpdate ordering",
+    "other body/resource classes; damping inside joined runs; island dispatch with more than one worker"
+  ]
+}
