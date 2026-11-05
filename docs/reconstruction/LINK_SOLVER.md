@@ -11243,3 +11243,106 @@ Count bound summary for the `18dd400` direct path: with the sphere, box and thes
 sections, every non-terrain cell returns at most 4 records there (sphere pairs 1,
 kind-3 cells 4, (4,4)/(4,5)/(5,4) 2, (5,5) 4), so `198fdc0` never writes past its fourth
 row on that path. Terrain cells reach `198f910`, which reduces each group to four.
+
+### Convex point query (0x18f0a70) and hull support (0x1949480)
+
+`engine/pose_convex_point_query.py` restates the point query that the (2,5) core
+`19d58b0` calls as `18f0a70(&out, &{FB rows, sB}, &tA, 16)` (see "Narrow-phase sphere
+testers and swap wrapper"), the support routine `1949480` and its float3 wrapper
+`19497c0`. Arguments: rcx = out (three 4-lane rows); rdx = a 0x48-byte block with rows
+b0, b1, b2, t and the hull pointer; r8 = the query point P (read unmasked); r9d = the
+iteration cap (signed; <= 0 skips the loop). Leaves: `1928540` mul, `1928630` mul-add,
+`19285b0` all-<=, `192a1c0` distance, `192a200` dot, `192a1f0` div, `1928c40` mask,
+`193c310` |x| <= all, `193c5c0` masked reciprocal, `19284a0` 0x50-byte entry copy,
+`1928380` 0x150-byte simplex copy, `1927b60` broadcast. M is the XYZ mask `3336890`. No
+rsqrtps/rcpps occurs, so nothing depends on hardware approximations.
+
+```text
+simplex entry: {idx, 0, s (world hull pt), P, w = P - s, wt (4 lanes)}; up to 4
+init: s0 = ((t + v0.x*b0) + v0.y*b1) + v0.z*b2 (v0 = movups verts[0] & M); w0 = P - s0;
+      wt0 = 1; count = 1; prev = hadd2((w0*w0)&M); visited = {} (empty)
+loop it < iters:
+  d = count 1: -w0
+      count 2: e = w1-w0; c = (-w0).zxy*e.yzx - (-w0).yzx*e.zxy; d = c.yzx*e.zxy - e.yzx*c.zxy
+      count 3: n = ac.zxy*ab.yzx - ac.yzx*ab.zxy; d = (n.w0 < 0) ? n : -n
+  if hadd2((d*d)&M) < 2^-46 (29ca860): stop
+  L = haddps(haddps(-d*b0, -d*b1), haddps(-d*b2, same)) & M     # pair sums
+  i = 1949480(sB, L.xyz); s = world(verts[i]); save simplex (count, 4 entries)
+  if i in visited: stop                    # visited = indices right after the last append
+  append {i, s, P, P-s, 1}; visited = indices of entries 0..count-1
+  solve(count):                            # newest point last; weights = (1/den & M) * num
+    2 (a,b): e=b-a; ub=-(e.a), ua=e.b, ee=e.e
+       ub<=0 -> {a}; ua<=0 -> {b}; |ee|<=S1 (3336a30) -> count 1, STOP; else {a:ua, b:ub}/ee
+    3 (a,b,c): C region (-(ca.c)<=0 & bc.c<=0) -> {c}
+       n = ac x ab (shuffled); va=n.(b x c), vb=n.(c x a), vc=n.(a x b)
+       vc<=0 -> {a,b}; va<=0 & bc.c>0 & -(bc.b)>0 -> {b,c};
+       vb<=0 & ca.a>0 & -(ca.c)>0 -> {c,a}; |n.n|<=S2 (3336a50) -> count 2, STOP;
+       else {a:va, b:vb, c:vc}/(n.n)
+    4 (a,b,c,d): vertex D; edges AD, CD, BD (each: two face-side dots <= 0, two edge dots > 0);
+       sgn = (((ad x ac).ab) < 0) ? -1 : 1; u_a..u_d = sgn * cofactor dots;
+       faces ABC(u_d<=0) -> (a,c,b), ABD(u_c) -> (a,b,d), ACD(u_b) -> (a,d,c),
+       BCD(u_a) -> (b,c,d), each also needing three 0 < n_k.(cross) tests;
+       |sgn*vol| <= S3 (3336a70) -> count 3, STOP; else weights u_k/(sgn*vol), count 4
+  if count == 4: stop                      # point inside
+  v = count 1 ? w0 : (w0*wt0) + wt1*w1 [+ wt2*w2];  q = hadd2((v*v)&M)
+  if 0.999999 (29ca880) * prev <= q: restore saved simplex; stop
+  prev = q
+out: count 1: H = s0, Q = P0; 2/3: H = sum s_k*wt_k, Q = sum P_k*wt_k; 4: H = Q = sum s_k*wt_k
+     dist = sqrtps(hadd2(((Q-H)^2)&M)) (all lanes); out = {dist, H, Q}
+```
+
+Statics S1, S2 and S3 are function-local, initialised by `1c44fb0/1c44f50` to 1e-7 x4
+(`29ca870` twice and the scalar `1e4a8b8` broadcast). A degenerate exit keeps the
+reduced count and the previous weights.
+
+`1949480(shape, dir3)`:
+
+- +0xc0 == 0 (brute force): dot = (y*vy + x*vx) + z*vz over indices 0..u32[+0x48]-2. A
+  candidate wins only when strictly greater (comiss; unordered never wins). Start value
+  -FLT_MAX (`1e4a918`), default index 0.
+- +0xc0 != 0 (cube-map lookup): s = (1/sqrt((xx+yy)+zz)) * f[+0xe8]. Per axis, cell =
+  cvttss2si(f[+0xe8] + c*s) (NaN or overflow gives 0x80000000), clamped to >= 0, then
+  signed-min with u32[+0xe0]. slot = ((iz*E4 + iy)*E4 + ix) in 32-bit arithmetic,
+  E4 = u32[+0xe4]. An even table entry is the vertex index entry>>1. An odd entry is a
+  u32 list at q[+0xd0] + 4*(entry>>1), scanned through the first item with bit 0 set
+  (inclusive), using the strict greater-than dot.
+
+Behaviour worth preserving:
+
+- The visited list is empty on the first iteration, so vertex 0 can be appended again;
+  for a one-vertex hull this ends in the no-progress restore.
+- Only regions containing the newest point (plus the opposite face in the tetrahedron)
+  are tested. Count 1 uses w0 without its weight. With count 4, both output rows hold
+  the hull combination.
+- The vertex load is a 16-byte movups at a 12-byte stride; its fourth lane comes from
+  the next slot and is masked.
+
+Hull count (settles the count-1 scan lead from the sphere section): the constructor
+`1948780` (kind word 0x8005, vtable `29c9d80`) allocates n+1 slots, copies n vertices,
+computes the AABB over n and stores +0x48 = n+1 (`lea edi,[rsi+1]`). The clone `1948e20`
+passes +0x48-1 back as n. So the scan covers exactly the n real vertices and the extra
+slot is unwritten padding for the 16-byte load. A value of 0 would wrap to an unbounded
+native scan; the model raises. The deserialisation path (default constructor `18af470`)
+is not traced.
+
+Validation: `native/snow_host/pose_convex_point_query_validation.json`, 2048 of 2048
+Unicorn cases, nothing hooked out: 1024 direct `18f0a70` runs, 512 `1949480` runs, and
+512 composed runs of `19d5c90` → `19d58b0` → native `18f0a70` against
+`sphere_convex_tester` with the model query bound in. Hulls of 1–48 vertices (clouds,
+boxes, flat, collinear, duplicate, single-vertex, tiny, slivers, tetrahedra, sphere
+samples); about 15% use +0x48 = n and about 20% synthetic lookup tables; 64 random-mask
+cases, 157 with a cap other than 16, 90 NaN/inf input lanes. Bit exact under the
+emulator two-NaN rule (the manual rule differs in 67 cases). 8 injected bugs caught.
+Branch hits include segment vertex/edge/degenerate 324+206/451/17, triangle face 152,
+tetrahedron inside 77, exits repeat 443 / no progress 363, support lookup 207 / brute
+force 766. Fixtures: StackLimit, TLS epoch 1, guards `3336a40/60/80` = 1, statics
+1e-7 x4; the static-init paths are never run. Tests: 18.
+
+Limits: the hardware two-NaN rule, the live MXCSR, live hulls and lookup tables. The
+tetrahedron vertex-D, edge and degenerate branches have 1–2 hits each. The sibling
+`18f3710` (capsule-hull) is not covered.
+
+Harness correction: before 2026-11-05 the sphere harness set only static `3336a30`, so
+its native `18f0a70` runs used zero thresholds for the triangle and volume tests. Its
+record comparison stayed valid (the model consumed the native result). The harness now
+sets all three statics; the regenerated receipt is again 2560 of 2560.

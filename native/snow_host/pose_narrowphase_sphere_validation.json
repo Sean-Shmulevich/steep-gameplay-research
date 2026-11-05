@@ -23,7 +23,7 @@
   "fixtures": [
     "XYZ mask {-1,-1,-1,0} (initializer 0x400c7e60); 1 case in 16 of the forward runs uses a random mask",
     "TEB+0x10 StackLimit for __chkstk 0x1c45120; TEB+0x58 TLS array, epoch 1 at block+0x4eec",
-    "function-local static 0x3336a30 pre-set to its initializer value (RVA 0x29ca870, 1e-7 x4), guard 0x3336a40 = 1",
+    "function-local statics 0x3336a30/0x3336a50/0x3336a70 pre-set to their initializer values (1e-7 x4; RVA 0x29ca870 and the scalar 0x1e4a8b8), guards 0x3336a40/60/80 = 1 (before 2026-11-05 only 0x3336a30 was set, so 18f0a70 ran its triangle and volume degeneracy tests with zero thresholds)",
     "convex shapes: support lookup pointer +0xc0 = 0 (brute-force vertex scan path only)"
   ],
   "image_sha256": "32646ca74ffb077d0a4e6def5b269a2c093dfc96cbcfc6ceedcc150e25dd60d2",

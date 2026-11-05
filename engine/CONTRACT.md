@@ -2133,3 +2133,20 @@ raises where native faults or indexes -1. UNRESOLVED: `18f3710`, the hardware tw
 rule, live MXCSR, the +0xc0 support path, shape+0x40 vs descriptor +0 on real assets.
 Evidence: `native/snow_host/pose_narrowphase_kind45_validation.json`. No claim of
 original-engine equivalence outside the validated fixtures.
+
+### Convex point query and hull support
+
+`engine.pose_convex_point_query`: `convex_point_query(mem, rows, shape, point,
+iterations=16, *, mask=XYZ_MASK, nan_rule='sse', statics=DEFAULT_STATICS, trace=None,
+support=None) -> (dist, on_hull, on_point)` (0x18f0a70); `hull_support(mem, shape, d,
+nan_rule='sse')` (0x1949480 via 0x19497c0); `bind_point_query(mem, *, iterations=16,
+mask, nan_rule, statics)` supplies `point_query(frame_b_rows, shape_b, point)` to
+`engine.pose_narrowphase_sphere.sphere_convex_tester`. Follows LINK_SOLVER.md "Convex
+point query (0x18f0a70) and hull support (0x1949480)". Lane-exact float32 with native
+operand order; `iterations` <= 0 returns vertex 0 and P; +0x48 is read as n+1 and a zero
+count raises where native would scan without bound. Supplied: CRT static initialisation
+(the three statics are a parameter, default 1e-7 x4). Authored: names, the trace hook,
+the exception. UNRESOLVED: the hardware two-NaN rule, live MXCSR, real hull data and
+lookup tables, the deserialisation path. Evidence:
+`native/snow_host/pose_convex_point_query_validation.json`. No claim of original-engine
+equivalence outside the validated fixtures.
